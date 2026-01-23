@@ -1,0 +1,13 @@
+# Dubai Tennis Tickets - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://dubaitennistickets.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow admin and private paths
+Disallow: /api/
+Disallow: /admin/
