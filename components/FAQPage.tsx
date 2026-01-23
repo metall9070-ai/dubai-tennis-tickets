@@ -178,7 +178,7 @@ const FAQPage: React.FC<FAQPageProps> = ({
       />
 
       {/* Breadcrumbs */}
-      <div className="bg-white border-b border-[#d2d2d7]">
+      <div className="bg-white border-b border-[#d2d2d7] pt-24">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <Breadcrumbs
             items={[
