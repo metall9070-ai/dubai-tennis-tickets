@@ -1,0 +1,221 @@
+[
+    {
+        "model": "events.tournament",
+        "pk": 1,
+        "fields": {
+            "name": "Dubai Duty Free Tennis Championships - Women's Week",
+            "type": "WTA",
+            "year": 2026,
+            "description": "WTA 1000 Tournament - The premier women's tennis tournament in Dubai featuring the world's top female players.",
+            "venue": "Dubai Duty Free Tennis Stadium",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.tournament",
+        "pk": 2,
+        "fields": {
+            "name": "Dubai Duty Free Tennis Championships - Men's Week",
+            "type": "ATP",
+            "year": 2026,
+            "description": "ATP 500 Tournament - A prestigious men's tennis tournament attracting the world's best male players.",
+            "venue": "Dubai Duty Free Tennis Stadium",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 1,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Day 1",
+            "date": "15",
+            "day": "Sun",
+            "month": "FEB",
+            "time": "11:00 AM",
+            "event_date": "2026-02-15",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 2,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Day 2",
+            "date": "16",
+            "day": "Mon",
+            "month": "FEB",
+            "time": "11:00 AM",
+            "event_date": "2026-02-16",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 3,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Day 3",
+            "date": "17",
+            "day": "Tue",
+            "month": "FEB",
+            "time": "11:00 AM",
+            "event_date": "2026-02-17",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 4,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Day 4",
+            "date": "18",
+            "day": "Wed",
+            "month": "FEB",
+            "time": "11:00 AM",
+            "event_date": "2026-02-18",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 5,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Quarter-Finals",
+            "date": "19",
+            "day": "Thu",
+            "month": "FEB",
+            "time": "2:00 PM",
+            "event_date": "2026-02-19",
+            "min_price": "250.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 6,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Semi-Finals",
+            "date": "20",
+            "day": "Fri",
+            "month": "FEB",
+            "time": "1:00 PM",
+            "event_date": "2026-02-20",
+            "min_price": "350.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 7,
+        "fields": {
+            "tournament": 1,
+            "title": "Women's Finals",
+            "date": "21",
+            "day": "Sat",
+            "month": "FEB",
+            "time": "4:30 PM",
+            "event_date": "2026-02-21",
+            "min_price": "500.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 8,
+        "fields": {
+            "tournament": 2,
+            "title": "Men's Day 1",
+            "date": "23",
+            "day": "Mon",
+            "month": "FEB",
+            "time": "2:00 PM",
+            "event_date": "2026-02-23",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 9,
+        "fields": {
+            "tournament": 2,
+            "title": "Men's Day 2",
+            "date": "24",
+            "day": "Tue",
+            "month": "FEB",
+            "time": "2:00 PM",
+            "event_date": "2026-02-24",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 10,
+        "fields": {
+            "tournament": 2,
+            "title": "Men's Day 3",
+            "date": "25",
+            "day": "Wed",
+            "month": "FEB",
+            "time": "2:00 PM",
+            "event_date": "2026-02-25",
+            "min_price": "150.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 11,
+        "fields": {
+            "tournament": 2,
+            "title": "Men's Quarter-Finals",
+            "date": "26",
+            "day": "Thu",
+            "month": "FEB",
+            "time": "2:00 PM",
+            "event_date": "2026-02-26",
+            "min_price": "300.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 12,
+        "fields": {
+            "tournament": 2,
+            "title": "Men's Semi-Finals",
+            "date": "27",
+            "day": "Fri",
+            "month": "FEB",
+            "time": "1:30 PM",
+            "event_date": "2026-02-27",
+            "min_price": "450.00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 13,
+        "fields": {
+            "tournament": 2,
+            "title": "Men's Finals",
+            "date": "28",
+            "day": "Sat",
+            "month": "FEB",
+            "time": "4:30 PM",
+            "event_date": "2026-02-28",
+            "min_price": "750.00",
+            "is_active": true
+        }
+    }
+]

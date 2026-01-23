@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python manage.py:*)",
+      "Bash(python -m py_compile:*)",
+      "Bash(venv/Scripts/python.exe manage.py migrate:*)",
+      "Bash(venv/Scripts/python.exe manage.py:*)",
+      "Bash(curl:*)",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,226 @@
+[
+    {
+        "model": "events.category",
+        "pk": 1,
+        "fields": {
+            "event": 1,
+            "name": "Premium Courtside",
+            "price": "1200.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 14,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 2,
+        "fields": {
+            "event": 1,
+            "name": "Prime A",
+            "price": "650.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 42,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 3,
+        "fields": {
+            "event": 1,
+            "name": "Grandstand Upper",
+            "price": "150.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 156,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 4,
+        "fields": {
+            "event": 1,
+            "name": "Grandstand Lower",
+            "price": "350.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 88,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 5,
+        "fields": {
+            "event": 2,
+            "name": "Premium Courtside",
+            "price": "1200.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 35,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 6,
+        "fields": {
+            "event": 2,
+            "name": "Prime A",
+            "price": "650.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 78,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 7,
+        "fields": {
+            "event": 2,
+            "name": "Grandstand Upper",
+            "price": "150.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 245,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 8,
+        "fields": {
+            "event": 2,
+            "name": "Grandstand Lower",
+            "price": "350.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 165,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 9,
+        "fields": {
+            "event": 7,
+            "name": "Premium Courtside",
+            "price": "2500.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 8,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 10,
+        "fields": {
+            "event": 7,
+            "name": "Prime A",
+            "price": "1200.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 22,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 11,
+        "fields": {
+            "event": 7,
+            "name": "Grandstand Upper",
+            "price": "500.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 89,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 12,
+        "fields": {
+            "event": 7,
+            "name": "Grandstand Lower",
+            "price": "800.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 45,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 13,
+        "fields": {
+            "event": 13,
+            "name": "Premium Courtside",
+            "price": "3500.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 5,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 14,
+        "fields": {
+            "event": 13,
+            "name": "Prime A",
+            "price": "1800.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 18,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 15,
+        "fields": {
+            "event": 13,
+            "name": "Grandstand Upper",
+            "price": "750.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 67,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 16,
+        "fields": {
+            "event": 13,
+            "name": "Grandstand Lower",
+            "price": "1100.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 32,
+            "sort_order": 4,
+            "is_active": true
+        }
+    }
+]
