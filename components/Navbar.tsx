@@ -87,10 +87,11 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header 
+      <header
         className={`fixed top-0 left-0 right-0 z-[60] bg-[#111842]/95 backdrop-blur-md border-b border-white/10 transition-opacity duration-1000 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
       >
         <div className="max-w-[1200px] mx-auto h-12 flex items-center justify-between px-4 sm:px-6">
           <div className="flex-shrink-0">

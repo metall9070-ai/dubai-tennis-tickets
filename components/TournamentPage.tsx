@@ -44,7 +44,7 @@ const TournamentPage: React.FC<TournamentPageProps> = ({
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
       <Navbar isVisible={true} cartCount={cartCount} onHome={onHome} onTournament={() => {}} onATPTickets={onATPTickets} onWTATickets={onWTATickets} onCart={onCart} onSeatingGuide={onSeatingGuide} onVenue={onVenue} onFAQ={onFAQ} />
       
-      <main className="flex-1 pt-16 md:pt-24 pb-12 md:pb-20">
+      <main className="flex-1 pb-12 md:pb-20" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 4rem)' }}>
         <div className="max-w-[980px] mx-auto px-4 sm:px-6">
           
           {/* Breadcrumbs */}
@@ -59,10 +59,11 @@ const TournamentPage: React.FC<TournamentPageProps> = ({
 
           {/* Tournament Banner Image */}
           <div className="relative w-full h-[25vh] md:h-[40vh] overflow-hidden rounded-[24px] md:rounded-[32px] mb-8 md:mb-16 shadow-sm border border-black/5">
-            <img 
-              src="https://images.unsplash.com/photo-1595435064212-0104e78c4447?q=80&w=2000&auto=format&fit=crop" 
-              alt="Dubai Duty Free Tennis Stadium" 
+            <img
+              src="https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop"
+              alt="Dubai Duty Free Tennis Stadium"
               className="w-full h-full object-cover"
+              loading="eager"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>

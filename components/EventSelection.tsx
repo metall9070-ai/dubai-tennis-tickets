@@ -62,7 +62,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
     setIsModalOpen(false);
   };
 
-  const handlePlus = () => setTicketCount(prev => Math.min(prev + 1, Math.min(10, selectedCategory?.seatsLeft || 10)));
+  const handlePlus = () => setTicketCount(prev => Math.min(prev + 1, Math.min(4, selectedCategory?.seatsLeft || 4)));
   const handleMinus = () => setTicketCount(prev => Math.max(prev - 1, 1));
 
   const handleAddToCart = () => {
@@ -278,7 +278,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div className="flex flex-col">
                         <span className="text-[15px] md:text-[17px] font-bold text-[#111842]">Quantity</span>
-                        <span className="text-[9px] md:text-[11px] text-[#86868b] font-bold uppercase tracking-[0.1em] mt-0.5">MAX 10 PER ORDER</span>
+                        <span className="text-[9px] md:text-[11px] text-[#86868b] font-bold uppercase tracking-[0.1em] mt-0.5">MAX 4 PER ORDER</span>
                       </div>
                       <div className="flex items-center space-x-4 md:space-x-5">
                         <button 
