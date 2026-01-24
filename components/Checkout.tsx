@@ -76,6 +76,43 @@ const Checkout: React.FC<CheckoutProps> = ({
             <span className="text-[#1d1d1f]">Order</span>
           </nav>
 
+          {/* Progress Steps */}
+          <div className="mb-8 md:mb-12">
+            <div className="flex items-center justify-between max-w-md mx-auto md:mx-0">
+              {/* Step 1: Cart */}
+              <div className="flex flex-col items-center">
+                <div className="w-10 h-10 rounded-full bg-[#1e824c] text-white flex items-center justify-center font-semibold text-sm">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-semibold text-[#1e824c] mt-2">Cart</span>
+              </div>
+
+              {/* Connector 1 */}
+              <div className="flex-1 h-0.5 bg-[#1e824c] mx-2"></div>
+
+              {/* Step 2: Details */}
+              <div className="flex flex-col items-center">
+                <div className="w-10 h-10 rounded-full bg-[#1e824c] text-white flex items-center justify-center font-semibold text-sm">
+                  2
+                </div>
+                <span className="text-[11px] font-semibold text-[#1e824c] mt-2">Details</span>
+              </div>
+
+              {/* Connector 2 */}
+              <div className="flex-1 h-0.5 bg-[#d2d2d7] mx-2"></div>
+
+              {/* Step 3: Payment */}
+              <div className="flex flex-col items-center">
+                <div className="w-10 h-10 rounded-full bg-[#f5f5f7] text-[#86868b] flex items-center justify-center font-semibold text-sm border-2 border-[#d2d2d7]">
+                  3
+                </div>
+                <span className="text-[11px] font-semibold text-[#86868b] mt-2">Payment</span>
+              </div>
+            </div>
+          </div>
+
           <h1 className="text-[36px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-8 md:mb-12 leading-tight">
             Complete Your <span className="text-[#1e824c]">Order</span>
           </h1>

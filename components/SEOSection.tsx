@@ -42,7 +42,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
 
             <div className="space-y-6">
               <p>
-                <strong>Dubai Tennis 2026 tickets</strong> are now available through our official platform. Choose from Courtside, Prime, and Grandstand seating with prices starting from <strong>$150</strong>. All tickets include access to the tournament village with premium dining and entertainment.
+                <strong>Dubai Tennis 2026 tickets</strong> are now available through our ticket concierge. Choose from Courtside, Prime, and Grandstand seating with prices starting from <strong>$150</strong>. All tickets include access to the tournament village with premium dining and entertainment.
               </p>
               <p>
                 The men's <strong>ATP Dubai tournament</strong> (February 23-28) and women's <strong>WTA Dubai tournament</strong> (February 15-21) feature separate draws, allowing fans to experience different champions across two weeks of action.
@@ -87,7 +87,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
 
           <div className="pt-8 sm:pt-10 md:pt-12 border-t border-[#d2d2d7]">
             <p className="text-[12px] sm:text-[13px] text-[#86868b] text-center leading-relaxed">
-              Buy official Dubai Tennis tickets online. Secure checkout, instant confirmation, and authentic guaranteed entry to all sessions at Dubai Duty Free Tennis Stadium.
+              Buy Dubai Tennis tickets online. Secure checkout, instant confirmation, and verified tickets for all sessions at Dubai Duty Free Tennis Stadium.
             </p>
           </div>
         </div>
