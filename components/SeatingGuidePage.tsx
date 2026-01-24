@@ -112,14 +112,13 @@ const SeatingGuidePage: React.FC<SeatingGuidePageProps> = ({
 
       {/* Hero Section - Fullscreen like VenuePage */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
-        {/* Background Image with SEO-friendly aria-label */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop')"
-          }}
-          role="img"
-          aria-label="Dubai Tennis Stadium seating guide and court layout"
+        {/* Background Image */}
+        <img
+          src="https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop"
+          alt="Dubai Tennis Stadium seating guide and court layout"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
         />
         {/* Overlay for text contrast - WCAG AA compliant */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
