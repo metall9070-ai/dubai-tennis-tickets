@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Breadcrumbs from './Breadcrumbs';
@@ -41,90 +41,134 @@ const WTATicketsPage: React.FC<WTATicketsPageProps> = ({
 }) => {
   const wtaEvents = eventsData.filter(e => e.type === 'WTA');
 
+  // SEO: Update meta tags for this page
+  useEffect(() => {
+    document.title = 'WTA 1000 Tickets Dubai 2026 | Dubai Tennis Championships';
+
+    // Update og:image meta tag
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) {
+      ogImage.setAttribute('content', 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    return () => {
+      document.title = 'Dubai Tennis Championships 2026 Tickets | Best Seats Available';
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
-      <Navbar isVisible={true} cartCount={cartCount} onHome={onHome} onTournament={onTournament} onATPTickets={onATPTickets} onWTATickets={onWTATickets} onCart={onCart} onSeatingGuide={onSeatingGuide} onVenue={onVenue} onFAQ={onFAQ} />
-      
-      <main className="flex-1 pt-24 pb-20">
-        <div className="max-w-[980px] mx-auto px-4 sm:px-6">
-          
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/', onClick: onHome }
-            ]}
-            currentPage="WTA 1000 Tickets"
-          />
+    <div className="min-h-screen bg-[#f5f5f7]">
+      <Navbar
+        isVisible={true}
+        cartCount={cartCount}
+        onHome={onHome}
+        onTournament={onTournament}
+        onATPTickets={onATPTickets}
+        onWTATickets={onWTATickets}
+        onCart={onCart}
+        onSeatingGuide={onSeatingGuide}
+        onVenue={onVenue}
+        onFAQ={onFAQ}
+      />
 
-          {/* Banner Image */}
-          <div className="relative w-full h-[35vh] md:h-[40vh] overflow-hidden rounded-[32px] mb-12 shadow-sm border border-black/5">
-            <img 
-              src="https://images.unsplash.com/photo-1595435064212-0104e78c4447?q=80&w=2000&auto=format&fit=crop" 
-              alt="WTA Tennis Action" 
-              className="w-full h-full object-cover"
+      {/* Hero Section - Fullscreen like VenuePage */}
+      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        {/* Background Image with SEO-friendly aria-label */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2000&auto=format&fit=crop')"
+          }}
+          role="img"
+          aria-label="WTA Dubai Tennis Championships tickets and court view"
+        />
+        {/* Overlay for text contrast - WCAG AA compliant */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
+
+        {/* Breadcrumbs */}
+        <div className="absolute top-0 left-0 right-0 z-10" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+            <Breadcrumbs
+              items={[
+                { label: 'Home', href: '/', onClick: onHome }
+              ]}
+              currentPage="WTA 1000 Tickets"
+              light
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
+        </div>
 
-          {/* Page Heading */}
-          <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-10 leading-tight">
-            WTA 1000 Tickets – Dubai Duty Free Tennis Championships
-          </h1>
+        {/* Hero Content */}
+        <div className="relative z-10 h-full flex items-end">
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px] pb-12">
+            <h1 className="text-[36px] md:text-[56px] font-bold tracking-tight text-white mb-4 leading-tight">
+              WTA 1000 Tickets<br />
+              <span className="text-white/90">Dubai Tennis Championships</span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 max-w-xl">
+              Watch the world's best women's tennis. February 15-21, 2026.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <main className="bg-white">
+        <div className="max-w-[980px] mx-auto px-4 sm:px-6 py-12 md:py-16">
+
+          {/* Schedule Block */}
+          <div id="wta-schedule" className="mb-16 scroll-mt-24">
+            <div className="flex items-center justify-between mb-8 px-4">
+              <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">WTA 1000 Match Schedule</h2>
+              <span className="text-[12px] font-bold text-[#1e824c] uppercase tracking-widest px-3 py-1 bg-[#1e824c]/10 rounded-full">Available Sessions</span>
+            </div>
+            <div className="bg-[#f5f5f7] rounded-[32px] overflow-hidden border border-black/5 shadow-inner">
+              {wtaEvents.map((event, index, arr) => (
+                <EventRow
+                  key={event.id}
+                  event={event}
+                  isLast={index === arr.length - 1}
+                  onClick={() => onSelectEvent(event)}
+                />
+              ))}
+            </div>
+            <p className="text-[13px] text-[#86868b] mt-4 text-center font-medium">
+              Select a session above to view categories and book your seats.
+            </p>
+          </div>
 
           {/* Content Sections */}
           <article className="prose prose-lg max-w-none text-[#1d1d1f]/90 leading-relaxed font-normal">
-            
-            {/* Embedded Schedule Block */}
-            <div id="wta-schedule" className="mb-16 scroll-mt-24">
-              <div className="flex items-center justify-between mb-8 px-4">
-                <h3 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">WTA 1000 Match Schedule</h3>
-                <span className="text-[12px] font-bold text-[#1e824c] uppercase tracking-widest px-3 py-1 bg-[#1e824c]/10 rounded-full">Available Sessions</span>
-              </div>
-              <div className="bg-[#f5f5f7] rounded-[32px] overflow-hidden border border-black/5 shadow-inner">
-                {wtaEvents.map((event, index, arr) => (
-                  <EventRow 
-                    key={event.id} 
-                    event={event} 
-                    isLast={index === arr.length - 1} 
-                    onClick={() => onSelectEvent(event)}
-                  />
-                ))}
-              </div>
-              <p className="text-[13px] text-[#86868b] mt-4 text-center font-medium">
-                Select a session above to view categories and book your seats.
-              </p>
-            </div>
-
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">What Is the WTA Tour?</h2>
             <p className="mb-12">
-              The WTA Tour (Women’s Tennis Association) is the premier global circuit for professional women’s tennis. It governs the world ranking system and organises elite tournaments across multiple continents, featuring the highest-ranked female players in the sport.
+              The WTA Tour (Women's Tennis Association) is the premier global circuit for professional women's tennis. It governs the world ranking system and organises elite tournaments across multiple continents, featuring the highest-ranked female players in the sport.
               <br /><br />
               WTA tournaments are divided into several categories based on ranking points, prize money, and competitive level. These include WTA 250, WTA 500, WTA 1000, the WTA Finals, and the four Grand Slams. Among these, WTA 1000 tournaments represent the highest tier outside the Grand Slams.
             </p>
 
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">What Is a WTA 1000 Tournament?</h2>
             <p className="mb-6">
-              A WTA 1000 tournament is one of the most prestigious and competitive levels on the women’s professional tennis calendar. The tournament winner earns 1,000 WTA ranking points, making these events critical for players competing for top rankings, Grand Slam seedings, and qualification for the WTA Finals.
+              A WTA 1000 tournament is one of the most prestigious and competitive levels on the women's professional tennis calendar. The tournament winner earns 1,000 WTA ranking points, making these events critical for players competing for top rankings, Grand Slam seedings, and qualification for the WTA Finals.
             </p>
             <p className="mb-6">
               WTA 1000 tournaments are known for:
             </p>
             <ul className="list-disc pl-6 mb-12 space-y-2">
-              <li>Participation of the world’s top-ranked players</li>
+              <li>Participation of the world's top-ranked players</li>
               <li>High-intensity matches from the early rounds</li>
               <li>Large prize pools and international media coverage</li>
               <li>Strong fan attendance and global visibility</li>
             </ul>
             <p className="mb-12">
-              These events consistently deliver elite-level tennis and are considered must-watch tournaments for fans of the women’s game.
+              These events consistently deliver elite-level tennis and are considered must-watch tournaments for fans of the women's game.
             </p>
 
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">WTA 1000 at the Dubai Duty Free Tennis Championships</h2>
             <p className="mb-8">
-              The women’s event at the Dubai Duty Free Tennis Championships is officially classified as a WTA 1000 tournament, placing it among the most important stops on the WTA Tour.
+              The women's event at the Dubai Duty Free Tennis Championships is classified as a WTA 1000 tournament, placing it among the most important stops on the WTA Tour.
             </p>
             <p className="mb-8">
-              Now celebrating its 26th edition, the Dubai WTA 1000 tournament has a long history of hosting and crowning the sport’s biggest stars. Past champions include Jasmine Paolini, Barbora Krejcikova, Elina Svitolina, Venus Williams, Serena Williams, Martina Hingis, Justine Henin, Lindsay Davenport, Simona Halep, Garbiñe Muguruza, and Caroline Wozniacki.
+              Now celebrating its 26th edition, the Dubai WTA 1000 tournament has a long history of hosting and crowning the sport's biggest stars. Past champions include Jasmine Paolini, Barbora Krejcikova, Elina Svitolina, Venus Williams, Serena Williams, Martina Hingis, Justine Henin, Lindsay Davenport, Simona Halep, Garbiñe Muguruza, and Caroline Wozniacki.
             </p>
             <p className="mb-6">
               Matches are played at the Dubai Duty Free Tennis Stadium, offering:
@@ -140,7 +184,7 @@ const WTATicketsPage: React.FC<WTATicketsPageProps> = ({
 
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">Buy WTA 1000 Tickets in Dubai</h2>
             <p className="mb-12">
-              Purchasing WTA 1000 tickets for the Dubai Duty Free Tennis Championships gives fans the opportunity to watch the very best women’s tennis players compete live in Dubai. From early-round matchups to finals week, WTA tickets offer access to top-tier competition and unforgettable on-court performances.
+              Purchasing WTA 1000 tickets for the Dubai Duty Free Tennis Championships gives fans the opportunity to watch the very best women's tennis players compete live in Dubai. From early-round matchups to finals week, WTA tickets offer access to top-tier competition and unforgettable on-court performances.
               <br /><br />
               To plan your visit, fans are advised to check the tournament schedule, where match dates, session times, and order of play are available for all WTA rounds throughout the week.
             </p>
@@ -150,7 +194,7 @@ const WTATicketsPage: React.FC<WTATicketsPageProps> = ({
               <p className="mb-8 opacity-90 max-w-xl mx-auto">
                 Don't miss the chance to see the world's best female tennis players competing live in Dubai. Select your seats now for an unparalleled sporting experience.
               </p>
-              <button 
+              <button
                 onClick={() => {
                   const el = document.getElementById('wta-schedule');
                   el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -163,7 +207,7 @@ const WTATicketsPage: React.FC<WTATicketsPageProps> = ({
           </article>
         </div>
       </main>
-      
+
       <Footer
         onHome={onHome}
         onTournament={onTournament}

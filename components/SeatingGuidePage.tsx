@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Breadcrumbs from './Breadcrumbs';
@@ -70,6 +70,21 @@ const SeatingGuidePage: React.FC<SeatingGuidePageProps> = ({
   onContacts,
   onAboutUs
 }) => {
+  // SEO: Update meta tags for this page
+  useEffect(() => {
+    document.title = 'Seating Guide Dubai Tennis 2026 | Dubai Tennis Championships';
+
+    // Update og:image meta tag
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) {
+      ogImage.setAttribute('content', 'https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    return () => {
+      document.title = 'Dubai Tennis Championships 2026 Tickets | Best Seats Available';
+    };
+  }, []);
+
   const handleViewSchedule = () => {
     onHome();
     setTimeout(() => {
@@ -95,39 +110,57 @@ const SeatingGuidePage: React.FC<SeatingGuidePageProps> = ({
         onFAQ={onFAQ}
       />
 
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-[#d2d2d7]" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
-        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/', onClick: onHome }
-            ]}
-            currentPage="Seating Guide"
-          />
-        </div>
-      </div>
+      {/* Hero Section - Fullscreen like VenuePage */}
+      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        {/* Background Image with SEO-friendly aria-label */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop')"
+          }}
+          role="img"
+          aria-label="Dubai Tennis Stadium seating guide and court layout"
+        />
+        {/* Overlay for text contrast - WCAG AA compliant */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
 
-      {/* Hero Section */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-          <div className="text-center mb-12">
-            <h1 className="text-[40px] md:text-[56px] font-bold tracking-tight text-[#1d1d1f] mb-6">
-              Dubai Tennis Stadium<br />
-              <span className="text-[#1e824c]">Seating Guide</span>
+        {/* Breadcrumbs */}
+        <div className="absolute top-0 left-0 right-0 z-10" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+            <Breadcrumbs
+              items={[
+                { label: 'Home', href: '/', onClick: onHome }
+              ]}
+              currentPage="Seating Guide"
+              light
+            />
+          </div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 h-full flex items-end">
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px] pb-12">
+            <h1 className="text-[36px] md:text-[56px] font-bold tracking-tight text-white mb-4 leading-tight">
+              Seating Guide<br />
+              <span className="text-white/90">Dubai Tennis Stadium</span>
             </h1>
-            <p className="text-xl text-[#86868b] max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/80 max-w-xl">
               Find the perfect seats for Dubai Duty Free Tennis Championships 2026.
-              Compare seating categories and choose the view that suits you best.
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Stadium Visual */}
-          <div className="relative bg-[#f5f5f7] rounded-3xl p-4 md:p-8 mb-12">
+      {/* Stadium Visual Section */}
+      <section className="bg-white py-12 md:py-16">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <div className="relative bg-[#f5f5f7] rounded-3xl p-4 md:p-8">
             <div className="max-w-2xl mx-auto">
               <img
                 src="https://dubaidutyfreetennischampionships.com/wp-content/uploads/2024/01/DDFTC-STADIUM_JAN-10-2024-PORTRAIT_2392x2953-scaled.jpg"
                 alt="Dubai Duty Free Tennis Championships Stadium Seating Chart"
                 className="w-full h-auto rounded-2xl shadow-lg"
+                loading="eager"
               />
             </div>
           </div>
