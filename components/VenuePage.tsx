@@ -113,11 +113,13 @@ const VenuePage: React.FC<VenuePageProps> = ({
 
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2000&auto=format&fit=crop')"
-          }}
+        {/* Background Image */}
+        <img
+          src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2000&auto=format&fit=crop"
+          alt="Dubai Duty Free Tennis Stadium aerial view"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
 
