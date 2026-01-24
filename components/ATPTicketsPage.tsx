@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Breadcrumbs from './Breadcrumbs';
@@ -41,63 +41,107 @@ const ATPTicketsPage: React.FC<ATPTicketsPageProps> = ({
 }) => {
   const atpEvents = eventsData.filter(e => e.type === 'ATP');
 
+  // SEO: Update meta tags for this page
+  useEffect(() => {
+    document.title = 'ATP 500 Tickets Dubai 2026 | Dubai Tennis Championships';
+
+    // Update og:image meta tag
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) {
+      ogImage.setAttribute('content', 'https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    return () => {
+      document.title = 'Dubai Tennis Championships 2026 Tickets | Best Seats Available';
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
-      <Navbar isVisible={true} cartCount={cartCount} onHome={onHome} onTournament={onTournament} onATPTickets={onATPTickets} onWTATickets={onWTATickets} onCart={onCart} onSeatingGuide={onSeatingGuide} onVenue={onVenue} onFAQ={onFAQ} />
-      
-      <main className="flex-1 pt-24 pb-20">
-        <div className="max-w-[980px] mx-auto px-4 sm:px-6">
-          
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/', onClick: onHome }
-            ]}
-            currentPage="ATP 500 Tickets"
-          />
+    <div className="min-h-screen bg-[#f5f5f7]">
+      <Navbar
+        isVisible={true}
+        cartCount={cartCount}
+        onHome={onHome}
+        onTournament={onTournament}
+        onATPTickets={onATPTickets}
+        onWTATickets={onWTATickets}
+        onCart={onCart}
+        onSeatingGuide={onSeatingGuide}
+        onVenue={onVenue}
+        onFAQ={onFAQ}
+      />
 
-          {/* Banner Image */}
-          <div className="relative w-full h-[35vh] md:h-[40vh] overflow-hidden rounded-[32px] mb-12 shadow-sm border border-black/5">
-            <img 
-              src="https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=2000&auto=format&fit=crop" 
-              alt="ATP Tennis Action" 
-              className="w-full h-full object-cover"
+      {/* Hero Section - Fullscreen like VenuePage */}
+      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        {/* Background Image with SEO-friendly hidden img for crawlers */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop')"
+          }}
+          role="img"
+          aria-label="ATP Dubai Tennis Championships tickets and seating overview"
+        />
+        {/* Overlay for text contrast - WCAG AA compliant */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
+
+        {/* Breadcrumbs */}
+        <div className="absolute top-0 left-0 right-0 z-10" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+            <Breadcrumbs
+              items={[
+                { label: 'Home', href: '/', onClick: onHome }
+              ]}
+              currentPage="ATP 500 Tickets"
+              light
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
+        </div>
 
-          {/* Page Heading */}
-          <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-10 leading-tight">
-            ATP Tickets – Dubai Duty Free Tennis Championships
-          </h1>
+        {/* Hero Content */}
+        <div className="relative z-10 h-full flex items-end">
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px] pb-12">
+            <h1 className="text-[36px] md:text-[56px] font-bold tracking-tight text-white mb-4 leading-tight">
+              ATP 500 Tickets<br />
+              <span className="text-white/90">Dubai Tennis Championships</span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 max-w-xl">
+              Experience world-class men's tennis. February 23-28, 2026.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <main className="bg-white">
+        <div className="max-w-[980px] mx-auto px-4 sm:px-6 py-12 md:py-16">
+
+          {/* Schedule Block */}
+          <div id="atp-schedule" className="mb-16 scroll-mt-24">
+            <div className="flex items-center justify-between mb-8 px-4">
+              <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">ATP 500 Match Schedule</h2>
+              <span className="text-[12px] font-bold text-[#1e824c] uppercase tracking-widest px-3 py-1 bg-[#1e824c]/10 rounded-full">Available Sessions</span>
+            </div>
+            <div className="bg-[#f5f5f7] rounded-[32px] overflow-hidden border border-black/5 shadow-inner">
+              {atpEvents.map((event, index, arr) => (
+                <EventRow
+                  key={event.id}
+                  event={event}
+                  isLast={index === arr.length - 1}
+                  onClick={() => onSelectEvent(event)}
+                />
+              ))}
+            </div>
+            <p className="text-[13px] text-[#86868b] mt-4 text-center font-medium">
+              Select a session above to view categories and book your seats.
+            </p>
+          </div>
 
           {/* Content Sections */}
           <article className="prose prose-lg max-w-none text-[#1d1d1f]/90 leading-relaxed font-normal">
-            
-            {/* Embedded Schedule Block - Now at the top */}
-            <div id="atp-schedule" className="mb-16 scroll-mt-24">
-              <div className="flex items-center justify-between mb-8 px-4">
-                <h3 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">ATP 500 Match Schedule</h3>
-                <span className="text-[12px] font-bold text-[#1e824c] uppercase tracking-widest px-3 py-1 bg-[#1e824c]/10 rounded-full">Available Sessions</span>
-              </div>
-              <div className="bg-[#f5f5f7] rounded-[32px] overflow-hidden border border-black/5 shadow-inner">
-                {atpEvents.map((event, index, arr) => (
-                  <EventRow 
-                    key={event.id} 
-                    event={event} 
-                    isLast={index === arr.length - 1} 
-                    onClick={() => onSelectEvent(event)}
-                  />
-                ))}
-              </div>
-              <p className="text-[13px] text-[#86868b] mt-4 text-center font-medium">
-                Select a session above to view categories and book your seats.
-              </p>
-            </div>
-
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">What Is the ATP Tour?</h2>
             <p className="mb-12">
-              The ATP Tour (Association of Tennis Professionals) is the world’s leading professional men’s tennis circuit, governing elite tournaments and ranking the top male players globally. ATP events are played across multiple continents and form the foundation of the official ATP World Rankings, which determine player standings, seedings, and qualification for major tournaments.
+              The ATP Tour (Association of Tennis Professionals) is the world's leading professional men's tennis circuit, governing elite tournaments and ranking the top male players globally. ATP events are played across multiple continents and form the foundation of the ATP World Rankings, which determine player standings, seedings, and qualification for major tournaments.
               <br /><br />
               The ATP Tour is structured into several tournament categories, each offering different levels of ranking points, prize money, and competitive intensity. These categories include ATP 250, ATP 500, ATP Masters 1000, and the ATP Finals, with Grand Slams organised separately.
             </p>
@@ -121,10 +165,10 @@ const ATPTicketsPage: React.FC<ATPTicketsPageProps> = ({
 
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">ATP 500 at the Dubai Duty Free Tennis Championships</h2>
             <p className="mb-8">
-              The men’s event at the Dubai Duty Free Tennis Championships is officially classified as an ATP 500 tournament, placing it among the most respected stops on the ATP Tour.
+              The men's event at the Dubai Duty Free Tennis Championships is classified as an ATP 500 tournament, placing it among the most respected stops on the ATP Tour.
             </p>
             <p className="mb-8">
-              Now in its 34th edition, the Dubai ATP 500 tournament has built a reputation for attracting the world’s best players. Past champions and participants include Novak Djokovic, Roger Federer, Rafael Nadal, Andy Murray, Daniil Medvedev, and Andre Agassi, along with recent title winners Aslan Karatsev and Ugo Humbert.
+              Now in its 34th edition, the Dubai ATP 500 tournament has built a reputation for attracting the world's best players. Past champions and participants include Novak Djokovic, Roger Federer, Rafael Nadal, Andy Murray, Daniil Medvedev, and Andre Agassi, along with recent title winners Aslan Karatsev and Ugo Humbert.
             </p>
             <p className="mb-6">
               Held at the Dubai Duty Free Tennis Stadium, the tournament offers:
@@ -140,7 +184,7 @@ const ATPTicketsPage: React.FC<ATPTicketsPageProps> = ({
 
             <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mb-6">Buy ATP Tickets in Dubai</h2>
             <p className="mb-12">
-              Purchasing ATP tickets for the Dubai Duty Free Tennis Championships gives fans the opportunity to experience top-level men’s tennis in one of the world’s most iconic destinations. Whether attending early-round matches or finals week, ATP 500 Dubai tickets provide access to elite competition, global tennis stars, and an unforgettable live sporting atmosphere.
+              Purchasing ATP tickets for the Dubai Duty Free Tennis Championships gives fans the opportunity to experience top-level men's tennis in one of the world's most iconic destinations. Whether attending early-round matches or finals week, ATP 500 Dubai tickets provide access to elite competition, global tennis stars, and an unforgettable live sporting atmosphere.
               <br /><br />
               Fans are encouraged to review the tournament schedule to select preferred match days and sessions, as ATP matches are spread across multiple rounds throughout the week.
             </p>
@@ -150,7 +194,7 @@ const ATPTicketsPage: React.FC<ATPTicketsPageProps> = ({
               <p className="mb-8 opacity-90 max-w-xl mx-auto">
                 Don't miss the chance to see the world's best male tennis players competing live in Dubai. Select your seats now for an unparalleled sporting experience.
               </p>
-              <button 
+              <button
                 onClick={() => {
                   const el = document.getElementById('atp-schedule');
                   el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -163,7 +207,7 @@ const ATPTicketsPage: React.FC<ATPTicketsPageProps> = ({
           </article>
         </div>
       </main>
-      
+
       <Footer
         onHome={onHome}
         onTournament={onTournament}
