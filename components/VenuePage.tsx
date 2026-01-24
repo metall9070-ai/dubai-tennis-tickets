@@ -116,13 +116,13 @@ const VenuePage: React.FC<VenuePageProps> = ({
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://dubaidutyfreetennischampionships.com/wp-content/uploads/2025/09/WTA-Finals.jpg')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2000&auto=format&fit=crop')"
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
 
         {/* Breadcrumbs */}
-        <div className="absolute top-0 left-0 right-0 z-10 pt-24">
+        <div className="absolute top-0 left-0 right-0 z-10" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
           <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
             <Breadcrumbs
               items={[

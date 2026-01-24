@@ -178,7 +178,7 @@ const FAQPage: React.FC<FAQPageProps> = ({
       />
 
       {/* Breadcrumbs */}
-      <div className="bg-white border-b border-[#d2d2d7] pt-24">
+      <div className="bg-white border-b border-[#d2d2d7]" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <Breadcrumbs
             items={[
