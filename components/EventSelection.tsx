@@ -183,30 +183,45 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <h3 className="text-xl font-semibold mb-6 tracking-tight text-[#1d1d1f]">Price Categories</h3>
           <div className="flex flex-col gap-4 mb-8">
             {categories.map((cat) => (
-              <div 
+              <div
                 key={cat.id}
                 onMouseEnter={() => setHoveredCategory(cat.id)}
                 onMouseLeave={() => setHoveredCategory(null)}
                 onClick={() => openModal(cat)}
-                className={`group cursor-pointer bg-white border border-[#d2d2d7] rounded-[24px] p-6 transition-all duration-400 transform 
+                className={`group cursor-pointer bg-white border border-[#d2d2d7] rounded-[24px] p-6 transition-all duration-400 transform
                   ${hoveredCategory === cat.id ? '-translate-y-1 shadow-2xl border-[#1e824c]/40' : 'hover:shadow-lg hover:border-[#86868b]/30'}
                 `}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-white shadow-md text-lg" style={{ backgroundColor: cat.color }}>
                       {cat.id}
                     </div>
                     <div>
                       <h4 className="font-semibold text-[18px] tracking-tight text-[#1d1d1f]">{cat.name}</h4>
+                      {cat.seatsLeft < 30 && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-red-500 uppercase tracking-wide animate-pulse">
+                          <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                          Selling Fast
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-[20px] font-semibold text-[#1d1d1f]">${cat.price}</p>
-                    <p className={`text-[11px] font-semibold mt-1 uppercase tracking-widest ${cat.seatsLeft < 20 ? 'text-red-500' : 'text-[#1e824c]'}`}>
-                      {cat.seatsLeft} left
-                    </p>
                   </div>
+                </div>
+                {/* Urgency indicator bar */}
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all ${cat.seatsLeft < 20 ? 'bg-red-500' : cat.seatsLeft < 50 ? 'bg-orange-400' : 'bg-[#1e824c]'}`}
+                      style={{ width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%` }}
+                    ></div>
+                  </div>
+                  <span className={`text-[11px] font-bold uppercase tracking-wide whitespace-nowrap ${cat.seatsLeft < 20 ? 'text-red-500' : cat.seatsLeft < 50 ? 'text-orange-500' : 'text-[#1e824c]'}`}>
+                    {cat.seatsLeft} left
+                  </span>
                 </div>
               </div>
             ))}

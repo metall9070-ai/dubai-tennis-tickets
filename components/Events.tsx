@@ -79,6 +79,23 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
 };
 
 export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => void }> = ({ event, isLast, onClick }) => {
+  // Determine session type based on time
+  const getSessionType = (time: string): { label: string; icon: string; bgColor: string; textColor: string } => {
+    const hour = parseInt(time.split(':')[0]);
+    const isPM = time.includes('PM');
+    const hour24 = isPM && hour !== 12 ? hour + 12 : hour;
+
+    if (hour24 >= 16) {
+      return { label: 'Evening', icon: '🌙', bgColor: 'bg-[#1d1d1f]', textColor: 'text-white' };
+    } else if (hour24 >= 13) {
+      return { label: 'Afternoon', icon: '☀️', bgColor: 'bg-[#f59e0b]/10', textColor: 'text-[#d97706]' };
+    } else {
+      return { label: 'Morning', icon: '🌅', bgColor: 'bg-[#3b82f6]/10', textColor: 'text-[#2563eb]' };
+    }
+  };
+
+  const session = getSessionType(event.time);
+
   return (
     <div
       id={`event-${event.id}`}
@@ -96,6 +113,10 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
              <span className="text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#1d1d1f]">{event.day}</span>
              <span className="w-1 h-1 rounded-full bg-[#d2d2d7]"></span>
              <span className="text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#86868b]">{event.time}</span>
+             <span className={`hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-semibold ${session.bgColor} ${session.textColor}`}>
+               <span className="text-[10px]">{session.icon}</span>
+               {session.label}
+             </span>
           </div>
           <h4 className="text-[15px] sm:text-base md:text-2xl font-semibold tracking-tight text-[#1d1d1f] group-hover:text-[#1e824c] transition-colors duration-300 leading-snug">
             {event.title}

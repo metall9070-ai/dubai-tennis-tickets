@@ -3,7 +3,7 @@ import React from 'react';
 const WhyBuy: React.FC = () => {
   const benefits = [
     {
-      title: 'Official Tickets & Guarantee',
+      title: 'Verified Tickets & Guarantee',
       description: 'Your data is fully protected, and the service is provided in full. We also guarantee the authenticity of all tickets.',
       icon: (
         <svg className="w-6 h-6 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ const WhyBuy: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-[28px] md:text-[40px] font-bold tracking-tight text-[#1d1d1f] mb-4">
-            The Official Booking Experience
+            Premium Booking Experience
           </h2>
           <p className="text-[16px] md:text-lg text-[#86868b] font-medium max-w-2xl mx-auto">
             We provide a secure and premium way to experience world-class tennis in Dubai.

@@ -34,7 +34,7 @@ const Hero: React.FC<HeroProps> = ({ isVisible, onAction }) => {
             <span className="text-white/90">Tennis Championships 2026</span>
           </h1>
 
-          <h2 className="sr-only">Official ATP 500 and WTA 1000 Tennis Tickets</h2>
+          <h2 className="sr-only">ATP 500 and WTA 1000 Tennis Tickets Dubai 2026</h2>
 
           <div className="my-8 sm:my-12 md:my-16">
             <span className="text-[22px] sm:text-3xl md:text-5xl font-semibold text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]">
