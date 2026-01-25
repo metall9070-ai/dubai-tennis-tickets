@@ -91,6 +91,14 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
     onHoverCategory(null);
   };
 
+  // Touch handler для мобильных устройств - подсветка при касании
+  const handleTouchStart = (sectionId: string) => {
+    const category = sectionToCategory[sectionId];
+    if (category) {
+      onHoverCategory(category);
+    }
+  };
+
   const handleClick = (sectionId: string) => {
     const category = sectionToCategory[sectionId];
     if (category) {
@@ -138,6 +146,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_38')}
               onMouseEnter={() => handleMouseEnter('s_38')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_38')}
               onClick={() => handleClick('s_38')}
             />
             <path
@@ -148,6 +157,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_37')}
               onMouseEnter={() => handleMouseEnter('s_37')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_37')}
               onClick={() => handleClick('s_37')}
             />
             <path
@@ -158,6 +168,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_39')}
               onMouseEnter={() => handleMouseEnter('s_39')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_39')}
               onClick={() => handleClick('s_39')}
             />
             <path
@@ -168,6 +179,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_34')}
               onMouseEnter={() => handleMouseEnter('s_34')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_34')}
               onClick={() => handleClick('s_34')}
             />
             <path
@@ -178,6 +190,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_78')}
               onMouseEnter={() => handleMouseEnter('s_78')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_78')}
               onClick={() => handleClick('s_78')}
             />
             <path
@@ -188,6 +201,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_33')}
               onMouseEnter={() => handleMouseEnter('s_33')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_33')}
               onClick={() => handleClick('s_33')}
             />
             <path
@@ -198,6 +212,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_77')}
               onMouseEnter={() => handleMouseEnter('s_77')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_77')}
               onClick={() => handleClick('s_77')}
             />
             <path
@@ -208,6 +223,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_36')}
               onMouseEnter={() => handleMouseEnter('s_36')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_36')}
               onClick={() => handleClick('s_36')}
             />
             <path
@@ -218,6 +234,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_35')}
               onMouseEnter={() => handleMouseEnter('s_35')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_35')}
               onClick={() => handleClick('s_35')}
             />
             <path
@@ -228,6 +245,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_41')}
               onMouseEnter={() => handleMouseEnter('s_41')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_41')}
               onClick={() => handleClick('s_41')}
             />
             <path
@@ -238,6 +256,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_40')}
               onMouseEnter={() => handleMouseEnter('s_40')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_40')}
               onClick={() => handleClick('s_40')}
             />
             <path
@@ -248,6 +267,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
               style={getSectionStyle('s_42')}
               onMouseEnter={() => handleMouseEnter('s_42')}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={() => handleTouchStart('s_42')}
               onClick={() => handleClick('s_42')}
             />
           </g>
@@ -430,6 +450,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_43')}
             onMouseEnter={() => handleMouseEnter('s_43')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_43')}
             onClick={() => handleClick('s_43')}
           />
           <path
@@ -440,6 +461,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_44')}
             onMouseEnter={() => handleMouseEnter('s_44')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_44')}
             onClick={() => handleClick('s_44')}
           />
           <path
@@ -450,6 +472,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_45')}
             onMouseEnter={() => handleMouseEnter('s_45')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_45')}
             onClick={() => handleClick('s_45')}
           />
           <path
@@ -460,6 +483,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_46')}
             onMouseEnter={() => handleMouseEnter('s_46')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_46')}
             onClick={() => handleClick('s_46')}
           />
           <path
@@ -470,6 +494,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_47')}
             onMouseEnter={() => handleMouseEnter('s_47')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_47')}
             onClick={() => handleClick('s_47')}
           />
           <path
@@ -480,6 +505,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_48')}
             onMouseEnter={() => handleMouseEnter('s_48')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_48')}
             onClick={() => handleClick('s_48')}
           />
           <path
@@ -490,6 +516,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_49')}
             onMouseEnter={() => handleMouseEnter('s_49')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_49')}
             onClick={() => handleClick('s_49')}
           />
           <path
@@ -500,6 +527,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_50')}
             onMouseEnter={() => handleMouseEnter('s_50')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_50')}
             onClick={() => handleClick('s_50')}
           />
           <path
@@ -510,6 +538,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_51')}
             onMouseEnter={() => handleMouseEnter('s_51')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_51')}
             onClick={() => handleClick('s_51')}
           />
           <path
@@ -520,6 +549,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_52')}
             onMouseEnter={() => handleMouseEnter('s_52')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_52')}
             onClick={() => handleClick('s_52')}
           />
 
@@ -532,6 +562,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_54')}
             onMouseEnter={() => handleMouseEnter('s_54')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_54')}
             onClick={() => handleClick('s_54')}
           />
           <path
@@ -542,6 +573,7 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
             style={getSectionStyle('s_53')}
             onMouseEnter={() => handleMouseEnter('s_53')}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={() => handleTouchStart('s_53')}
             onClick={() => handleClick('s_53')}
           />
         </g>
