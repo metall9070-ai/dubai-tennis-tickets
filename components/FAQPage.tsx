@@ -178,7 +178,7 @@ const FAQPage: React.FC<FAQPageProps> = ({
       />
 
       {/* Breadcrumbs */}
-      <div className="bg-white border-b border-[#d2d2d7]" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 6rem)' }}>
+      <div className="bg-white border-b border-[#d2d2d7]" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 3.5rem)' }}>
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <Breadcrumbs
             items={[
@@ -210,7 +210,7 @@ const FAQPage: React.FC<FAQPageProps> = ({
       </section>
 
       {/* Category Filter */}
-      <section className="bg-[#f5f5f7] py-6 sticky top-[60px] z-40 border-b border-[#d2d2d7]">
+      <section className="bg-[#f5f5f7] py-6 sticky z-40 border-b border-[#d2d2d7]" style={{ top: 'calc(env(safe-area-inset-top) + 3rem)' }}>
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((category) => (
