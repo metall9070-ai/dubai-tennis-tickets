@@ -120,7 +120,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#1e824c" />
 
         {/* Google Search Console Verification - replace with your actual code */}
-        <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
+        <meta name="google-site-verification" content="Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY" />
 
         {/* Google Tag Manager */}
         <Script
