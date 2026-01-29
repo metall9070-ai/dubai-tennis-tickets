@@ -4,6 +4,33 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
+// Telegram notification settings
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+// Send Telegram notification
+async function sendTelegramNotification(message: string) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.log('Telegram not configured, skipping notification');
+    return;
+  }
+
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML',
+      }),
+    });
+  } catch (error) {
+    console.error('Failed to send Telegram notification:', error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text();
@@ -38,11 +65,32 @@ export async function POST(request: NextRequest) {
         console.log('Amount:', session.amount_total ? session.amount_total / 100 : 0, session.currency);
         console.log('Metadata:', session.metadata);
 
-        // TODO: Add your fulfillment logic here
-        // - Send confirmation email
-        // - Create order in database
-        // - Generate tickets
-        // - Update inventory
+        // Get line items for order details
+        const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+
+        // Format tickets for notification
+        const ticketsList = lineItems.data.map(item =>
+          `• ${item.description || item.price?.product} x${item.quantity} - $${(item.amount_total / 100).toFixed(2)}`
+        ).join('\n');
+
+        // Send Telegram notification
+        const amount = session.amount_total ? (session.amount_total / 100).toFixed(2) : '0';
+        const telegramMessage = `🎾 <b>NEW ORDER!</b>
+
+<b>Event:</b> Dubai Tennis Championships 2026
+
+<b>Customer:</b> ${session.metadata?.customer_name || 'N/A'}
+<b>Email:</b> ${session.customer_email || 'N/A'}
+<b>Phone:</b> ${session.metadata?.customer_phone || 'N/A'}
+
+<b>Tickets:</b>
+${ticketsList}
+
+<b>TOTAL: $${amount}</b>
+
+<b>Stripe ID:</b> <code>${session.payment_intent}</code>`;
+
+        await sendTelegramNotification(telegramMessage);
 
         break;
       }
