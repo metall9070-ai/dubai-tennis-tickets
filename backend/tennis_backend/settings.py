@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -192,10 +193,13 @@ SIMPLE_JWT = {
 }
 
 # CORS Configuration
+# For development, allow all origins (change for production)
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
-        'CORS_ALLOWED_ORIGINS', 
+        'CORS_ALLOWED_ORIGINS',
         'http://localhost:5173,http://127.0.0.1:5173'
     ).split(',')
 ]
@@ -271,6 +275,16 @@ LOGGING = {
             'level': os.getenv('ORDERS_LOG_LEVEL', 'INFO'),
             'propagate': False,
         },
+        'events.views': {
+            'handlers': ['console'],
+            'level': os.getenv('EVENTS_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+        'events.safety': {
+            'handlers': ['console'],
+            'level': os.getenv('API_SAFETY_LOG_LEVEL', 'DEBUG'),
+            'propagate': False,
+        },
     },
 }
 
@@ -278,3 +292,39 @@ LOGGING = {
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '')
 TELEGRAM_NOTIFICATIONS_ENABLED = os.getenv('TELEGRAM_NOTIFICATIONS_ENABLED', 'False').lower() == 'true'
+
+# =============================================================================
+# API SAFETY FLAGS
+# =============================================================================
+# Controls whether Django API prices are authoritative for frontend.
+# When False, frontend should use static/fallback prices.
+USE_DJANGO_PRICES = os.getenv('USE_DJANGO_PRICES', 'True').lower() == 'true'
+
+# Controls whether Django API availability data is authoritative.
+# When False, frontend should show "check availability" instead of counts.
+USE_DJANGO_AVAILABILITY = os.getenv('USE_DJANGO_AVAILABILITY', 'True').lower() == 'true'
+
+# =============================================================================
+# PRODUCTION SECURITY SETTINGS
+# =============================================================================
+# These settings are ONLY applied when DEBUG is False (production mode)
+if not DEBUG:
+    # Force HTTPS
+    SECURE_SSL_REDIRECT = True
+
+    # HTTP Strict Transport Security (1 year)
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    # Secure cookies
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
+    # Additional security headers
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+
+    # WhiteNoise compression and caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
