@@ -108,6 +108,10 @@ export async function POST(request: NextRequest) {
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}/checkout/cancel`,
         customer_email: customerInfo.email,
+        // Enable automatic Stripe receipt emails
+        payment_intent_data: {
+          receipt_email: customerInfo.email,
+        },
         metadata: {
           customer_name: customerInfo.name,
           customer_phone: customerInfo.phone,
