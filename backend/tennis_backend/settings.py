@@ -309,8 +309,8 @@ USE_DJANGO_AVAILABILITY = os.getenv('USE_DJANGO_AVAILABILITY', 'True').lower() =
 # =============================================================================
 # These settings are ONLY applied when DEBUG is False (production mode)
 if not DEBUG:
-    # Force HTTPS
-    SECURE_SSL_REDIRECT = True
+    # Railway/Render proxy handles HTTPS - disable Django redirect to avoid loop
+    SECURE_SSL_REDIRECT = False
 
     # HTTP Strict Transport Security (1 year)
     SECURE_HSTS_SECONDS = 31536000
