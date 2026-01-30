@@ -140,6 +140,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT.mkdir(parents=True, exist_ok=True)  # Ensure exists before WhiteNoise init
 
 # Staticfiles finders - required for WhiteNoise to find DRF and admin static files
 STATICFILES_FINDERS = [
