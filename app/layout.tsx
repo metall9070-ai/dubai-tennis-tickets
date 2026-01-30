@@ -8,7 +8,7 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-XXXXXXX';
 
 export const metadata: Metadata = {
   title: 'Dubai Tennis Championships 2026 Tickets | Best Seats Available',
-  description: 'Dubai Duty Free Tennis Championships 2026 ticket concierge service. Feb 15-28 at Aviation Club. ATP 500 & WTA 1000. Prices from $150. Secure checkout, instant confirmation.',
+  description: 'Dubai Duty Free Tennis Championships 2026 ticket concierge service. Feb 15-28 at Aviation Club. ATP 500 & WTA 1000. Prices from $200. Secure checkout, instant confirmation.',
   keywords: 'Dubai Tennis, Dubai Duty Free Tennis Championships, ATP 500 Dubai, WTA 1000 Dubai, tennis tickets Dubai, Dubai Tennis Stadium, tennis 2026, buy tennis tickets',
   authors: [{ name: 'Dubai Tennis Tickets' }],
   robots: 'index, follow',
@@ -86,8 +86,8 @@ const jsonLd = {
       },
       offers: {
         '@type': 'AggregateOffer',
-        lowPrice: '150',
-        highPrice: '750',
+        lowPrice: '200',
+        highPrice: '3000',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
         validFrom: '2025-06-01',

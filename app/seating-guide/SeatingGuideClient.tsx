@@ -6,25 +6,27 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
+// Seating categories for informational display
+// Prices reflect current Django database (WTA: $300-$2000, ATP: $200-$3000)
 const seatingCategories = [
   {
-    name: 'Courtside',
+    name: 'Prime A',
     rows: '1-5',
-    price: 'From $300',
+    price: 'From $2,000',
     color: '#1e824c',
-    features: ['Player-level views', 'Premium cushioned seats', 'VIP hospitality access', 'Exclusive lounge'],
+    features: ['Best court views', 'Premium cushioned seats', 'Center court position', 'Closest to action'],
   },
   {
-    name: 'Prime',
+    name: 'Prime B',
     rows: '6-15',
-    price: 'From $200',
+    price: 'From $1,000',
     color: '#3b82f6',
-    features: ['Optimal viewing angles', 'Center court position', 'Comfortable seating', 'Good proximity'],
+    features: ['Optimal viewing angles', 'Excellent court position', 'Comfortable seating', 'Great proximity'],
   },
   {
     name: 'Grandstand',
     rows: '16+',
-    price: 'From $150',
+    price: 'From $200',
     color: '#f59e0b',
     features: ['Full court overview', 'Great value', 'Elevated perspective', 'Multiple sections'],
   },

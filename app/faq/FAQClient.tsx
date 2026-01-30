@@ -17,7 +17,7 @@ const faqData = [
   },
   {
     question: 'How much do tickets cost?',
-    answer: 'Ticket prices range from $150 for early round Grandstand seats to $750 for Men\'s Finals Courtside. Women\'s Finals start at $500. VIP hospitality packages are available from $1,500.',
+    answer: 'Ticket prices range from $200 for ATP Grandstand Upper to $3,000 for ATP Prime A. WTA tickets start at $300 for Grandstand and go up to $2,000 for Prime A seats.',
   },
   {
     question: 'How will I receive my tickets?',

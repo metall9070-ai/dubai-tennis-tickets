@@ -43,7 +43,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
 
             <div className="space-y-6">
               <p>
-                <strong>Dubai Tennis 2026 tickets</strong> are now available through our ticket concierge. Choose from Courtside, Prime, and Grandstand seating with prices starting from <strong>$150</strong>. All tickets include access to the tournament village with premium dining and entertainment.
+                <strong>Dubai Tennis 2026 tickets</strong> are now available through our ticket concierge. Choose from Prime and Grandstand seating with prices starting from <strong>$200</strong>. All tickets include access to the tournament village with premium dining and entertainment.
               </p>
               <p>
                 The men's <strong>ATP Dubai tournament</strong> (February 23-28) and women's <strong>WTA Dubai tournament</strong> (February 15-21) feature separate draws, allowing fans to experience different champions across two weeks of action.

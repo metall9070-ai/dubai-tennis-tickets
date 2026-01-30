@@ -1,22 +1,78 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { eventsData, EventRow } from '@/components/Events';
+import { Event, EventRow } from '@/components/Events';
+import { fetchEvents } from '@/lib/api';
 import { useCart } from '@/app/CartContext';
 
 export default function WTATicketsClient() {
   const router = useRouter();
   const { cartTotalItems } = useCart();
-  const wtaEvents = eventsData.filter(e => e.type === 'WTA');
 
-  const handleSelectEvent = (eventData: any) => {
-    const eventId = eventData?.id || eventData?.title?.toLowerCase().replace(/\s+/g, '-') || 'select';
+  // State for events - fetched from Django API
+  const [wtaEvents, setWtaEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch events from Django API - NEVER use fallback data
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadEvents() {
+      try {
+        setIsLoading(true);
+        const result = await fetchEvents();
+
+        if (!mounted) return;
+
+        // STRICT: Reject fallback data - only use Django API prices
+        if (result.fallback) {
+          console.error('[TOURNAMENT PAGE] REJECTED fallback data - Django API required for prices');
+          setError('Unable to load prices. Please try again.');
+          setWtaEvents([]);
+          return;
+        }
+
+        if (result.data) {
+          const wta = result.data.filter(e => e.type === 'WTA');
+          setWtaEvents(wta);
+
+          // Log each event with LIVE FETCH format for network verification
+          wta.forEach(event => {
+            console.log(`[LIVE FETCH] /tickets/wta event "${event.title}" min_price=${event.minPrice}`);
+          });
+
+          console.log(`[LIVE FETCH] /tickets/wta loaded ${wta.length} WTA events from Django API`);
+        }
+      } catch (err) {
+        console.error('[TOURNAMENT PAGE] Failed to load events:', err);
+        if (mounted) {
+          setError('Unable to load prices. Please try again.');
+          setWtaEvents([]);
+        }
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadEvents();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const handleSelectEvent = (eventData: Event) => {
+    // Use slug for SEO-friendly URLs, fallback to id for backward compatibility
+    const eventSlug = eventData.slug || `event-${eventData.id}`;
     sessionStorage.setItem('selectedEvent', JSON.stringify(eventData));
-    router.push(`/tickets/event/${eventId}`);
+    router.push(`/tickets/event/${eventSlug}`);
   };
 
   const breadcrumbItems = [
@@ -66,18 +122,34 @@ export default function WTATicketsClient() {
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1d1d1f]">
               Select Your Session
             </h2>
-            <span className="text-sm font-medium text-[#1e824c]">{wtaEvents.length} sessions</span>
+            <span className="text-sm font-medium text-[#1e824c]">
+              {isLoading ? '...' : `${wtaEvents.length} sessions`}
+            </span>
           </div>
 
           <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
-            {wtaEvents.map((event, index, arr) => (
-              <EventRow
-                key={event.id}
-                event={event}
-                isLast={index === arr.length - 1}
-                onClick={() => handleSelectEvent(event)}
-              />
-            ))}
+            {isLoading ? (
+              <div className="p-8 text-center text-[#86868b]">
+                <div className="animate-pulse">Loading sessions...</div>
+              </div>
+            ) : error ? (
+              <div className="p-8 text-center text-red-500">
+                {error}. Please refresh the page.
+              </div>
+            ) : wtaEvents.length === 0 ? (
+              <div className="p-8 text-center text-[#86868b]">
+                No sessions available.
+              </div>
+            ) : (
+              wtaEvents.map((event, index, arr) => (
+                <EventRow
+                  key={event.id}
+                  event={event}
+                  isLast={index === arr.length - 1}
+                  onClick={() => handleSelectEvent(event)}
+                />
+              ))
+            )}
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import WTATicketsClient from './WTATicketsClient';
 
 export const metadata: Metadata = {
   title: 'WTA 1000 Tickets Dubai 2026 | Dubai Tennis Championships',
-  description: 'Buy WTA 1000 Dubai 2026 tickets. Women\'s tournament February 15-21. See Swiatek, Sabalenka, Gauff compete at Dubai Tennis Stadium. Courtside from $250, Grandstand from $150.',
+  description: 'Buy WTA 1000 Dubai 2026 tickets. Women\'s tournament February 15-21. See Swiatek, Sabalenka, Gauff compete at Dubai Tennis Stadium. Prime from $1000, Grandstand from $300.',
   keywords: 'WTA 1000 Dubai, WTA Dubai tickets, women\'s tennis Dubai, Dubai Tennis 2026, Swiatek Dubai, tennis tickets',
   openGraph: {
     title: 'WTA 1000 Dubai Tickets 2026 | Women\'s Tournament Feb 15-21',

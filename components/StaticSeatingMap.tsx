@@ -7,7 +7,11 @@ interface StaticSeatingMapProps {
   onHoverCategory: (category: string | null) => void;
   onSelectCategory: (category: string) => void;
   eventType?: 'WTA' | 'ATP';
+  soldOutCategories?: string[];
 }
+
+// Gray color for sold out sections (same as inactive stadium areas)
+const SOLD_OUT_COLOR = '#86868b';
 
 // Маппинг секций к категориям для WTA (Women's Day) - 3 категории
 const WTA_SECTION_TO_CATEGORY: Record<string, string> = {
@@ -76,13 +80,20 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
   onHoverCategory,
   onSelectCategory,
   eventType = 'WTA',
+  soldOutCategories = [],
 }) => {
   const sectionToCategory = eventType === 'ATP' ? ATP_SECTION_TO_CATEGORY : WTA_SECTION_TO_CATEGORY;
   const backgroundUrl = eventType === 'ATP' ? ATP_BACKGROUND_URL : WTA_BACKGROUND_URL;
 
+  // Helper to check if a category is sold out
+  const isCategorySoldOut = (category: string): boolean => {
+    return soldOutCategories.includes(category);
+  };
+
   const handleMouseEnter = (sectionId: string) => {
     const category = sectionToCategory[sectionId];
-    if (category) {
+    // Don't hover sold out sections
+    if (category && !isCategorySoldOut(category)) {
       onHoverCategory(category);
     }
   };
@@ -94,29 +105,32 @@ const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
   // Touch handler для мобильных устройств - подсветка при касании
   const handleTouchStart = (sectionId: string) => {
     const category = sectionToCategory[sectionId];
-    if (category) {
+    // Don't hover sold out sections
+    if (category && !isCategorySoldOut(category)) {
       onHoverCategory(category);
     }
   };
 
   const handleClick = (sectionId: string) => {
     const category = sectionToCategory[sectionId];
-    if (category) {
+    // Don't allow clicking sold out sections
+    if (category && !isCategorySoldOut(category)) {
       onSelectCategory(category);
     }
   };
 
   const getSectionStyle = (sectionId: string): React.CSSProperties => {
     const category = sectionToCategory[sectionId];
-    const isHovered = hoveredCategory === category;
-    const isOtherHovered = hoveredCategory !== null && hoveredCategory !== category;
+    const isSoldOut = category ? isCategorySoldOut(category) : false;
+    const isHovered = hoveredCategory === category && !isSoldOut;
+    const isOtherHovered = hoveredCategory !== null && hoveredCategory !== category && !isSoldOut;
 
     return {
-      fill: SECTION_COLOR,
-      cursor: 'pointer',
+      fill: isSoldOut ? SOLD_OUT_COLOR : SECTION_COLOR,
+      cursor: isSoldOut ? 'not-allowed' : 'pointer',
       transition: 'filter 0.2s ease, opacity 0.2s ease',
       filter: isHovered ? 'brightness(1.12) saturate(1.1)' : 'none',
-      opacity: isOtherHovered ? 0.5 : 1,
+      opacity: isSoldOut ? 0.5 : (isOtherHovered ? 0.5 : 1),
     };
   };
 

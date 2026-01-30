@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhyBuy from './WhyBuy';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
 import { CartItem } from '@/app/CartContext';
+import { fetchEventCategories, isSoldOut } from '@/lib/api';
+import BuyForm from './BuyForm';
 
 interface EventSelectionProps {
   event: any;
@@ -34,21 +36,27 @@ interface Category {
   price: number;
   color: string;
   seatsLeft: number;
+  isActive?: boolean;
 }
 
-// Категории для WTA (Women's Day) - 3 категории
-const WTA_CATEGORIES: Category[] = [
-  { id: 'prime-a', name: 'Prime A', price: 650, color: CATEGORY_COLORS['prime-a'], seatsLeft: 42 },
-  { id: 'prime-b', name: 'Prime B', price: 1200, color: CATEGORY_COLORS['prime-b'], seatsLeft: 14 },
-  { id: 'grandstand', name: 'Grandstand', price: 250, color: CATEGORY_COLORS['grandstand'], seatsLeft: 156 },
+// ============================================================================
+// DEPRECATED: These constants are NO LONGER USED in state initialization
+// Django API is the SINGLE SOURCE OF TRUTH for category prices
+// Keep for reference only - DO NOT use for fallback pricing
+// ============================================================================
+// WTA: Grandstand $300, Prime B $1000, Prime A $2000
+const _WTA_REFERENCE_CATEGORIES: Category[] = [
+  { id: 'grandstand', name: 'Grandstand', price: 300, color: CATEGORY_COLORS['grandstand'], seatsLeft: 100 },
+  { id: 'prime-b', name: 'Prime B', price: 1000, color: CATEGORY_COLORS['prime-b'], seatsLeft: 100 },
+  { id: 'prime-a', name: 'Prime A', price: 2000, color: CATEGORY_COLORS['prime-a'], seatsLeft: 100 },
 ];
 
-// Категории для ATP (Men's Day) - 4 категории
-const ATP_CATEGORIES: Category[] = [
-  { id: 'prime-a', name: 'Prime A', price: 750, color: CATEGORY_COLORS['prime-a'], seatsLeft: 38 },
-  { id: 'prime-b', name: 'Prime B', price: 1400, color: CATEGORY_COLORS['prime-b'], seatsLeft: 12 },
-  { id: 'grandstand-lower', name: 'Grandstand Lower', price: 350, color: CATEGORY_COLORS['grandstand-lower'], seatsLeft: 120 },
-  { id: 'grandstand-upper', name: 'Grandstand Upper', price: 200, color: CATEGORY_COLORS['grandstand-upper'], seatsLeft: 180 },
+// ATP: Grandstand Upper $200, Grandstand Lower $400, Prime B $1500, Prime A $3000
+const _ATP_REFERENCE_CATEGORIES: Category[] = [
+  { id: 'grandstand-upper', name: 'Grandstand Upper', price: 200, color: CATEGORY_COLORS['grandstand-upper'], seatsLeft: 100 },
+  { id: 'grandstand-lower', name: 'Grandstand Lower', price: 400, color: CATEGORY_COLORS['grandstand-lower'], seatsLeft: 100 },
+  { id: 'prime-b', name: 'Prime B', price: 1500, color: CATEGORY_COLORS['prime-b'], seatsLeft: 100 },
+  { id: 'prime-a', name: 'Prime A', price: 3000, color: CATEGORY_COLORS['prime-a'], seatsLeft: 100 },
 ];
 
 const EventSelection: React.FC<EventSelectionProps> = ({
@@ -56,24 +64,89 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   onPaymentDelivery, onPrivacyPolicy, onTermsOfService, onContacts, onAboutUs, onCart, onHome,
   cart, setCart, onCheckout, onFAQ, onSeatingGuide, onVenue
 }) => {
-  // Выбор категорий в зависимости от типа мероприятия
-  const categories = event?.type === 'ATP' ? ATP_CATEGORIES : WTA_CATEGORIES;
+  // State for categories - Django API is single source of truth
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  // Fetch categories from Django API - NO fallback to static data
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadCategories() {
+      if (!event?.id) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      setApiError(null);
+
+      try {
+        // Fetch categories from Django API (SINGLE SOURCE OF TRUTH)
+        const result = await fetchEventCategories(event.id);
+
+        if (!mounted) return;
+
+        // STRICT: Reject if API returns fallback or null data
+        if (result.fallback || !result.data || result.data.length === 0) {
+          console.error('[EventSelection] Django API required for category prices - no fallback allowed');
+          setApiError(result.error || 'Unable to load prices from server');
+          setCategories([]);
+          return;
+        }
+
+        // Map API response to Category format
+        const apiCategories = result.data.map((cat, index) => ({
+          ...cat,
+          color: cat.color || Object.values(CATEGORY_COLORS)[index] || '#1e824c',
+        }));
+
+        // Log each category with LIVE FETCH format for network verification
+        apiCategories.forEach(cat => {
+          console.log(`[LIVE FETCH] /tickets/event category "${cat.name}" price=${cat.price}`);
+        });
+
+        setCategories(apiCategories);
+        console.log(`[LIVE FETCH] /tickets/event loaded ${apiCategories.length} categories from Django API`);
+      } catch (error) {
+        console.error('[EventSelection] API fetch failed:', error);
+        if (mounted) {
+          setApiError('Unable to load prices. Please try again.');
+          setCategories([]);
+        }
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadCategories();
+
+    return () => {
+      mounted = false;
+    };
+  }, [event?.id]);
 
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [ticketCount, setTicketCount] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [showBuyForm, setShowBuyForm] = useState(false);
 
   const openModal = (cat: Category) => {
     setSelectedCategory(cat);
     setTicketCount(1);
     setIsAdded(false);
+    setShowBuyForm(false);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setShowBuyForm(false);
   };
 
   const handlePlus = () => setTicketCount(prev => Math.min(prev + 1, Math.min(4, selectedCategory?.seatsLeft || 4)));
@@ -106,9 +179,24 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   };
 
   const handleSelectCategory = (categoryId: string) => {
-    const cat = categories.find(c => c.id === categoryId);
-    if (cat) openModal(cat);
+    // categoryId from seating map is a slug like "prime-a", "grandstand"
+    // categories from API may have numeric IDs
+    // Match by ID first, then by normalized name
+    const normalizeToSlug = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
+    const cat = categories.find(c =>
+      c.id === categoryId ||
+      normalizeToSlug(c.name) === categoryId
+    );
+    // Don't open modal for sold out categories
+    if (cat && !isSoldOut(cat.isActive, cat.seatsLeft)) {
+      openModal(cat);
+    }
   };
+
+  // Compute sold out category slugs for the seating map
+  const soldOutCategories = categories
+    .filter(cat => isSoldOut(cat.isActive, cat.seatsLeft))
+    .map(cat => cat.name.toLowerCase().replace(/\s+/g, '-'));
 
   const cartTotalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotalValue = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -176,6 +264,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
               onHoverCategory={setHoveredCategory}
               onSelectCategory={handleSelectCategory}
               eventType={event?.type}
+              soldOutCategories={soldOutCategories}
             />
           </div>
         </div>
@@ -185,25 +274,30 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 tracking-tight text-[#1d1d1f]">Price Categories</h3>
           <div className="flex flex-col gap-3 md:gap-4 mb-6 md:mb-8">
             {categories.map((cat) => {
-              const isHovered = hoveredCategory === cat.id;
-              const isOtherHovered = hoveredCategory !== null && hoveredCategory !== cat.id;
+              // Normalize name to slug for map compatibility (e.g., "Prime A" -> "prime-a")
+              const catSlug = cat.name.toLowerCase().replace(/\s+/g, '-');
+              const isHovered = hoveredCategory === cat.id || hoveredCategory === catSlug;
+              const isOtherHovered = hoveredCategory !== null && !isHovered;
+              const categoryIsSoldOut = isSoldOut(cat.isActive, cat.seatsLeft);
 
               return (
                 <div
                   key={cat.id}
-                  onMouseEnter={() => setHoveredCategory(cat.id)}
+                  onMouseEnter={() => !categoryIsSoldOut && setHoveredCategory(catSlug)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  onClick={() => openModal(cat)}
-                  className={`group cursor-pointer bg-white border rounded-[18px] md:rounded-[24px] p-4 md:p-6 transition-all duration-300 transform
-                    ${isHovered
-                      ? '-translate-y-1 shadow-2xl border-transparent'
-                      : isOtherHovered
-                        ? 'opacity-40 border-[#d2d2d7]'
-                        : 'border-[#d2d2d7] hover:shadow-lg hover:border-[#86868b]/30'
+                  onClick={() => !categoryIsSoldOut && openModal(cat)}
+                  className={`group bg-white border rounded-[18px] md:rounded-[24px] p-4 md:p-6 transition-all duration-300 transform
+                    ${categoryIsSoldOut
+                      ? 'cursor-not-allowed opacity-60 border-[#d2d2d7] grayscale'
+                      : isHovered
+                        ? 'cursor-pointer -translate-y-1 shadow-2xl border-transparent'
+                        : isOtherHovered
+                          ? 'cursor-pointer opacity-40 border-[#d2d2d7]'
+                          : 'cursor-pointer border-[#d2d2d7] hover:shadow-lg hover:border-[#86868b]/30'
                     }
                   `}
                   style={{
-                    boxShadow: isHovered ? `0 20px 40px -10px ${cat.color}40` : undefined,
+                    boxShadow: isHovered && !categoryIsSoldOut ? `0 20px 40px -10px ${cat.color}40` : undefined,
                   }}
                 >
                   <div className="flex items-center justify-between mb-2.5 md:mb-3">
@@ -211,38 +305,49 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       <div
                         className={`w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center font-semibold text-white shadow-md text-base md:text-lg transition-all duration-300`}
                         style={{
-                          backgroundColor: cat.color,
-                          filter: isHovered ? 'brightness(1.15) saturate(1.2)' : 'none',
+                          backgroundColor: categoryIsSoldOut ? '#86868b' : cat.color,
+                          filter: isHovered && !categoryIsSoldOut ? 'brightness(1.15) saturate(1.2)' : 'none',
                         }}
                       >
                         {cat.id === 'prime-a' ? 'A' : cat.id === 'prime-b' ? 'B' : 'G'}
                       </div>
                       <div>
-                        <h4 className="font-semibold text-[16px] md:text-[18px] tracking-tight text-[#1d1d1f]">{cat.name}</h4>
-                        {cat.seatsLeft < 30 && (
+                        <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#86868b]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
+                        {categoryIsSoldOut ? (
+                          <span className="inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-[#86868b] uppercase tracking-wide">
+                            <span className="w-1.5 h-1.5 bg-[#86868b] rounded-full"></span>
+                            Sold Out
+                          </span>
+                        ) : cat.seatsLeft < 30 ? (
                           <span className="inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-red-500 uppercase tracking-wide animate-pulse">
                             <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
                             Selling Fast
                           </span>
-                        )}
+                        ) : null}
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-[18px] md:text-[20px] font-semibold text-[#1d1d1f]">${cat.price}</p>
+                      {categoryIsSoldOut ? (
+                        <p className="text-[16px] md:text-[18px] font-bold text-[#86868b] uppercase">Sold Out</p>
+                      ) : (
+                        <p className="text-[18px] md:text-[20px] font-semibold text-[#1d1d1f]">${cat.price}</p>
+                      )}
                     </div>
                   </div>
-                  {/* Urgency indicator bar */}
-                  <div className="flex items-center gap-2.5 md:gap-3">
-                    <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
-                      <div
-                        className={`h-full rounded-full transition-all ${cat.seatsLeft < 20 ? 'bg-red-500' : cat.seatsLeft < 50 ? 'bg-orange-400' : 'bg-[#1e824c]'}`}
-                        style={{ width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%` }}
-                      ></div>
+                  {/* Urgency indicator bar - hidden for sold out */}
+                  {!categoryIsSoldOut && (
+                    <div className="flex items-center gap-2.5 md:gap-3">
+                      <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${cat.seatsLeft < 20 ? 'bg-red-500' : cat.seatsLeft < 50 ? 'bg-orange-400' : 'bg-[#1e824c]'}`}
+                          style={{ width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%` }}
+                        ></div>
+                      </div>
+                      <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-wide whitespace-nowrap ${cat.seatsLeft < 20 ? 'text-red-500' : cat.seatsLeft < 50 ? 'text-orange-500' : 'text-[#1e824c]'}`}>
+                        {cat.seatsLeft} left
+                      </span>
                     </div>
-                    <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-wide whitespace-nowrap ${cat.seatsLeft < 20 ? 'text-red-500' : cat.seatsLeft < 50 ? 'text-orange-500' : 'text-[#1e824c]'}`}>
-                      {cat.seatsLeft} left
-                    </span>
-                  </div>
+                  )}
                 </div>
               );
             })}
@@ -367,14 +472,50 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     </p>
                   </div>
 
-                  <button
-                    onClick={handleAddToCart}
-                    className="w-full py-4 md:py-5 bg-[#00a651] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#008c44] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px] flex items-center justify-center space-x-2"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                    <span>ADD TO CART</span>
-                  </button>
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => setShowBuyForm(true)}
+                      className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
+                    >
+                      Buy Now
+                    </button>
+                    <button
+                      onClick={handleAddToCart}
+                      className="w-full py-3 md:py-4 bg-white text-[#1d1d1f] font-semibold rounded-[16px] md:rounded-[20px] border-2 border-[#d2d2d7] hover:border-[#86868b] transition-all transform active:scale-[0.98] text-[14px] md:text-[16px] flex items-center justify-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
                 </>
+              ) : showBuyForm && selectedCategory ? (
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <button
+                      onClick={() => setShowBuyForm(false)}
+                      className="flex items-center gap-1 text-[#86868b] hover:text-[#1d1d1f] transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      <span className="text-sm font-medium">Back</span>
+                    </button>
+                    <button onClick={closeModal} className="p-1 hover:bg-[#f5f5f7] rounded-full transition-colors">
+                      <svg className="w-5 h-5 text-[#d2d2d7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1d1d1f] mb-4">Complete Your Purchase</h3>
+                  <BuyForm
+                    eventId={typeof event.id === 'string' ? parseInt(event.id, 10) : event.id}
+                    categoryId={typeof selectedCategory.id === 'string' ? parseInt(selectedCategory.id, 10) : Number(selectedCategory.id)}
+                    categoryName={selectedCategory.name}
+                    quantity={ticketCount}
+                    unitPrice={selectedCategory.price}
+                    onCancel={() => setShowBuyForm(false)}
+                  />
+                </div>
               ) : (
                 <div className="text-center py-4 md:py-6">
                   <div className="w-14 h-14 md:w-16 md:h-16 bg-green-50 text-[#1e824c] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-inner">
