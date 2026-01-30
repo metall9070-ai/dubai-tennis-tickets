@@ -11,6 +11,14 @@ class Command(BaseCommand):
     help = 'Ensure superuser exists with correct password'
 
     def handle(self, *args, **options):
+        from django.conf import settings
+
+        # Debug: show database info
+        db = settings.DATABASES['default']
+        self.stdout.write(f"DATABASE ENGINE: {db.get('ENGINE')}")
+        self.stdout.write(f"DATABASE HOST: {db.get('HOST', 'N/A')}")
+        self.stdout.write(f"DATABASE NAME: {db.get('NAME')}")
+
         password = os.getenv('DJANGO_SUPERUSER_PASSWORD', '')
 
         # Debug: show password info (not the actual password)
