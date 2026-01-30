@@ -4,9 +4,14 @@ Dubai Duty Free Tennis Championships Ticket System
 """
 
 import os
+import warnings
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+
+# Suppress known-benign WhiteNoise warning about STATIC_ROOT not existing at import time
+# (collectstatic creates it at runtime; WhiteNoise confirms this is safe to ignore)
+warnings.filterwarnings('ignore', message=r'No directory at.*staticfiles')
 
 # Load environment variables from .env file
 load_dotenv()
@@ -140,7 +145,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATIC_ROOT.mkdir(parents=True, exist_ok=True)  # Ensure exists before WhiteNoise init
 
 # Staticfiles finders - required for WhiteNoise to find DRF and admin static files
 STATICFILES_FINDERS = [
