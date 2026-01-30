@@ -208,12 +208,21 @@ SIMPLE_JWT = {
 # For development, allow all origins (change for production)
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
+# Production frontend domains + local development
+_DEFAULT_CORS_ORIGINS = ','.join([
+    'https://dubaitennistickets.com',
+    'https://www.dubaitennistickets.com',
+    'https://dubai-tennis-tickets.vercel.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+])
+
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
-    for origin in os.getenv(
-        'CORS_ALLOWED_ORIGINS',
-        'http://localhost:5173,http://127.0.0.1:5173'
-    ).split(',')
+    for origin in os.getenv('CORS_ALLOWED_ORIGINS', _DEFAULT_CORS_ORIGINS).split(',')
+    if origin.strip()
 ]
 
 CORS_ALLOW_CREDENTIALS = True
