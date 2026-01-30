@@ -49,5 +49,6 @@ backend/venv/
 
 # Django
 *.sqlite3
-backend/staticfiles/
+backend/staticfiles/*
+!backend/staticfiles/.gitkeep
 backend/media/
