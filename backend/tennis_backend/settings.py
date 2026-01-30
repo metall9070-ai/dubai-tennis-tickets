@@ -349,5 +349,5 @@ if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
 
-    # WhiteNoise compression and caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # WhiteNoise compression (without manifest - doesn't require collectstatic at startup)
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
