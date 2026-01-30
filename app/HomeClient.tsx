@@ -20,10 +20,11 @@ export default function HomeClient() {
   }, []);
 
   const handleSelectEvent = (eventData: any) => {
-    const eventId = eventData?.id || eventData?.title?.toLowerCase().replace(/\s+/g, '-') || 'select';
+    // Use slug for SEO-friendly URLs, fallback to id for backward compatibility
+    const eventSlug = eventData?.slug || `event-${eventData?.id}`;
     // Store selected event in sessionStorage for the event page
     sessionStorage.setItem('selectedEvent', JSON.stringify(eventData));
-    router.push(`/tickets/event/${eventId}`);
+    router.push(`/tickets/event/${eventSlug}`);
   };
 
   const handleViewShelter = () => {

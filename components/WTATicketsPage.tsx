@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Breadcrumbs from './Breadcrumbs';
-import { eventsData, EventRow } from './Events';
+import { Event, EventRow } from './Events';
+import { fetchEvents } from '@/lib/api';
 
 interface WTATicketsPageProps {
   onHome: () => void;
@@ -39,7 +40,60 @@ const WTATicketsPage: React.FC<WTATicketsPageProps> = ({
   onSeatingGuide,
   onVenue
 }) => {
-  const wtaEvents = eventsData.filter(e => e.type === 'WTA');
+  // State for events - fetched from Django API
+  const [wtaEvents, setWtaEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch events from Django API - NEVER use fallback data
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadEvents() {
+      try {
+        setIsLoading(true);
+        const result = await fetchEvents();
+
+        if (!mounted) return;
+
+        // STRICT: Reject fallback data - only use Django API prices
+        if (result.fallback) {
+          console.error('[WTATicketsPage] REJECTED fallback data - Django API required for prices');
+          setError('Unable to load prices. Please try again.');
+          setWtaEvents([]);
+          return;
+        }
+
+        if (result.data) {
+          const wta = result.data.filter(e => e.type === 'WTA');
+          setWtaEvents(wta);
+
+          // Log each event's price source explicitly
+          wta.forEach(event => {
+            console.log('[PRICE SOURCE]', event.title, event.minPrice);
+          });
+
+          console.log(`[WTATicketsPage] Loaded ${wta.length} WTA events from Django API`);
+        }
+      } catch (err) {
+        console.error('[WTATicketsPage] Failed to load events:', err);
+        if (mounted) {
+          setError('Unable to load prices. Please try again.');
+          setWtaEvents([]);
+        }
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadEvents();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   // SEO: Update meta tags for this page
   useEffect(() => {

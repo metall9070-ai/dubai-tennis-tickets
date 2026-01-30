@@ -1,32 +1,35 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchEvents } from '@/lib/api';
 
-export interface Event {
-  id: number | string;
-  type: 'WTA' | 'ATP';
-  title: string;
-  date: string;
-  day: string;
-  month: string;
-  time: string;
-  minPrice: number;
-}
+// Re-export Event type from lib/types.ts for backward compatibility
+// This breaks the circular dependency: api.ts <-> Events.tsx
+export type { Event } from '@/lib/types';
+import type { Event } from '@/lib/types';
 
+// ============================================================================
+// WARNING: THIS STATIC DATA IS FOR TYPE REFERENCE ONLY
+// DO NOT USE FOR PRICES - Django API is the SINGLE SOURCE OF TRUTH
+// lib/api.ts does NOT import this data anymore
+// If you see $150 anywhere, it's a BUG - report immediately
+// ============================================================================
+// WTA min_price = $300 (Grandstand), ATP min_price = $200 (Grandstand Upper)
+// Slugs are now the primary identifier - IDs are kept for backward compatibility
 export const eventsData: Event[] = [
-  { id: 1, type: 'WTA', month: 'FEB', date: '15', day: 'Sun', time: '11:00 AM', title: "Women's Day 1", minPrice: 150 },
-  { id: 'shelby', type: 'WTA', month: 'FEB', date: '16', day: 'Mon', time: '11:00 AM', title: "Women's Day 2", minPrice: 150 },
-  { id: 3, type: 'WTA', month: 'FEB', date: '17', day: 'Tue', time: '11:00 AM', title: "Women's Day 3", minPrice: 150 },
-  { id: 4, type: 'WTA', month: 'FEB', date: '18', day: 'Wed', time: '11:00 AM', title: "Women's Day 4", minPrice: 150 },
-  { id: 5, type: 'WTA', month: 'FEB', date: '19', day: 'Thu', time: '2:00 PM', title: "Women's Quarter-Finals", minPrice: 250 },
-  { id: 6, type: 'WTA', month: 'FEB', date: '20', day: 'Fri', time: '1:00 PM', title: "Women's Semi-Finals", minPrice: 350 },
-  { id: 7, type: 'WTA', month: 'FEB', date: '21', day: 'Sat', time: '4:30 PM', title: "Women's Finals", minPrice: 500 },
-  { id: 8, type: 'ATP', month: 'FEB', date: '23', day: 'Mon', time: '2:00 PM', title: "Men's Day 1", minPrice: 150 },
-  { id: 9, type: 'ATP', month: 'FEB', date: '24', day: 'Tue', time: '2:00 PM', title: "Men's Day 2", minPrice: 150 },
-  { id: 10, type: 'ATP', month: 'FEB', date: '25', day: 'Wed', time: '2:00 PM', title: "Men's Day 3", minPrice: 150 },
-  { id: 11, type: 'ATP', month: 'FEB', date: '26', day: 'Thu', time: '2:00 PM', title: "Men's Quarter-Finals", minPrice: 300 },
-  { id: 12, type: 'ATP', month: 'FEB', date: '27', day: 'Fri', time: '1:30 PM', title: "Men's Semi-Finals", minPrice: 450 },
-  { id: 13, type: 'ATP', month: 'FEB', date: '28', day: 'Sat', time: '4:30 PM', title: "Men's Finals", minPrice: 750 },
+  { id: 1, slug: 'womens-day-1-feb-15', type: 'WTA', month: 'FEB', date: '15', day: 'Sun', time: '11:00 AM', title: "Women's Day 1", minPrice: 300 },
+  { id: 2, slug: 'womens-day-2-feb-16', type: 'WTA', month: 'FEB', date: '16', day: 'Mon', time: '11:00 AM', title: "Women's Day 2", minPrice: 300 },
+  { id: 3, slug: 'womens-day-3-feb-17', type: 'WTA', month: 'FEB', date: '17', day: 'Tue', time: '11:00 AM', title: "Women's Day 3", minPrice: 300 },
+  { id: 4, slug: 'womens-day-4-feb-18', type: 'WTA', month: 'FEB', date: '18', day: 'Wed', time: '11:00 AM', title: "Women's Day 4", minPrice: 300 },
+  { id: 5, slug: 'womens-quarter-finals-feb-19', type: 'WTA', month: 'FEB', date: '19', day: 'Thu', time: '2:00 PM', title: "Women's Quarter-Finals", minPrice: 300 },
+  { id: 6, slug: 'womens-semi-finals-feb-20', type: 'WTA', month: 'FEB', date: '20', day: 'Fri', time: '1:00 PM', title: "Women's Semi-Finals", minPrice: 300 },
+  { id: 7, slug: 'womens-finals-feb-21', type: 'WTA', month: 'FEB', date: '21', day: 'Sat', time: '4:30 PM', title: "Women's Finals", minPrice: 300 },
+  { id: 8, slug: 'mens-day-1-feb-23', type: 'ATP', month: 'FEB', date: '23', day: 'Mon', time: '2:00 PM', title: "Men's Day 1", minPrice: 200 },
+  { id: 9, slug: 'mens-day-2-feb-24', type: 'ATP', month: 'FEB', date: '24', day: 'Tue', time: '2:00 PM', title: "Men's Day 2", minPrice: 200 },
+  { id: 10, slug: 'mens-day-3-feb-25', type: 'ATP', month: 'FEB', date: '25', day: 'Wed', time: '2:00 PM', title: "Men's Day 3", minPrice: 200 },
+  { id: 11, slug: 'mens-quarter-finals-feb-26', type: 'ATP', month: 'FEB', date: '26', day: 'Thu', time: '2:00 PM', title: "Men's Quarter-Finals", minPrice: 200 },
+  { id: 12, slug: 'mens-semi-finals-feb-27', type: 'ATP', month: 'FEB', date: '27', day: 'Fri', time: '1:30 PM', title: "Men's Semi-Finals", minPrice: 200 },
+  { id: 13, slug: 'mens-finals-feb-28', type: 'ATP', month: 'FEB', date: '28', day: 'Sat', time: '4:30 PM', title: "Men's Finals", minPrice: 200 },
 ];
 
 interface EventsProps {
@@ -34,6 +37,93 @@ interface EventsProps {
 }
 
 const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadEvents() {
+      try {
+        setIsLoading(true);
+        const result = await fetchEvents();
+
+        if (!mounted) return;
+
+        // STRICT: Reject fallback data - only use Django API prices
+        if (result.fallback) {
+          console.error('[Events] REJECTED fallback data - Django API required for prices');
+          setError('Unable to load prices');
+          setEvents([]);
+          return;
+        }
+
+        if (result.data) {
+          setEvents(result.data);
+          // Log each event with LIVE FETCH format for network verification
+          result.data.forEach(event => {
+            console.log(`[LIVE FETCH] Homepage event "${event.title}" min_price=${event.minPrice}`);
+          });
+          console.log(`[LIVE FETCH] Homepage loaded ${result.data.length} events from Django API`);
+        }
+      } catch (err) {
+        console.error('[Events] Failed to load events:', err);
+        if (mounted) {
+          setError('Unable to load prices');
+          setEvents([]);
+        }
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadEvents();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const wtaEvents = events.filter(e => e.type === 'WTA');
+  const atpEvents = events.filter(e => e.type === 'ATP');
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <div className="mb-8 md:mb-20 text-center md:text-left">
+            <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
+            <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
+          </div>
+          <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#86868b]">
+            <div className="animate-pulse">Loading sessions...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <div className="mb-8 md:mb-20 text-center md:text-left">
+            <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
+            <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
+          </div>
+          <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-red-500">
+            {error}. Please refresh the page.
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
@@ -48,14 +138,18 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
             <span className="text-[12px] md:text-sm font-medium text-[#1e824c]">Women's Week</span>
           </div>
           <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
-            {eventsData.filter(e => e.type === 'WTA').map((event, index, arr) => (
-              <EventRow 
-                key={event.id} 
-                event={event} 
-                isLast={index === arr.length - 1} 
-                onClick={() => onSelectEvent(event)}
-              />
-            ))}
+            {wtaEvents.length === 0 ? (
+              <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
+            ) : (
+              wtaEvents.map((event, index, arr) => (
+                <EventRow
+                  key={event.id}
+                  event={event}
+                  isLast={index === arr.length - 1}
+                  onClick={() => onSelectEvent(event)}
+                />
+              ))
+            )}
           </div>
         </div>
 
@@ -65,14 +159,18 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
             <span className="text-[12px] md:text-sm font-medium text-[#1e824c]">Men's Week</span>
           </div>
           <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
-            {eventsData.filter(e => e.type === 'ATP').map((event, index, arr) => (
-              <EventRow 
-                key={event.id} 
-                event={event} 
-                isLast={index === arr.length - 1} 
-                onClick={() => onSelectEvent(event)}
-              />
-            ))}
+            {atpEvents.length === 0 ? (
+              <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
+            ) : (
+              atpEvents.map((event, index, arr) => (
+                <EventRow
+                  key={event.id}
+                  event={event}
+                  isLast={index === arr.length - 1}
+                  onClick={() => onSelectEvent(event)}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -81,6 +179,19 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
 };
 
 export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => void }> = ({ event, isLast, onClick }) => {
+  // RUNTIME GUARD: Detect illegal prices from static data
+  // $150 was the old fallback price - if seen, it means Django API data was bypassed
+  const ILLEGAL_PRICES = [150];  // Known prices that indicate static data leak
+  if (ILLEGAL_PRICES.includes(event.minPrice)) {
+    console.error(`[PRICE GUARD] ILLEGAL PRICE DETECTED: Event "${event.title}" has minPrice=$${event.minPrice} - THIS IS STATIC DATA, NOT FROM DJANGO API!`);
+  }
+
+  // Log price source for debugging
+  console.log('[PRICE SOURCE]', event.title, `$${event.minPrice}`, '(must be from Django API)');
+
+  // Check if price is valid (from Django API)
+  const hasValidPrice = event.minPrice != null && event.minPrice > 0;
+
   // Determine session type based on time
   const getSessionType = (time: string): { label: string; icon: string; bgColor: string; textColor: string } => {
     const hour = parseInt(time.split(':')[0]);
@@ -129,8 +240,14 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
 
       <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 flex-shrink-0">
         <div className="flex flex-col items-end">
-          <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-wide sm:tracking-widest">From</span>
-          <span className="text-[14px] sm:text-[15px] md:text-[17px] font-semibold text-[#1d1d1f]">${event.minPrice}</span>
+          {hasValidPrice ? (
+            <>
+              <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-wide sm:tracking-widest">From</span>
+              <span className="text-[14px] sm:text-[15px] md:text-[17px] font-semibold text-[#1d1d1f]">${event.minPrice}</span>
+            </>
+          ) : (
+            <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#86868b]">Price unavailable</span>
+          )}
         </div>
         <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[#1e824c] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
           Buy
