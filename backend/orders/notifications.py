@@ -5,13 +5,13 @@ Sends notifications via Telegram (admin) and Email (admin + customer).
 NOTIFICATION FLOW:
 1. Order CREATED -> Telegram + Email to ADMIN only
 2. Order PAID (webhook) -> Telegram to ADMIN + Email to CUSTOMER
+
+EMAIL: Uses Resend API (HTTP) instead of SMTP - works on Railway where SMTP is blocked.
 """
 
 import logging
-import httpx
+import resend
 from django.conf import settings
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 logger = logging.getLogger(__name__)
@@ -68,15 +68,20 @@ class TelegramNotifier:
 
 
 class EmailNotifier:
-    """Send email notifications."""
+    """Send email notifications via Resend API."""
 
     def __init__(self):
         self.from_email = settings.DEFAULT_FROM_EMAIL
         self.admin_email = settings.ADMIN_EMAIL
+        self.api_key = getattr(settings, 'RESEND_API_KEY', '')
+
+        # Initialize Resend with API key
+        if self.api_key:
+            resend.api_key = self.api_key
 
     def is_configured(self) -> bool:
-        """Check if email is properly configured."""
-        return bool(self.from_email)
+        """Check if Resend is properly configured."""
+        return bool(self.api_key and self.from_email)
 
     def send_email(
         self,
@@ -86,7 +91,7 @@ class EmailNotifier:
         plain_content: str = None
     ) -> bool:
         """
-        Send an email.
+        Send an email via Resend API.
 
         Args:
             to_email: Recipient email address
@@ -98,44 +103,38 @@ class EmailNotifier:
             True if sent successfully, False otherwise
         """
         if not self.is_configured():
-            logger.debug("Email notifications not configured")
+            logger.warning("Resend not configured (missing RESEND_API_KEY)")
             return False
 
         if not plain_content:
             plain_content = strip_tags(html_content)
 
-        # Log SMTP configuration for debugging (without password)
-        logger.info(f"[EMAIL DEBUG] Attempting to send email to: {to_email}")
-        logger.info(f"[EMAIL DEBUG] From: {self.from_email}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_HOST: {settings.EMAIL_HOST}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_PORT: {settings.EMAIL_PORT}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_USE_TLS: {settings.EMAIL_USE_TLS}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_USE_SSL: {getattr(settings, 'EMAIL_USE_SSL', False)}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_HOST_USER: {settings.EMAIL_HOST_USER}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_HOST_PASSWORD set: {bool(settings.EMAIL_HOST_PASSWORD)}")
-        logger.info(f"[EMAIL DEBUG] EMAIL_HOST_PASSWORD length: {len(settings.EMAIL_HOST_PASSWORD) if settings.EMAIL_HOST_PASSWORD else 0}")
+        logger.info(f"[RESEND] Sending email to: {to_email}")
+        logger.info(f"[RESEND] From: {self.from_email}")
+        logger.info(f"[RESEND] Subject: {subject}")
 
         try:
-            # First attempt: try with fail_silently=False to capture the actual error
-            result = send_mail(
-                subject=subject,
-                message=plain_content,
-                from_email=self.from_email,
-                recipient_list=[to_email],
-                html_message=html_content,
-                fail_silently=False  # Temporarily False to capture real error
-            )
-            if result:
-                logger.info(f"Email sent successfully to {to_email}")
+            # Send via Resend API
+            params = {
+                "from": self.from_email,
+                "to": [to_email],
+                "subject": subject,
+                "html": html_content,
+                "text": plain_content,
+            }
+
+            response = resend.Emails.send(params)
+
+            if response and response.get('id'):
+                logger.info(f"[RESEND] Email sent successfully! ID: {response['id']}")
                 return True
             else:
-                logger.warning(f"Email send returned 0 for {to_email} (no error but 0 sent)")
+                logger.warning(f"[RESEND] Unexpected response: {response}")
                 return False
+
         except Exception as e:
-            # Log the actual SMTP error for debugging
-            logger.error(f"[EMAIL DEBUG] SMTP Error Type: {type(e).__name__}")
-            logger.error(f"[EMAIL DEBUG] SMTP Error Details: {e}")
-            logger.error(f"Failed to send email to {to_email}: {e}")
+            logger.error(f"[RESEND] Error Type: {type(e).__name__}")
+            logger.error(f"[RESEND] Error Details: {e}")
             return False
 
 
