@@ -38,10 +38,9 @@ ALLOWED_HOSTS = _env_hosts + [
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Trusted origins for CSRF - required for admin login
+# NOTE: Django does NOT support wildcards in CSRF_TRUSTED_ORIGINS
 CSRF_TRUSTED_ORIGINS = [
     'https://worthy-clarity-production.up.railway.app',
-    'https://*.railway.app',
-    'https://*.up.railway.app',
 ]
 
 # Application definition
