@@ -100,9 +100,9 @@ WSGI_APPLICATION = 'tennis_backend.wsgi.application'
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3')
 
 if DATABASE_URL.startswith('postgres'):
-    # PostgreSQL configuration
+    # PostgreSQL configuration (supports both postgres:// and postgresql://)
     import re
-    match = re.match(r'postgres://([^:]+):([^@]+)@([^:]+):(\d+)/(.+)', DATABASE_URL)
+    match = re.match(r'postgres(?:ql)?://([^:]+):([^@]+)@([^:]+):(\d+)/(.+)', DATABASE_URL)
     if match:
         DATABASES = {
             'default': {
