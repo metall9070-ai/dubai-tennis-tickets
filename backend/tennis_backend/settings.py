@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',  # For secure token rotation
     'corsheaders',
     # Local apps
-    'users',
+    'users.apps.UsersConfig',
     'events',
     'orders',
     'contacts',
