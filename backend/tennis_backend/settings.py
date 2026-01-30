@@ -340,6 +340,31 @@ TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '')
 TELEGRAM_NOTIFICATIONS_ENABLED = os.getenv('TELEGRAM_NOTIFICATIONS_ENABLED', 'False').lower() == 'true'
 
 # =============================================================================
+# STRIPE CONFIGURATION
+# =============================================================================
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', '')
+
+# Frontend URL for Stripe redirects
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+
+# =============================================================================
+# EMAIL CONFIGURATION (for customer notifications)
+# =============================================================================
+EMAIL_BACKEND = os.getenv(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend'
+)
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Dubai Tennis Tickets <noreply@dubaitennistickets.com>')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', '')
+
+# =============================================================================
 # API SAFETY FLAGS
 # =============================================================================
 # Controls whether Django API prices are authoritative for frontend.
