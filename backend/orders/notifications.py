@@ -105,16 +105,22 @@ class EmailNotifier:
             plain_content = strip_tags(html_content)
 
         try:
-            send_mail(
+            # Use fail_silently=True to prevent SMTP timeouts from killing the request
+            # Email failures are logged but don't block order creation
+            result = send_mail(
                 subject=subject,
                 message=plain_content,
                 from_email=self.from_email,
                 recipient_list=[to_email],
                 html_message=html_content,
-                fail_silently=False
+                fail_silently=True  # Critical: prevents worker timeout on SMTP issues
             )
-            logger.info(f"Email sent successfully to {to_email}")
-            return True
+            if result:
+                logger.info(f"Email sent successfully to {to_email}")
+                return True
+            else:
+                logger.warning(f"Email send returned 0 for {to_email} (likely SMTP issue)")
+                return False
         except Exception as e:
             logger.error(f"Failed to send email to {to_email}: {e}")
             return False
