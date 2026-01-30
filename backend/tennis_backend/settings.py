@@ -352,13 +352,17 @@ FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
 # =============================================================================
 # EMAIL CONFIGURATION (for customer notifications)
 # =============================================================================
+# Supports two modes:
+# 1. Port 587 + TLS (STARTTLS): EMAIL_PORT=587, EMAIL_USE_TLS=True, EMAIL_USE_SSL=False
+# 2. Port 465 + SSL (implicit):  EMAIL_PORT=465, EMAIL_USE_TLS=False, EMAIL_USE_SSL=True
 EMAIL_BACKEND = os.getenv(
     'EMAIL_BACKEND',
     'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend'
 )
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '465'))  # Default to 465 (SSL) - often works when 587 is blocked
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'False').lower() == 'true'  # For port 587
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'True').lower() == 'true'   # For port 465
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_TIMEOUT = int(os.getenv('EMAIL_TIMEOUT', '10'))  # 10 second timeout to prevent worker hangs

@@ -110,6 +110,7 @@ class EmailNotifier:
         logger.info(f"[EMAIL DEBUG] EMAIL_HOST: {settings.EMAIL_HOST}")
         logger.info(f"[EMAIL DEBUG] EMAIL_PORT: {settings.EMAIL_PORT}")
         logger.info(f"[EMAIL DEBUG] EMAIL_USE_TLS: {settings.EMAIL_USE_TLS}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_USE_SSL: {getattr(settings, 'EMAIL_USE_SSL', False)}")
         logger.info(f"[EMAIL DEBUG] EMAIL_HOST_USER: {settings.EMAIL_HOST_USER}")
         logger.info(f"[EMAIL DEBUG] EMAIL_HOST_PASSWORD set: {bool(settings.EMAIL_HOST_PASSWORD)}")
         logger.info(f"[EMAIL DEBUG] EMAIL_HOST_PASSWORD length: {len(settings.EMAIL_HOST_PASSWORD) if settings.EMAIL_HOST_PASSWORD else 0}")
