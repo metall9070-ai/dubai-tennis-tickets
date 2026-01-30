@@ -4,14 +4,9 @@ Dubai Duty Free Tennis Championships Ticket System
 """
 
 import os
-import warnings
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-
-# Suppress known-benign WhiteNoise warning about STATIC_ROOT not existing at import time
-# (collectstatic creates it at runtime; WhiteNoise confirms this is safe to ignore)
-warnings.filterwarnings('ignore', message=r'No directory at.*staticfiles')
 
 # Load environment variables from .env file
 load_dotenv()
@@ -274,6 +269,17 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+        # Suppress WhiteNoise "No directory at" warning (benign, collectstatic creates it)
+        'py.warnings': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'whitenoise': {
+            'handlers': ['console'],
+            'level': 'ERROR',
             'propagate': False,
         },
         'users.views': {
