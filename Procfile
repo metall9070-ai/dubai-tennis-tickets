@@ -1,1 +1,1 @@
-web: cd backend && python manage.py migrate --verbosity 2 && python manage.py collectstatic --noinput && python -m gunicorn tennis_backend.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --threads 1 --timeout 120
+web: cd backend && python manage.py migrate && python manage.py collectstatic --noinput && python -m gunicorn tennis_backend.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --threads 1 --timeout 120
