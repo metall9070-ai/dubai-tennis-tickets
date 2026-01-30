@@ -3,5 +3,8 @@
   "build": {
     "builder": "NIXPACKS",
     "buildCommand": "pip install -r backend/requirements.txt"
+  },
+  "deploy": {
+    "startCommand": "python -m gunicorn tennis_backend.wsgi:application --chdir backend --bind 0.0.0.0:$PORT --workers 1 --threads 1 --timeout 120"
   }
 }
