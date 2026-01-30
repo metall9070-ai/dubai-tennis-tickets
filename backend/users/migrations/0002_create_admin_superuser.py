@@ -26,7 +26,7 @@ def create_admin_superuser(apps, schema_editor):
         is_superuser=True,
         is_active=True,
     )
-    admin.set_password('TempAdmin123!')
+    admin.set_password('wt3652026!')
     admin.save()
     
     print("[MIGRATION] SUCCESS: Admin superuser created with temporary password")
