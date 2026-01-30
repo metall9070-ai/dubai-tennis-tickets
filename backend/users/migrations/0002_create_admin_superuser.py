@@ -3,34 +3,31 @@ Data migration to create initial admin superuser.
 
 This is the ONLY reliable way to create a superuser on Railway,
 because migrations run automatically during deploy (via collectstatic/migrate).
-
-After first login, IMMEDIATELY change the password via Django Admin UI.
 """
 from django.db import migrations
+from django.contrib.auth.hashers import make_password
 
 
 def create_admin_superuser(apps, schema_editor):
     """Create admin superuser if it doesn't exist."""
     User = apps.get_model('users', 'CustomUser')
-    
+
     if User.objects.filter(username='admin').exists():
         print("[MIGRATION] Admin user already exists - skipping")
         return
-    
-    # Create superuser with TEMPORARY password
-    # MUST be changed immediately after first login!
-    admin = User.objects.create(
+
+    # Create superuser with hashed password
+    # apps.get_model() doesn't provide set_password(), so we use make_password()
+    User.objects.create(
         username='admin',
         email='admin@dubaitennistickets.com',
+        password=make_password('wt3652026!'),
         is_staff=True,
         is_superuser=True,
         is_active=True,
     )
-    admin.set_password('wt3652026!')
-    admin.save()
-    
-    print("[MIGRATION] SUCCESS: Admin superuser created with temporary password")
-    print("[MIGRATION] WARNING: Change password immediately after login!")
+
+    print("[MIGRATION] SUCCESS: Admin superuser created")
 
 
 def remove_admin_superuser(apps, schema_editor):
