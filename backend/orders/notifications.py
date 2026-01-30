@@ -10,6 +10,7 @@ EMAIL: Uses Resend API (HTTP) instead of SMTP - works on Railway where SMTP is b
 """
 
 import logging
+import httpx
 import resend
 from django.conf import settings
 from django.utils.html import strip_tags
