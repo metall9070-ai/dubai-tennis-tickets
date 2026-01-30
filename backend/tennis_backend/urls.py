@@ -8,19 +8,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 
-from .health import health_check
-
-
-def root_health(request):
-    """Simple root health check for Railway."""
-    return HttpResponse("OK", content_type="text/plain")
-
-
 urlpatterns = [
-    path('', root_health, name='root'),  # Root endpoint for quick testing
-    path('health/', root_health, name='health'),  # Health check at /health/
+    # Root health checks - MUST be fast, no DB, no imports
+    path('', lambda request: HttpResponse("OK", status=200)),
+    path('health/', lambda request: HttpResponse("OK", status=200)),
+
+    # Admin
     path('admin/', admin.site.urls),
-    path('api/health/', health_check, name='health_check'),
+
+    # API endpoints
     path('api/auth/', include('users.urls')),
     path('api/', include('events.urls')),
     path('api/', include('orders.urls')),
