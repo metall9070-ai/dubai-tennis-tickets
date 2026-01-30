@@ -344,6 +344,15 @@ if not DEBUG:
     # Railway/Render proxy handles HTTPS - disable Django redirect to avoid loop
     SECURE_SSL_REDIRECT = False
 
+    # CRITICAL: Tell Django to trust X-Forwarded-Proto header from reverse proxy
+    # Without this, Django thinks requests are HTTP and CSRF fails
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # CSRF trusted origins - required for admin login behind HTTPS proxy
+    CSRF_TRUSTED_ORIGINS = [
+        'https://worthy-clarity-production.up.railway.app',
+    ]
+
     # HTTP Strict Transport Security (1 year)
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -352,6 +361,8 @@ if not DEBUG:
     # Secure cookies
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
     # Additional security headers
     SECURE_CONTENT_TYPE_NOSNIFF = True
