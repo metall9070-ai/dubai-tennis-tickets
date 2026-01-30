@@ -64,6 +64,11 @@ class Order(models.Model):
         default=0,
         help_text='FROZEN: Total amount at time of order creation. Never recalculate from catalog.'
     )
+    currency = models.CharField(
+        max_length=3,
+        default='USD',
+        help_text='Currency code (ISO 4217)'
+    )
     status = models.CharField(
         max_length=20,
         choices=ORDER_STATUS,
