@@ -104,24 +104,36 @@ class EmailNotifier:
         if not plain_content:
             plain_content = strip_tags(html_content)
 
+        # Log SMTP configuration for debugging (without password)
+        logger.info(f"[EMAIL DEBUG] Attempting to send email to: {to_email}")
+        logger.info(f"[EMAIL DEBUG] From: {self.from_email}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_HOST: {settings.EMAIL_HOST}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_PORT: {settings.EMAIL_PORT}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_USE_TLS: {settings.EMAIL_USE_TLS}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_HOST_USER: {settings.EMAIL_HOST_USER}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_HOST_PASSWORD set: {bool(settings.EMAIL_HOST_PASSWORD)}")
+        logger.info(f"[EMAIL DEBUG] EMAIL_HOST_PASSWORD length: {len(settings.EMAIL_HOST_PASSWORD) if settings.EMAIL_HOST_PASSWORD else 0}")
+
         try:
-            # Use fail_silently=True to prevent SMTP timeouts from killing the request
-            # Email failures are logged but don't block order creation
+            # First attempt: try with fail_silently=False to capture the actual error
             result = send_mail(
                 subject=subject,
                 message=plain_content,
                 from_email=self.from_email,
                 recipient_list=[to_email],
                 html_message=html_content,
-                fail_silently=True  # Critical: prevents worker timeout on SMTP issues
+                fail_silently=False  # Temporarily False to capture real error
             )
             if result:
                 logger.info(f"Email sent successfully to {to_email}")
                 return True
             else:
-                logger.warning(f"Email send returned 0 for {to_email} (likely SMTP issue)")
+                logger.warning(f"Email send returned 0 for {to_email} (no error but 0 sent)")
                 return False
         except Exception as e:
+            # Log the actual SMTP error for debugging
+            logger.error(f"[EMAIL DEBUG] SMTP Error Type: {type(e).__name__}")
+            logger.error(f"[EMAIL DEBUG] SMTP Error Details: {e}")
             logger.error(f"Failed to send email to {to_email}: {e}")
             return False
 
