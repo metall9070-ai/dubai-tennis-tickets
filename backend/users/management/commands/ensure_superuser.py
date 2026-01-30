@@ -1,6 +1,6 @@
 """
 Management command to ensure superuser exists.
-Creates or updates admin user with password from environment.
+Resets password for ALL superusers to the one from environment.
 """
 import os
 from django.core.management.base import BaseCommand
@@ -11,22 +11,29 @@ class Command(BaseCommand):
     help = 'Ensure superuser exists with correct password'
 
     def handle(self, *args, **options):
-        username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'admin')
         password = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'admin123')
-        email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
 
-        try:
-            user = CustomUser.objects.get(username=username)
-            # User exists - update password
-            user.set_password(password)
-            user.is_staff = True
-            user.is_superuser = True
-            user.save()
-            self.stdout.write(self.style.SUCCESS(
-                f'Updated password for existing superuser: {username}'
-            ))
-        except CustomUser.DoesNotExist:
-            # Create new superuser
+        # Show all existing users
+        all_users = CustomUser.objects.all()
+        self.stdout.write(f'Total users in database: {all_users.count()}')
+
+        for u in all_users:
+            self.stdout.write(f'  - {u.username} (staff={u.is_staff}, superuser={u.is_superuser})')
+
+        # Find all superusers and reset their passwords
+        superusers = CustomUser.objects.filter(is_superuser=True)
+
+        if superusers.exists():
+            for user in superusers:
+                user.set_password(password)
+                user.save()
+                self.stdout.write(self.style.SUCCESS(
+                    f'Reset password for superuser: {user.username}'
+                ))
+        else:
+            # No superusers - create one
+            username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'admin')
+            email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
             CustomUser.objects.create_superuser(
                 username=username,
                 email=email,
@@ -35,3 +42,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(
                 f'Created new superuser: {username}'
             ))
+
+        self.stdout.write(self.style.SUCCESS(
+            f'Done! Login with password from DJANGO_SUPERUSER_PASSWORD'
+        ))
