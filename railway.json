@@ -3,8 +3,5 @@
   "build": {
     "builder": "NIXPACKS",
     "buildCommand": "pip install -r backend/requirements.txt"
-  },
-  "deploy": {
-    "startCommand": "chmod +x /app/backend/start.sh && /app/backend/start.sh"
   }
 }
