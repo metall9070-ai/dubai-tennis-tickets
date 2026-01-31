@@ -68,3 +68,23 @@ export async function fetchEventsServer(): Promise<Event[]> {
     return [];
   }
 }
+
+/**
+ * Fetch ATP events from Django API (server-side).
+ */
+export async function fetchATPEventsServer(): Promise<Event[]> {
+  const allEvents = await fetchEventsServer();
+  const atpEvents = allEvents.filter(e => e.type === 'ATP');
+  console.log(`[SERVER API] Filtered ${atpEvents.length} ATP events for SSR`);
+  return atpEvents;
+}
+
+/**
+ * Fetch WTA events from Django API (server-side).
+ */
+export async function fetchWTAEventsServer(): Promise<Event[]> {
+  const allEvents = await fetchEventsServer();
+  const wtaEvents = allEvents.filter(e => e.type === 'WTA');
+  console.log(`[SERVER API] Filtered ${wtaEvents.length} WTA events for SSR`);
+  return wtaEvents;
+}
