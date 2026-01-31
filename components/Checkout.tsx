@@ -68,31 +68,32 @@ const Checkout: React.FC<CheckoutProps> = ({
     }
 
     try {
-      // Create order in backend for each cart item
-      // For simplicity, we'll create orders for all items and redirect to Stripe for the first one
-      const orderPromises = cart.map(item =>
-        fetch(`${API_BASE_URL}/api/orders/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            event_id: parseInt(item.id.split('-')[0]),
-            category_id: parseInt(item.id.split('-')[1]),
-            quantity: item.quantity,
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            comments: formData.comments,
-          }),
-        }).then(res => res.json())
-      );
+      // Build items array from cart
+      const items = cart.map(item => ({
+        event_id: parseInt(item.id.split('-')[0]),
+        category_id: parseInt(item.id.split('-')[1]),
+        quantity: item.quantity,
+      }));
 
-      const orders = await Promise.all(orderPromises);
-      const firstOrder = orders[0];
+      // Create single order with all items
+      const orderResponse = await fetch(`${API_BASE_URL}/api/orders/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          comments: formData.comments,
+          items: items,
+        }),
+      });
 
-      if (!firstOrder.order?.id) {
-        throw new Error(firstOrder.error || 'Failed to create order');
+      const orderData = await orderResponse.json();
+
+      if (!orderResponse.ok || !orderData.order?.id) {
+        throw new Error(orderData.message || orderData.error || 'Failed to create order');
       }
 
       // Create Stripe checkout session
@@ -102,7 +103,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          order_id: firstOrder.order.id,
+          order_id: orderData.order.id,
         }),
       });
 
