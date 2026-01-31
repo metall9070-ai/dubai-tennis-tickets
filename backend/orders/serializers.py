@@ -2,8 +2,14 @@
 Serializers for orders and order items.
 Thin serializers focused on validation and transformation only.
 Business logic is delegated to the service layer.
+
+CONTACT DATA VALIDATION:
+- Name: Min 2 chars, must not look like email or phone
+- Email: Valid email format
+- Phone: E.164 international format (+[country][number])
 """
 
+import re
 from rest_framework import serializers
 from django.db.models import Sum
 
@@ -16,6 +22,11 @@ from .services import (
     CategoryNotFoundError,
     InsufficientSeatsError
 )
+
+# Validation patterns
+E164_PHONE_PATTERN = re.compile(r'^\+[1-9]\d{7,14}$')
+EMAIL_PATTERN = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
+LOOKS_LIKE_PHONE = re.compile(r'^[\d\s\-+()]{7,}$')
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -78,28 +89,75 @@ class OrderCreateSerializer(serializers.Serializer):
     """
     Serializer for creating orders.
     Validates input and delegates creation to OrderService.
+
+    STRICT VALIDATION (before Stripe redirect):
+    - Name: Min 2 chars, not an email, not a phone
+    - Email: Valid format
+    - Phone: E.164 international format
     """
-    
+
     # Customer information
     name = serializers.CharField(max_length=200, min_length=2)
     email = serializers.EmailField()
-    phone = serializers.CharField(max_length=30, min_length=5)
+    phone = serializers.CharField(max_length=30, min_length=8)
     comments = serializers.CharField(required=False, allow_blank=True, default='')
-    
+
     # Cart items
     items = OrderItemCreateSerializer(many=True)
-    
+
     def validate_name(self, value):
-        """Sanitize and validate name."""
-        return value.strip()
-    
+        """
+        Validate customer name.
+        - Must be at least 2 characters
+        - Must not look like an email address
+        - Must not look like a phone number
+        """
+        cleaned = value.strip()
+
+        if len(cleaned) < 2:
+            raise serializers.ValidationError('Name must be at least 2 characters.')
+
+        # Reject if it looks like an email
+        if EMAIL_PATTERN.match(cleaned):
+            raise serializers.ValidationError('Please enter your name, not an email address.')
+
+        # Reject if it looks like a phone number
+        if LOOKS_LIKE_PHONE.match(cleaned):
+            raise serializers.ValidationError('Please enter your name, not a phone number.')
+
+        return cleaned
+
+    def validate_email(self, value):
+        """
+        Validate email address.
+        DRF's EmailField handles basic validation, but we add explicit check.
+        """
+        cleaned = value.strip().lower()
+
+        if not EMAIL_PATTERN.match(cleaned):
+            raise serializers.ValidationError('Please enter a valid email address.')
+
+        return cleaned
+
     def validate_phone(self, value):
-        """Sanitize phone number."""
-        # Remove common formatting characters
-        cleaned = ''.join(c for c in value if c.isdigit() or c == '+')
-        if len(cleaned) < 5:
-            raise serializers.ValidationError('Phone number is too short.')
-        return value.strip()
+        """
+        Validate phone number in E.164 international format.
+        Format: +[country code][subscriber number]
+        Example: +971501234567
+
+        Regex: ^\+[1-9]\d{7,14}$
+        - Starts with +
+        - First digit is 1-9 (no leading zeros)
+        - 8-15 total digits (including country code)
+        """
+        cleaned = value.strip()
+
+        if not E164_PHONE_PATTERN.match(cleaned):
+            raise serializers.ValidationError(
+                'Phone must be in international E.164 format: +[country code][number] (e.g., +971501234567)'
+            )
+
+        return cleaned
     
     def validate_items(self, value):
         """Ensure at least one item in order."""

@@ -5,10 +5,10 @@
         "fields": {
             "event": 1,
             "name": "Prime A",
-            "price": "2000.00",
+            "price": "200.00",
             "color": "#1e824c",
             "seats_total": 50,
-            "seats_available": 14,
+            "seats_available": 0,
             "sort_order": 1,
             "is_active": true
         }
@@ -19,10 +19,10 @@
         "fields": {
             "event": 1,
             "name": "Prime B",
-            "price": "1000.00",
+            "price": "200.00",
             "color": "#2b5ce7",
             "seats_total": 100,
-            "seats_available": 42,
+            "seats_available": 12,
             "sort_order": 2,
             "is_active": true
         }
@@ -33,105 +33,21 @@
         "fields": {
             "event": 1,
             "name": "Grandstand",
-            "price": "300.00",
+            "price": "100.00",
             "color": "#86868b",
             "seats_total": 300,
-            "seats_available": 156,
+            "seats_available": 28,
             "sort_order": 3,
             "is_active": true
         }
     },
     {
         "model": "events.category",
-        "pk": 5,
+        "pk": 4,
         "fields": {
             "event": 2,
             "name": "Prime A",
-            "price": "2000.00",
-            "color": "#1e824c",
-            "seats_total": 50,
-            "seats_available": 35,
-            "sort_order": 1,
-            "is_active": true
-        }
-    },
-    {
-        "model": "events.category",
-        "pk": 6,
-        "fields": {
-            "event": 2,
-            "name": "Prime B",
-            "price": "1000.00",
-            "color": "#2b5ce7",
-            "seats_total": 100,
-            "seats_available": 78,
-            "sort_order": 2,
-            "is_active": true
-        }
-    },
-    {
-        "model": "events.category",
-        "pk": 7,
-        "fields": {
-            "event": 2,
-            "name": "Grandstand",
             "price": "300.00",
-            "color": "#86868b",
-            "seats_total": 300,
-            "seats_available": 245,
-            "sort_order": 3,
-            "is_active": true
-        }
-    },
-    {
-        "model": "events.category",
-        "pk": 9,
-        "fields": {
-            "event": 7,
-            "name": "Prime A",
-            "price": "2000.00",
-            "color": "#1e824c",
-            "seats_total": 50,
-            "seats_available": 8,
-            "sort_order": 1,
-            "is_active": true
-        }
-    },
-    {
-        "model": "events.category",
-        "pk": 10,
-        "fields": {
-            "event": 7,
-            "name": "Prime B",
-            "price": "1000.00",
-            "color": "#2b5ce7",
-            "seats_total": 100,
-            "seats_available": 22,
-            "sort_order": 2,
-            "is_active": true
-        }
-    },
-    {
-        "model": "events.category",
-        "pk": 11,
-        "fields": {
-            "event": 7,
-            "name": "Grandstand",
-            "price": "300.00",
-            "color": "#86868b",
-            "seats_total": 300,
-            "seats_available": 89,
-            "sort_order": 3,
-            "is_active": true
-        }
-    },
-    {
-        "model": "events.category",
-        "pk": 13,
-        "fields": {
-            "event": 13,
-            "name": "Prime A",
-            "price": "3000.00",
             "color": "#1e824c",
             "seats_total": 50,
             "seats_available": 5,
@@ -141,14 +57,140 @@
     },
     {
         "model": "events.category",
-        "pk": 14,
+        "pk": 5,
         "fields": {
-            "event": 13,
+            "event": 2,
             "name": "Prime B",
-            "price": "1500.00",
+            "price": "200.00",
             "color": "#2b5ce7",
             "seats_total": 100,
-            "seats_available": 18,
+            "seats_available": 10,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 6,
+        "fields": {
+            "event": 2,
+            "name": "Grandstand",
+            "price": "100.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 24,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 7,
+        "fields": {
+            "event": 3,
+            "name": "Prime A",
+            "price": "200.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 8,
+        "fields": {
+            "event": 3,
+            "name": "Prime B",
+            "price": "200.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 14,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 9,
+        "fields": {
+            "event": 3,
+            "name": "Grandstand",
+            "price": "100.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 22,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 10,
+        "fields": {
+            "event": 4,
+            "name": "Prime A",
+            "price": "200.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 11,
+        "fields": {
+            "event": 4,
+            "name": "Prime B",
+            "price": "200.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 9,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 12,
+        "fields": {
+            "event": 4,
+            "name": "Grandstand",
+            "price": "100.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 30,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 13,
+        "fields": {
+            "event": 5,
+            "name": "Prime A",
+            "price": "300.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 14,
+        "fields": {
+            "event": 5,
+            "name": "Prime B",
+            "price": "300.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 11,
             "sort_order": 2,
             "is_active": true
         }
@@ -157,12 +199,12 @@
         "model": "events.category",
         "pk": 15,
         "fields": {
-            "event": 13,
-            "name": "Grandstand Upper",
-            "price": "200.00",
+            "event": 5,
+            "name": "Grandstand",
+            "price": "150.00",
             "color": "#86868b",
             "seats_total": 300,
-            "seats_available": 67,
+            "seats_available": 26,
             "sort_order": 3,
             "is_active": true
         }
@@ -171,12 +213,418 @@
         "model": "events.category",
         "pk": 16,
         "fields": {
-            "event": 13,
+            "event": 6,
+            "name": "Prime A",
+            "price": "1200.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 7,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 17,
+        "fields": {
+            "event": 6,
+            "name": "Prime B",
+            "price": "800.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 13,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 18,
+        "fields": {
+            "event": 6,
+            "name": "Grandstand",
+            "price": "350.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 20,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 19,
+        "fields": {
+            "event": 7,
+            "name": "Prime A",
+            "price": "1000.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 4,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 20,
+        "fields": {
+            "event": 7,
+            "name": "Prime B",
+            "price": "1400.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 8,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 21,
+        "fields": {
+            "event": 7,
+            "name": "Grandstand",
+            "price": "500.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 25,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 22,
+        "fields": {
+            "event": 8,
+            "name": "Prime A",
+            "price": "300.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 23,
+        "fields": {
+            "event": 8,
+            "name": "Prime B",
+            "price": "300.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 15,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 24,
+        "fields": {
+            "event": 8,
             "name": "Grandstand Lower",
-            "price": "400.00",
+            "price": "200.00",
             "color": "#3d6ef5",
             "seats_total": 200,
-            "seats_available": 32,
+            "seats_available": 18,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 25,
+        "fields": {
+            "event": 8,
+            "name": "Grandstand Upper",
+            "price": "150.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 27,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 26,
+        "fields": {
+            "event": 9,
+            "name": "Prime A",
+            "price": "300.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 27,
+        "fields": {
+            "event": 9,
+            "name": "Prime B",
+            "price": "300.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 12,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 28,
+        "fields": {
+            "event": 9,
+            "name": "Grandstand Lower",
+            "price": "200.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 16,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 29,
+        "fields": {
+            "event": 9,
+            "name": "Grandstand Upper",
+            "price": "150.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 23,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 30,
+        "fields": {
+            "event": 10,
+            "name": "Prime A",
+            "price": "600.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 31,
+        "fields": {
+            "event": 10,
+            "name": "Prime B",
+            "price": "600.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 10,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 32,
+        "fields": {
+            "event": 10,
+            "name": "Grandstand Lower",
+            "price": "300.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 19,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 33,
+        "fields": {
+            "event": 10,
+            "name": "Grandstand Upper",
+            "price": "200.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 29,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 34,
+        "fields": {
+            "event": 11,
+            "name": "Prime A",
+            "price": "900.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 35,
+        "fields": {
+            "event": 11,
+            "name": "Prime B",
+            "price": "900.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 14,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 36,
+        "fields": {
+            "event": 11,
+            "name": "Grandstand Lower",
+            "price": "600.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 17,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 37,
+        "fields": {
+            "event": 11,
+            "name": "Grandstand Upper",
+            "price": "250.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 21,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 38,
+        "fields": {
+            "event": 12,
+            "name": "Prime A",
+            "price": "1200.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 39,
+        "fields": {
+            "event": 12,
+            "name": "Prime B",
+            "price": "1200.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 9,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 40,
+        "fields": {
+            "event": 12,
+            "name": "Grandstand Lower",
+            "price": "900.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 15,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 41,
+        "fields": {
+            "event": 12,
+            "name": "Grandstand Upper",
+            "price": "600.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 24,
+            "sort_order": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 42,
+        "fields": {
+            "event": 13,
+            "name": "Prime A",
+            "price": "1400.00",
+            "color": "#1e824c",
+            "seats_total": 50,
+            "seats_available": 0,
+            "sort_order": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 43,
+        "fields": {
+            "event": 13,
+            "name": "Prime B",
+            "price": "1400.00",
+            "color": "#2b5ce7",
+            "seats_total": 100,
+            "seats_available": 11,
+            "sort_order": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 44,
+        "fields": {
+            "event": 13,
+            "name": "Grandstand Lower",
+            "price": "900.00",
+            "color": "#3d6ef5",
+            "seats_total": 200,
+            "seats_available": 20,
+            "sort_order": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 45,
+        "fields": {
+            "event": 13,
+            "name": "Grandstand Upper",
+            "price": "700.00",
+            "color": "#86868b",
+            "seats_total": 300,
+            "seats_available": 28,
             "sort_order": 4,
             "is_active": true
         }
