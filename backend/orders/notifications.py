@@ -3,10 +3,11 @@ Notification service for order updates.
 Sends notifications via Telegram (admin) and Email (admin + customer).
 
 NOTIFICATION FLOW:
-1. Order CREATED -> Telegram + Email to ADMIN only
+1. Order CREATED -> Telegram to ADMIN + Email to ADMIN + Email to CUSTOMER
 2. Order PAID (webhook) -> Telegram to ADMIN + Email to CUSTOMER
 
 EMAIL: Uses Resend API (HTTP) instead of SMTP - works on Railway where SMTP is blocked.
+TEMPLATES: Customer emails use templates from backend/emails/*.txt
 """
 
 import logging
@@ -14,6 +15,8 @@ import httpx
 import resend
 from django.conf import settings
 from django.utils.html import strip_tags
+
+from emails.renderer import get_order_created_email, get_order_paid_email
 
 logger = logging.getLogger(__name__)
 
@@ -185,6 +188,7 @@ def notify_order_created(order) -> dict:
     Sends to:
     - Telegram: Admin notification with order details
     - Email: Admin notification
+    - Email: Customer notification (using order_created.txt template)
 
     Args:
         order: Order model instance with status=CREATED
@@ -194,7 +198,8 @@ def notify_order_created(order) -> dict:
     """
     results = {
         'telegram_admin': False,
-        'email_admin': False
+        'email_admin': False,
+        'email_customer': False
     }
 
     items_text = _build_order_items_text(order)
@@ -260,9 +265,30 @@ def notify_order_created(order) -> dict:
             html_content=admin_html
         )
 
+    # Email to Customer - Order Created (using template)
+    try:
+        customer_subject, customer_body = get_order_created_email(order)
+        # Convert plain text to simple HTML (preserve line breaks)
+        customer_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <pre style="font-family: Arial, sans-serif; white-space: pre-wrap; word-wrap: break-word;">{customer_body}</pre>
+        </body>
+        </html>
+        """
+        results['email_customer'] = email_notifier.send_email(
+            to_email=order.email,
+            subject=customer_subject,
+            html_content=customer_html,
+            plain_content=customer_body
+        )
+    except Exception as e:
+        logger.error(f"Failed to send customer ORDER_CREATED email: {e}")
+
     logger.info(
         f"Order CREATED notifications for {order.order_number}: "
-        f"telegram={results['telegram_admin']}, email_admin={results['email_admin']}"
+        f"telegram={results['telegram_admin']}, email_admin={results['email_admin']}, "
+        f"email_customer={results['email_customer']}"
     )
     return results
 
@@ -277,7 +303,7 @@ def notify_order_paid(order) -> dict:
 
     Sends to:
     - Telegram: Admin notification that payment is confirmed
-    - Email: Customer confirmation with ticket details
+    - Email: Customer confirmation (using order_paid.txt template)
 
     Args:
         order: Order model instance with status=PAID
@@ -315,61 +341,25 @@ def notify_order_paid(order) -> dict:
 """
     results['telegram_admin'] = telegram_notifier.send_message(telegram_message.strip())
 
-    # Email to Customer - Payment Confirmation
-    frontend_url = getattr(settings, 'FRONTEND_URL', 'https://dubaitennistickets.com')
-    customer_subject = f"Payment Confirmed - Dubai Tennis Championships #{order.order_number}"
-    customer_html = f"""
-    <html>
-    <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: #1a1a2e; color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0;">Dubai Duty Free Tennis Championships</h1>
-        </div>
-
-        <div style="padding: 20px;">
-            <h2 style="color: #28a745;">Payment Confirmed!</h2>
-
-            <p>Dear {order.name},</p>
-
-            <p>Thank you for your purchase! Your payment has been successfully processed.</p>
-
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                <h3 style="margin-top: 0;">Order Details</h3>
-                <p><strong>Order Number:</strong> #{order.order_number}</p>
-                <p><strong>Date:</strong> {order.paid_at.strftime('%B %d, %Y at %H:%M') if order.paid_at else 'N/A'}</p>
-
-                <h4>Tickets:</h4>
-                {_build_order_items_html(order)}
-
-                <p style="font-size: 18px;"><strong>Total Paid:</strong> ${order.total_amount} {order.currency}</p>
-            </div>
-
-            <h3>What's Next?</h3>
-            <p>You will receive your e-tickets via email within 24-48 hours before the event date.</p>
-            <p>Please bring a valid ID matching the name on your order to collect your tickets at the venue.</p>
-
-            <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                <p style="margin: 0;"><strong>Venue:</strong> Dubai Duty Free Tennis Stadium, Aviation Club, Al Garhoud</p>
-            </div>
-
-            <p>If you have any questions, please contact us at support@dubaitennistickets.com</p>
-
-            <p>We look forward to seeing you at the tournament!</p>
-
-            <p>Best regards,<br>Dubai Tennis Tickets Team</p>
-        </div>
-
-        <div style="background: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-            <p>This is an automated message. Please do not reply directly to this email.</p>
-            <p><a href="{frontend_url}">www.dubaitennistickets.com</a></p>
-        </div>
-    </body>
-    </html>
-    """
-    results['email_customer'] = email_notifier.send_email(
-        to_email=order.email,
-        subject=customer_subject,
-        html_content=customer_html
-    )
+    # Email to Customer - Payment Confirmation (using template)
+    try:
+        customer_subject, customer_body = get_order_paid_email(order)
+        # Convert plain text to simple HTML (preserve line breaks)
+        customer_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <pre style="font-family: Arial, sans-serif; white-space: pre-wrap; word-wrap: break-word;">{customer_body}</pre>
+        </body>
+        </html>
+        """
+        results['email_customer'] = email_notifier.send_email(
+            to_email=order.email,
+            subject=customer_subject,
+            html_content=customer_html,
+            plain_content=customer_body
+        )
+    except Exception as e:
+        logger.error(f"Failed to send customer ORDER_PAID email: {e}")
 
     logger.info(
         f"Order PAID notifications for {order.order_number}: "
