@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import WTATicketsClient from './WTATicketsClient';
+import { fetchWTAEventsServer } from '@/lib/api-server';
 
 export const metadata: Metadata = {
   title: 'WTA 1000 Tickets Dubai 2026 | Dubai Tennis Championships',
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WTATicketsPage() {
-  return <WTATicketsClient />;
+export default async function WTATicketsPage() {
+  const initialEvents = await fetchWTAEventsServer();
+  return <WTATicketsClient initialEvents={initialEvents} />;
 }

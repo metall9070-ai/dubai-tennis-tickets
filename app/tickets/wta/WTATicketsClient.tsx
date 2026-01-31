@@ -9,17 +9,26 @@ import { Event, EventRow } from '@/components/Events';
 import { fetchEvents } from '@/lib/api';
 import { useCart } from '@/app/CartContext';
 
-export default function WTATicketsClient() {
+interface WTATicketsClientProps {
+  initialEvents?: Event[];
+}
+
+export default function WTATicketsClient({ initialEvents }: WTATicketsClientProps) {
   const router = useRouter();
   const { cartTotalItems } = useCart();
 
-  // State for events - fetched from Django API
-  const [wtaEvents, setWtaEvents] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Use initialEvents from SSR if available
+  const [wtaEvents, setWtaEvents] = useState<Event[]>(initialEvents || []);
+  const [isLoading, setIsLoading] = useState(!initialEvents || initialEvents.length === 0);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch events from Django API - NEVER use fallback data
+  // Skip CSR fetch if we have SSR data
   useEffect(() => {
+    if (initialEvents && initialEvents.length > 0) {
+      console.log(`[SSR] Using ${initialEvents.length} WTA events from server-side render`);
+      return;
+    }
+
     let mounted = true;
 
     async function loadEvents() {
@@ -40,13 +49,7 @@ export default function WTATicketsClient() {
         if (result.data) {
           const wta = result.data.filter(e => e.type === 'WTA');
           setWtaEvents(wta);
-
-          // Log each event with LIVE FETCH format for network verification
-          wta.forEach(event => {
-            console.log(`[LIVE FETCH] /tickets/wta event "${event.title}" min_price=${event.minPrice}`);
-          });
-
-          console.log(`[LIVE FETCH] /tickets/wta loaded ${wta.length} WTA events from Django API`);
+          console.log(`[CSR FALLBACK] /tickets/wta loaded ${wta.length} WTA events from Django API`);
         }
       } catch (err) {
         console.error('[TOURNAMENT PAGE] Failed to load events:', err);
@@ -66,7 +69,7 @@ export default function WTATicketsClient() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [initialEvents]);
 
   const handleSelectEvent = (eventData: Event) => {
     // Use slug for SEO-friendly URLs, fallback to id for backward compatibility

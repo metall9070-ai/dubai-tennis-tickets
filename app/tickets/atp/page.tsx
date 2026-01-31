@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ATPTicketsClient from './ATPTicketsClient';
+import { fetchATPEventsServer } from '@/lib/api-server';
 
 export const metadata: Metadata = {
   title: 'ATP 500 Tickets Dubai 2026 | Dubai Tennis Championships',
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ATPTicketsPage() {
-  return <ATPTicketsClient />;
+export default async function ATPTicketsPage() {
+  const initialEvents = await fetchATPEventsServer();
+  return <ATPTicketsClient initialEvents={initialEvents} />;
 }
