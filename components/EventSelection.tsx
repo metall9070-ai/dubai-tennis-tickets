@@ -7,7 +7,6 @@ import WhyBuy from './WhyBuy';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
-import BuyForm from './BuyForm';
 
 interface EventSelectionProps {
   event: any;
@@ -134,13 +133,11 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   const [ticketCount, setTicketCount] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [showBuyForm, setShowBuyForm] = useState(false);
 
   const openModal = (cat: Category) => {
     setSelectedCategory(cat);
     setTicketCount(1);
     setIsAdded(false);
-    setShowBuyForm(false);
     setIsModalOpen(true);
   };
 
@@ -410,35 +407,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeModal}></div>
           <div className="relative bg-white w-full max-w-[440px] max-h-[92vh] rounded-[32px] md:rounded-[42px] shadow-2xl overflow-y-auto animate-modalSlide border border-black/5">
             <div className="p-5 md:p-8">
-              {showBuyForm && selectedCategory ? (
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <button
-                      onClick={() => setShowBuyForm(false)}
-                      className="flex items-center gap-1 text-[#86868b] hover:text-[#1d1d1f] transition-colors"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                      </svg>
-                      <span className="text-sm font-medium">Back</span>
-                    </button>
-                    <button onClick={closeModal} className="p-1 hover:bg-[#f5f5f7] rounded-full transition-colors">
-                      <svg className="w-5 h-5 text-[#d2d2d7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#1d1d1f] mb-4">Complete Your Purchase</h3>
-                  <BuyForm
-                    eventId={typeof event.id === 'string' ? parseInt(event.id, 10) : event.id}
-                    categoryId={typeof selectedCategory.id === 'string' ? parseInt(selectedCategory.id, 10) : Number(selectedCategory.id)}
-                    categoryName={selectedCategory.name}
-                    quantity={ticketCount}
-                    unitPrice={selectedCategory.price}
-                    onCancel={() => setShowBuyForm(false)}
-                  />
-                </div>
-              ) : !isAdded ? (
+              {!isAdded ? (
                 <>
                   <div className="flex items-center justify-between mb-0.5 md:mb-1">
                     <span className="text-[14px] md:text-[15px] font-semibold text-[#86868b]">Select Quantity</span>
@@ -502,10 +471,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
                   <div className="space-y-3">
                     <button
-                      onClick={() => {
-                        console.log('Buy Now clicked, setting showBuyForm to true');
-                        setShowBuyForm(true);
-                      }}
+                      onClick={handleAddToCart}
                       className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
                     >
                       Buy Now
