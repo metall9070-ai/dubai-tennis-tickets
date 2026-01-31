@@ -80,7 +80,8 @@ export default async function OrderCheckoutPage({ params }: Props) {
   const formatStatus = (status: string) => {
     const statusMap: Record<string, { label: string; color: string }> = {
       pending: { label: 'Pending Payment', color: 'bg-yellow-100 text-yellow-800' },
-      confirmed: { label: 'Confirmed', color: 'bg-green-100 text-green-800' },
+      confirmed: { label: 'Confirmed', color: 'bg-blue-100 text-blue-800' },
+      paid: { label: 'Paid', color: 'bg-green-100 text-green-800' },
       cancelled: { label: 'Cancelled', color: 'bg-red-100 text-red-800' },
       refunded: { label: 'Refunded', color: 'bg-gray-100 text-gray-800' },
     };
@@ -219,17 +220,32 @@ export default async function OrderCheckoutPage({ params }: Props) {
           </div>
         )}
 
-        {/* Confirmed Order Message */}
-        {order.status === 'confirmed' && (
+        {/* Paid Order Message */}
+        {order.status === 'paid' && (
           <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-center">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-green-800 mb-2">Payment Confirmed</h2>
+            <h2 className="text-lg font-semibold text-green-800 mb-2">Payment Successful!</h2>
             <p className="text-green-700">
-              Your tickets have been confirmed. Check your email for details.
+              Thank you for your purchase! Your tickets have been confirmed and a confirmation email has been sent to your email address.
+            </p>
+          </div>
+        )}
+
+        {/* Confirmed Order Message */}
+        {order.status === 'confirmed' && (
+          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
+            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-lg font-semibold text-blue-800 mb-2">Order Confirmed</h2>
+            <p className="text-blue-700">
+              Your order has been confirmed. Check your email for details.
             </p>
           </div>
         )}

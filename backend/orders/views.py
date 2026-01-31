@@ -73,17 +73,18 @@ class OrderViewSet(viewsets.ModelViewSet):
         Permission configuration:
         - create: Anyone (guest checkout)
         - list: Authenticated users only (see their orders)
-        - retrieve: Owner or admin only
+        - retrieve: Anyone (for order confirmation page after checkout)
         - by_order_number: Anyone (but requires order number)
 
         NOTE: Payment confirmation is ONLY via Stripe webhook at /api/stripe/webhook/
+        NOTE: retrieve is public because UUIDs are unguessable and needed for checkout flow
         """
         if self.action == 'create':
             return [AllowAny()]
         elif self.action == 'by_order_number':
             return [AllowAny()]
         elif self.action == 'retrieve':
-            return [IsOrderOwnerOrAdmin()]
+            return [AllowAny()]  # Public for checkout confirmation (UUID is unguessable)
         return [IsAuthenticated()]
     
     def get_serializer_class(self):
