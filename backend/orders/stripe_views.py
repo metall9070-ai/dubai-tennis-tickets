@@ -40,9 +40,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle
+
+
+class CheckoutSessionThrottle(AnonRateThrottle):
+    """Rate limit for checkout session creation to prevent abuse."""
+    rate = '10/minute'
 
 from .models import Order, OrderItem
 from .services import OrderService, OrderItemRequest, InsufficientSeatsError
@@ -125,6 +131,7 @@ def _create_stripe_session_for_order(order: Order) -> stripe.checkout.Session:
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@throttle_classes([CheckoutSessionThrottle])
 def create_checkout_session(request):
     """
     Create order and Stripe Checkout Session.
