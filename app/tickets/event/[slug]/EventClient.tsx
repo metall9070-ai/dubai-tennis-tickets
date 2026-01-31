@@ -7,6 +7,22 @@ import EventSelection from '@/components/EventSelection';
 import { fetchEventBySlug } from '@/lib/api';
 import type { Event } from '@/lib/types';
 
+// Storage version - must match CartContext.tsx
+const CART_VERSION_KEY = 'dubai-tennis-cart-version';
+const CURRENT_CART_VERSION = 3;
+
+// Check if sessionStorage should be trusted (version matches)
+function isStorageVersionValid(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    const storedVersion = localStorage.getItem(CART_VERSION_KEY);
+    const version = storedVersion ? parseInt(storedVersion, 10) : 0;
+    return version === CURRENT_CART_VERSION;
+  } catch {
+    return false;
+  }
+}
+
 interface EventClientProps {
   slug: string;
 }
@@ -27,30 +43,36 @@ export default function EventClient({ slug }: EventClientProps) {
       setError(null);
 
       // First check sessionStorage for backward compatibility
-      const stored = sessionStorage.getItem('selectedEvent');
-      if (stored) {
-        try {
-          const storedEvent = JSON.parse(stored);
+      // BUT only if storage version is valid (prevents using stale data after cart format change)
+      if (isStorageVersionValid()) {
+        const stored = sessionStorage.getItem('selectedEvent');
+        if (stored) {
+          try {
+            const storedEvent = JSON.parse(stored);
 
-          // Check if the stored event matches the current slug
-          // This handles the case where user navigated via event selection
-          if (storedEvent.slug === slug || String(storedEvent.id) === slug) {
-            console.log(`[EventClient] Found matching event in sessionStorage`);
-            if (mounted) {
-              setSelectedEvent(storedEvent);
-              setIsLoading(false);
+            // Check if the stored event matches the current slug
+            // This handles the case where user navigated via event selection
+            if (storedEvent.slug === slug || String(storedEvent.id) === slug) {
+              console.log(`[EventClient] Found matching event in sessionStorage (version valid)`);
+              if (mounted) {
+                setSelectedEvent(storedEvent);
+                setIsLoading(false);
 
-              // If user came with ID, redirect to slug URL for SEO
-              if (String(storedEvent.id) === slug && storedEvent.slug) {
-                router.replace(`/tickets/event/${storedEvent.slug}`);
+                // If user came with ID, redirect to slug URL for SEO
+                if (String(storedEvent.id) === slug && storedEvent.slug) {
+                  router.replace(`/tickets/event/${storedEvent.slug}`);
+                }
               }
+              return;
             }
-            return;
+          } catch {
+            // Invalid JSON in sessionStorage, ignore
+            console.log(`[EventClient] Invalid sessionStorage data, fetching from API`);
           }
-        } catch {
-          // Invalid JSON in sessionStorage, ignore
-          console.log(`[EventClient] Invalid sessionStorage data, fetching from API`);
         }
+      } else {
+        console.log(`[EventClient] Storage version mismatch, clearing stale sessionStorage`);
+        sessionStorage.removeItem('selectedEvent');
       }
 
       // Fetch event from API by slug (or ID for backward compatibility)
