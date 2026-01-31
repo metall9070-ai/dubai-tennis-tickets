@@ -98,7 +98,8 @@ def _create_stripe_session_for_order(order: Order) -> stripe.checkout.Session:
             'metadata': {
                 'order_id': str(order.id),
                 'order_number': order.order_number,
-            }
+            },
+            'receipt_email': order.email,  # Send Stripe receipt to customer
         },
         # Idempotency key: same order_id = same session
         idempotency_key=f"checkout_session_order_{order.id}",
