@@ -75,6 +75,12 @@ const Checkout: React.FC<CheckoutProps> = ({
         quantity: item.quantity,
       }));
 
+      // Clean phone number - remove spaces, dashes, parentheses for E.164 format
+      const cleanPhone = formData.phone.replace(/[\s\-()]/g, '');
+
+      console.log('[Checkout] Creating order with items:', items);
+      console.log('[Checkout] Phone (cleaned):', cleanPhone);
+
       // Create single order with all items
       const orderResponse = await fetch(`${API_BASE_URL}/api/orders/`, {
         method: 'POST',
@@ -82,18 +88,41 @@ const Checkout: React.FC<CheckoutProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          phone: cleanPhone,
           comments: formData.comments,
           items: items,
         }),
       });
 
       const orderData = await orderResponse.json();
+      console.log('[Checkout] Order API response:', orderResponse.status, orderData);
 
       if (!orderResponse.ok || !orderData.order?.id) {
-        throw new Error(orderData.message || orderData.error || 'Failed to create order');
+        // Extract detailed error message from validation response
+        let errorMessage = 'Failed to create order';
+
+        if (orderData.details) {
+          // Check for field-specific errors
+          const fieldErrors = [];
+          for (const [field, errors] of Object.entries(orderData.details)) {
+            if (Array.isArray(errors)) {
+              fieldErrors.push(...errors);
+            } else if (typeof errors === 'string') {
+              fieldErrors.push(errors);
+            }
+          }
+          if (fieldErrors.length > 0) {
+            errorMessage = fieldErrors.join('. ');
+          }
+        } else if (orderData.message && orderData.message !== 'Validation error') {
+          errorMessage = orderData.message;
+        } else if (orderData.error) {
+          errorMessage = orderData.error;
+        }
+
+        throw new Error(errorMessage);
       }
 
       // Create Stripe checkout session
