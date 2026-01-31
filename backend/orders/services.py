@@ -12,7 +12,7 @@ from django.db import transaction
 from django.contrib.auth import get_user_model
 
 from events.models import Category, Event
-from .models import Order, OrderItem
+from .models import Order, OrderItem, SalesChannel
 from .notifications import notify_new_order
 
 logger = logging.getLogger(__name__)
@@ -154,15 +154,19 @@ class OrderService:
         phone: str,
         items: List[OrderItemRequest],
         user: Optional[User] = None,
-        comments: str = ''
+        comments: str = '',
+        sales_channel: Optional[SalesChannel] = None
     ) -> Order:
         """
         Create an order with atomic seat reservation.
-        
+
         Uses SELECT FOR UPDATE to prevent race conditions when reserving seats.
         The entire operation is wrapped in a transaction - if any seat reservation
         fails, all changes are rolled back.
-        
+
+        Currency is set from SalesChannel (Variant 1 architecture).
+        stripe_amount_cents is calculated and frozen at order creation.
+
         Args:
             name: Customer name
             email: Customer email
@@ -170,24 +174,31 @@ class OrderService:
             items: List of validated OrderItemRequest objects
             user: Optional authenticated user
             comments: Optional order comments
-            
+            sales_channel: Optional SalesChannel (uses default if not provided)
+
         Returns:
             Created Order instance
-            
+
         Raises:
             InsufficientSeatsError: If seats become unavailable during reservation
         """
-        # Create the order first
+        # Get sales channel (determines currency)
+        if sales_channel is None:
+            sales_channel = SalesChannel.get_default()
+
+        # Create the order with currency from sales channel
         order = Order.objects.create(
             user=user,
             name=name,
             email=email,
             phone=phone,
             comments=comments,
+            sales_channel=sales_channel,
+            currency=sales_channel.currency,  # FROZEN at creation
         )
-        
+
         total_amount = Decimal('0.00')
-        
+
         # Process each item with row-level locking
         for item in items:
             # Lock the category row to prevent concurrent modifications
@@ -195,7 +206,7 @@ class OrderService:
             locked_category = Category.objects.select_for_update().get(
                 id=item.category.id
             )
-            
+
             # Re-check availability with the lock held
             if locked_category.seats_available < item.quantity:
                 # Transaction will rollback automatically
@@ -204,11 +215,11 @@ class OrderService:
                     available=locked_category.seats_available,
                     requested=item.quantity
                 )
-            
+
             # Reserve the seats
             locked_category.seats_available -= item.quantity
             locked_category.save(update_fields=['seats_available', 'updated_at'])
-            
+
             # Create order item with snapshot data
             order_item = OrderItem.objects.create(
                 order=order,
@@ -224,19 +235,23 @@ class OrderService:
                 category_name=locked_category.name,
                 venue=item.event.venue,
             )
-            
+
             total_amount += order_item.subtotal
-            
+
             logger.info(
                 f'Reserved {item.quantity} seats for {locked_category.name} '
                 f'(order {order.order_number})'
             )
-        
-        # Update order total
-        order.total_amount = total_amount
-        order.save(update_fields=['total_amount'])
 
-        logger.info(f'Order {order.order_number} created successfully. Total: ${total_amount}')
+        # Update order total and calculate stripe_amount_cents (FROZEN)
+        order.total_amount = total_amount
+        order.stripe_amount_cents = order._calculate_stripe_amount_cents()
+        order.save(update_fields=['total_amount', 'stripe_amount_cents'])
+
+        logger.info(
+            f'Order {order.order_number} created successfully. '
+            f'Total: {order.currency} {total_amount} ({order.stripe_amount_cents} cents)'
+        )
 
         # Send Telegram notification (async-safe, won't block)
         try:

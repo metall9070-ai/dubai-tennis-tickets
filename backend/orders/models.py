@@ -7,19 +7,100 @@ Once an order is created, the following fields are FROZEN and must NEVER change:
 - OrderItem.quantity (number of tickets)
 - OrderItem.subtotal (unit_price * quantity)
 - Order.total_amount (sum of all item subtotals)
+- Order.currency (ISO 4217 currency code)
+- Order.stripe_amount_cents (amount in smallest currency unit)
 
 These fields represent the binding financial agreement with the customer.
 Future catalog price changes MUST NOT affect existing orders.
+
+CURRENCY ARCHITECTURE (Variant 1 - Site-level):
+- Each SalesChannel has a fixed currency
+- Order.currency is set from SalesChannel at creation time
+- Order.stripe_amount_cents = total_amount * 100 (for USD/EUR/etc)
+- Stripe uses these frozen values for checkout and webhook validation
 """
 
 import uuid
 from decimal import Decimal
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, RegexValidator
 from django.core.exceptions import ValidationError
 
 from events.models import Event, Category
+
+
+# =============================================================================
+# SALES CHANNEL MODEL (Site-level currency configuration)
+# =============================================================================
+
+class SalesChannel(models.Model):
+    """
+    Represents a sales channel/site with fixed currency.
+
+    Variant 1 Architecture:
+    - Each site has ONE currency (no multi-currency UI)
+    - Currency is determined at site level, not ticket level
+    - Future Variant 2 can add ticket-level currency override
+
+    For dubaitennistickets.com: currency = "USD"
+    """
+
+    CURRENCY_CHOICES = [
+        ('USD', 'US Dollar'),
+        ('EUR', 'Euro'),
+        ('GBP', 'British Pound'),
+        ('AED', 'UAE Dirham'),
+    ]
+
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+        help_text='Human-readable name (e.g., "Dubai Tennis Tickets")'
+    )
+    domain = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text='Domain name (e.g., "dubaitennistickets.com")'
+    )
+    currency = models.CharField(
+        max_length=3,
+        choices=CURRENCY_CHOICES,
+        default='USD',
+        validators=[RegexValidator(r'^[A-Z]{3}$', 'Must be 3-letter ISO 4217 code')],
+        help_text='ISO 4217 currency code. FROZEN for all orders from this channel.'
+    )
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Sales Channel'
+        verbose_name_plural = 'Sales Channels'
+
+    def __str__(self):
+        return f"{self.name} ({self.currency})"
+
+    @classmethod
+    def get_default(cls):
+        """
+        Get the default sales channel.
+        Creates one if it doesn't exist (for dubaitennistickets.com).
+        """
+        channel, created = cls.objects.get_or_create(
+            domain='dubaitennistickets.com',
+            defaults={
+                'name': 'Dubai Tennis Tickets',
+                'currency': 'USD',
+                'is_active': True,
+            }
+        )
+        return channel
+
+
+# =============================================================================
+# ORDER MODEL
+# =============================================================================
 
 
 class Order(models.Model):
@@ -29,6 +110,8 @@ class Order(models.Model):
 
     IMMUTABLE FIELDS (after creation):
     - total_amount: Frozen financial total, derived from OrderItem.subtotal
+    - currency: ISO 4217 currency code from SalesChannel
+    - stripe_amount_cents: Amount in smallest currency unit for Stripe
     - order_number: Unique identifier, never changes
     """
 
@@ -42,6 +125,16 @@ class Order(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     order_number = models.CharField(max_length=20, unique=True, editable=False)
+
+    # Sales channel reference (for currency determination)
+    sales_channel = models.ForeignKey(
+        SalesChannel,
+        on_delete=models.PROTECT,
+        null=True,  # Allow null for backwards compatibility with existing orders
+        blank=True,
+        related_name='orders',
+        help_text='Sales channel that originated this order'
+    )
 
     # Customer information (for both guest and authenticated users)
     user = models.ForeignKey(
@@ -67,7 +160,12 @@ class Order(models.Model):
     currency = models.CharField(
         max_length=3,
         default='USD',
-        help_text='Currency code (ISO 4217)'
+        validators=[RegexValidator(r'^[A-Z]{3}$', 'Must be 3-letter ISO 4217 code')],
+        help_text='FROZEN: ISO 4217 currency code. Set from SalesChannel at creation.'
+    )
+    stripe_amount_cents = models.PositiveIntegerField(
+        default=0,
+        help_text='FROZEN: Amount in smallest currency unit (cents). Used for Stripe validation.'
     )
     status = models.CharField(
         max_length=20,
@@ -134,8 +232,30 @@ class Order(models.Model):
         The total_amount is frozen at order creation time.
         """
         self.total_amount = sum(item.subtotal for item in self.items.all())
-        self.save(update_fields=['total_amount'])
+        self.stripe_amount_cents = self._calculate_stripe_amount_cents()
+        self.save(update_fields=['total_amount', 'stripe_amount_cents'])
         return self.total_amount
+
+    def _calculate_stripe_amount_cents(self) -> int:
+        """
+        Calculate amount in smallest currency unit for Stripe.
+
+        For USD, EUR, GBP, AED: multiply by 100 (cents).
+        For zero-decimal currencies (JPY, etc): no multiplication needed.
+
+        Returns:
+            Amount in smallest currency unit (integer)
+        """
+        # Zero-decimal currencies (no cents)
+        ZERO_DECIMAL_CURRENCIES = {'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF',
+                                   'KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND',
+                                   'VUV', 'XAF', 'XOF', 'XPF'}
+
+        if self.currency.upper() in ZERO_DECIMAL_CURRENCIES:
+            return int(self.total_amount)
+
+        # Standard currencies: multiply by 100
+        return int(self.total_amount * 100)
 
     @property
     def total_tickets(self):
