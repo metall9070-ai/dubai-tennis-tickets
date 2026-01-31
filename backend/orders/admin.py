@@ -7,11 +7,58 @@ This prevents accidental modification of historical order data.
 
 Catalog prices (in TicketCategory) can be changed freely.
 Order prices (in OrderItem) are FROZEN at creation time.
+
+CURRENCY ARCHITECTURE:
+- SalesChannel.currency determines order currency (Variant 1)
+- Order.currency is FROZEN at creation and cannot be changed
+- Order.stripe_amount_cents is FROZEN and used for Stripe validation
 """
 
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Order, OrderItem
+from .models import Order, OrderItem, SalesChannel
+
+
+# =============================================================================
+# SALES CHANNEL ADMIN
+# =============================================================================
+
+@admin.register(SalesChannel)
+class SalesChannelAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for SalesChannel model.
+
+    Currency can be changed for future orders but will NOT affect existing orders.
+    """
+
+    list_display = ['name', 'domain', 'currency', 'is_active', 'created_at']
+    list_filter = ['currency', 'is_active']
+    search_fields = ['name', 'domain']
+    ordering = ['name']
+
+    readonly_fields = ['created_at', 'updated_at']
+
+    fieldsets = (
+        ('Channel Information', {
+            'fields': ('name', 'domain', 'is_active'),
+        }),
+        ('Currency Configuration', {
+            'fields': ('currency',),
+            'description': format_html(
+                '<strong>Note:</strong> Changing currency here affects FUTURE orders only. '
+                'Existing orders retain their original currency (immutable).'
+            )
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+# =============================================================================
+# ORDER ITEM INLINE
+# =============================================================================
 
 
 class OrderItemInline(admin.TabularInline):
@@ -54,6 +101,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     IMMUTABLE FIELDS (B6):
     - total_amount: Frozen financial total
+    - currency: Frozen ISO 4217 currency code
+    - stripe_amount_cents: Frozen amount for Stripe
     - order_number: Unique identifier
     - All OrderItem data (via inline)
 
@@ -64,16 +113,16 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_display = [
         'order_number', 'name', 'email', 'total_amount_display',
-        'status', 'total_tickets', 'created_at'
+        'currency', 'status', 'total_tickets', 'created_at'
     ]
-    list_filter = ['status', 'created_at']
+    list_filter = ['status', 'currency', 'sales_channel', 'created_at']
     search_fields = ['order_number', 'name', 'email', 'phone']
     ordering = ['-created_at']
 
     # FROZEN: These fields cannot be modified
     readonly_fields = [
-        'id', 'order_number',
-        'total_amount',  # B6: FROZEN financial total
+        'id', 'order_number', 'sales_channel',
+        'total_amount', 'currency', 'stripe_amount_cents',  # B6: FROZEN financial data
         'created_at', 'updated_at', 'paid_at',
         'user', 'total_tickets_display'
     ]
@@ -82,7 +131,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Order Information', {
-            'fields': ('id', 'order_number', 'status', 'user'),
+            'fields': ('id', 'order_number', 'status', 'sales_channel', 'user'),
             'description': 'Order identifier and status. Status can be updated.'
         }),
         ('Customer', {
@@ -90,11 +139,11 @@ class OrderAdmin(admin.ModelAdmin):
             'description': 'Customer contact information. Can be corrected if needed.'
         }),
         ('Financial Summary (FROZEN - B6)', {
-            'fields': ('total_amount', 'total_tickets_display', 'paid_at'),
+            'fields': ('total_amount', 'currency', 'stripe_amount_cents', 'total_tickets_display', 'paid_at'),
             'description': format_html(
                 '<strong style="color: #c00;">WARNING:</strong> '
-                'Financial data is FROZEN at order creation. '
-                'Changing catalog prices will NOT affect this order.'
+                'Financial data (amount, currency) is FROZEN at order creation. '
+                'Cannot be changed. Used for Stripe validation.'
             )
         }),
         ('Timestamps', {
@@ -112,8 +161,8 @@ class OrderAdmin(admin.ModelAdmin):
     total_tickets_display.short_description = 'Total Tickets'
 
     def total_amount_display(self, obj):
-        """Display total with currency symbol."""
-        return f"${obj.total_amount:,.2f}"
+        """Display total with currency code."""
+        return f"{obj.currency} {obj.total_amount:,.2f}"
     total_amount_display.short_description = 'Total'
     total_amount_display.admin_order_field = 'total_amount'
 

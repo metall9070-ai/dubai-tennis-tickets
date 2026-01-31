@@ -19,7 +19,14 @@ CRITICAL SECURITY:
 - Order is marked PAID ONLY via webhook
 - NEVER trust success page or query params for payment confirmation
 - Webhook signature is ALWAYS validated
-- Amount is ALWAYS validated against order total
+- Amount is validated: session.amount_total == order.stripe_amount_cents
+- Currency is validated: session.currency == order.currency
+
+CURRENCY ARCHITECTURE (Variant 1):
+- Currency is set from SalesChannel at order creation
+- order.currency and order.stripe_amount_cents are FROZEN
+- Stripe checkout uses these frozen values
+- Webhook validates BOTH amount AND currency match
 """
 
 import logging
@@ -53,6 +60,7 @@ def _create_stripe_session_for_order(order: Order) -> stripe.checkout.Session:
 
     Uses idempotency key to prevent duplicate sessions.
     Prices are taken from server-side order data ONLY.
+    Currency and amount are from FROZEN order fields.
 
     Args:
         order: Order model instance with items prefetched
@@ -64,11 +72,12 @@ def _create_stripe_session_for_order(order: Order) -> stripe.checkout.Session:
         stripe.error.StripeError: If Stripe API fails
     """
     # Build line items from ORDER data (never trust client)
+    # Currency is FROZEN from order creation (set by SalesChannel)
     line_items = []
     for item in order.items.all():
         line_items.append({
             'price_data': {
-                'currency': order.currency.lower(),
+                'currency': order.currency.lower(),  # FROZEN currency
                 'unit_amount': int(item.unit_price * 100),  # Stripe uses cents
                 'product_data': {
                     'name': f"{item.event_title} - {item.category_name}",
@@ -92,7 +101,9 @@ def _create_stripe_session_for_order(order: Order) -> stripe.checkout.Session:
         metadata={
             'order_id': str(order.id),
             'order_number': order.order_number,
-            'expected_amount': str(int(order.total_amount * 100)),  # Store for verification
+            # Store FROZEN values for webhook verification
+            'expected_amount_cents': str(order.stripe_amount_cents),
+            'expected_currency': order.currency,
         },
         payment_intent_data={
             'metadata': {
@@ -372,8 +383,9 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
     SECURITY VALIDATIONS:
     1. Order exists and is in valid status
     2. payment_status == 'paid'
-    3. Amount matches order total
-    4. Idempotency: already paid orders are skipped
+    3. Amount matches order.stripe_amount_cents (FROZEN)
+    4. Currency matches order.currency (FROZEN)
+    5. Idempotency: already paid orders are skipped
 
     Args:
         session: Stripe Checkout Session object
@@ -387,7 +399,7 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
     payment_intent_id = session.get('payment_intent')
     payment_status = session.get('payment_status')
     amount_total = session.get('amount_total')  # In cents
-    currency = session.get('currency', 'usd').upper()
+    session_currency = session.get('currency', 'usd').upper()
 
     if not order_id:
         logger.error(f"Webhook missing order_id in metadata: session={session.get('id')}, event={event_id}")
@@ -396,7 +408,7 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
     logger.info(
         f"Processing webhook for order {order_id}: "
         f"payment_intent={payment_intent_id}, status={payment_status}, "
-        f"amount={amount_total}, event={event_id}"
+        f"amount={amount_total}, currency={session_currency}, event={event_id}"
     )
 
     # CRITICAL: Verify payment is actually completed
@@ -434,15 +446,24 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
                 )
                 return HttpResponse(status=200)
 
-            # AMOUNT VALIDATION: Verify amount matches order total
-            expected_amount = int(order.total_amount * 100)  # Convert to cents
+            # CURRENCY VALIDATION: Verify currency matches order (FROZEN)
+            if session_currency != order.currency:
+                logger.error(
+                    f"CURRENCY MISMATCH for order {order.order_number}! "
+                    f"Expected: {order.currency}, Received: {session_currency}, event={event_id}"
+                )
+                # SECURITY: Do NOT mark as paid - this could indicate fraud
+                return HttpResponse(status=200)
+
+            # AMOUNT VALIDATION: Verify amount matches order.stripe_amount_cents (FROZEN)
+            # Use stripe_amount_cents if available, fallback for existing orders
+            expected_amount = order.stripe_amount_cents if order.stripe_amount_cents else int(order.total_amount * 100)
             if amount_total != expected_amount:
                 logger.error(
                     f"AMOUNT MISMATCH for order {order.order_number}! "
                     f"Expected: {expected_amount}, Received: {amount_total}, event={event_id}"
                 )
-                # This is a serious issue - log but still return 200 to acknowledge
-                # In production, you might want to flag this order for review
+                # SECURITY: Do NOT mark as paid - this could indicate fraud
                 return HttpResponse(status=200)
 
             # ALL CHECKS PASSED - Update order status
@@ -451,7 +472,10 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
             order.paid_at = timezone.now()
             order.save(update_fields=['status', 'payment_intent_id', 'paid_at', 'updated_at'])
 
-            logger.info(f"Order {order.order_number} marked as PAID, event={event_id}")
+            logger.info(
+                f"Order {order.order_number} marked as PAID "
+                f"({order.currency} {order.total_amount}), event={event_id}"
+            )
 
         # Send PAID notifications (outside transaction to avoid blocking)
         try:
