@@ -59,32 +59,58 @@ const Checkout: React.FC<CheckoutProps> = ({
 
     setIsLoading(true);
 
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
     try {
-      const response = await fetch('/api/create-checkout-session', {
+      // Create order in backend for each cart item
+      // For simplicity, we'll create orders for all items and redirect to Stripe for the first one
+      const orderPromises = cart.map(item =>
+        fetch(`${API_BASE_URL}/api/orders/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            event_id: parseInt(item.id.split('-')[0]),
+            category_id: parseInt(item.id.split('-')[1]),
+            quantity: item.quantity,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            comments: formData.comments,
+          }),
+        }).then(res => res.json())
+      );
+
+      const orders = await Promise.all(orderPromises);
+      const firstOrder = orders[0];
+
+      if (!firstOrder.order?.id) {
+        throw new Error(firstOrder.error || 'Failed to create order');
+      }
+
+      // Create Stripe checkout session
+      const stripeResponse = await fetch(`${API_BASE_URL}/api/stripe/create-checkout-session/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          cart,
-          customerInfo: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            comments: formData.comments,
-          },
+          order_id: firstOrder.order.id,
         }),
       });
 
-      const data = await response.json();
+      const stripeData = await stripeResponse.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Payment failed');
+      if (!stripeResponse.ok) {
+        throw new Error(stripeData.error || 'Payment failed');
       }
 
-      if (data.url) {
+      if (stripeData.checkout_url) {
+        // Clear cart before redirect
+        setCart([]);
         // Redirect to Stripe Checkout
-        window.location.href = data.url;
+        window.location.href = stripeData.checkout_url;
       } else {
         throw new Error('No checkout URL returned');
       }
@@ -361,21 +387,6 @@ const Checkout: React.FC<CheckoutProps> = ({
                     </label>
                   </div>
 
-                  {/* TEMPORARY PLACEHOLDER - Remove when ready to go live */}
-                  <div className="w-full py-4 md:py-5 rounded-[20px] md:rounded-[24px] text-lg md:text-xl font-semibold bg-[#f5a623] text-white flex items-center justify-center space-x-3">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Coming Soon</span>
-                  </div>
-                  <p className="text-center text-[13px] text-[#86868b] mt-4">
-                    Online payment will be available shortly. For immediate booking, please contact us at{' '}
-                    <a href="mailto:support@dubaitennistickets.com" className="text-[#1e824c] underline hover:text-[#166d3e]">
-                      support@dubaitennistickets.com
-                    </a>
-                  </p>
-                  {/*
-                  ORIGINAL BUTTON - Uncomment when ready to go live:
                   <button
                     onClick={handlePayment}
                     disabled={!agree || !formData.name || !formData.email || !formData.phone || isLoading}
@@ -395,12 +406,11 @@ const Checkout: React.FC<CheckoutProps> = ({
                       </>
                     ) : (
                       <>
-                        <span>Pay Order</span>
+                        <span>Go to Checkout</span>
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                       </>
                     )}
                   </button>
-                  */}
                 </section>
               </>
             )}
