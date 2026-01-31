@@ -6,6 +6,66 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
+const facilities = [
+  {
+    icon: "🍽️",
+    title: "Food & Beverage",
+    description: "Multiple restaurants, cafes, and bars throughout the venue. International cuisine, premium dining options, and quick refreshment stands."
+  },
+  {
+    icon: "🚻",
+    title: "Restrooms",
+    description: "Clean, well-maintained facilities located throughout the stadium. Accessible restrooms available on all levels."
+  },
+  {
+    icon: "🛍️",
+    title: "Official Merchandise",
+    description: "Tournament shop with official Dubai Tennis merchandise, player apparel, and exclusive souvenirs."
+  },
+  {
+    icon: "📶",
+    title: "Free WiFi",
+    description: "Complimentary high-speed WiFi available throughout the venue for all ticket holders."
+  },
+  {
+    icon: "🏧",
+    title: "ATM & Currency",
+    description: "ATM machines available on-site. Most vendors accept credit cards and Apple Pay."
+  },
+  {
+    icon: "🩺",
+    title: "First Aid",
+    description: "Medical stations staffed with trained personnel. Located near main entrances and VIP areas."
+  }
+];
+
+const transportOptions = [
+  {
+    mode: "Metro",
+    icon: "🚇",
+    details: "Take the Green Line to GGICO station. 5-minute walk to venue. Trains run every 5-10 minutes.",
+    tip: "Most convenient option during peak hours"
+  },
+  {
+    mode: "Taxi / Ride-Share",
+    icon: "🚕",
+    details: "Uber, Careem, and taxis available. Drop-off point at Gate 1. Dedicated pickup area after matches.",
+    tip: "Book in advance for finals matches"
+  },
+  {
+    mode: "Car / Parking",
+    icon: "🚗",
+    details: "On-site parking available (limited). Additional parking at nearby Dubai Festival City Mall with shuttle.",
+    tip: "Arrive 90 minutes early for parking"
+  },
+  {
+    mode: "Hotel Shuttle",
+    icon: "🚌",
+    details: "Many nearby hotels offer complimentary shuttle service to the venue during tournament dates.",
+    tip: "Check with your hotel concierge"
+  }
+];
+
 export default function VenueClient() {
   const router = useRouter();
 
@@ -17,65 +77,303 @@ export default function VenueClient() {
     <div className="min-h-screen bg-[#f5f5f7]">
       <Navbar />
 
-      <section className="pt-16 pb-12 bg-white border-b border-black/5">
-        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-          <Breadcrumbs items={breadcrumbItems} currentPage="Venue" />
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d1d1f] mt-6">
-            Venue & Directions
-          </h1>
-          <p className="text-lg text-[#86868b] mt-4 max-w-2xl">
-            Dubai Duty Free Tennis Stadium at Aviation Club
-          </p>
+      {/* Hero Section */}
+      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2000&auto=format&fit=crop"
+          alt="Dubai Duty Free Tennis Stadium aerial view"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
+
+        <div className="absolute top-0 left-0 right-0 z-10" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 3.5rem)' }}>
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+            <Breadcrumbs items={breadcrumbItems} currentPage="Venue & Directions" light />
+          </div>
+        </div>
+
+        <div className="relative z-10 h-full flex items-end">
+          <div className="container mx-auto px-4 sm:px-6 max-w-[980px] pb-12">
+            <h1 className="text-[40px] md:text-[56px] font-bold tracking-tight text-white mb-4">
+              Dubai Duty Free<br />Tennis Stadium
+            </h1>
+            <p className="text-xl text-white/80 max-w-xl">
+              The iconic home of Dubai Tennis Championships since 1993.
+              Aviation Club, Al Garhoud, Dubai.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="py-12 md:py-20">
+      {/* Quick Info */}
+      <section className="py-8 bg-white border-b border-[#d2d2d7]">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-[24px] p-6 md:p-8 border border-black/5">
-              <h2 className="text-2xl font-bold text-[#1d1d1f] mb-4">Location</h2>
-              <p className="text-[#424245] mb-4">
-                <strong>Dubai Duty Free Tennis Stadium</strong><br />
-                Aviation Club Tennis Centre<br />
-                Al Garhoud, Dubai<br />
-                United Arab Emirates
-              </p>
-              <p className="text-[#86868b] text-sm">
-                10 minutes from Dubai International Airport
-              </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">5,000</p>
+              <p className="text-sm text-[#86868b]">Seat Capacity</p>
             </div>
-
-            <div className="bg-white rounded-[24px] p-6 md:p-8 border border-black/5">
-              <h2 className="text-2xl font-bold text-[#1d1d1f] mb-4">Getting There</h2>
-              <ul className="space-y-3 text-[#424245]">
-                <li className="flex items-start">
-                  <span className="font-semibold w-20 flex-shrink-0">Metro:</span>
-                  <span>GGICO Station (Green Line)</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-semibold w-20 flex-shrink-0">Taxi:</span>
-                  <span>~15 mins from Downtown Dubai</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-semibold w-20 flex-shrink-0">Parking:</span>
-                  <span>On-site parking available</span>
-                </li>
-              </ul>
+            <div>
+              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">1993</p>
+              <p className="text-sm text-[#86868b]">Established</p>
             </div>
+            <div>
+              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">10 min</p>
+              <p className="text-sm text-[#86868b]">From Airport</p>
+            </div>
+            <div>
+              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">Open-Air</p>
+              <p className="text-sm text-[#86868b]">Venue Type</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="bg-white rounded-[24px] p-6 md:p-8 border border-black/5 md:col-span-2">
-              <h2 className="text-2xl font-bold text-[#1d1d1f] mb-4">Stadium Facilities</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {['5,000 Capacity', 'VIP Lounges', 'Food Courts', 'Pro Shop', 'Air Conditioning', 'Practice Courts', 'Media Centre', 'First Aid'].map((facility) => (
-                  <div key={facility} className="flex items-center">
-                    <svg className="w-5 h-5 text-[#1e824c] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-sm text-[#424245]">{facility}</span>
-                  </div>
-                ))}
+      {/* About the Venue */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-6">
+                A Legendary Tennis Venue
+              </h2>
+              <div className="space-y-4 text-[#86868b] leading-relaxed">
+                <p>
+                  The Dubai Duty Free Tennis Stadium at the Aviation Club is one of the most
+                  prestigious tennis venues in the world. Since hosting its first tournament in 1993,
+                  it has witnessed countless memorable moments in tennis history.
+                </p>
+                <p>
+                  The intimate open-air stadium offers spectators an unparalleled viewing experience,
+                  with every seat providing excellent sightlines to Centre Court. The venue's unique
+                  atmosphere combines world-class sporting facilities with the luxury and hospitality
+                  that Dubai is famous for.
+                </p>
+                <p>
+                  <strong className="text-[#1d1d1f]">Roger Federer</strong> holds the record for most titles here
+                  with 8 championships, cementing the stadium's reputation as one of his favorite venues
+                  on the ATP Tour.
+                </p>
               </div>
             </div>
+            <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=800&auto=format&fit=crop"
+                alt="Dubai Tennis Stadium aerial view"
+                className="rounded-3xl shadow-xl w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Location & Map */}
+      <section className="py-16 bg-[#f5f5f7]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-8 text-center">
+            Location & Directions
+          </h2>
+
+          <div className="bg-white rounded-3xl overflow-hidden shadow-sm mb-8">
+            <div className="aspect-[16/9] bg-[#e8e8ed] flex items-center justify-center">
+              <div className="text-center p-8">
+                <div className="text-4xl mb-4">📍</div>
+                <p className="font-semibold text-[#1d1d1f] mb-2">Dubai Duty Free Tennis Stadium</p>
+                <p className="text-[#86868b]">Aviation Club, Al Garhoud, Dubai, UAE</p>
+                <a
+                  href="https://maps.google.com/?q=25.2340,55.3309"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-4 px-6 py-2 bg-[#1e824c] text-white rounded-full text-sm font-medium hover:bg-[#166d3e] transition-colors"
+                >
+                  Open in Google Maps
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Address Card */}
+          <div className="bg-white rounded-2xl p-6 mb-8">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#1e824c]/10 rounded-xl flex items-center justify-center shrink-0">
+                <span className="text-2xl">🏟️</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-[#1d1d1f] mb-1">Full Address</h3>
+                <p className="text-[#86868b]">
+                  Dubai Duty Free Tennis Stadium<br />
+                  Aviation Club Tennis Centre<br />
+                  Al Garhoud Road, Al Garhoud<br />
+                  Dubai, United Arab Emirates
+                </p>
+                <p className="text-sm text-[#1e824c] mt-2">
+                  GPS: 25.2340° N, 55.3309° E
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Transport Options */}
+          <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">How to Get There</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {transportOptions.map((option, index) => (
+              <div key={index} className="bg-white rounded-2xl p-6">
+                <div className="flex items-start gap-4">
+                  <div className="text-3xl">{option.icon}</div>
+                  <div>
+                    <h4 className="font-bold text-[#1d1d1f] mb-2">{option.mode}</h4>
+                    <p className="text-[#86868b] text-sm mb-2">{option.details}</p>
+                    <p className="text-sm text-[#1e824c] font-medium">💡 {option.tip}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Facilities */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-8 text-center">
+            Stadium Facilities
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {facilities.map((facility, index) => (
+              <div key={index} className="bg-[#f5f5f7] rounded-2xl p-6">
+                <div className="text-3xl mb-4">{facility.icon}</div>
+                <h3 className="font-bold text-[#1d1d1f] mb-2">{facility.title}</h3>
+                <p className="text-sm text-[#86868b]">{facility.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Weather & What to Bring */}
+      <section className="py-16 bg-[#f5f5f7]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Weather */}
+            <div className="bg-white rounded-3xl p-8">
+              <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">☀️ February Weather</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
+                  <span className="text-[#86868b]">Average High</span>
+                  <span className="font-semibold text-[#1d1d1f]">25°C / 77°F</span>
+                </div>
+                <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
+                  <span className="text-[#86868b]">Average Low</span>
+                  <span className="font-semibold text-[#1d1d1f]">15°C / 59°F</span>
+                </div>
+                <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
+                  <span className="text-[#86868b]">Rainfall</span>
+                  <span className="font-semibold text-[#1d1d1f]">Rare</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[#86868b]">Conditions</span>
+                  <span className="font-semibold text-[#1e824c]">Ideal for tennis</span>
+                </div>
+              </div>
+            </div>
+
+            {/* What to Bring */}
+            <div className="bg-white rounded-3xl p-8">
+              <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">🎒 What to Bring</h3>
+              <ul className="space-y-3">
+                {['Sunscreen and sunglasses', 'Hat or cap for day sessions', 'Light jacket for evening matches', 'Comfortable walking shoes', 'Phone charger / power bank', 'Your printed or digital ticket'].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-[#1d1d1f]">
+                    <span className="w-6 h-6 bg-[#1e824c]/10 rounded-full flex items-center justify-center text-xs">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nearby Hotels */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-4 text-center">
+            Nearby Hotels
+          </h2>
+          <p className="text-center text-[#86868b] mb-8 max-w-2xl mx-auto">
+            Recommended accommodations within 15 minutes of the stadium
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[#f5f5f7] rounded-2xl p-6">
+              <div className="text-sm text-[#1e824c] font-medium mb-2">5-Star • 5 min</div>
+              <h3 className="font-bold text-[#1d1d1f] mb-2">Le Meridien Dubai</h3>
+              <p className="text-sm text-[#86868b]">Adjacent to the venue with direct access. Official tournament hotel.</p>
+            </div>
+            <div className="bg-[#f5f5f7] rounded-2xl p-6">
+              <div className="text-sm text-[#1e824c] font-medium mb-2">5-Star • 10 min</div>
+              <h3 className="font-bold text-[#1d1d1f] mb-2">Park Hyatt Dubai</h3>
+              <p className="text-sm text-[#86868b]">Luxury waterfront resort at Dubai Creek. Shuttle service available.</p>
+            </div>
+            <div className="bg-[#f5f5f7] rounded-2xl p-6">
+              <div className="text-sm text-[#1e824c] font-medium mb-2">5-Star • 15 min</div>
+              <h3 className="font-bold text-[#1d1d1f] mb-2">InterContinental Festival City</h3>
+              <p className="text-sm text-[#86868b]">Modern hotel at Festival City Mall with excellent dining options.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 bg-[#1d1d1f] text-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px] text-center">
+          <h2 className="text-[32px] font-bold mb-4">Experience World-Class Tennis</h2>
+          <p className="text-lg text-white/70 mb-8 max-w-xl mx-auto">
+            Book your seats at Dubai Duty Free Tennis Stadium for an unforgettable experience.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => router.push('/')}
+              className="px-8 py-4 bg-[#1e824c] text-white font-semibold rounded-full hover:bg-[#166d3e] transition-colors"
+            >
+              Browse All Tickets
+            </button>
+            <button
+              onClick={() => router.push('/seating-guide')}
+              className="px-8 py-4 bg-white text-[#1d1d1f] font-semibold rounded-full hover:bg-white/90 transition-colors"
+            >
+              View Seating Guide
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Links */}
+      <section className="py-12 bg-[#f5f5f7]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button
+              onClick={() => router.push('/seating-guide')}
+              className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
+            >
+              <h3 className="font-semibold text-[#1d1d1f] mb-2">Seating Guide</h3>
+              <p className="text-sm text-[#86868b]">Compare seating categories and prices</p>
+            </button>
+            <button
+              onClick={() => router.push('/faq')}
+              className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
+            >
+              <h3 className="font-semibold text-[#1d1d1f] mb-2">FAQ</h3>
+              <p className="text-sm text-[#86868b]">Common questions about the event</p>
+            </button>
+            <button
+              onClick={() => router.push('/tournament')}
+              className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
+            >
+              <h3 className="font-semibold text-[#1d1d1f] mb-2">Tournament Info</h3>
+              <p className="text-sm text-[#86868b]">History and champions of Dubai Tennis</p>
+            </button>
           </div>
         </div>
       </section>
