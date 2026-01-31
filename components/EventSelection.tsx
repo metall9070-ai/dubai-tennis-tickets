@@ -143,7 +143,6 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setShowBuyForm(false);
   };
 
   const handlePlus = () => setTicketCount(prev => Math.min(prev + 1, Math.min(4, selectedCategory?.seatsLeft || 4)));
@@ -469,21 +468,12 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     </p>
                   </div>
 
-                  <div className="space-y-3">
-                    <button
-                      onClick={handleAddToCart}
-                      className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
-                    >
-                      Buy Now
-                    </button>
-                    <button
-                      onClick={handleAddToCart}
-                      className="w-full py-3 md:py-4 bg-white text-[#1d1d1f] font-semibold rounded-[16px] md:rounded-[20px] border-2 border-[#d2d2d7] hover:border-[#86868b] transition-all transform active:scale-[0.98] text-[14px] md:text-[16px] flex items-center justify-center space-x-2"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                      <span>Add to Cart</span>
-                    </button>
-                  </div>
+                  <button
+                    onClick={handleAddToCart}
+                    className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
+                  >
+                    Confirm Order
+                  </button>
                 </>
               ) : (
                 <div className="text-center py-4 md:py-6">
