@@ -174,29 +174,3 @@ class OrderListSerializer(serializers.ModelSerializer):
         if hasattr(obj, '_total_tickets'):
             return obj._total_tickets or 0
         return obj.items.aggregate(total=Sum('quantity'))['total'] or 0
-
-
-# =============================================================================
-# INTERNAL WEBHOOK SERIALIZERS (not for public API)
-# =============================================================================
-
-class MarkPaidSerializer(serializers.Serializer):
-    """
-    Serializer for internal mark-paid endpoint.
-    Used by webhook to mark order as paid after successful payment.
-
-    NOT exposed in browsable API.
-    """
-
-    payment_intent_id = serializers.CharField(
-        max_length=255,
-        min_length=3,
-        help_text='Stripe PaymentIntent ID (e.g., pi_...)'
-    )
-
-    def validate_payment_intent_id(self, value):
-        """Validate payment_intent_id format."""
-        value = value.strip()
-        if not value:
-            raise serializers.ValidationError('payment_intent_id is required.')
-        return value
