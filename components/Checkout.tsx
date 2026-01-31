@@ -59,7 +59,13 @@ const Checkout: React.FC<CheckoutProps> = ({
 
     setIsLoading(true);
 
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+
+    if (!API_BASE_URL) {
+      alert('Configuration error: API URL not set');
+      setIsLoading(false);
+      return;
+    }
 
     try {
       // Create order in backend for each cart item
