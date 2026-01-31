@@ -71,9 +71,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   'grandstand-upper': '#4A69BD',
 };
 
-// URL фоновых изображений
-const WTA_BACKGROUND_URL = 'https://mapsapi.tmol.co/maps/geometry/image/61/19/611944?removeFilters=ISM_Shadow&tmSansFonts=true&app=PRD1741_ICCP-FE';
-const ATP_BACKGROUND_URL = 'https://mapsapi.tmol.co/maps/geometry/image/61/19/611934?removeFilters=ISM_Shadow&tmSansFonts=true&app=PRD1741_ICCP-FE';
+// URL фоновых изображений (локальные копии для надежной загрузки на мобильных)
+const WTA_BACKGROUND_URL = '/images/wta-seating-bg.png';
+const ATP_BACKGROUND_URL = '/images/atp-seating-bg.png';
 
 const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
   hoveredCategory,
