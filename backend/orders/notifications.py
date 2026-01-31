@@ -4,7 +4,7 @@ Sends notifications via Telegram (admin) and Email (admin + customer).
 
 NOTIFICATION FLOW:
 1. Order CREATED -> Telegram to ADMIN + Email to ADMIN + Email to CUSTOMER
-2. Order PAID (webhook) -> Telegram to ADMIN + Email to CUSTOMER
+2. Order PAID (webhook) -> Telegram to ADMIN + Email to ADMIN + Email to CUSTOMER
 
 EMAIL: Uses Resend API (HTTP) instead of SMTP - works on Railway where SMTP is blocked.
 TEMPLATES: Customer emails use templates from backend/emails/*.txt
@@ -303,6 +303,7 @@ def notify_order_paid(order) -> dict:
 
     Sends to:
     - Telegram: Admin notification that payment is confirmed
+    - Email: Admin notification that payment is confirmed
     - Email: Customer confirmation (using order_paid.txt template)
 
     Args:
@@ -313,6 +314,7 @@ def notify_order_paid(order) -> dict:
     """
     results = {
         'telegram_admin': False,
+        'email_admin': False,
         'email_customer': False
     }
 
@@ -341,6 +343,40 @@ def notify_order_paid(order) -> dict:
 """
     results['telegram_admin'] = telegram_notifier.send_message(telegram_message.strip())
 
+    # Email to Admin - Payment Confirmation
+    if email_notifier.admin_email:
+        admin_subject = f"[ОПЛАЧЕН] Заказ #{order.order_number} - Оплата подтверждена"
+        admin_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif;">
+            <h2 style="color: #28a745;">✅ Заказ оплачен!</h2>
+
+            <p><strong>Заказ:</strong> #{order.order_number}</p>
+            <p><strong>Оплачен:</strong> {order.paid_at.strftime('%d.%m.%Y %H:%M') if order.paid_at else 'N/A'}</p>
+
+            <h3>Клиент:</h3>
+            <ul>
+                <li>Имя: {order.name}</li>
+                <li>Email: {order.email}</li>
+                <li>Телефон: {order.phone or 'Не указан'}</li>
+            </ul>
+
+            <h3>Билеты:</h3>
+            {_build_order_items_html(order)}
+
+            <p><strong>Оплачено:</strong> ${order.total_amount} {order.currency}</p>
+            <p><strong>Stripe Payment ID:</strong> {order.payment_intent_id or 'N/A'}</p>
+
+            <p><a href="{admin_url}">Открыть в админке</a></p>
+        </body>
+        </html>
+        """
+        results['email_admin'] = email_notifier.send_email(
+            to_email=email_notifier.admin_email,
+            subject=admin_subject,
+            html_content=admin_html
+        )
+
     # Email to Customer - Payment Confirmation (using template)
     try:
         customer_subject, customer_body = get_order_paid_email(order)
@@ -363,7 +399,8 @@ def notify_order_paid(order) -> dict:
 
     logger.info(
         f"Order PAID notifications for {order.order_number}: "
-        f"telegram={results['telegram_admin']}, email_customer={results['email_customer']}"
+        f"telegram={results['telegram_admin']}, email_admin={results['email_admin']}, "
+        f"email_customer={results['email_customer']}"
     )
     return results
 
