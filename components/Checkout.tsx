@@ -48,8 +48,8 @@ const Checkout: React.FC<CheckoutProps> = ({
       alert('Please enter your email');
       return;
     }
-    if (!formData.phone) {
-      alert('Please enter your phone number');
+    if (!formData.phone || formData.phone.length < 8) {
+      alert('Please enter a valid phone number (at least 8 digits including country code)');
       return;
     }
     if (!agree) {
@@ -75,8 +75,8 @@ const Checkout: React.FC<CheckoutProps> = ({
         quantity: item.quantity,
       }));
 
-      // Clean phone number - remove spaces, dashes, parentheses for E.164 format
-      const cleanPhone = formData.phone.replace(/[\s\-()]/g, '');
+      // Build E.164 phone: add + prefix (user only enters digits)
+      const cleanPhone = '+' + formData.phone.replace(/[^\d]/g, '');
 
       console.log('[Checkout] Creating order with items:', items);
       console.log('[Checkout] Phone (cleaned):', cleanPhone);
@@ -349,15 +349,23 @@ const Checkout: React.FC<CheckoutProps> = ({
                     </div>
                     <div className="flex flex-col md:col-span-2">
                       <label className="text-[13px] font-semibold text-[#86868b] uppercase tracking-widest mb-2 ml-1" htmlFor="phone">Phone Number</label>
-                      <input 
-                        type="tel" 
-                        id="phone" 
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="+971 -- --- ----"
-                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[#1e824c] transition-all outline-none"
-                      />
+                      <div className="flex">
+                        <span className="inline-flex items-center px-4 bg-[#e8e8ed] text-[#1d1d1f] font-semibold rounded-l-[18px] border-r border-[#d2d2d7]">+</span>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={(e) => {
+                            // Only allow digits
+                            const value = e.target.value.replace(/[^\d]/g, '');
+                            setFormData(prev => ({ ...prev, phone: value }));
+                          }}
+                          placeholder="971501234567"
+                          className="flex-1 bg-[#f5f5f7] border-0 rounded-r-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[#1e824c] transition-all outline-none"
+                        />
+                      </div>
+                      <p className="text-[11px] text-[#86868b] mt-1.5 ml-1">Enter country code and number (e.g., 971501234567 for UAE)</p>
                     </div>
                     <div className="flex flex-col md:col-span-2">
                       <label className="text-[13px] font-semibold text-[#86868b] uppercase tracking-widest mb-2 ml-1" htmlFor="comments">Order Comments</label>
@@ -425,9 +433,9 @@ const Checkout: React.FC<CheckoutProps> = ({
 
                   <button
                     onClick={handlePayment}
-                    disabled={!agree || !formData.name || !formData.email || !formData.phone || isLoading}
+                    disabled={!agree || !formData.name || !formData.email || formData.phone.length < 8 || isLoading}
                     className={`w-full py-4 md:py-5 rounded-[20px] md:rounded-[24px] text-lg md:text-xl font-semibold transition-all transform active:scale-[0.98] shadow-2xl flex items-center justify-center space-x-3
-                      ${agree && formData.name && formData.email && formData.phone && !isLoading
+                      ${agree && formData.name && formData.email && formData.phone.length >= 8 && !isLoading
                         ? 'bg-[#1e824c] text-white hover:bg-[#166d3e] shadow-[#1e824c]/30'
                         : 'bg-[#ebebed] text-[#86868b] cursor-not-allowed shadow-none'}
                     `}
