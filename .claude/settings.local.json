@@ -68,7 +68,12 @@
       "Bash(.venvScriptsactivate)",
       "Bash(git -C \"c:/Users/ivan_/Downloads/dubai-duty-free-tennis-championships---tickets\" log --oneline -5)",
       "Bash(./venv/Scripts/python:*)",
-      "Bash(./venv/Scripts/pip install:*)"
+      "Bash(./venv/Scripts/pip install:*)",
+      "Bash(.venvScriptspython.exe manage.py makemigrations orders --name add_sales_channel_and_stripe_amount)",
+      "Bash(git checkout:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(grep:*)"
     ]
   }
 }

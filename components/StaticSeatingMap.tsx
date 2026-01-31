@@ -72,8 +72,8 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 // URL фоновых изображений (локальные копии для надежной загрузки на мобильных)
-const WTA_BACKGROUND_URL = '/images/wta-seating-bg.png';
-const ATP_BACKGROUND_URL = '/images/atp-seating-bg.png';
+const WTA_BACKGROUND_URL = '/images/wta-seating-bg.svg';
+const ATP_BACKGROUND_URL = '/images/atp-seating-bg.svg';
 
 const StaticSeatingMap: React.FC<StaticSeatingMapProps> = ({
   hoveredCategory,
