@@ -9,8 +9,13 @@ import TrustSignals from '@/components/TrustSignals';
 import Events from '@/components/Events';
 import WhyBuy from '@/components/WhyBuy';
 import SEOSection from '@/components/SEOSection';
+import type { Event } from '@/lib/types';
 
-export default function HomeClient() {
+interface HomeClientProps {
+  initialEvents: Event[];
+}
+
+export default function HomeClient({ initialEvents }: HomeClientProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
@@ -41,7 +46,7 @@ export default function HomeClient() {
       {isLoaded && (
         <>
           <TrustSignals />
-          <Events onSelectEvent={handleSelectEvent} />
+          <Events onSelectEvent={handleSelectEvent} initialEvents={initialEvents} />
           <WhyBuy />
           <SEOSection
             onFAQ={() => router.push('/faq')}

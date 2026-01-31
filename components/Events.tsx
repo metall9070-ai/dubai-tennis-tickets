@@ -34,14 +34,23 @@ export const eventsData: Event[] = [
 
 interface EventsProps {
   onSelectEvent: (event: any) => void;
+  initialEvents?: Event[];
 }
 
-const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
+  // Use initialEvents from SSR if available, otherwise empty array
+  const [events, setEvents] = useState<Event[]>(initialEvents || []);
+  // Skip loading state if we have SSR data
+  const [isLoading, setIsLoading] = useState(!initialEvents || initialEvents.length === 0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Skip CSR fetch if we already have SSR data
+    if (initialEvents && initialEvents.length > 0) {
+      console.log(`[SSR] Using ${initialEvents.length} events from server-side render`);
+      return;
+    }
+
     let mounted = true;
 
     async function loadEvents() {
@@ -85,7 +94,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent }) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [initialEvents]);
 
   const wtaEvents = events.filter(e => e.type === 'WTA');
   const atpEvents = events.filter(e => e.type === 'ATP');
