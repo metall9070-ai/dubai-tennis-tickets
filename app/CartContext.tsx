@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 const CART_STORAGE_KEY = 'dubai-tennis-cart';
 const CART_VERSION_KEY = 'dubai-tennis-cart-version';
-const CURRENT_CART_VERSION = 2; // Increment when cart format changes
+const CURRENT_CART_VERSION = 3; // Increment when cart format changes (v3: clear sessionStorage too)
 
 export interface CartItem {
   id: string;
@@ -49,11 +49,13 @@ function loadCartFromStorage(): CartItem[] {
     const storedVersion = localStorage.getItem(CART_VERSION_KEY);
     const version = storedVersion ? parseInt(storedVersion, 10) : 0;
 
-    // If version mismatch, clear old cart
+    // If version mismatch, clear old cart AND sessionStorage
     if (version !== CURRENT_CART_VERSION) {
-      console.log(`[Cart] Version mismatch (stored: ${version}, current: ${CURRENT_CART_VERSION}). Clearing old cart.`);
+      console.log(`[Cart] Version mismatch (stored: ${version}, current: ${CURRENT_CART_VERSION}). Clearing old data.`);
       localStorage.removeItem(CART_STORAGE_KEY);
       localStorage.setItem(CART_VERSION_KEY, String(CURRENT_CART_VERSION));
+      // Also clear sessionStorage which may have old event data
+      sessionStorage.removeItem('selectedEvent');
       return [];
     }
 
