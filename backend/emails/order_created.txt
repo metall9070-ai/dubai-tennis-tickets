@@ -1,34 +1,34 @@
-Тема письма:
-Заказ №{{order_number}} на {{event_name}} успешно создан
+Subject:
+Order #{{order_number}} for {{event_name}} successfully created
 
 ---
 
-Здравствуйте, {{client_name}},
+Dear {{client_name}},
 
-Благодарим вас за заказ на мероприятие {{event_name}}.
-Мы получили ваш заказ и забронировали выбранные билеты.
+Thank you for your order for {{event_name}}.
+We have received your order and reserved the selected tickets.
 
-Детали вашего заказа:
+Your order details:
 
-Мероприятие: {{event_name}}
-Дата и время: {{event_date_time}}
-Место проведения: {{venue}}
-Категория билетов: {{category}}
-Количество билетов: {{quantity}}
-Цена за билет: {{price}}
-Общая сумма: {{total_amount}}
+Event: {{event_name}}
+Date and time: {{event_date_time}}
+Venue: {{venue}}
+Ticket category: {{category}}
+Number of tickets: {{quantity}}
+Price per ticket: {{price}}
+Total amount: {{total_amount}}
 
-В данный момент заказ ожидает оплаты.
-После завершения оплаты вы получите подтверждение на эту же электронную почту.
+Your order is currently awaiting payment.
+Once payment is complete, you will receive a confirmation to this email address.
 
-Если у вас возникли вопросы по заказу, мероприятию или условиям —
-вы можете просто ответить на это письмо,
-либо написать нам на почту support@dubaitennistickets.com.
+If you have any questions about your order, the event, or terms and conditions,
+you can simply reply to this email
+or contact us at support@dubaitennistickets.com.
 
-❗ Пожалуйста, при обращении указывайте номер заказа —
-это поможет нам быстрее вам помочь.
+Please include your order number in any correspondence —
+this will help us assist you more quickly.
 
-Мы на связи 24/7.
+We are available 24/7.
 
-С уважением,
-Команда Dubai Tennis Tickets
+Best regards,
+Dubai Tennis Tickets Team
