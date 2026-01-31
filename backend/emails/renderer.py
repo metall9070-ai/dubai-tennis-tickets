@@ -42,9 +42,9 @@ def load_template(template_name: str) -> Tuple[str, str]:
         logger.error(f"Invalid template format in {template_name}: missing --- separator")
         raise ValueError(f"Template {template_name} has invalid format")
 
-    # Extract subject from first part
+    # Extract subject from first part (supports both EN and RU headers)
     subject_part = parts[0].strip()
-    subject_line = subject_part.replace('Тема письма:', '').strip()
+    subject_line = subject_part.replace('Subject:', '').replace('Тема письма:', '').strip()
 
     # Body is the second part
     body = parts[1].strip()
