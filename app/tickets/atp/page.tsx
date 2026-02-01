@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ATP 500 Dubai Tickets 2026 | Men\'s Tournament Feb 23-28',
     description: 'Premium tickets for ATP 500 Dubai. World\'s top men\'s players compete February 23-28, 2026.',
-    images: ['https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1200&auto=format&fit=crop'],
+    images: ['/images/federer-dubai-atp.jpg'],
   },
   alternates: {
     canonical: '/tickets/atp',

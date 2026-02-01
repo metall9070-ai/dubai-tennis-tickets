@@ -90,11 +90,12 @@ export default function ATPTicketsClient({ initialEvents }: ATPTicketsClientProp
       <section className="relative pt-12 pb-16 md:pt-16 md:pb-24 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1920&auto=format&fit=crop"
-            alt="ATP 500 Tennis"
-            className="w-full h-full object-cover opacity-30"
+            src="/images/federer-dubai-atp.jpg"
+            alt="Roger Federer playing at Dubai Duty Free Tennis Championships - ATP 500 Tournament"
+            title="ATP 500 Dubai - World-class tennis at Dubai Duty Free Tennis Stadium"
+            className="w-full h-full object-cover object-top opacity-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1d1d1f]/80 to-[#1d1d1f]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1d1d1f] via-[#1d1d1f]/40 to-transparent" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-[980px]">

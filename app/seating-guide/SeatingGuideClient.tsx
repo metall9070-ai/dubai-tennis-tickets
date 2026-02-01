@@ -56,33 +56,33 @@ export default function SeatingGuideClient() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop"
-          alt="Dubai Tennis Stadium seating guide and court layout"
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
-
-        <div className="absolute top-0 left-0 right-0 z-10" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 3.5rem)' }}>
-          <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-            <Breadcrumbs
-              items={breadcrumbItems}
-              currentPage="Seating Guide"
-              light
-            />
-          </div>
+      <section className="relative pt-12 pb-16 md:pt-16 md:pb-24 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/dubai-tennis-stadium-seating.jpg"
+            alt="Dubai Duty Free Tennis Stadium seating layout and court view"
+            title="Seating Guide - Dubai Tennis Championships Stadium Map"
+            className="w-full h-full object-cover object-top opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1d1d1f] via-[#1d1d1f]/40 to-transparent" />
         </div>
 
-        <div className="relative z-10 h-full flex items-end">
-          <div className="container mx-auto px-4 sm:px-6 max-w-[980px] pb-12">
-            <h1 className="text-[36px] md:text-[56px] font-bold tracking-tight text-white mb-4 leading-tight">
-              Seating Guide<br />
-              <span className="text-white/90">Dubai Tennis Stadium</span>
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <Breadcrumbs items={breadcrumbItems} currentPage="Seating Guide" light />
+
+          <div className="mt-8 md:mt-12 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1e824c] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+              Stadium Map
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+              Seating Guide
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-xl">
-              Find the perfect seats for Dubai Duty Free Tennis Championships 2026.
+            <p className="text-lg md:text-xl text-white/80 max-w-2xl">
+              Dubai Duty Free Tennis Stadium
+            </p>
+            <p className="text-base text-white/60 mt-4 max-w-2xl">
+              Find the perfect seats for Dubai Duty Free Tennis Championships 2026. Compare categories and choose your view.
             </p>
           </div>
         </div>

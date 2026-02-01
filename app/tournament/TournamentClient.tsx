@@ -15,37 +15,45 @@ export default function TournamentClient() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#f5f5f7]">
       <Navbar />
 
-      <main className="flex-1 pb-12 md:pb-20" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 4rem)' }}>
-        <div className="max-w-[980px] mx-auto px-4 sm:px-6">
+      {/* Hero Section */}
+      <section className="relative pt-12 pb-16 md:pt-16 md:pb-24 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/dubai-tennis-stadium-tournament.jpg"
+            alt="Dubai Duty Free Tennis Championships - ATP 500 and WTA 1000 Tournament"
+            title="Dubai Tennis Championships 2026 - World-class tennis event"
+            className="w-full h-full object-cover object-top opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1d1d1f] via-[#1d1d1f]/40 to-transparent" />
+        </div>
 
-          {/* Breadcrumbs */}
-          <div className="mb-8 md:mb-12">
-            <Breadcrumbs
-              items={breadcrumbItems}
-              currentPage="Tournament Info"
-            />
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <Breadcrumbs items={breadcrumbItems} currentPage="Tournament Info" light />
+
+          <div className="mt-8 md:mt-12 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1e824c] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+              Since 1993
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+              Dubai Duty Free Tennis Championships
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 max-w-2xl">
+              February 15-28, 2026 • Dubai Duty Free Tennis Stadium
+            </p>
+            <p className="text-base text-white/60 mt-4 max-w-2xl">
+              One of the most prestigious tennis events in the Middle East. ATP 500 & WTA 1000 tournaments featuring the world's top players.
+            </p>
           </div>
+        </div>
+      </section>
 
-          {/* Tournament Banner Image */}
-          <div className="relative w-full h-[25vh] md:h-[40vh] overflow-hidden rounded-[24px] md:rounded-[32px] mb-8 md:mb-16 shadow-sm border border-black/5">
-            <img
-              src="https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=2000&auto=format&fit=crop"
-              alt="Dubai Duty Free Tennis Stadium"
-              className="w-full h-full object-cover"
-              loading="eager"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-          </div>
-
-          {/* Page Heading */}
-          <h1 className="text-[32px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-6 md:mb-10 leading-tight">
-            Dubai Duty Free Tennis Championships
-          </h1>
-
-          {/* Content Sections */}
+      {/* Content Section */}
+      <section className="py-12 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <article className="prose prose-lg max-w-none text-[#1d1d1f]/90 leading-relaxed font-normal">
             <p className="mb-6 md:mb-8 text-[16px] md:text-[18px]">
               The Dubai Duty Free Tennis Championships is one of the most prestigious and eagerly anticipated sporting events in the United Arab Emirates and a major highlight on the global tennis calendar. Owned and organised by Dubai Duty Free, the tournament is held under the patronage of HH Sheikh Mohammed Bin Rashid Al Maktoum, Vice President and Prime Minister of the UAE and Ruler of Dubai.
@@ -92,7 +100,7 @@ export default function TournamentClient() {
             </div>
           </article>
         </div>
-      </main>
+      </section>
 
       <Footer />
     </div>
