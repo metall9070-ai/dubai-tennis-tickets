@@ -145,7 +145,7 @@ class OrderCreateSerializer(serializers.Serializer):
         Format: +[country code][subscriber number]
         Example: +971501234567
 
-        Regex: ^\+[1-9]\d{7,14}$
+        Regex: ^\\+[1-9]\\d{7,14}$
         - Starts with +
         - First digit is 1-9 (no leading zeros)
         - 8-15 total digits (including country code)
