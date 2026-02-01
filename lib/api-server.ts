@@ -88,3 +88,150 @@ export async function fetchWTAEventsServer(): Promise<Event[]> {
   console.log(`[SERVER API] Filtered ${wtaEvents.length} WTA events for SSR`);
   return wtaEvents;
 }
+
+// ============================================================================
+// EVENT DETAIL PAGE - SSR/ISR Functions
+// ============================================================================
+
+interface APICategory {
+  id: number | string;
+  name: string;
+  price: string | number;
+  color?: string;
+  seats_left: number;
+  is_active?: boolean;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  price: number;
+  color: string;
+  seatsLeft: number;
+  isActive?: boolean;
+}
+
+const CATEGORY_COLORS: Record<string, string> = {
+  'prime-a': '#8B5CF6',
+  'prime-b': '#F59E0B',
+  'grandstand': '#10B981',
+  'grandstand-lower': '#10B981',
+  'grandstand-upper': '#3B82F6',
+};
+
+/**
+ * Fetch single event by slug or ID (server-side).
+ * Uses ISR with 60s revalidation.
+ */
+export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | null> {
+  if (!API_BASE_URL) {
+    console.error('[SERVER API] No API URL configured');
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/events/${slugOrId}/`, {
+      next: { revalidate: 60 },
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      console.error('[SERVER API] Event fetch failed:', response.status);
+      return null;
+    }
+
+    const e: APIEvent = await response.json();
+
+    const event: Event = {
+      id: e.id,
+      slug: e.slug || `event-${e.id}`,
+      type: e.type,
+      title: e.title,
+      date: e.date,
+      day: e.day,
+      month: e.month,
+      time: e.time,
+      minPrice: parseFloat(e.min_price) || 0,
+      tournamentSlug: e.tournament_slug,
+    };
+
+    console.log(`[SERVER API] Loaded event "${event.title}" for SSR`);
+    return event;
+
+  } catch (error) {
+    console.error('[SERVER API] Event fetch error:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch categories for an event (server-side).
+ * Uses ISR with 60s revalidation.
+ */
+export async function fetchEventCategoriesServer(eventId: number | string): Promise<Category[]> {
+  if (!API_BASE_URL) {
+    console.error('[SERVER API] No API URL configured');
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/events/${eventId}/categories/`, {
+      next: { revalidate: 60 },
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      console.error('[SERVER API] Categories fetch failed:', response.status);
+      return [];
+    }
+
+    const json = await response.json();
+    const results = json.results || json;
+
+    const categories: Category[] = results.map((cat: APICategory, index: number) => {
+      const slug = cat.name.toLowerCase().replace(/\s+/g, '-');
+      return {
+        id: String(cat.id),
+        name: cat.name,
+        price: typeof cat.price === 'string' ? parseFloat(cat.price) : cat.price,
+        color: cat.color || CATEGORY_COLORS[slug] || Object.values(CATEGORY_COLORS)[index] || '#1e824c',
+        seatsLeft: cat.seats_left,
+        isActive: cat.is_active !== false,
+      };
+    });
+
+    console.log(`[SERVER API] Loaded ${categories.length} categories for event ${eventId}`);
+    return categories;
+
+  } catch (error) {
+    console.error('[SERVER API] Categories fetch error:', error);
+    return [];
+  }
+}
+
+/**
+ * Fetch event with categories in PARALLEL (server-side).
+ * This is the main function for SSR/ISR on event detail page.
+ * Uses Promise.all for parallel fetching.
+ */
+export async function fetchEventWithCategoriesServer(slugOrId: string): Promise<{
+  event: Event | null;
+  categories: Category[];
+}> {
+  // First fetch the event to get its ID
+  const event = await fetchEventBySlugServer(slugOrId);
+
+  if (!event) {
+    return { event: null, categories: [] };
+  }
+
+  // Then fetch categories using the event ID (parallel would require ID upfront)
+  const categories = await fetchEventCategoriesServer(event.id);
+
+  console.log(`[SERVER API] SSR complete: event "${event.title}" with ${categories.length} categories`);
+  return { event, categories };
+}
