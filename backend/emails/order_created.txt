@@ -10,12 +10,9 @@ We have received your order and reserved the selected tickets.
 
 Your order details:
 
-Event: {{event_name}}
-Date and time: {{event_date_time}}
-Venue: {{venue}}
-Ticket category: {{category}}
-Number of tickets: {{quantity}}
-Price per ticket: {{price}}
+{{order_items}}
+
+Total tickets: {{total_quantity}}
 Total amount: {{total_amount}}
 
 Your order is currently awaiting payment.

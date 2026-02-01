@@ -10,11 +10,9 @@ Your tickets have been successfully paid for and confirmed.
 
 Order details:
 
-Event: {{event_name}}
-Date and time: {{event_date_time}}
-Venue: {{venue}}
-Ticket category: {{category}}
-Number of tickets: {{quantity}}
+{{order_items}}
+
+Total tickets: {{total_quantity}}
 Total amount: {{total_amount}}
 
 You will also receive your electronic payment receipt in a separate email.
