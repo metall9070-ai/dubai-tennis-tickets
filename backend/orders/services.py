@@ -159,6 +159,10 @@ class OrderService:
 
             # Step 3: Check category belongs to the requested event
             if item.category.event_id != item.event_id:
+                logger.warning(
+                    f'Category-event mismatch: category {item.category_id} belongs to '
+                    f'event {item.category.event_id}, but request specified event {item.event_id}'
+                )
                 raise CategoryEventMismatchError(
                     category_id=item.category_id,
                     category_event_id=item.category.event_id,
@@ -170,12 +174,20 @@ class OrderService:
             # - is_active=False: Category is CLOSED (not purchasable)
             # - show_on_frontend=False: Category is SOLD OUT/Legacy (not purchasable)
             if not item.category.is_active:
+                logger.warning(
+                    f'Category not available: category {item.category_id} "{item.category.name}" '
+                    f'is_active=False (event {item.event_id})'
+                )
                 raise CategoryNotAvailableError(
                     category_id=item.category_id,
                     category_name=item.category.name,
                     reason='category is closed'
                 )
             if not item.category.show_on_frontend:
+                logger.warning(
+                    f'Category not available: category {item.category_id} "{item.category.name}" '
+                    f'show_on_frontend=False (event {item.event_id})'
+                )
                 raise CategoryNotAvailableError(
                     category_id=item.category_id,
                     category_name=item.category.name,
