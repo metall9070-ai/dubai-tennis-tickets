@@ -303,14 +303,14 @@ const Checkout: React.FC<CheckoutProps> = ({
 
                     </div>
 
-                    <div className="flex justify-between items-baseline mt-8 pt-6 border-t border-[#f5f5f7]">
+                    <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:justify-between md:items-baseline mt-8 pt-6 border-t border-[#f5f5f7]">
                        <div className="flex items-baseline space-x-2">
-                          <span className="text-[14px] font-semibold text-[#86868b]">Price per ticket:</span>
-                          <span className="text-[16px] font-bold text-[#1d1d1f]">${item.price.toLocaleString()}</span>
+                          <span className="text-[14px] text-[#86868b]">Price per ticket:</span>
+                          <span className="text-[16px] font-semibold text-[#1d1d1f]">${item.price.toLocaleString()}</span>
                        </div>
-                       <div className="flex items-baseline space-x-3">
-                          <span className="text-[14px] font-semibold text-[#86868b]">Total for this day:</span>
-                          <span className="text-2xl md:text-3xl font-bold text-[#1e824c] tracking-tight tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
+                       <div className="flex items-baseline space-x-2">
+                          <span className="text-[14px] text-[#86868b]">Total for this day:</span>
+                          <span className="text-[18px] font-bold text-[#1e824c] tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
                        </div>
                     </div>
                   </div>
