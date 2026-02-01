@@ -68,13 +68,39 @@ class EventNotFoundError(OrderServiceError):
 
 
 class CategoryNotFoundError(OrderServiceError):
-    """Raised when category is not found or inactive."""
-    
-    def __init__(self, category_id: int, event_id: int):
+    """Raised when category does not exist."""
+
+    def __init__(self, category_id: int):
         super().__init__(
-            message=f'Category with ID {category_id} not found or not available for event {event_id}.',
+            message=f'Category with ID {category_id} not found.',
             code='category_not_found',
-            details={'category_id': category_id, 'event_id': event_id}
+            details={'category_id': category_id}
+        )
+
+
+class CategoryEventMismatchError(OrderServiceError):
+    """Raised when category belongs to a different event than requested."""
+
+    def __init__(self, category_id: int, category_event_id: int, requested_event_id: int):
+        super().__init__(
+            message=f'Category {category_id} belongs to event {category_event_id}, not event {requested_event_id}.',
+            code='category_event_mismatch',
+            details={
+                'category_id': category_id,
+                'category_event_id': category_event_id,
+                'requested_event_id': requested_event_id
+            }
+        )
+
+
+class CategoryNotAvailableError(OrderServiceError):
+    """Raised when category exists but is not available for purchase."""
+
+    def __init__(self, category_id: int, category_name: str, reason: str):
+        super().__init__(
+            message=f'Category "{category_name}" is not available: {reason}.',
+            code='category_not_available',
+            details={'category_id': category_id, 'category_name': category_name, 'reason': reason}
         )
 
 
@@ -93,28 +119,30 @@ class OrderService:
         """
         Validate order items without locking.
         Used for initial validation before checkout.
-        
+
         Args:
             items_data: List of dicts with event_id, category_id, quantity
-            
+
         Returns:
             List of validated OrderItemRequest objects
-            
+
         Raises:
             EventNotFoundError: If event not found
-            CategoryNotFoundError: If category not found
+            CategoryNotFoundError: If category does not exist
+            CategoryEventMismatchError: If category belongs to different event
+            CategoryNotAvailableError: If category is deactivated or hidden
             InsufficientSeatsError: If not enough seats (preliminary check)
         """
         validated_items = []
-        
+
         for item_data in items_data:
             item = OrderItemRequest(
                 event_id=item_data['event_id'],
                 category_id=item_data['category_id'],
                 quantity=item_data['quantity']
             )
-            
-            # Validate event exists and is active
+
+            # Step 1: Validate event exists and is active
             try:
                 item.event = Event.objects.select_related('tournament').get(
                     id=item.event_id,
@@ -122,31 +150,48 @@ class OrderService:
                 )
             except Event.DoesNotExist:
                 raise EventNotFoundError(item.event_id)
-            
-            # Validate category exists, belongs to event, and is purchasable
+
+            # Step 2: Fetch category by ID ONLY (no compound query)
+            try:
+                item.category = Category.objects.get(id=item.category_id)
+            except Category.DoesNotExist:
+                raise CategoryNotFoundError(item.category_id)
+
+            # Step 3: Check category belongs to the requested event
+            if item.category.event_id != item.event_id:
+                raise CategoryEventMismatchError(
+                    category_id=item.category_id,
+                    category_event_id=item.category.event_id,
+                    requested_event_id=item.event_id
+                )
+
+            # Step 4: Check category is purchasable
             # CRITICAL: Both is_active AND show_on_frontend must be True
             # - is_active=False: Category is CLOSED (not purchasable)
             # - show_on_frontend=False: Category is SOLD OUT/Legacy (not purchasable)
-            try:
-                item.category = Category.objects.get(
-                    id=item.category_id,
-                    event=item.event,
-                    is_active=True,
-                    show_on_frontend=True
+            if not item.category.is_active:
+                raise CategoryNotAvailableError(
+                    category_id=item.category_id,
+                    category_name=item.category.name,
+                    reason='category is closed'
                 )
-            except Category.DoesNotExist:
-                raise CategoryNotFoundError(item.category_id, item.event_id)
-            
-            # Preliminary availability check (will be rechecked with lock)
+            if not item.category.show_on_frontend:
+                raise CategoryNotAvailableError(
+                    category_id=item.category_id,
+                    category_name=item.category.name,
+                    reason='category is sold out'
+                )
+
+            # Step 5: Preliminary availability check (will be rechecked with lock)
             if item.category.seats_available < item.quantity:
                 raise InsufficientSeatsError(
                     category_name=item.category.name,
                     available=item.category.seats_available,
                     requested=item.quantity
                 )
-            
+
             validated_items.append(item)
-        
+
         return validated_items
     
     @classmethod
