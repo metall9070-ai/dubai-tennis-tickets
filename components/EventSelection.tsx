@@ -264,7 +264,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         <div className="lg:col-span-2 flex flex-col">
           <div className="w-full mb-4 md:mb-6 flex items-center justify-between">
             <h3 className="text-lg md:text-xl font-semibold tracking-tight">Select Seating Area</h3>
-            <span className="text-[9px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-[0.1em] md:tracking-[0.2em] bg-[#f5f5f7] px-2 md:px-3 py-1 rounded-full">Live Availability</span>
+            <span className="text-[10px] md:text-[11px] font-medium text-[#86868b] bg-[#f5f5f7] px-2.5 md:px-3 py-1 rounded-full">Live availability</span>
           </div>
 
           <div className="bg-[#f8f9fb] rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5">
@@ -366,10 +366,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           {cart.length > 0 && (
             <div className="mt-auto p-6 md:p-8 bg-[#1d1d1f] text-white rounded-[24px] md:rounded-[32px] shadow-2xl sticky bottom-4 animate-fadeIn border border-white/10">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/50">Your Cart</span>
+                <span className="text-[11px] md:text-[12px] font-medium text-white/50">Your Cart</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] md:text-[11px] bg-white/10 px-2.5 md:px-3 py-1 rounded-full font-semibold uppercase tracking-wider md:tracking-widest">
-                    {cartTotalItems} {cartTotalItems === 1 ? 'Ticket' : 'Tickets'}
+                  <span className="text-[10px] md:text-[11px] bg-white/10 px-2.5 md:px-3 py-1 rounded-full font-medium">
+                    {cartTotalItems} {cartTotalItems === 1 ? 'ticket' : 'tickets'}
                   </span>
                   <button
                     onClick={() => setCart([])}

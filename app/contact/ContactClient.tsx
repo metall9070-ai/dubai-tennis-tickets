@@ -90,7 +90,7 @@ export default function ContactClient() {
                 <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="flex flex-col">
-                      <label className="text-[11px] md:text-[13px] font-semibold text-[#86868b] uppercase tracking-widest mb-1.5 ml-1">Full Name</label>
+                      <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Full Name</label>
                       <input
                         type="text"
                         required
@@ -99,7 +99,7 @@ export default function ContactClient() {
                       />
                     </div>
                     <div className="flex flex-col">
-                      <label className="text-[11px] md:text-[13px] font-semibold text-[#86868b] uppercase tracking-widest mb-1.5 ml-1">Email Address</label>
+                      <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Email Address</label>
                       <input
                         type="email"
                         required
@@ -109,7 +109,7 @@ export default function ContactClient() {
                     </div>
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-[11px] md:text-[13px] font-semibold text-[#86868b] uppercase tracking-widest mb-1.5 ml-1">Subject</label>
+                    <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Subject</label>
                     <input
                       type="text"
                       required
@@ -118,7 +118,7 @@ export default function ContactClient() {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-[11px] md:text-[13px] font-semibold text-[#86868b] uppercase tracking-widest mb-1.5 ml-1">Message</label>
+                    <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Message</label>
                     <textarea
                       required
                       rows={5}
