@@ -140,19 +140,31 @@ interface APIResponse<T> {
 // ============================================================================
 
 /**
- * Check if a category is SOLD OUT.
- * A category is SOLD OUT if:
- * - is_active === false (admin disabled)
+ * Check if a category is NOT PURCHASABLE (sold out / disabled).
+ *
+ * A category is NOT PURCHASABLE if ANY of these conditions is true:
+ * - is_active === false (admin manually disabled / CLOSED)
+ * - show_on_frontend === false (SOLD OUT / Legacy - visible but disabled)
  * - seats_available === 0 (no seats left)
  *
- * @param isActive - Whether the category is active (from API)
+ * IMPORTANT: show_on_frontend=false does NOT mean hidden.
+ * It means: visible but disabled (greyed out, not clickable, not purchasable)
+ *
+ * @param isActive - Whether the category is active (from API is_active)
  * @param seatsAvailable - Number of available seats (from API)
- * @returns true if the category should be shown as SOLD OUT
+ * @param showOnFrontend - Whether the category is purchasable on frontend (from API show_on_frontend)
+ * @returns true if the category should be shown as SOLD OUT / NOT PURCHASABLE
  */
-export function isSoldOut(isActive: boolean | undefined, seatsAvailable: number): boolean {
-  // If is_active is explicitly false, it's sold out
+export function isSoldOut(
+  isActive: boolean | undefined,
+  seatsAvailable: number,
+  showOnFrontend?: boolean
+): boolean {
+  // If is_active is explicitly false, it's not purchasable (CLOSED)
   if (isActive === false) return true;
-  // If no seats available, it's sold out
+  // If show_on_frontend is explicitly false, it's not purchasable (SOLD OUT / Legacy)
+  if (showOnFrontend === false) return true;
+  // If no seats available, it's not purchasable
   if (seatsAvailable <= 0) return true;
   return false;
 }
@@ -328,10 +340,13 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
  * - If API is unavailable, returns null (UI must show error)
  * - NO fallback to static data
  *
- * VISIBILITY RULES:
- * - show_on_frontend=true: Category appears in UI (may be SOLD OUT or available)
- * - show_on_frontend=false: Legacy category, filtered out entirely
- * - is_active=false OR seats_available=0: Shown as SOLD OUT (but still visible)
+ * VISIBILITY & AVAILABILITY RULES:
+ * - ALL categories are returned (including show_on_frontend=false)
+ * - show_on_frontend=false: Visible but DISABLED (greyed out, not clickable, not purchasable)
+ * - is_active=false OR seats_available=0: Also shown as SOLD OUT
+ *
+ * IMPORTANT: show_on_frontend=false does NOT mean hidden!
+ * It means visible but disabled (sold out / legacy category).
  */
 export async function fetchEventCategories(
   eventId: number | string
@@ -342,6 +357,7 @@ export async function fetchEventCategories(
   color: string;
   seatsLeft: number;
   isActive: boolean;
+  showOnFrontend: boolean;
 }[]>> {
   // No API URL configured
   if (!API_BASE_URL) {
@@ -391,26 +407,25 @@ export async function fetchEventCategories(
 
     console.log(`[API NORMALIZED] categories count: ${categories.length}`);
 
-    // CRITICAL: Filter by show_on_frontend FIRST
-    // Legacy categories (show_on_frontend=false) are hidden entirely from UI
-    // Inactive/sold-out categories (is_active=false OR seats_available=0) are still shown as SOLD OUT
-    const visibleCategories = categories.filter(c => c.show_on_frontend === true);
-
-    const djangoCategories = visibleCategories.map(c => ({
+    // IMPORTANT: Do NOT filter out show_on_frontend=false categories
+    // They should be visible but disabled (greyed out, not clickable, not purchasable)
+    // Frontend uses showOnFrontend flag to determine availability
+    const djangoCategories = categories.map(c => ({
       id: String(c.id),
       name: c.name,
       price: parseFloat(c.price) || 0,
       color: c.color,
       seatsLeft: c.seats_available,
       isActive: c.is_active,
+      showOnFrontend: c.show_on_frontend,
     }));
 
     // Log each category with price source for audit trail
     console.log(`[API] Event ${eventId} categories loaded from Django (SINGLE SOURCE OF TRUTH):`);
-    console.log(`[API] Total: ${categories.length}, Visible (show_on_frontend=true): ${visibleCategories.length}`);
+    console.log(`[API] Total: ${categories.length}`);
     djangoCategories.forEach(c => {
-      const soldOut = isSoldOut(c.isActive, c.seatsLeft);
-      console.log(`[PRICE] Category "${c.name}": $${c.price} ${soldOut ? '(SOLD OUT)' : ''}`);
+      const notPurchasable = isSoldOut(c.isActive, c.seatsLeft, c.showOnFrontend);
+      console.log(`[PRICE] Category "${c.name}": $${c.price} ${notPurchasable ? '(NOT PURCHASABLE)' : ''} [isActive=${c.isActive}, showOnFrontend=${c.showOnFrontend}]`);
     });
 
     return { data: djangoCategories, fallback: false };
