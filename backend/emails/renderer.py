@@ -70,9 +70,36 @@ def render_template(template_text: str, context: Dict[str, Any]) -> str:
     return result
 
 
+def _format_order_item(item, index: int) -> str:
+    """
+    Format a single OrderItem for email display.
+
+    Args:
+        item: OrderItem model instance
+        index: Item number (1-based) for display
+
+    Returns:
+        Formatted string for this item
+    """
+    date_time = f"{item.event_date} {item.event_month} {item.event_day}, {item.event_time}"
+    return f"""Item {index}:
+Event: {item.event_title}
+Date and time: {date_time}
+Venue: {item.venue}
+Category: {item.category_name}
+Quantity: {item.quantity}
+Price per ticket: ${item.unit_price}
+Subtotal: ${item.subtotal}"""
+
+
 def build_order_context(order) -> Dict[str, Any]:
     """
     Build context dictionary from Order instance.
+
+    MULTI-ITEM SUPPORT:
+    - {{order_items}} contains formatted text for ALL items (use this in templates)
+    - {{total_quantity}} is the sum of all item quantities
+    - For subject line compatibility, {{event_name}} uses first item's event title
 
     Args:
         order: Order model instance with items prefetched
@@ -80,24 +107,27 @@ def build_order_context(order) -> Dict[str, Any]:
     Returns:
         Dictionary with all template variables
     """
-    # Get first item for single-item orders, or build summary for multi-item
     items = list(order.items.all())
 
+    # Build formatted order items text for ALL items
     if items:
+        # Format each item with full details
+        formatted_items = []
+        for i, item in enumerate(items, start=1):
+            formatted_items.append(_format_order_item(item, i))
+
+        order_items_text = "\n\n".join(formatted_items)
+
+        # First item data for subject line and backward compatibility
         first_item = items[0]
         event_name = first_item.event_title
-        event_date_time = f"{first_item.event_date} {first_item.event_month} {first_item.event_day}, {first_item.event_time}"
-        venue = first_item.venue
-        category = first_item.category_name
-        quantity = sum(item.quantity for item in items)
-        price = f"${first_item.unit_price}"
+
+        # Calculate totals across all items
+        total_quantity = sum(item.quantity for item in items)
     else:
+        order_items_text = "No items in order."
         event_name = "N/A"
-        event_date_time = "N/A"
-        venue = "N/A"
-        category = "N/A"
-        quantity = 0
-        price = "N/A"
+        total_quantity = 0
 
     # Build FAQ link
     frontend_url = getattr(settings, 'FRONTEND_URL', 'https://dubaitennistickets.com')
@@ -106,12 +136,11 @@ def build_order_context(order) -> Dict[str, Any]:
     return {
         'order_number': order.order_number,
         'client_name': order.name,
+        # For subject line (uses first item's event for brevity)
         'event_name': event_name,
-        'event_date_time': event_date_time,
-        'venue': venue,
-        'category': category,
-        'quantity': quantity,
-        'price': price,
+        # NEW: Full order items listing for email body
+        'order_items': order_items_text,
+        'total_quantity': total_quantity,
         'total_amount': f"${order.total_amount} {order.currency}",
         'faq_link': faq_link,
     }
