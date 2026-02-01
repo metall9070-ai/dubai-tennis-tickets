@@ -70,26 +70,22 @@ def render_template(template_text: str, context: Dict[str, Any]) -> str:
     return result
 
 
-def _format_order_item(item, index: int) -> str:
+def _format_order_item(item) -> str:
     """
     Format a single OrderItem for email display.
 
     Args:
         item: OrderItem model instance
-        index: Item number (1-based) for display
 
     Returns:
-        Formatted string for this item
+        Formatted string for this item (clean, customer-friendly)
     """
     date_time = f"{item.event_date} {item.event_month} {item.event_day}, {item.event_time}"
-    return f"""Item {index}:
-Event: {item.event_title}
-Date and time: {date_time}
-Venue: {item.venue}
+    return f"""{item.event_title}
+{date_time}
+{item.venue}
 Category: {item.category_name}
-Quantity: {item.quantity}
-Price per ticket: ${item.unit_price}
-Subtotal: ${item.subtotal}"""
+Tickets: {item.quantity} × ${item.unit_price} = ${item.subtotal}"""
 
 
 def build_order_context(order) -> Dict[str, Any]:
@@ -113,10 +109,14 @@ def build_order_context(order) -> Dict[str, Any]:
     if items:
         # Format each item with full details
         formatted_items = []
-        for i, item in enumerate(items, start=1):
-            formatted_items.append(_format_order_item(item, i))
+        for item in items:
+            formatted_items.append(_format_order_item(item))
 
-        order_items_text = "\n\n".join(formatted_items)
+        # Use separator for multi-item orders, clean look for single item
+        if len(formatted_items) > 1:
+            order_items_text = "\n\n— — —\n\n".join(formatted_items)
+        else:
+            order_items_text = formatted_items[0]
 
         # First item data for subject line and backward compatibility
         first_item = items[0]
