@@ -157,6 +157,68 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
         </div>
       </section>
 
+      {/* SEO Content Section */}
+      <section className="py-12 md:py-16 bg-white" itemScope itemType="https://schema.org/SportsEvent">
+        <meta itemProp="name" content="WTA 1000 Dubai 2026 - Dubai Duty Free Tennis Championships" />
+        <meta itemProp="startDate" content="2026-02-15" />
+        <meta itemProp="endDate" content="2026-02-21" />
+        <div itemProp="location" itemScope itemType="https://schema.org/Place">
+          <meta itemProp="name" content="Dubai Duty Free Tennis Stadium" />
+          <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+            <meta itemProp="addressLocality" content="Dubai" />
+            <meta itemProp="addressCountry" content="UAE" />
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
+          <article className="prose prose-lg max-w-none text-[#1d1d1f]/80">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#1d1d1f] mb-6">
+              WTA 1000 Tickets – Dubai Duty Free Tennis Championships
+            </h2>
+
+            <p className="mb-4 leading-relaxed">
+              If you're searching to buy WTA 1000 tickets in Dubai, the Dubai Duty Free Tennis Championships offers one of the most prestigious women's tournaments on tour. As a WTA 1000 event, it stands among the highest tier of women's tennis competitions, delivering elite matchups and a world-class setting for fans from around the globe.
+            </p>
+
+            <p className="mb-4 leading-relaxed">
+              The WTA 1000 tournament in Dubai consistently features a deep field and competitive matches from the opening rounds through to the final. Fans can expect high-intensity tennis, tactical battles, and memorable performances across multiple sessions. The tournament's reputation and location make it a key stop on the WTA calendar and a favorite among both players and spectators.
+            </p>
+
+            <p className="mb-4 leading-relaxed">
+              Tickets for WTA 1000 matches are offered in various seating categories, allowing visitors to choose the experience that suits them best. Whether attending early rounds to watch multiple matches in one session or selecting prime seats for the later stages, there are options for different preferences and budgets. Seating and session availability depend on demand and match significance.
+            </p>
+
+            <p className="mb-4 leading-relaxed">
+              Watching women's tennis in Dubai combines sport with a premium travel experience. The Dubai Duty Free Tennis Stadium provides excellent sightlines and a comfortable environment, while the city offers luxury accommodations, beaches, shopping, and dining just minutes away. The tournament's evening sessions are particularly popular, blending top-level tennis with Dubai's vibrant nightlife atmosphere.
+            </p>
+
+            <p className="leading-relaxed">
+              Check the schedule above to view available WTA 1000 Dubai tickets and choose the sessions that fit your visit. As one of the most in-demand events on the women's tour, ticket availability can be limited, especially for quarterfinals and beyond, so planning ahead is recommended.
+            </p>
+          </article>
+
+          {/* Cross-linking to ATP */}
+          <div className="mt-10 pt-8 border-t border-[#d2d2d7]">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <p className="text-sm text-[#86868b] mb-1">Also at Dubai Tennis Championships</p>
+                <p className="text-lg font-semibold text-[#1d1d1f]">ATP 500 Men's Tournament</p>
+                <p className="text-sm text-[#86868b]">February 23-28, 2026</p>
+              </div>
+              <button
+                onClick={() => router.push('/tickets/atp')}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#1e824c] text-white font-semibold rounded-full hover:bg-[#166d3e] transition-colors"
+              >
+                View ATP 500 Tickets
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

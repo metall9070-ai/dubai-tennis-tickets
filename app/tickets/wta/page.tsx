@@ -16,7 +16,54 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsEvent',
+  name: 'WTA 1000 Dubai 2026 - Dubai Duty Free Tennis Championships',
+  description: 'The Dubai Duty Free Tennis Championships WTA 1000 tournament featuring top-ranked women\'s tennis players.',
+  startDate: '2026-02-15',
+  endDate: '2026-02-21',
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'Dubai Duty Free Tennis Stadium',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Dubai',
+      addressCountry: 'UAE',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'Dubai Duty Free Tennis Championships',
+    url: 'https://dubaitennischampionships.com',
+  },
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'USD',
+    lowPrice: 300,
+    highPrice: 2000,
+    availability: 'https://schema.org/InStock',
+    url: 'https://dubaitennistickets.com/tickets/wta',
+  },
+  sport: 'Tennis',
+  competitor: [
+    { '@type': 'Person', name: 'Iga Swiatek' },
+    { '@type': 'Person', name: 'Aryna Sabalenka' },
+    { '@type': 'Person', name: 'Coco Gauff' },
+  ],
+};
+
 export default async function WTATicketsPage() {
   const initialEvents = await fetchWTAEventsServer();
-  return <WTATicketsClient initialEvents={initialEvents} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <WTATicketsClient initialEvents={initialEvents} />
+    </>
+  );
 }
