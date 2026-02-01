@@ -10,6 +10,7 @@ import { fetchEventCategories, isSoldOut } from '@/lib/api';
 
 interface EventSelectionProps {
   event: any;
+  initialCategories?: Category[];
   onBack: () => void;
   onTournament: () => void;
   onATPTickets: () => void;
@@ -59,17 +60,28 @@ const _ATP_REFERENCE_CATEGORIES: Category[] = [
 ];
 
 const EventSelection: React.FC<EventSelectionProps> = ({
-  event, onBack, onTournament, onATPTickets, onWTATickets,
+  event, initialCategories, onBack, onTournament, onATPTickets, onWTATickets,
   onPaymentDelivery, onPrivacyPolicy, onTermsOfService, onContacts, onAboutUs, onCart, onHome,
   cart, setCart, onCheckout, onFAQ, onSeatingGuide, onVenue
 }) => {
   // State for categories - Django API is single source of truth
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Use SSR data if available
+  const [categories, setCategories] = useState<Category[]>(initialCategories || []);
+  const [isLoading, setIsLoading] = useState(!initialCategories || initialCategories.length === 0);
   const [apiError, setApiError] = useState<string | null>(null);
 
   // Fetch categories from Django API - NO fallback to static data
+  // Skip CSR fetch if SSR data was provided
   useEffect(() => {
+    // Skip if we already have SSR data
+    if (initialCategories && initialCategories.length > 0) {
+      console.log(`[EventSelection] Using SSR data: ${initialCategories.length} categories`);
+      initialCategories.forEach(cat => {
+        console.log(`[SSR] category "${cat.name}" price=${cat.price}`);
+      });
+      return;
+    }
+
     let mounted = true;
 
     async function loadCategories() {
@@ -78,6 +90,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         return;
       }
 
+      console.log(`[EventSelection] No SSR data, fetching categories from API`);
       setIsLoading(true);
       setApiError(null);
 
@@ -126,7 +139,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
     return () => {
       mounted = false;
     };
-  }, [event?.id]);
+  }, [event?.id, initialCategories]);
 
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);

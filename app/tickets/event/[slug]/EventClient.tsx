@@ -6,6 +6,7 @@ import { useCart } from '@/app/CartContext';
 import EventSelection from '@/components/EventSelection';
 import { fetchEventBySlug } from '@/lib/api';
 import type { Event } from '@/lib/types';
+import type { Category } from '@/lib/api-server';
 
 // Storage version - must match CartContext.tsx
 const CART_VERSION_KEY = 'dubai-tennis-cart-version';
@@ -25,20 +26,32 @@ function isStorageVersionValid(): boolean {
 
 interface EventClientProps {
   slug: string;
+  initialEvent?: Event | null;
+  initialCategories?: Category[];
 }
 
-export default function EventClient({ slug }: EventClientProps) {
+export default function EventClient({ slug, initialEvent, initialCategories }: EventClientProps) {
   const router = useRouter();
   const { cart, setCart } = useCart();
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Use SSR data if available, otherwise start with null/loading
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(initialEvent || null);
+  const [isLoading, setIsLoading] = useState(!initialEvent);
   const [error, setError] = useState<string | null>(null);
 
+  // Only fetch client-side if NO SSR data was provided
   useEffect(() => {
+    // Skip CSR fetch if we have SSR data
+    if (initialEvent) {
+      console.log(`[EventClient] Using SSR data for event: "${initialEvent.title}"`);
+      // Store in sessionStorage for other components
+      sessionStorage.setItem('selectedEvent', JSON.stringify(initialEvent));
+      return;
+    }
+
     let mounted = true;
 
     async function loadEvent() {
-      console.log(`[EventClient] Starting load for slug: "${slug}"`);
+      console.log(`[EventClient] No SSR data, starting CSR load for slug: "${slug}"`);
       setIsLoading(true);
       setError(null);
 
@@ -124,7 +137,7 @@ export default function EventClient({ slug }: EventClientProps) {
     return () => {
       mounted = false;
     };
-  }, [slug, router]);
+  }, [slug, router, initialEvent]);
 
   const navigationHandlers = {
     onHome: () => router.push('/'),
@@ -200,6 +213,7 @@ export default function EventClient({ slug }: EventClientProps) {
   return (
     <EventSelection
       event={selectedEvent}
+      initialCategories={initialCategories}
       onBack={() => {
         // Navigate back to appropriate tournament page based on event type
         if (selectedEvent.type === 'WTA') {
