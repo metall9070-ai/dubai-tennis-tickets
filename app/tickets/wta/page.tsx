@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'WTA 1000 Dubai Tickets 2026 | Women\'s Tournament Feb 15-21',
     description: 'Premium tickets for WTA 1000 Dubai. World\'s top women\'s players compete February 15-21, 2026.',
-    images: ['https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop'],
+    images: ['/images/federer-dubai-wta.jpg'],
   },
   alternates: {
     canonical: '/tickets/wta',
