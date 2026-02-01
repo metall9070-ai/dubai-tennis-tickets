@@ -78,14 +78,16 @@ def _format_order_item(item) -> str:
         item: OrderItem model instance
 
     Returns:
-        Formatted string for this item (clean, customer-friendly)
+        Formatted string for this item
     """
     date_time = f"{item.event_date} {item.event_month} {item.event_day}, {item.event_time}"
-    return f"""{item.event_title}
-{date_time}
-{item.venue}
+    return f"""Event: {item.event_title}
+Date and time: {date_time}
+Venue: {item.venue}
 Category: {item.category_name}
-Tickets: {item.quantity} × ${item.unit_price} = ${item.subtotal}"""
+Quantity: {item.quantity}
+Price per ticket: ${item.unit_price}
+Subtotal: ${item.subtotal}"""
 
 
 def build_order_context(order) -> Dict[str, Any]:
