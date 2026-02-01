@@ -46,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({ isVisible, onAction }) => {
           </div>
 
           <p className="text-base sm:text-lg md:text-2xl font-normal text-white/90 mb-8 sm:mb-12 md:mb-16 max-w-3xl mx-auto leading-relaxed tracking-[-0.01em] drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
-            Premium tickets for world-class tennis at the iconic Dubai Duty Free Tennis Stadium.
+            Tickets for world-class tennis at the iconic Dubai Duty Free Tennis Stadium.
           </p>
 
           <div className="flex items-center justify-center">

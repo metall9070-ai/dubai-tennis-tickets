@@ -32,12 +32,12 @@ const TrustSignals: React.FC = () => {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#1e824c]/10 rounded-full flex items-center justify-center flex-shrink-0">
               <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
             <div className="min-w-0">
-              <p className="text-[12px] sm:text-[13px] font-semibold text-[#1d1d1f] leading-tight">Money-Back</p>
-              <p className="text-[10px] sm:text-[11px] text-[#86868b] leading-tight">If cancelled</p>
+              <p className="text-[12px] sm:text-[13px] font-semibold text-[#1d1d1f] leading-tight">Easy Purchase</p>
+              <p className="text-[10px] sm:text-[11px] text-[#86868b] leading-tight">Fast checkout</p>
             </div>
           </div>
           <div className="flex items-center gap-2.5 sm:gap-3">
