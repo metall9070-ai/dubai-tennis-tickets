@@ -86,7 +86,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
             </button>
           </div>
 
-          <div className="pt-8 sm:pt-10 md:pt-12 border-t border-[#d2d2d7]">
+          <div className="py-8 sm:py-10 md:py-12 border-t border-b border-[#d2d2d7]">
             <p className="text-[12px] sm:text-[13px] text-[#86868b] text-center leading-relaxed">
               Buy Dubai Tennis tickets online. Secure checkout, instant confirmation, and verified tickets for all sessions at Dubai Duty Free Tennis Stadium.
             </p>
