@@ -163,8 +163,9 @@ export default function VenueClient() {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=800&auto=format&fit=crop"
-                alt="Dubai Tennis Stadium aerial view"
+                src="/dubai-tennis-areal-view.jpg"
+                alt="Dubai Duty Free Tennis Stadium aerial view - Centre Court and surrounding facilities"
+                title="Aerial view of Dubai Tennis Stadium"
                 className="rounded-3xl shadow-xl w-full"
               />
             </div>
