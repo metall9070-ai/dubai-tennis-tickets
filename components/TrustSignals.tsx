@@ -6,7 +6,7 @@ const TrustSignals: React.FC = () => {
   return (
     <div className="bg-white border-b border-black/5">
       <div className="container mx-auto px-4 sm:px-6 py-5 sm:py-6 max-w-[980px]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 justify-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 justify-items-start md:justify-items-center">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#1e824c]/10 rounded-full flex items-center justify-center flex-shrink-0">
               <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
