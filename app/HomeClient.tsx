@@ -39,9 +39,22 @@ export default function HomeClient({ initialEvents }: HomeClientProps) {
     }
   };
 
+  const handleHome = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="relative min-h-screen bg-[#f5f5f7]">
-      <Navbar isVisible={isLoaded} />
+      <Navbar
+        isVisible={isLoaded}
+        onHome={handleHome}
+        onATPTickets={() => router.push('/tickets/atp')}
+        onWTATickets={() => router.push('/tickets/wta')}
+        onSeatingGuide={() => router.push('/seating-guide')}
+        onVenue={() => router.push('/venue')}
+        onFAQ={() => router.push('/faq')}
+        onCart={() => router.push('/checkout')}
+      />
       <Hero isVisible={isLoaded} onAction={handleViewShelter} />
       {isLoaded && (
         <>
