@@ -430,10 +430,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
                   <div className="mb-3 md:mb-4">
                     <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[#111842] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
-                    <div className="flex items-baseline space-x-2">
-                       <span className="text-[16px] md:text-[19px] font-semibold text-[#1d1d1f]">Price:</span>
-                       <span className="text-[22px] md:text-[28px] font-bold text-[#1e824c] tracking-tight">${selectedCategory.price.toLocaleString()}</span>
-                       <span className="text-[14px] md:text-[17px] text-[#86868b] font-normal">/ ticket</span>
+                    <div className="flex items-baseline space-x-1.5">
+                       <span className="text-[15px] md:text-[17px] text-[#86868b]">Price:</span>
+                       <span className="text-[20px] md:text-[24px] font-bold text-[#1e824c]">${selectedCategory.price.toLocaleString()}</span>
+                       <span className="text-[14px] md:text-[16px] text-[#86868b]">/ ticket</span>
                     </div>
                   </div>
 
