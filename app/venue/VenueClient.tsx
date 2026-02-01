@@ -180,21 +180,17 @@ export default function VenueClient() {
           </h2>
 
           <div className="bg-white rounded-3xl overflow-hidden shadow-sm mb-8">
-            <div className="aspect-[16/9] bg-[#e8e8ed] flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-4xl mb-4">📍</div>
-                <p className="font-semibold text-[#1d1d1f] mb-2">Dubai Duty Free Tennis Stadium</p>
-                <p className="text-[#86868b]">Aviation Club, Al Garhoud, Dubai, UAE</p>
-                <a
-                  href="https://maps.google.com/?q=25.2340,55.3309"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-4 px-6 py-2 bg-[#1e824c] text-white rounded-full text-sm font-medium hover:bg-[#166d3e] transition-colors"
-                >
-                  Open in Google Maps
-                </a>
-              </div>
-            </div>
+            <iframe
+              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=Dubai+Duty+Free+Tennis+Stadium,Al+Garhoud,Dubai&zoom=15`}
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="rounded-3xl"
+              title="Dubai Duty Free Tennis Stadium Location"
+            />
           </div>
 
           {/* Address Card */}
