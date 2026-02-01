@@ -188,16 +188,6 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
 };
 
 export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => void }> = ({ event, isLast, onClick }) => {
-  // RUNTIME GUARD: Detect illegal prices from static data
-  // $150 was the old fallback price - if seen, it means Django API data was bypassed
-  const ILLEGAL_PRICES = [150];  // Known prices that indicate static data leak
-  if (ILLEGAL_PRICES.includes(event.minPrice)) {
-    console.error(`[PRICE GUARD] ILLEGAL PRICE DETECTED: Event "${event.title}" has minPrice=$${event.minPrice} - THIS IS STATIC DATA, NOT FROM DJANGO API!`);
-  }
-
-  // Log price source for debugging
-  console.log('[PRICE SOURCE]', event.title, `$${event.minPrice}`, '(must be from Django API)');
-
   // Check if price is valid (from Django API)
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
