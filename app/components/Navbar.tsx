@@ -50,7 +50,14 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
           <div className="flex-shrink-0">
             <Link
               href="/"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={(e) => {
+                setIsMenuOpen(false);
+                // If already on home page, scroll to top instead of navigating
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className="flex items-center group cursor-pointer"
               aria-label="Home"
             >
