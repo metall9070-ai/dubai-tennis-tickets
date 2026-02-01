@@ -30,8 +30,8 @@ const Footer: React.FC = () => {
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-12 max-w-[1200px]">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
-          {/* Column 1: Brand & Contact */}
-          <div className="col-span-2 lg:col-span-2 flex flex-col space-y-3 sm:space-y-4">
+          {/* Column 1: Brand & Contact - appears after nav links on mobile */}
+          <div className="col-span-2 lg:col-span-2 flex flex-col space-y-3 sm:space-y-4 order-2 lg:order-1">
             <span className="text-[#1d1d1f] text-[15px] sm:text-[16px] font-bold tracking-tight">
               Dubai Tennis Ticket Concierge
             </span>
@@ -55,8 +55,8 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Tickets */}
-          <div>
+          {/* Column 2: Tickets - appears first on mobile */}
+          <div className="order-1 lg:order-2">
             <h4 className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Tickets</h4>
             <ul className="flex flex-col space-y-2 sm:space-y-2.5">
               {ticketLinks.map((link) => (
@@ -72,8 +72,8 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Information */}
-          <div>
+          {/* Column 3: Information - appears first on mobile */}
+          <div className="order-1 lg:order-3">
             <h4 className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Information</h4>
             <ul className="flex flex-col space-y-2 sm:space-y-2.5">
               {infoLinks.map((link) => (
@@ -89,8 +89,8 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 4: Legal */}
-          <div className="col-span-2 sm:col-span-1">
+          {/* Column 4: Support - appears after brand on mobile */}
+          <div className="col-span-2 sm:col-span-1 order-3 lg:order-4">
             <h4 className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Support</h4>
             <ul className="flex flex-col space-y-2 sm:space-y-2.5">
               {legalLinks.map((link) => (
