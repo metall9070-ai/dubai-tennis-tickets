@@ -123,12 +123,16 @@ class OrderService:
             except Event.DoesNotExist:
                 raise EventNotFoundError(item.event_id)
             
-            # Validate category exists and belongs to event
+            # Validate category exists, belongs to event, and is purchasable
+            # CRITICAL: Both is_active AND show_on_frontend must be True
+            # - is_active=False: Category is CLOSED (not purchasable)
+            # - show_on_frontend=False: Category is SOLD OUT/Legacy (not purchasable)
             try:
                 item.category = Category.objects.get(
                     id=item.category_id,
                     event=item.event,
-                    is_active=True
+                    is_active=True,
+                    show_on_frontend=True
                 )
             except Category.DoesNotExist:
                 raise CategoryNotFoundError(item.category_id, item.event_id)

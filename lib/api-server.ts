@@ -100,6 +100,7 @@ interface APICategory {
   color?: string;
   seats_left: number;
   is_active?: boolean;
+  show_on_frontend?: boolean;
 }
 
 export interface Category {
@@ -109,6 +110,7 @@ export interface Category {
   color: string;
   seatsLeft: number;
   isActive?: boolean;
+  showOnFrontend?: boolean;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -192,6 +194,8 @@ export async function fetchEventCategoriesServer(eventId: number | string): Prom
     const json = await response.json();
     const results = json.results || json;
 
+    // IMPORTANT: Do NOT filter out show_on_frontend=false categories
+    // They should be visible but disabled (greyed out, not clickable, not purchasable)
     const categories: Category[] = results.map((cat: APICategory, index: number) => {
       const slug = cat.name.toLowerCase().replace(/\s+/g, '-');
       return {
@@ -201,6 +205,7 @@ export async function fetchEventCategoriesServer(eventId: number | string): Prom
         color: cat.color || CATEGORY_COLORS[slug] || Object.values(CATEGORY_COLORS)[index] || '#1e824c',
         seatsLeft: cat.seats_left,
         isActive: cat.is_active !== false,
+        showOnFrontend: cat.show_on_frontend !== false,
       };
     });
 

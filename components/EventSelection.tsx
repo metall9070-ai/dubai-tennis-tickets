@@ -37,6 +37,7 @@ interface Category {
   color: string;
   seatsLeft: number;
   isActive?: boolean;
+  showOnFrontend?: boolean;
 }
 
 // ============================================================================
@@ -196,15 +197,16 @@ const EventSelection: React.FC<EventSelectionProps> = ({
       c.id === categoryId ||
       normalizeToSlug(c.name) === categoryId
     );
-    // Don't open modal for sold out categories
-    if (cat && !isSoldOut(cat.isActive, cat.seatsLeft)) {
+    // Don't open modal for sold out / disabled categories
+    if (cat && !isSoldOut(cat.isActive, cat.seatsLeft, cat.showOnFrontend)) {
       openModal(cat);
     }
   };
 
-  // Compute sold out category slugs for the seating map
+  // Compute sold out / disabled category slugs for the seating map
+  // Categories with show_on_frontend=false are included here (visible but disabled)
   const soldOutCategories = categories
-    .filter(cat => isSoldOut(cat.isActive, cat.seatsLeft))
+    .filter(cat => isSoldOut(cat.isActive, cat.seatsLeft, cat.showOnFrontend))
     .map(cat => cat.name.toLowerCase().replace(/\s+/g, '-'));
 
   const cartTotalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -287,7 +289,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
               const catSlug = cat.name.toLowerCase().replace(/\s+/g, '-');
               const isHovered = hoveredCategory === cat.id || hoveredCategory === catSlug;
               const isOtherHovered = hoveredCategory !== null && !isHovered;
-              const categoryIsSoldOut = isSoldOut(cat.isActive, cat.seatsLeft);
+              const categoryIsSoldOut = isSoldOut(cat.isActive, cat.seatsLeft, cat.showOnFrontend);
 
               return (
                 <div
