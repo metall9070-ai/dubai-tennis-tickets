@@ -20,6 +20,8 @@ from .services import (
     OrderServiceError,
     EventNotFoundError,
     CategoryNotFoundError,
+    CategoryEventMismatchError,
+    CategoryNotAvailableError,
     InsufficientSeatsError
 )
 
@@ -179,9 +181,13 @@ class OrderCreateSerializer(serializers.Serializer):
             raise serializers.ValidationError({'items': e.message})
         except CategoryNotFoundError as e:
             raise serializers.ValidationError({'items': e.message})
+        except CategoryEventMismatchError as e:
+            raise serializers.ValidationError({'items': e.message})
+        except CategoryNotAvailableError as e:
+            raise serializers.ValidationError({'items': e.message})
         except InsufficientSeatsError as e:
             raise serializers.ValidationError({'items': e.message})
-        
+
         return attrs
     
     def create(self, validated_data):
