@@ -18,7 +18,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
   onWTATickets
 }) => {
   return (
-    <section className="py-12 sm:py-16 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
+    <section className="pt-12 sm:pt-16 md:pt-24 pb-0 bg-[#f5f5f7] text-[#1d1d1f]">
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
         <div className="flex flex-col space-y-8 sm:space-y-10 md:space-y-12">
           <div className="text-center md:text-left">
@@ -86,7 +86,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
             </button>
           </div>
 
-          <div className="py-8 sm:py-10 md:py-12 border-t border-b border-[#d2d2d7]">
+          <div className="py-8 sm:py-10 md:py-12 border-t border-[#d2d2d7]">
             <p className="text-[12px] sm:text-[13px] text-[#86868b] text-center leading-relaxed">
               Buy Dubai Tennis tickets online. Secure checkout, instant confirmation, and verified tickets for all sessions at Dubai Duty Free Tennis Stadium.
             </p>
