@@ -215,12 +215,8 @@ export default function EventClient({ slug, initialEvent, initialCategories }: E
       event={selectedEvent}
       initialCategories={initialCategories}
       onBack={() => {
-        // Navigate back to appropriate tournament page based on event type
-        if (selectedEvent.type === 'WTA') {
-          router.push('/tickets/wta');
-        } else {
-          router.push('/tickets/atp');
-        }
+        // Navigate to homepage and scroll to schedule section
+        router.push('/#tickets');
       }}
       cart={cart}
       setCart={setCart}
