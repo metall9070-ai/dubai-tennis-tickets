@@ -31,6 +31,7 @@ CURRENCY ARCHITECTURE (Variant 1):
 
 import logging
 import stripe
+import sentry_sdk
 from decimal import Decimal
 
 from django.conf import settings
@@ -493,6 +494,7 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
         except Exception as e:
             # Don't fail the webhook if notifications fail
             logger.error(f"Failed to send PAID notifications for {order.order_number}: {e}")
+            sentry_sdk.capture_exception(e)
 
         return HttpResponse(status=200)
 
@@ -501,6 +503,7 @@ def handle_checkout_completed(session: dict, event_id: str) -> HttpResponse:
         return HttpResponse(status=404)
     except Exception as e:
         logger.exception(f"Error processing webhook for order {order_id}, event={event_id}: {e}")
+        sentry_sdk.capture_exception(e)
         return HttpResponse(status=500)
 
 
