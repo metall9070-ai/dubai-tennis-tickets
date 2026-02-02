@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ClearCartOnSuccess from './ClearCartOnSuccess';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -92,6 +93,9 @@ export default async function OrderCheckoutPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
+      {/* Clear cart when order is paid */}
+      <ClearCartOnSuccess orderStatus={order.status} />
+
       {/* Header */}
       <header className="bg-white border-b border-[#d2d2d7]">
         <div className="max-w-3xl mx-auto px-4 py-6">

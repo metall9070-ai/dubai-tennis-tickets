@@ -155,8 +155,8 @@ const Checkout: React.FC<CheckoutProps> = ({
           });
         }
 
-        // Clear cart before redirect
-        setCart([]);
+        // NOTE: Cart is NOT cleared here - it will be cleared on the success page
+        // after payment confirmation. This prevents showing empty cart during redirect.
 
         // Small delay to ensure GA4 event is sent before redirect
         setTimeout(() => {

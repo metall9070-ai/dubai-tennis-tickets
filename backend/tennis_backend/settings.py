@@ -11,6 +11,48 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# =============================================================================
+# SENTRY ERROR TRACKING
+# =============================================================================
+SENTRY_DSN = os.getenv('SENTRY_DSN', '')
+
+if SENTRY_DSN:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    def _sentry_before_send(event, hint):
+        """
+        Filter out expected client errors (400, 404) from Sentry.
+        These are not actionable - they're normal client behavior.
+        """
+        if 'exc_info' in hint:
+            exc_type, exc_value, tb = hint['exc_info']
+            # Filter Django Http404
+            from django.http import Http404
+            if isinstance(exc_value, Http404):
+                return None
+            # Filter DRF validation errors and 404s
+            from rest_framework.exceptions import NotFound, ValidationError
+            if isinstance(exc_value, (NotFound, ValidationError)):
+                return None
+
+        return event
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[
+            DjangoIntegration(
+                transaction_style='url',
+                middleware_spans=True,
+            ),
+        ],
+        environment=os.getenv('SENTRY_ENVIRONMENT', 'development'),
+        release=os.getenv('SENTRY_RELEASE', 'dubai-tennis@1.0.0'),
+        traces_sample_rate=float(os.getenv('SENTRY_TRACES_SAMPLE_RATE', '0.1')),
+        send_default_pii=True,
+        before_send=_sentry_before_send,
+    )
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
