@@ -143,13 +143,15 @@ const Checkout: React.FC<CheckoutProps> = ({
       }
 
       if (stripeData.checkout_url) {
-        // GA4: Track begin_checkout event before Stripe redirect
-        // Using beacon transport to ensure event is sent even during page unload
-        if (typeof window !== 'undefined' && window.gtag) {
-          window.gtag('event', 'begin_checkout', {
+        // GA4: Track begin_checkout event via GTM dataLayer
+        if (typeof window !== 'undefined') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as any).dataLayer.push({
+            event: 'begin_checkout',
             event_category: 'ecommerce',
-            event_label: 'stripe_redirect',
-            transport_type: 'beacon'
+            event_label: 'stripe_redirect'
           });
         }
 
@@ -159,7 +161,7 @@ const Checkout: React.FC<CheckoutProps> = ({
         // Small delay to ensure GA4 event is sent before redirect
         setTimeout(() => {
           window.location.href = stripeData.checkout_url;
-        }, 100);
+        }, 150);
       } else {
         throw new Error('No checkout URL returned');
       }
