@@ -143,6 +143,14 @@ const Checkout: React.FC<CheckoutProps> = ({
       }
 
       if (stripeData.checkout_url) {
+        // GA4: Track begin_checkout event before Stripe redirect
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'begin_checkout', {
+            event_category: 'ecommerce',
+            event_label: 'stripe_redirect'
+          });
+        }
+
         // Clear cart before redirect
         setCart([]);
         // Redirect to Stripe Checkout
