@@ -10,10 +10,20 @@ from django.http import HttpResponse
 
 from .health import health_check
 
+
+def sentry_debug(request):
+    """Temporary endpoint to test Sentry integration. Remove after verification."""
+    division_by_zero = 1 / 0
+    return HttpResponse("This will never be reached")
+
+
 urlpatterns = [
     # Root health check (simple)
     path('', lambda request: HttpResponse("OK", status=200)),
     path('health/', lambda request: HttpResponse("OK", status=200)),
+
+    # Sentry test endpoint (remove after verification)
+    path('api/sentry-debug/', sentry_debug, name='sentry-debug'),
 
     # Admin
     path('admin/', admin.site.urls),
