@@ -145,11 +145,12 @@ const Checkout: React.FC<CheckoutProps> = ({
       if (stripeData.checkout_url) {
         // GA4: Track begin_checkout event via dataLayer (GTM) and gtag (if available)
         if (typeof window !== 'undefined') {
+          const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
           const eventData = {
             currency: 'USD',
-            value: total,
+            value: cartTotal,
             items: cart.map(item => ({
-              item_id: item.eventId.toString(),
+              item_id: item.id,
               item_name: item.eventTitle,
               price: item.price,
               quantity: item.quantity
