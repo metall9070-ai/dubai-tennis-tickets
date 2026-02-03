@@ -143,16 +143,30 @@ const Checkout: React.FC<CheckoutProps> = ({
       }
 
       if (stripeData.checkout_url) {
-        // GA4: Track begin_checkout event via GTM dataLayer
+        // GA4: Track begin_checkout event via dataLayer (GTM) and gtag (if available)
         if (typeof window !== 'undefined') {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const eventData = {
+            currency: 'USD',
+            value: total,
+            items: cart.map(item => ({
+              item_id: item.eventId.toString(),
+              item_name: item.eventTitle,
+              price: item.price,
+              quantity: item.quantity
+            }))
+          };
+
+          // Method 1: GTM dataLayer
           (window as any).dataLayer = (window as any).dataLayer || [];
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (window as any).dataLayer.push({
             event: 'begin_checkout',
-            event_category: 'ecommerce',
-            event_label: 'stripe_redirect'
+            ecommerce: eventData
           });
+
+          // Method 2: Direct gtag (if available)
+          if (typeof (window as any).gtag === 'function') {
+            (window as any).gtag('event', 'begin_checkout', eventData);
+          }
         }
 
         // NOTE: Cart is NOT cleared here - it will be cleared on the success page

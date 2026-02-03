@@ -122,6 +122,24 @@ export default function RootLayout({
         {/* Google Search Console Verification - replace with your actual code */}
         <meta name="google-site-verification" content="Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY" />
 
+        {/* Google Analytics 4 - Direct gtag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-1R8HSPFZ1S"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="ga4-config"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-1R8HSPFZ1S');
+            `,
+          }}
+        />
+
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"
