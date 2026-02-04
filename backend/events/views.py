@@ -8,12 +8,14 @@ Supports lookup by slug OR id for SEO-friendly URLs.
 import logging
 
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponsePermanentRedirect
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from .models import Tournament, Event, Category
+from .redirects import get_new_slug
 from .serializers import (
     TournamentSerializer,
     EventSerializer,
@@ -33,6 +35,7 @@ class SlugOrIdLookupMixin:
     - Try slug first (SEO-friendly URLs)
     - Fall back to id if not a valid slug
     - Response includes both slug and id for frontend redirect logic
+    - Supports 301 redirect for legacy slugs
     """
 
     def get_object(self):
@@ -46,13 +49,22 @@ class SlugOrIdLookupMixin:
         obj = queryset.filter(slug=lookup_value).first()
 
         if obj is None:
-            # Fall back to id lookup if it looks like an integer
-            try:
-                pk = int(lookup_value)
-                obj = get_object_or_404(queryset, pk=pk)
-            except (ValueError, TypeError):
-                # Not a valid integer, try slug one more time (404 if not found)
-                obj = get_object_or_404(queryset, slug=lookup_value)
+            # Check if this is a legacy slug that needs redirect
+            new_slug = get_new_slug(lookup_value)
+            if new_slug:
+                # Store redirect info for retrieve() to handle
+                self._legacy_redirect_slug = new_slug
+                # Try to find by new slug
+                obj = queryset.filter(slug=new_slug).first()
+
+            if obj is None:
+                # Fall back to id lookup if it looks like an integer
+                try:
+                    pk = int(lookup_value)
+                    obj = get_object_or_404(queryset, pk=pk)
+                except (ValueError, TypeError):
+                    # Not a valid integer, try slug one more time (404 if not found)
+                    obj = get_object_or_404(queryset, slug=lookup_value)
 
         self.check_object_permissions(self.request, obj)
         return obj
@@ -128,11 +140,31 @@ class EventViewSet(SlugOrIdLookupMixin, SafeAPIViewMixin, viewsets.ReadOnlyModel
         return response
 
     def retrieve(self, request, *args, **kwargs):
-        """Override retrieve to add price logging."""
-        response = super().retrieve(request, *args, **kwargs)
-        event = response.data
+        """
+        Override retrieve to:
+        - Handle 301 redirect for legacy slugs
+        - Add price logging
+        """
+        # Reset redirect flag
+        self._legacy_redirect_slug = None
+
+        # get_object() may set _legacy_redirect_slug
+        instance = self.get_object()
+
+        # If legacy slug was used, return 301 redirect
+        if hasattr(self, '_legacy_redirect_slug') and self._legacy_redirect_slug:
+            # Build new URL with same query params
+            new_url = request.build_absolute_uri().replace(
+                self.kwargs.get(self.lookup_field),
+                self._legacy_redirect_slug
+            )
+            logger.info(f"301 Redirect: {self.kwargs.get(self.lookup_field)} -> {self._legacy_redirect_slug}")
+            return HttpResponsePermanentRedirect(new_url)
+
+        serializer = self.get_serializer(instance)
+        event = serializer.data
         print(f"[API PRICE] Event {event.get('id')} \"{event.get('title')}\" min_price={event.get('min_price')}")
-        return response
+        return Response(event)
     
     @action(detail=False, methods=['get'], url_path='wta')
     def wta_events(self, request):
