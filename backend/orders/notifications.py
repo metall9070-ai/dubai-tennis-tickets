@@ -26,6 +26,7 @@ class TelegramNotifier:
 
     BASE_URL = "https://api.telegram.org/bot{token}/sendMessage"
 
+    # TODO(platform): Telegram credentials may vary per client
     def __init__(self):
         self.token = settings.TELEGRAM_BOT_TOKEN
         self.chat_id = settings.TELEGRAM_CHAT_ID
@@ -74,6 +75,7 @@ class TelegramNotifier:
 class EmailNotifier:
     """Send email notifications via Resend API."""
 
+    # TODO(platform): email sender and admin may vary per client
     def __init__(self):
         self.from_email = settings.DEFAULT_FROM_EMAIL
         self.admin_email = settings.ADMIN_EMAIL

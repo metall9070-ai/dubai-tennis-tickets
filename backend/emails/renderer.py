@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 EMAILS_DIR = Path(__file__).parent
 
 
+# TODO(platform): email templates may vary per client
 def load_template(template_name: str) -> Tuple[str, str]:
     """
     Load email template from file.
@@ -132,6 +133,7 @@ def build_order_context(order) -> Dict[str, Any]:
         total_quantity = 0
 
     # Build FAQ link
+    # TODO(platform): frontend URL and branding may vary per client
     frontend_url = getattr(settings, 'FRONTEND_URL', 'https://dubaitennistickets.com')
     faq_link = f"{frontend_url}/faq"
 

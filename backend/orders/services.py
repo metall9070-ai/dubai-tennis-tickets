@@ -244,6 +244,7 @@ class OrderService:
             InsufficientSeatsError: If seats become unavailable during reservation
         """
         # Get sales channel (determines currency)
+        # TODO(platform): sales channel may be determined by client context
         if sales_channel is None:
             sales_channel = SalesChannel.get_default()
 
