@@ -116,6 +116,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.client_context.ClientContextMiddleware',
 ]
 
 ROOT_URLCONF = 'tennis_backend.urls'
@@ -398,6 +399,11 @@ FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
 RESEND_API_KEY = os.getenv('RESEND_API_KEY', '')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Dubai Tennis Tickets <orders@dubaitennistickets.com>')
 ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', '')
+
+# =============================================================================
+# CLIENT CONTEXT
+# =============================================================================
+DEFAULT_CLIENT_CODE = "dubai_tennis_v1"
 
 # =============================================================================
 # API SAFETY FLAGS
