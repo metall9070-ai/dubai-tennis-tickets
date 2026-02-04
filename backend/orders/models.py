@@ -87,6 +87,7 @@ class SalesChannel(models.Model):
         Get the default sales channel.
         Creates one if it doesn't exist (for dubaitennistickets.com).
         """
+        # TODO(platform): sales channel resolution may depend on client context
         channel, created = cls.objects.get_or_create(
             domain='dubaitennistickets.com',
             defaults={
@@ -202,6 +203,7 @@ class Order(models.Model):
 
     def _generate_order_number(self):
         """Generate unique order number in format DT/1001, DT/1002, etc."""
+        # TODO(platform): order number prefix may vary per client
         from django.db.models import Max
 
         # Get the highest existing order number

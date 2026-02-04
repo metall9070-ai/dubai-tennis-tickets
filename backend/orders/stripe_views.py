@@ -58,6 +58,7 @@ from .notifications import notify_order_created, notify_order_paid
 logger = logging.getLogger(__name__)
 
 # Initialize Stripe
+# TODO(platform): Stripe credentials may vary per client
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -94,6 +95,7 @@ def _create_stripe_session_for_order(order: Order) -> stripe.checkout.Session:
             'quantity': item.quantity,
         })
 
+    # TODO(platform): frontend URL may vary per client
     frontend_url = settings.FRONTEND_URL.rstrip('/')
 
     # Create Stripe Checkout Session with idempotency key
