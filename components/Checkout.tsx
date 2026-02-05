@@ -143,10 +143,10 @@ const Checkout: React.FC<CheckoutProps> = ({
       }
 
       if (stripeData.checkout_url) {
-        // GA4: Track begin_checkout event via dataLayer (GTM) and gtag (if available)
-        if (typeof window !== 'undefined') {
+        // GA4: Track begin_checkout event via gtag only (avoid duplicate with GTM)
+        if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
           const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-          const eventData = {
+          (window as any).gtag('event', 'begin_checkout', {
             currency: 'USD',
             value: cartTotal,
             items: cart.map(item => ({
@@ -155,19 +155,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               price: item.price,
               quantity: item.quantity
             }))
-          };
-
-          // Method 1: GTM dataLayer
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: 'begin_checkout',
-            ecommerce: eventData
           });
-
-          // Method 2: Direct gtag (if available)
-          if (typeof (window as any).gtag === 'function') {
-            (window as any).gtag('event', 'begin_checkout', eventData);
-          }
         }
 
         // NOTE: Cart is NOT cleared here - it will be cleared on the success page
