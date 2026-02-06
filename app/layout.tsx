@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   keywords: 'Dubai Tennis, Dubai Duty Free Tennis Championships, ATP 500 Dubai, WTA 1000 Dubai, tennis tickets Dubai, Dubai Tennis Stadium, tennis 2026, buy tennis tickets',
   authors: [{ name: 'Dubai Tennis Tickets' }],
   robots: 'index, follow',
-  metadataBase: new URL('https://dubaitennistickets.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://dubaitennistickets.com'),
   alternates: {
     canonical: '/',
   },
