@@ -191,6 +191,21 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
   // Check if price is valid (from Django API)
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
+  const handleClick = () => {
+    // GA4: Track view_item event
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'view_item', {
+        items: [{
+          item_id: event.id,
+          item_name: event.title,
+          item_category: 'tennis_event',
+          item_variant: event.type
+        }]
+      });
+    }
+    onClick();
+  };
+
   // Determine session type based on time
   const getSessionType = (time: string): { label: string; icon: string; bgColor: string; textColor: string } => {
     const hour = parseInt(time.split(':')[0]);
@@ -211,7 +226,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
   return (
     <div
       id={`event-${event.id}`}
-      onClick={onClick}
+      onClick={handleClick}
       className={`group cursor-pointer relative flex items-center justify-between p-4 sm:p-5 md:p-8 transition-all duration-300 hover:bg-[#f5f5f7]/50 active:bg-[#f5f5f7]/70 ${!isLast ? 'border-b border-[#f5f5f7]' : ''}`}
     >
       <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-12">
