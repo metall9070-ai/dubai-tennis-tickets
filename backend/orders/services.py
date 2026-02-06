@@ -13,6 +13,7 @@ from django.contrib.auth import get_user_model
 
 from events.models import Category, Event
 from .models import Order, OrderItem, SalesChannel
+from .models_site import Site
 from .notifications import notify_new_order
 
 logger = logging.getLogger(__name__)
@@ -101,6 +102,28 @@ class CategoryNotAvailableError(OrderServiceError):
             message=f'Category "{category_name}" is not available: {reason}.',
             code='category_not_available',
             details={'category_id': category_id, 'category_name': category_name, 'reason': reason}
+        )
+
+
+class SiteNotFoundError(OrderServiceError):
+    """Raised when site_code is not found."""
+
+    def __init__(self, site_code: str):
+        super().__init__(
+            message=f'Site with code "{site_code}" not found.',
+            code='site_not_found',
+            details={'site_code': site_code}
+        )
+
+
+class SiteDisabledError(OrderServiceError):
+    """Raised when site is disabled and cannot accept orders."""
+
+    def __init__(self, site_code: str):
+        super().__init__(
+            message=f'Site "{site_code}" is disabled and cannot accept new orders.',
+            code='site_disabled',
+            details={'site_code': site_code}
         )
 
 
@@ -207,6 +230,31 @@ class OrderService:
         return validated_items
     
     @classmethod
+    def resolve_site(cls, site_code: str) -> Site:
+        """
+        Resolve and validate site by code.
+
+        Args:
+            site_code: Site code to resolve
+
+        Returns:
+            Site instance
+
+        Raises:
+            SiteNotFoundError: If site not found
+            SiteDisabledError: If site is disabled
+        """
+        try:
+            site = Site.get_by_code(site_code)
+        except Site.DoesNotExist:
+            raise SiteNotFoundError(site_code)
+
+        if not site.can_create_order():
+            raise SiteDisabledError(site_code)
+
+        return site
+
+    @classmethod
     @transaction.atomic
     def create_order(
         cls,
@@ -214,6 +262,7 @@ class OrderService:
         email: str,
         phone: str,
         items: List[OrderItemRequest],
+        site_code: str,
         user: Optional[User] = None,
         comments: str = '',
         sales_channel: Optional[SalesChannel] = None
@@ -226,6 +275,7 @@ class OrderService:
         fails, all changes are rolled back.
 
         Currency is set from SalesChannel (Variant 1 architecture).
+        Site is set from site_code and FROZEN at order creation.
         stripe_amount_cents is calculated and frozen at order creation.
 
         Args:
@@ -233,6 +283,7 @@ class OrderService:
             email: Customer email
             phone: Customer phone
             items: List of validated OrderItemRequest objects
+            site_code: Site code (REQUIRED)
             user: Optional authenticated user
             comments: Optional order comments
             sales_channel: Optional SalesChannel (uses default if not provided)
@@ -242,19 +293,24 @@ class OrderService:
 
         Raises:
             InsufficientSeatsError: If seats become unavailable during reservation
+            SiteNotFoundError: If site_code not found
+            SiteDisabledError: If site is disabled
         """
+        # Resolve and validate site (REQUIRED)
+        site = cls.resolve_site(site_code)
+
         # Get sales channel (determines currency)
-        # TODO(platform): sales channel may be determined by client context
         if sales_channel is None:
             sales_channel = SalesChannel.get_default()
 
-        # Create the order with currency from sales channel
+        # Create the order with site and currency
         order = Order.objects.create(
             user=user,
             name=name,
             email=email,
             phone=phone,
             comments=comments,
+            site=site,  # FROZEN at creation
             sales_channel=sales_channel,
             currency=sales_channel.currency,  # FROZEN at creation
         )

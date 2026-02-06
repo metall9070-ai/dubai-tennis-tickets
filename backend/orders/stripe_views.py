@@ -55,7 +55,7 @@ from .models import Order, OrderItem
 from .models_webhook import WebhookEvent
 from .models_outbox import NotificationOutbox
 from .models_payment_log import PaymentLog
-from .services import OrderService, OrderItemRequest, InsufficientSeatsError
+from .services import OrderService, OrderItemRequest, InsufficientSeatsError, SiteNotFoundError, SiteDisabledError
 from .notifications import notify_order_created, notify_order_paid
 
 logger = logging.getLogger(__name__)
@@ -147,6 +147,7 @@ def create_checkout_session(request):
         "name": "John Doe",
         "email": "john@example.com",
         "phone": "+971501234567",
+        "site_code": "default",
         "comments": "Optional comments",
         "items": [
             {"event_id": 14, "category_id": 1, "quantity": 2}
@@ -162,8 +163,8 @@ def create_checkout_session(request):
     }
 
     FLOW:
-    1. Validate input
-    2. Create Order with status='pending'
+    1. Validate input (including site_code)
+    2. Create Order with status='pending' and site
     3. Send CREATED notifications (via OrderService)
     4. Create Stripe Checkout Session
     5. Return checkout URL
@@ -178,8 +179,8 @@ def create_checkout_session(request):
 
     data = request.data
 
-    # Validate required fields
-    required_fields = ['name', 'email', 'phone', 'items']
+    # Validate required fields (site_code is REQUIRED)
+    required_fields = ['name', 'email', 'phone', 'items', 'site_code']
     missing = [f for f in required_fields if not data.get(f)]
     if missing:
         return Response(
@@ -199,13 +200,14 @@ def create_checkout_session(request):
         # Step 1: Validate items using existing service
         validated_items = OrderService.validate_items(items_data)
 
-        # Step 2: Create order with atomic seat reservation
+        # Step 2: Create order with atomic seat reservation and site
         # OrderService.create_order() also sends CREATED notifications
         order = OrderService.create_order(
             name=data['name'],
             email=data['email'],
             phone=data['phone'],
             items=validated_items,
+            site_code=data['site_code'],  # REQUIRED, FROZEN at creation
             user=request.user if request.user.is_authenticated else None,
             comments=data.get('comments', '')
         )
@@ -224,6 +226,18 @@ def create_checkout_session(request):
             'session_id': checkout_session.id,
         }, status=status.HTTP_201_CREATED)
 
+    except SiteNotFoundError as e:
+        logger.warning(f"Site not found: {e.message}")
+        return Response(
+            {'error': 'site_not_found', 'message': e.message, 'details': e.details},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    except SiteDisabledError as e:
+        logger.warning(f"Site disabled: {e.message}")
+        return Response(
+            {'error': 'site_disabled', 'message': e.message, 'details': e.details},
+            status=status.HTTP_403_FORBIDDEN
+        )
     except InsufficientSeatsError as e:
         logger.warning(f"Insufficient seats: {e.message}")
         return Response(

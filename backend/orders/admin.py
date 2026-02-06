@@ -17,6 +17,7 @@ CURRENCY ARCHITECTURE:
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Order, OrderItem, SalesChannel
+from .models_site import Site
 from .models_webhook import WebhookEvent
 from .models_outbox import NotificationOutbox
 from .models_payment_log import PaymentLog
@@ -58,6 +59,47 @@ class SalesChannelAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+
+# =============================================================================
+# SITE ADMIN (Order source)
+# =============================================================================
+
+@admin.register(Site)
+class SiteAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for Site model.
+
+    INVARIANT: code is IMMUTABLE after creation.
+    """
+
+    list_display = ['code', 'domain', 'status', 'created_at']
+    list_filter = ['status', 'created_at']
+    search_fields = ['code', 'domain']
+    ordering = ['code']
+
+    # code is displayed but NOT editable after creation
+    readonly_fields = ['id', 'code', 'created_at', 'updated_at']
+
+    fieldsets = (
+        ('Site Identification', {
+            'fields': ('id', 'code', 'domain', 'status'),
+            'description': format_html(
+                '<strong>Note:</strong> Site code cannot be changed after creation.'
+            )
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        """Make code readonly for existing objects."""
+        if obj:  # Editing existing object
+            return self.readonly_fields
+        else:  # Creating new object - allow setting code
+            return ['id', 'created_at', 'updated_at']
 
 
 # =============================================================================
@@ -142,15 +184,15 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_display = [
         'order_number', 'name', 'email', 'total_amount_display',
-        'currency', 'status', 'total_tickets', 'created_at'
+        'currency', 'status', 'site', 'total_tickets', 'created_at'
     ]
-    list_filter = ['status', 'currency', 'sales_channel', 'created_at']
+    list_filter = ['status', 'currency', 'site', 'sales_channel', 'created_at']
     search_fields = ['order_number', 'name', 'email', 'phone']
     ordering = ['-created_at']
 
-    # FROZEN: These fields cannot be modified
+    # FROZEN: These fields cannot be modified (including site - source of order)
     readonly_fields = [
-        'id', 'order_number', 'sales_channel',
+        'id', 'order_number', 'site', 'sales_channel',  # site is FROZEN
         'total_amount', 'currency', 'stripe_amount_cents',  # B6: FROZEN financial data
         'created_at', 'updated_at', 'paid_at',
         'user', 'total_tickets_display'
@@ -162,8 +204,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Order Information', {
-            'fields': ('id', 'order_number', 'status', 'sales_channel', 'user'),
-            'description': 'Order identifier and status. Status can be updated.'
+            'fields': ('id', 'order_number', 'status', 'site', 'sales_channel', 'user'),
+            'description': 'Order identifier and status. Site is FROZEN at creation.'
         }),
         ('Customer', {
             'fields': ('name', 'email', 'phone', 'comments'),

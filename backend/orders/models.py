@@ -137,6 +137,16 @@ class Order(models.Model):
         help_text='Sales channel that originated this order'
     )
 
+    # Site reference (source of order) - IMMUTABLE after creation
+    site = models.ForeignKey(
+        'orders.Site',
+        on_delete=models.PROTECT,
+        null=True,  # Temporarily nullable for migration, will be NOT NULL
+        blank=True,
+        related_name='orders',
+        help_text='Site that originated this order (FROZEN after creation)'
+    )
+
     # Customer information (for both guest and authenticated users)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -199,6 +209,18 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.order_number:
             self.order_number = self._generate_order_number()
+
+        # IMMUTABILITY: site cannot change after creation
+        if self.pk:
+            update_fields = kwargs.get('update_fields')
+            if update_fields is None or 'site' in update_fields:
+                try:
+                    original = Order.objects.only('site_id').get(pk=self.pk)
+                    if original.site_id is not None and original.site_id != self.site_id:
+                        raise ValueError("Order.site cannot be changed after creation.")
+                except Order.DoesNotExist:
+                    pass
+
         super().save(*args, **kwargs)
 
     def _generate_order_number(self):
