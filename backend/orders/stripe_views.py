@@ -54,6 +54,7 @@ class CheckoutSessionThrottle(AnonRateThrottle):
 from .models import Order, OrderItem
 from .models_webhook import WebhookEvent
 from .models_outbox import NotificationOutbox
+from .models_payment_log import PaymentLog
 from .services import OrderService, OrderItemRequest, InsufficientSeatsError
 from .notifications import notify_order_created, notify_order_paid
 
@@ -384,10 +385,39 @@ def stripe_webhook(request):
     logger.info(f"Received Stripe webhook: {event_type} (id: {event_id})")
 
     # =========================================================================
+    # PAYMENT LOG - IMMEDIATELY after signature validation, BEFORE any logic
+    # This is the domain audit trail of all payment events
+    # =========================================================================
+    raw_payload = event.to_dict() if hasattr(event, 'to_dict') else dict(event)
+
+    # Extract payment details from event (if available)
+    session_data = event.get('data', {}).get('object', {})
+    amount_cents = session_data.get('amount_total')
+    currency = session_data.get('currency', '')
+
+    try:
+        payment_log = PaymentLog.create_received(
+            provider='stripe',
+            event_id=event_id,
+            event_type=event_type,
+            raw_payload=raw_payload,
+            amount_cents=amount_cents,
+            currency=currency,
+        )
+        logger.info(f"PaymentLog created: {payment_log.id} for event {event_id}")
+    except Exception as e:
+        # PaymentLog creation failed (likely duplicate) - log but continue
+        # This can happen if same event arrives twice very quickly
+        logger.warning(f"Failed to create PaymentLog for {event_id}: {e}")
+        payment_log = None
+
+    # =========================================================================
     # IDEMPOTENCY CHECK - BEFORE ANY BUSINESS LOGIC
     # =========================================================================
     if WebhookEvent.is_already_processed('stripe', event_id):
         logger.info(f"Webhook {event_id} already processed, skipping (idempotent)")
+        if payment_log:
+            payment_log.mark_ignored("Duplicate event - already processed")
         return HttpResponse(status=200)
 
     # Create or get webhook event record (handles race conditions via unique constraint)
@@ -396,16 +426,20 @@ def stripe_webhook(request):
             provider='stripe',
             event_id=event_id,
             event_type=event_type,
-            payload=event.to_dict() if hasattr(event, 'to_dict') else dict(event)
+            payload=raw_payload
         )
     except Exception as e:
         # If we can't create the record, another process likely got it
         logger.warning(f"Failed to create WebhookEvent for {event_id}: {e}")
+        if payment_log:
+            payment_log.mark_ignored(f"Concurrent processing: {e}")
         return HttpResponse(status=200)
 
     # If not created, check if already processed
     if not created and webhook_event.processing_status == 'processed':
         logger.info(f"Webhook {event_id} already processed (concurrent check), skipping")
+        if payment_log:
+            payment_log.mark_ignored("Duplicate event - concurrent check")
         return HttpResponse(status=200)
 
     # =========================================================================
@@ -413,14 +447,21 @@ def stripe_webhook(request):
     # =========================================================================
     if event_type == 'checkout.session.completed':
         session = event['data']['object']
-        return handle_checkout_completed(session, event_id, webhook_event)
+        return handle_checkout_completed(session, event_id, webhook_event, payment_log)
 
     # Unsupported event type - mark as skipped and acknowledge
     webhook_event.mark_skipped(f"Unsupported event type: {event_type}")
+    if payment_log:
+        payment_log.mark_ignored(f"Unsupported event type: {event_type}")
     return HttpResponse(status=200)
 
 
-def handle_checkout_completed(session: dict, event_id: str, webhook_event: WebhookEvent) -> HttpResponse:
+def handle_checkout_completed(
+    session: dict,
+    event_id: str,
+    webhook_event: WebhookEvent,
+    payment_log: PaymentLog = None
+) -> HttpResponse:
     """
     Handle successful checkout completion.
 
@@ -439,10 +480,16 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
     - Order.status check provides additional safety layer
     - All checks happen INSIDE atomic transaction
 
+    PAYMENT LOG:
+    - payment_log is updated to reflect processing result
+    - On success: mark_processed() with order link
+    - On skip/error: mark_ignored() or mark_error()
+
     Args:
         session: Stripe Checkout Session object
         event_id: Stripe event ID for logging
         webhook_event: WebhookEvent model instance for tracking
+        payment_log: PaymentLog model instance for audit trail (optional)
 
     Returns:
         HttpResponse with appropriate status
@@ -457,6 +504,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
     if not order_id:
         logger.error(f"Webhook missing order_id in metadata: session={session.get('id')}, event={event_id}")
         webhook_event.mark_failed("Missing order_id in metadata")
+        if payment_log:
+            payment_log.mark_error("Missing order_id in metadata")
         return HttpResponse(status=400)
 
     # Link webhook event to order for audit trail
@@ -476,6 +525,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
             f"(order={order_id}, event={event_id})"
         )
         webhook_event.mark_skipped(f"payment_status is not 'paid': {payment_status}")
+        if payment_log:
+            payment_log.mark_ignored(f"payment_status is not 'paid': {payment_status}")
         return HttpResponse(status=200)
 
     try:
@@ -487,6 +538,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
             if order.status == 'paid' and order.payment_intent_id == payment_intent_id:
                 logger.info(f"Order {order.order_number} already paid (idempotent), event={event_id}")
                 webhook_event.mark_processed(order_id)
+                if payment_log:
+                    payment_log.mark_ignored(f"Order {order.order_number} already paid (idempotent)")
                 return HttpResponse(status=200)
 
             # IDEMPOTENCY CHECK 2: Already paid with different payment
@@ -498,6 +551,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
                 webhook_event.mark_failed(
                     f"Order already paid with different payment_intent: {order.payment_intent_id}"
                 )
+                if payment_log:
+                    payment_log.mark_error(f"Order already paid with different payment_intent: {order.payment_intent_id}")
                 return HttpResponse(status=200)
 
             # STATUS CHECK: Order must be in payable status
@@ -507,6 +562,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
                     f"Current status: {order.status}, event={event_id}"
                 )
                 webhook_event.mark_failed(f"Invalid order status: {order.status}")
+                if payment_log:
+                    payment_log.mark_error(f"Invalid order status for payment: {order.status}")
                 return HttpResponse(status=200)
 
             # CURRENCY VALIDATION: Verify currency matches order (FROZEN)
@@ -518,6 +575,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
                 webhook_event.mark_failed(
                     f"Currency mismatch: expected {order.currency}, got {session_currency}"
                 )
+                if payment_log:
+                    payment_log.mark_error(f"Currency mismatch: expected {order.currency}, got {session_currency}")
                 return HttpResponse(status=200)
 
             # AMOUNT VALIDATION: Verify amount matches order.stripe_amount_cents (FROZEN)
@@ -530,6 +589,8 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
                 webhook_event.mark_failed(
                     f"Amount mismatch: expected {expected_amount}, got {amount_total}"
                 )
+                if payment_log:
+                    payment_log.mark_error(f"Amount mismatch: expected {expected_amount}, got {amount_total}")
                 return HttpResponse(status=200)
 
             # ALL CHECKS PASSED - Update order status
@@ -546,6 +607,10 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
             # This guarantees notification record is committed with order status
             # Even if server crashes after commit, notification will be retried
             NotificationOutbox.create_pending(order, 'order_paid')
+
+            # PAYMENT LOG: Mark as processed with order link
+            if payment_log:
+                payment_log.mark_processed(order)
 
             logger.info(
                 f"Order {order.order_number} marked as PAID "
@@ -569,10 +634,14 @@ def handle_checkout_completed(session: dict, event_id: str, webhook_event: Webho
     except Order.DoesNotExist:
         logger.error(f"Order not found for webhook: {order_id}, event={event_id}")
         webhook_event.mark_failed(f"Order not found: {order_id}")
+        if payment_log:
+            payment_log.mark_error(f"Order not found: {order_id}")
         return HttpResponse(status=404)
     except Exception as e:
         logger.exception(f"Error processing webhook for order {order_id}, event={event_id}: {e}")
         webhook_event.mark_failed(str(e))
+        if payment_log:
+            payment_log.mark_error(str(e))
         sentry_sdk.capture_exception(e)
         return HttpResponse(status=500)
 

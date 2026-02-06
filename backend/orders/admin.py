@@ -19,6 +19,7 @@ from django.utils.html import format_html
 from .models import Order, OrderItem, SalesChannel
 from .models_webhook import WebhookEvent
 from .models_outbox import NotificationOutbox
+from .models_payment_log import PaymentLog
 
 
 # =============================================================================
@@ -412,4 +413,89 @@ class NotificationOutboxAdmin(admin.ModelAdmin):
         """Allow deletion of old sent notifications for cleanup."""
         if obj and obj.status == 'sent':
             return True
+        return False
+
+
+# =============================================================================
+# PAYMENT LOG ADMIN (Domain audit journal)
+# =============================================================================
+
+@admin.register(PaymentLog)
+class PaymentLogAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for PaymentLog model.
+
+    This is an APPEND-ONLY audit journal. No modifications allowed.
+    Used for debugging, auditing, and tracing payment events.
+    """
+
+    list_display = [
+        'id', 'provider_event_id_short', 'provider', 'event_type',
+        'status', 'order_link', 'amount_display', 'received_at'
+    ]
+    list_filter = ['provider', 'status', 'event_type', 'received_at']
+    search_fields = ['provider_event_id', 'order__order_number', 'status_reason']
+    ordering = ['-received_at']
+    date_hierarchy = 'received_at'
+
+    readonly_fields = [
+        'provider', 'provider_event_id', 'event_type',
+        'order', 'amount', 'currency', 'raw_payload',
+        'status', 'status_reason', 'received_at', 'processed_at'
+    ]
+
+    fieldsets = (
+        ('Event Identification', {
+            'fields': ('provider', 'provider_event_id', 'event_type'),
+        }),
+        ('Order & Payment', {
+            'fields': ('order', 'amount', 'currency'),
+        }),
+        ('Processing Status', {
+            'fields': ('status', 'status_reason', 'processed_at'),
+        }),
+        ('Timestamps', {
+            'fields': ('received_at',),
+        }),
+        ('Raw Payload (Debug)', {
+            'fields': ('raw_payload',),
+            'classes': ('collapse',),
+            'description': 'Full webhook payload for debugging and audit purposes.'
+        }),
+    )
+
+    def provider_event_id_short(self, obj):
+        """Show truncated event ID for readability."""
+        event_id = obj.provider_event_id
+        if len(event_id) > 30:
+            return f"{event_id[:15]}...{event_id[-10:]}"
+        return event_id
+    provider_event_id_short.short_description = 'Event ID'
+
+    def order_link(self, obj):
+        """Link to related order if exists."""
+        if obj.order:
+            from django.urls import reverse
+            url = reverse('admin:orders_order_change', args=[obj.order.id])
+            return format_html('<a href="{}">{}</a>', url, obj.order.order_number)
+        return '-'
+    order_link.short_description = 'Order'
+
+    def amount_display(self, obj):
+        """Display amount with currency."""
+        if obj.amount is not None:
+            return f"{obj.currency} {obj.amount:,.2f}"
+        return '-'
+    amount_display.short_description = 'Amount'
+
+    def has_add_permission(self, request):
+        """Payment logs are system-generated only."""
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        """Allow viewing but all fields are readonly."""
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        """NEVER delete payment audit trail."""
         return False
