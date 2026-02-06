@@ -158,6 +158,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     inlines = [OrderItemInline, OrderStateLogInline]
 
+    actions = ['reprocess_with_stripe']
+
     fieldsets = (
         ('Order Information', {
             'fields': ('id', 'order_number', 'status', 'sales_channel', 'user'),
@@ -194,6 +196,54 @@ class OrderAdmin(admin.ModelAdmin):
         return f"{obj.currency} {obj.total_amount:,.2f}"
     total_amount_display.short_description = 'Total'
     total_amount_display.admin_order_field = 'total_amount'
+
+    def reprocess_with_stripe(self, request, queryset):
+        """
+        Admin action: Sync order status with Stripe API.
+
+        SAFE: Only reads from Stripe, never creates payments.
+        Uses Order.change_status() for proper audit trail.
+        """
+        from .services_reprocess import reprocess_order, ReprocessAction
+
+        synced = 0
+        noop = 0
+        errors = 0
+
+        for order in queryset:
+            result = reprocess_order(str(order.id))
+
+            if result.action == ReprocessAction.STATUS_SYNCED:
+                synced += 1
+                self.message_user(
+                    request,
+                    f"{order.order_number}: {result.before_status} → {result.after_status}",
+                    level='success'
+                )
+            elif result.action == ReprocessAction.NOOP:
+                noop += 1
+            elif result.action == ReprocessAction.CANNOT_REPROCESS:
+                self.message_user(
+                    request,
+                    f"{order.order_number}: Cannot reprocess - {result.message}",
+                    level='warning'
+                )
+            else:
+                errors += 1
+                self.message_user(
+                    request,
+                    f"{order.order_number}: Error - {result.message}",
+                    level='error'
+                )
+
+        if synced > 0:
+            self.message_user(request, f"Synced {synced} order(s) with Stripe", level='success')
+        if noop > 0:
+            self.message_user(request, f"{noop} order(s) already in sync")
+        if errors > 0:
+            self.message_user(request, f"{errors} error(s) occurred", level='error')
+
+    reprocess_with_stripe.short_description = "Sync status with Stripe API (safe, read-only)"
 
     def has_delete_permission(self, request, obj=None):
         """
