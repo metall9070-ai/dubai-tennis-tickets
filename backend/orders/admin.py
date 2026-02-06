@@ -17,6 +17,8 @@ CURRENCY ARCHITECTURE:
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Order, OrderItem, SalesChannel
+from .models_webhook import WebhookEvent
+from .models_outbox import NotificationOutbox
 
 
 # =============================================================================
@@ -258,3 +260,156 @@ class OrderItemAdmin(admin.ModelAdmin):
         if obj and obj.order.status in ['paid', 'confirmed']:
             return False
         return super().has_delete_permission(request, obj)
+
+
+# =============================================================================
+# WEBHOOK EVENT ADMIN (Idempotency tracking)
+# =============================================================================
+
+@admin.register(WebhookEvent)
+class WebhookEventAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for WebhookEvent model.
+
+    Used for auditing and debugging webhook processing.
+    All fields are READ-ONLY - webhook events are system-generated.
+    """
+
+    list_display = [
+        'provider_event_id_short', 'provider', 'event_type',
+        'processing_status', 'related_order_link', 'received_at'
+    ]
+    list_filter = ['provider', 'processing_status', 'event_type', 'received_at']
+    search_fields = ['provider_event_id', 'related_order_id', 'error_message']
+    ordering = ['-received_at']
+    date_hierarchy = 'received_at'
+
+    readonly_fields = [
+        'provider', 'provider_event_id', 'event_type',
+        'processing_status', 'raw_payload', 'related_order_id',
+        'error_message', 'received_at', 'processed_at'
+    ]
+
+    fieldsets = (
+        ('Event Identification', {
+            'fields': ('provider', 'provider_event_id', 'event_type'),
+        }),
+        ('Processing Status', {
+            'fields': ('processing_status', 'error_message', 'related_order_id'),
+        }),
+        ('Timestamps', {
+            'fields': ('received_at', 'processed_at'),
+        }),
+        ('Raw Payload (Debug)', {
+            'fields': ('raw_payload',),
+            'classes': ('collapse',),
+            'description': 'Full webhook payload for debugging purposes.'
+        }),
+    )
+
+    def provider_event_id_short(self, obj):
+        """Show truncated event ID for readability."""
+        event_id = obj.provider_event_id
+        if len(event_id) > 30:
+            return f"{event_id[:15]}...{event_id[-10:]}"
+        return event_id
+    provider_event_id_short.short_description = 'Event ID'
+
+    def related_order_link(self, obj):
+        """Link to related order if exists."""
+        if obj.related_order_id:
+            from django.urls import reverse
+            url = reverse('admin:orders_order_change', args=[obj.related_order_id])
+            return format_html('<a href="{}">{}</a>', url, str(obj.related_order_id)[:8])
+        return '-'
+    related_order_link.short_description = 'Order'
+
+    def has_add_permission(self, request):
+        """Webhook events are system-generated only."""
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        """Allow viewing but all fields are readonly."""
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        """Prevent deletion of webhook audit trail."""
+        return False
+
+
+# =============================================================================
+# NOTIFICATION OUTBOX ADMIN (Guaranteed delivery tracking)
+# =============================================================================
+
+@admin.register(NotificationOutbox)
+class NotificationOutboxAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for NotificationOutbox model.
+
+    Used for monitoring and manually retrying failed notifications.
+    """
+
+    list_display = [
+        'id', 'notification_type', 'status', 'order_link',
+        'attempt_count', 'created_at', 'sent_at'
+    ]
+    list_filter = ['status', 'notification_type', 'created_at']
+    search_fields = ['order_id', 'last_error']
+    ordering = ['-created_at']
+    date_hierarchy = 'created_at'
+
+    readonly_fields = [
+        'order_id', 'notification_type', 'status',
+        'attempt_count', 'last_error', 'created_at', 'sent_at'
+    ]
+
+    actions = ['retry_selected_notifications']
+
+    fieldsets = (
+        ('Notification Details', {
+            'fields': ('order_id', 'notification_type', 'status'),
+        }),
+        ('Delivery Status', {
+            'fields': ('attempt_count', 'last_error', 'sent_at'),
+        }),
+        ('Timestamps', {
+            'fields': ('created_at',),
+        }),
+    )
+
+    def order_link(self, obj):
+        """Link to related order."""
+        if obj.order_id:
+            from django.urls import reverse
+            url = reverse('admin:orders_order_change', args=[obj.order_id])
+            return format_html('<a href="{}">{}</a>', url, str(obj.order_id)[:8])
+        return '-'
+    order_link.short_description = 'Order'
+
+    def retry_selected_notifications(self, request, queryset):
+        """Admin action to retry selected pending notifications."""
+        pending = queryset.filter(status='pending')
+        count = 0
+        for item in pending:
+            try:
+                NotificationOutbox.process_pending_for_order(item.order_id)
+                count += 1
+            except Exception as e:
+                self.message_user(request, f"Error retrying {item.order_id}: {e}", level='error')
+
+        self.message_user(request, f"Retried {count} notifications")
+    retry_selected_notifications.short_description = "Retry selected pending notifications"
+
+    def has_add_permission(self, request):
+        """Notifications are system-generated only."""
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        """Allow viewing but all fields are readonly."""
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        """Allow deletion of old sent notifications for cleanup."""
+        if obj and obj.status == 'sent':
+            return True
+        return False
