@@ -264,6 +264,81 @@ class Order(models.Model):
         """Get total number of tickets in order."""
         return sum(item.quantity for item in self.items.all())
 
+    # =========================================================================
+    # STATUS CHANGE (MANDATORY LOGGING)
+    # =========================================================================
+
+    def change_status(
+        self,
+        to_status: str,
+        source: str,
+        note: str = '',
+        update_fields: list = None
+    ) -> bool:
+        """
+        Change order status with MANDATORY logging to OrderStateLog.
+
+        ЖЁСТКОЕ ПРАВИЛО: Это ЕДИНСТВЕННЫЙ способ изменить статус заказа.
+        Прямое присваивание order.status = ... ЗАПРЕЩЕНО.
+
+        Гарантии:
+        - Атомарность: статус и лог создаются в одной транзакции
+        - Идемпотентность: если статус не меняется, лог не создаётся
+        - Audit trail: каждый переход статуса задокументирован
+
+        Args:
+            to_status: Новый статус (pending, confirmed, paid, cancelled, refunded)
+            source: Источник изменения (api, webhook, admin, system)
+            note: Опциональная заметка (payment_intent_id, причина отмены, etc.)
+            update_fields: Дополнительные поля для сохранения (paid_at, payment_intent_id)
+
+        Returns:
+            True если статус изменился, False если статус уже был таким
+
+        Raises:
+            ValueError: Если to_status или source невалидны
+        """
+        from django.db import transaction
+        from .models_state_log import OrderStateLog
+
+        # Validate to_status
+        valid_statuses = [choice[0] for choice in self.ORDER_STATUS]
+        if to_status not in valid_statuses:
+            raise ValueError(f"Invalid status: {to_status}. Must be one of: {valid_statuses}")
+
+        # Validate source
+        valid_sources = [choice[0] for choice in OrderStateLog.SOURCE_CHOICES]
+        if source not in valid_sources:
+            raise ValueError(f"Invalid source: {source}. Must be one of: {valid_sources}")
+
+        # Idempotency: if status is already the same, no-op
+        if self.status == to_status:
+            return False
+
+        from_status = self.status
+
+        with transaction.atomic():
+            # Update status
+            self.status = to_status
+
+            # Prepare fields to save
+            fields_to_save = ['status', 'updated_at']
+            if update_fields:
+                fields_to_save.extend(update_fields)
+
+            self.save(update_fields=fields_to_save)
+
+            # Create mandatory log entry
+            OrderStateLog.create_log(
+                order=self,
+                from_status=from_status,
+                to_status=to_status,
+                source=source,
+                note=note,
+            )
+
+        return True
+
 
 class OrderItem(models.Model):
     """

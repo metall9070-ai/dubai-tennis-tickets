@@ -326,19 +326,21 @@ class OrderService:
     
     @classmethod
     @transaction.atomic
-    def cancel_order(cls, order: Order) -> Order:
+    def cancel_order(cls, order: Order, source: str = 'api', reason: str = '') -> Order:
         """
         Cancel an order and release reserved seats.
-        
+
         Args:
             order: Order to cancel
-            
+            source: Source of cancellation (api, admin, webhook, system)
+            reason: Optional reason for cancellation
+
         Returns:
             Updated Order instance
         """
         if order.status == 'cancelled':
             return order
-        
+
         # Release seats for each item
         for item in order.items.select_related('category'):
             category = Category.objects.select_for_update().get(id=item.category_id)
@@ -347,17 +349,21 @@ class OrderService:
                 category.seats_available + item.quantity
             )
             category.save(update_fields=['seats_available', 'updated_at'])
-            
+
             logger.info(
                 f'Released {item.quantity} seats for {category.name} '
                 f'(order {order.order_number} cancelled)'
             )
-        
-        order.status = 'cancelled'
-        order.save(update_fields=['status', 'updated_at'])
-        
+
+        # MANDATORY: Use change_status() to ensure OrderStateLog is created
+        order.change_status(
+            to_status='cancelled',
+            source=source,
+            note=reason,
+        )
+
         logger.info(f'Order {order.order_number} cancelled successfully.')
-        
+
         return order
     
     @classmethod
