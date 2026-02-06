@@ -7,8 +7,8 @@ import './globals.css';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-XXXXXXX';
 
 export const metadata: Metadata = {
-  title: 'Dubai Tennis Championships 2026 Tickets | Best Seats Available',
-  description: 'Dubai Duty Free Tennis Championships 2026 ticket concierge service. Feb 15-28 at Aviation Club. ATP 500 & WTA 1000. Prices from $200. Secure checkout, instant confirmation.',
+  title: 'Dubai Tennis Tickets 2026 | ATP 500 & WTA 1000 Championships',
+  description: 'Dubai Tennis Tickets for Dubai Duty Free Tennis Championships 2026. Feb 15-28 at Aviation Club. ATP 500 & WTA 1000. Prices from $200. Secure checkout.',
   keywords: 'Dubai Tennis, Dubai Duty Free Tennis Championships, ATP 500 Dubai, WTA 1000 Dubai, tennis tickets Dubai, Dubai Tennis Stadium, tennis 2026, buy tennis tickets',
   authors: [{ name: 'Dubai Tennis Tickets' }],
   robots: 'index, follow',
@@ -19,16 +19,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://dubaitennistickets.com/',
-    title: 'Dubai Duty Free Tennis Championships 2026 | Ticket Concierge',
-    description: 'Independent ticket concierge for Dubai Duty Free Tennis Championships 2026. February 15-28. ATP 500 & WTA 1000 tournaments at Dubai Tennis Stadium.',
+    title: 'Dubai Tennis Tickets | Dubai Duty Free Championships 2026',
+    description: 'Get Dubai Tennis Tickets for the Dubai Duty Free Tennis Championships 2026. February 15-28 at Dubai Tennis Stadium. ATP 500 & WTA 1000.',
     images: ['https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop'],
     locale: 'en_US',
     siteName: 'Dubai Tennis Tickets',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dubai Duty Free Tennis Championships 2026 | Ticket Concierge',
-    description: 'Independent ticket concierge for Dubai Duty Free Tennis Championships 2026. February 15-28. ATP 500 & WTA 1000 tournaments.',
+    title: 'Dubai Tennis Tickets | Dubai Duty Free Championships 2026',
+    description: 'Get Dubai Tennis Tickets for Dubai Duty Free Tennis Championships 2026. February 15-28. ATP 500 & WTA 1000 at Dubai Tennis Stadium.',
     images: ['https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop'],
   },
   other: {

@@ -66,10 +66,10 @@ const Footer: React.FC<FooterProps> = ({
           {/* Column 1: Brand & Contact - on mobile shows LAST, on desktop shows FIRST */}
           <div className="col-span-2 lg:col-span-2 flex flex-col space-y-3 sm:space-y-4 order-last lg:order-first">
             <span className="text-[#1d1d1f] text-[15px] sm:text-[16px] font-bold tracking-tight">
-              Dubai Tennis Ticket Concierge
+              Dubai Tennis Tickets
             </span>
             <p className="text-[12px] sm:text-[13px] text-[#424245] leading-relaxed">
-              Independent ticket concierge service for Dubai Duty Free Tennis Championships.
+              Independent ticket service for Dubai Duty Free Tennis Championships.
               Secure booking and guaranteed authentic tickets.
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
