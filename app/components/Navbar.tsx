@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
               aria-label="Home"
             >
               <span className="text-white text-[13px] font-bold tracking-[0.05em]">
-                Dubai Tennis Ticket Concierge
+                Dubai Tennis Tickets
               </span>
             </Link>
           </div>
@@ -151,7 +151,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
 
           <div className="mt-auto pb-12">
             <p className="text-white/50 text-[13px] font-medium tracking-tight">
-              Dubai Tennis Ticket Concierge<br />
+              Dubai Tennis Tickets<br />
               Independent ticket service
             </p>
           </div>
