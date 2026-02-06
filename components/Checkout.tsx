@@ -468,7 +468,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                       </>
                     ) : (
                       <>
-                        <span>Go to Checkout</span>
+                        <span>Proceed to payment</span>
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                       </>
                     )}

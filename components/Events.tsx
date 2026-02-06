@@ -249,7 +249,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
           )}
         </div>
         <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[#1e824c] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
-          Buy
+          Buy tickets
         </span>
       </div>
     </div>

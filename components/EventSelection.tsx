@@ -392,7 +392,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                 onClick={onCheckout}
                 className="w-full py-3.5 md:py-4 bg-[#1e824c] text-white font-semibold rounded-xl md:rounded-2xl hover:bg-[#166d3e] transition-all transform active:scale-[0.98] text-[15px] md:text-[16px] shadow-lg shadow-[#1e824c]/20"
               >
-                Go to Checkout
+                Checkout
               </button>
             </div>
           )}
@@ -503,7 +503,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       onClick={onCheckout}
                       className="w-full py-4 md:py-5 bg-[#1d1d1f] text-white font-semibold rounded-[20px] md:rounded-[24px] shadow-xl hover:bg-black transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
                     >
-                      Go to Checkout
+                      Checkout
                     </button>
                     <button
                       onClick={closeModal}
