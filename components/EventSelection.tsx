@@ -166,6 +166,21 @@ const EventSelection: React.FC<EventSelectionProps> = ({
     if (!selectedCategory) return;
     const cartId = `${event.id}-${selectedCategory.id}`;
 
+    // GA4: Track add_to_cart event
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'add_to_cart', {
+        items: [{
+          item_id: event.id,
+          item_name: event.title,
+          item_category: selectedCategory.name,
+          price: selectedCategory.price,
+          quantity: ticketCount
+        }],
+        value: selectedCategory.price * ticketCount,
+        currency: 'USD'
+      });
+    }
+
     setCart(prev => {
       const existing = prev.find(item => item.id === cartId);
       if (existing) {
