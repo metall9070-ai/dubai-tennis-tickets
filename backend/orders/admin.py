@@ -20,6 +20,7 @@ from .models import Order, OrderItem, SalesChannel
 from .models_webhook import WebhookEvent
 from .models_outbox import NotificationOutbox
 from .models_payment_log import PaymentLog
+from .models_state_log import OrderStateLog
 
 
 # =============================================================================
@@ -97,6 +98,31 @@ class OrderItemInline(admin.TabularInline):
         return True
 
 
+class OrderStateLogInline(admin.TabularInline):
+    """
+    Inline display of order status history.
+
+    Shows complete audit trail of all status changes for the order.
+    APPEND-ONLY: No modifications or deletions allowed.
+    """
+    model = OrderStateLog
+    extra = 0
+    ordering = ['-created_at']
+
+    readonly_fields = ['from_status', 'to_status', 'source', 'note', 'created_at']
+    fields = ['from_status', 'to_status', 'source', 'note', 'created_at']
+
+    can_delete = False
+
+    def has_add_permission(self, request, obj=None):
+        """State logs are system-generated only via change_status()."""
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        """Allow viewing but fields are readonly."""
+        return True
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     """
@@ -130,7 +156,7 @@ class OrderAdmin(admin.ModelAdmin):
         'user', 'total_tickets_display'
     ]
 
-    inlines = [OrderItemInline]
+    inlines = [OrderItemInline, OrderStateLogInline]
 
     fieldsets = (
         ('Order Information', {
@@ -498,4 +524,65 @@ class PaymentLogAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         """NEVER delete payment audit trail."""
+        return False
+
+
+# =============================================================================
+# ORDER STATE LOG ADMIN (Status change audit trail)
+# =============================================================================
+
+@admin.register(OrderStateLog)
+class OrderStateLogAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for OrderStateLog model.
+
+    This is an APPEND-ONLY audit journal. No modifications or deletions allowed.
+    Records every status change for every order.
+    """
+
+    list_display = [
+        'id', 'order_link', 'from_status', 'to_status',
+        'source', 'created_at'
+    ]
+    list_filter = ['source', 'from_status', 'to_status', 'created_at']
+    search_fields = ['order__order_number', 'note']
+    ordering = ['-created_at']
+    date_hierarchy = 'created_at'
+
+    readonly_fields = [
+        'order', 'from_status', 'to_status',
+        'source', 'note', 'created_at'
+    ]
+
+    fieldsets = (
+        ('Status Change', {
+            'fields': ('order', 'from_status', 'to_status'),
+        }),
+        ('Context', {
+            'fields': ('source', 'note'),
+        }),
+        ('Timestamp', {
+            'fields': ('created_at',),
+        }),
+    )
+
+    def order_link(self, obj):
+        """Link to related order."""
+        if obj.order:
+            from django.urls import reverse
+            url = reverse('admin:orders_order_change', args=[obj.order.id])
+            return format_html('<a href="{}">{}</a>', url, obj.order.order_number)
+        return '-'
+    order_link.short_description = 'Order'
+
+    def has_add_permission(self, request):
+        """State logs are system-generated only via change_status()."""
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        """Allow viewing but all fields are readonly."""
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        """NEVER delete state change audit trail."""
         return False

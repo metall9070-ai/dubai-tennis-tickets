@@ -593,11 +593,18 @@ def handle_checkout_completed(
                     payment_log.mark_error(f"Amount mismatch: expected {expected_amount}, got {amount_total}")
                 return HttpResponse(status=200)
 
-            # ALL CHECKS PASSED - Update order status
-            order.status = 'paid'
+            # ALL CHECKS PASSED - Update order status via change_status()
+            # Set payment fields first, they will be saved together with status
             order.payment_intent_id = payment_intent_id
             order.paid_at = timezone.now()
-            order.save(update_fields=['status', 'payment_intent_id', 'paid_at', 'updated_at'])
+
+            # MANDATORY: Use change_status() to ensure OrderStateLog is created
+            order.change_status(
+                to_status='paid',
+                source='webhook',
+                note=f"payment_intent={payment_intent_id}, event={event_id}",
+                update_fields=['payment_intent_id', 'paid_at']
+            )
 
             # Mark webhook as processed INSIDE transaction
             # This ensures atomicity: if transaction rolls back, webhook is not marked processed
