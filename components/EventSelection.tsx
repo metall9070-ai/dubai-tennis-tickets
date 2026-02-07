@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import WhyBuy from './WhyBuy';
 import WTASessionInfo from './WTASessionInfo';
+import ATPSessionInfo from './ATPSessionInfo';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
@@ -425,6 +426,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
       {/* WTA Session Info - only shown for WTA events */}
       {event?.type === 'WTA' && <WTASessionInfo eventTitle={event?.title || ''} />}
+
+      {/* ATP Session Info - only shown for ATP events */}
+      {event?.type === 'ATP' && <ATPSessionInfo eventTitle={event?.title || ''} />}
 
       <WhyBuy />
       <Footer
