@@ -145,12 +145,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [ticketCount, setTicketCount] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
 
   const openModal = (cat: Category) => {
     setSelectedCategory(cat);
     setTicketCount(1);
-    setIsAdded(false);
     setIsModalOpen(true);
   };
 
@@ -183,8 +181,18 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         venue: event.venue
       }];
     });
+  };
 
-    setIsAdded(true);
+  // Checkout: add to cart + go to checkout page
+  const handleCheckoutClick = () => {
+    handleAddToCart();
+    onCheckout();
+  };
+
+  // Continue Shopping: add to cart + close modal
+  const handleContinueShopping = () => {
+    handleAddToCart();
+    closeModal();
   };
 
   const handleSelectCategory = (categoryId: string) => {
@@ -419,8 +427,6 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeModal}></div>
           <div className="relative bg-white w-full max-w-[440px] max-h-[92vh] rounded-[32px] md:rounded-[42px] shadow-2xl overflow-y-auto animate-modalSlide border border-black/5">
             <div className="p-5 md:p-8">
-              {!isAdded ? (
-                <>
                   <div className="flex items-center justify-between mb-0.5 md:mb-1">
                     <span className="text-[14px] md:text-[15px] font-semibold text-[#86868b]">Select Quantity</span>
                     <button onClick={closeModal} className="p-1 hover:bg-[#f5f5f7] rounded-full transition-colors">
@@ -481,37 +487,20 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     </p>
                   </div>
 
-                  <button
-                    onClick={handleAddToCart}
-                    className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
-                  >
-                    Confirm Order
-                  </button>
-                </>
-              ) : (
-                <div className="text-center py-4 md:py-6">
-                  <div className="w-14 h-14 md:w-16 md:h-16 bg-green-50 text-[#1e824c] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-inner">
-                    <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <h3 className="text-[24px] md:text-[28px] font-semibold text-[#1d1d1f] mb-1.5 md:mb-2 tracking-tight">Added to Cart</h3>
-                  <p className="text-[14px] md:text-[15px] text-[#86868b] mb-8 md:mb-10 font-medium px-2 md:px-4">Your tickets have been successfully added to your cart.</p>
-
-                  <div className="space-y-3 md:space-y-4 px-1 md:px-2">
+                  <div className="space-y-3 md:space-y-4">
                     <button
-                      onClick={onCheckout}
-                      className="w-full py-4 md:py-5 bg-[#1d1d1f] text-white font-semibold rounded-[20px] md:rounded-[24px] shadow-xl hover:bg-black transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
+                      onClick={handleCheckoutClick}
+                      className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
                     >
                       Go to Checkout
                     </button>
                     <button
-                      onClick={closeModal}
+                      onClick={handleContinueShopping}
                       className="w-full py-2.5 text-[#1e824c] font-semibold hover:underline transition-all text-[14px] md:text-[15px]"
                     >
                       Continue Shopping
                     </button>
                   </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
