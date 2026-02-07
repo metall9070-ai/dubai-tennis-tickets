@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhyBuy from './WhyBuy';
+import WTASessionInfo from './WTASessionInfo';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
@@ -421,6 +422,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           )}
         </div>
       </div>
+
+      {/* WTA Session Info - only shown for WTA events */}
+      {event?.type === 'WTA' && <WTASessionInfo eventTitle={event?.title || ''} />}
 
       <WhyBuy />
       <Footer
