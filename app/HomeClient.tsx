@@ -45,7 +45,8 @@ export default function HomeClient({ initialEvents }: HomeClientProps) {
       <Hero isVisible={isLoaded} onAction={handleViewShelter} />
       {isLoaded && (
         <>
-          <TrustSignals />
+          {/* TEMPORARILY DISABLED — can be re-enabled on request */}
+          {/* <TrustSignals /> */}
           <Events onSelectEvent={handleSelectEvent} initialEvents={initialEvents} />
           <WhyBuy />
           <SEOSection
