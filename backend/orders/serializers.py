@@ -207,6 +207,7 @@ class OrderCreateSerializer(serializers.Serializer):
                 email=validated_data['email'],
                 phone=validated_data['phone'],
                 items=validated_data['validated_items'],
+                site_code='default',
                 user=user,
                 comments=validated_data.get('comments', '')
             )
