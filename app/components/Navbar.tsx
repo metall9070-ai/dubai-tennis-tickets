@@ -59,11 +59,17 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
                 }
               }}
               className="flex items-center group cursor-pointer"
-              aria-label="Home"
+              aria-label="Dubai Tennis Tickets"
             >
-              <span className="text-white text-[13px] font-bold tracking-[0.05em]">
-                Dubai Tennis Tickets
-              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 100"
+                className="w-7 h-7 md:w-8 md:h-8"
+              >
+                <circle cx="50" cy="50" r="48" fill="#C9E600"/>
+                <path d="M10 50a40 40 0 0 1 80 0" fill="none" stroke="#ffffff" strokeWidth="6" strokeLinecap="round"/>
+                <path d="M90 50a40 40 0 0 1-80 0" fill="none" stroke="#ffffff" strokeWidth="6" strokeLinecap="round"/>
+              </svg>
             </Link>
           </div>
 
