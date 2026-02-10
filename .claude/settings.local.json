@@ -73,7 +73,16 @@
       "Bash(git checkout:*)",
       "Bash(ls:*)",
       "Bash(wc:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git stash:*)",
+      "Bash(git merge:*)",
+      "Bash(gh repo view:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git filter-branch:*)",
+      "Bash(pip install:*)",
+      "Bash(npx next build:*)",
+      "WebFetch(domain:platform-backend-production-f268.up.railway.app)",
+      "WebFetch(domain:dubaitennistickets.com)"
     ]
   }
 }

@@ -34,6 +34,7 @@
 import type { Event } from '@/lib/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
 const API_TIMEOUT = 10000; // 10 seconds - increased for reliable local dev
 
 // Log API configuration on module load (client-side only)
@@ -289,7 +290,12 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
   // DJANGO API - SINGLE SOURCE OF TRUTH
   // No fallback to static data - if API fails, UI must show error
   try {
-    const response = await fetchWithTimeout(`${API_BASE_URL}/api/events/`);
+    let eventsUrl = `${API_BASE_URL}/api/events/`;
+    if (SITE_CODE) {
+      eventsUrl += `?site_code=${encodeURIComponent(SITE_CODE)}`;
+    }
+
+    const response = await fetchWithTimeout(eventsUrl);
 
     if (!response.ok) {
       console.error('[API] Events fetch FAILED:', response.status);

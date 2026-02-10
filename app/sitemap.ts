@@ -62,11 +62,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic event pages (already filtered by theme via fetchEventsServer)
+  // Dynamic event pages — fetch ALL events (no site_code).
+  // SEO must NOT depend on EventVisibility — event pages are always accessible.
   let eventPages: MetadataRoute.Sitemap = [];
 
   try {
-    const events = await fetchEventsServer();
+    const events = await fetchEventsServer('');
     eventPages = events.map(event => ({
       url: `${SITE_URL}/tickets/event/${event.slug}`,
       lastModified: new Date(),

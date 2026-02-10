@@ -6,6 +6,7 @@
 import type { Event } from '@/lib/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
 
 interface APIEvent {
   id: number;
@@ -24,15 +25,26 @@ interface APIEvent {
 /**
  * Fetch events from Django API (server-side).
  * Uses ISR with 60s revalidation for optimal SEO + freshness.
+ *
+ * @param siteCode - Site code for visibility filtering.
+ *   undefined = use NEXT_PUBLIC_SITE_CODE env (default for listing pages).
+ *   '' = skip visibility filter (used by sitemap — SEO must not depend on visibility).
  */
-export async function fetchEventsServer(): Promise<Event[]> {
+export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
   if (!API_BASE_URL) {
     console.error('[SERVER API] No API URL configured');
     return [];
   }
 
+  const effectiveSiteCode = siteCode !== undefined ? siteCode : SITE_CODE;
+
   try {
-    const response = await fetch(`${API_BASE_URL}/api/events/`, {
+    let url = `${API_BASE_URL}/api/events/`;
+    if (effectiveSiteCode) {
+      url += `?site_code=${encodeURIComponent(effectiveSiteCode)}`;
+    }
+
+    const response = await fetch(url, {
       next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
       headers: {
         'Accept': 'application/json',
