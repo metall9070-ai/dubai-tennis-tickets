@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useCart } from '@/app/CartContext';
-
-const CART_STORAGE_KEY = 'dubai-tennis-cart';
+import { useCart, CART_STORAGE_KEY } from '@/app/CartContext';
 
 interface ClearCartOnSuccessProps {
   orderStatus: string;

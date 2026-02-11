@@ -144,7 +144,12 @@ export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | 
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/events/${slugOrId}/`, {
+    let url = `${API_BASE_URL}/api/events/${slugOrId}/`;
+    if (SITE_CODE) {
+      url += `?site_code=${encodeURIComponent(SITE_CODE)}`;
+    }
+
+    const response = await fetch(url, {
       next: { revalidate: 60 },
       headers: {
         'Accept': 'application/json',
@@ -191,7 +196,12 @@ export async function fetchEventCategoriesServer(eventId: number | string): Prom
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/events/${eventId}/categories/`, {
+    let url = `${API_BASE_URL}/api/events/${eventId}/categories/`;
+    if (SITE_CODE) {
+      url += `?site_code=${encodeURIComponent(SITE_CODE)}`;
+    }
+
+    const response = await fetch(url, {
       next: { revalidate: 60 },
       headers: {
         'Accept': 'application/json',

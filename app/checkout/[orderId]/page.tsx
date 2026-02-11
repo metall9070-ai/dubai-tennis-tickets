@@ -4,6 +4,8 @@ import Link from 'next/link';
 import ClearCartOnSuccess from './ClearCartOnSuccess';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
+const SITE_BRAND = process.env.NEXT_PUBLIC_SITE_BRAND || 'Tickets';
 
 interface OrderItem {
   id: string;
@@ -39,7 +41,12 @@ interface Order {
 
 async function fetchOrder(orderId: string): Promise<Order | null> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/`, {
+    let url = `${API_BASE_URL}/api/orders/${orderId}/`;
+    if (SITE_CODE) {
+      url += `?site_code=${encodeURIComponent(SITE_CODE)}`;
+    }
+
+    const response = await fetch(url, {
       cache: 'no-store',
     });
 
@@ -64,7 +71,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { orderId } = await params;
   return {
-    title: `Order ${orderId.slice(0, 8)}... | Dubai Tennis Tickets`,
+    title: `Order ${orderId.slice(0, 8)}... | ${SITE_BRAND}`,
     description: 'Review your order details and complete payment.',
     robots: 'noindex, nofollow',
   };
@@ -100,7 +107,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
       <header className="bg-white border-b border-[#d2d2d7]">
         <div className="max-w-3xl mx-auto px-4 py-6">
           <Link href="/" className="text-[#1e824c] font-semibold text-lg hover:underline">
-            Dubai Tennis Tickets
+            {SITE_BRAND}
           </Link>
         </div>
       </header>

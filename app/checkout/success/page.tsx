@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { CART_STORAGE_KEY } from '@/app/CartContext';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -12,7 +13,7 @@ function SuccessContent() {
   useEffect(() => {
     // Clear cart on success
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('dubai-tennis-cart');
+      localStorage.removeItem(CART_STORAGE_KEY);
     }
   }, []);
 

@@ -14,6 +14,8 @@ interface BreadcrumbsProps {
   light?: boolean;
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || '';
+
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentPage, light = false }) => {
   // Generate Schema.org BreadcrumbList JSON-LD
   const schemaData = {
@@ -24,7 +26,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentPage, light = f
         "@type": "ListItem",
         "position": index + 1,
         "name": item.label,
-        "item": item.href ? `https://dubaitennistickets.com${item.href}` : undefined
+        "item": item.href ? `${SITE_URL}${item.href}` : undefined
       })),
       {
         "@type": "ListItem",

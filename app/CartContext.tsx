@@ -2,8 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-const CART_STORAGE_KEY = 'dubai-tennis-cart';
-const CART_VERSION_KEY = 'dubai-tennis-cart-version';
+const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
+export const CART_STORAGE_KEY = `${SITE_CODE}-cart`;
+export const CART_VERSION_KEY = `${SITE_CODE}-cart-version`;
 const CURRENT_CART_VERSION = 3; // Increment when cart format changes (v3: clear sessionStorage too)
 
 // CRITICAL: Clear old sessionStorage IMMEDIATELY at module load time

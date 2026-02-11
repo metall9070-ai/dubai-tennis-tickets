@@ -2,14 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCart } from '@/app/CartContext';
+import { useCart, CART_VERSION_KEY } from '@/app/CartContext';
 import EventSelection from '@/components/EventSelection';
 import { fetchEventBySlug } from '@/lib/api';
 import type { Event } from '@/lib/types';
 import type { Category } from '@/lib/api-server';
 
 // Storage version - must match CartContext.tsx
-const CART_VERSION_KEY = 'dubai-tennis-cart-version';
 const CURRENT_CART_VERSION = 3;
 
 // Check if sessionStorage should be trusted (version matches)

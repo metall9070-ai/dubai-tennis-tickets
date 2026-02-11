@@ -60,6 +60,7 @@ const Checkout: React.FC<CheckoutProps> = ({
     setIsLoading(true);
 
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+    const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
 
     if (!API_BASE_URL) {
       alert('Configuration error: API URL not set');
@@ -81,13 +82,14 @@ const Checkout: React.FC<CheckoutProps> = ({
       console.log('[Checkout] Creating order with items:', items);
       console.log('[Checkout] Phone (cleaned):', cleanPhone);
 
-      // Create single order with all items
-      const orderResponse = await fetch(`${API_BASE_URL}/api/orders/`, {
+      // Combined: create order + Stripe checkout session in one call
+      const response = await fetch(`${API_BASE_URL}/api/checkout/create-session/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          site_code: SITE_CODE,
           name: formData.name.trim(),
           email: formData.email.trim().toLowerCase(),
           phone: cleanPhone,
@@ -96,17 +98,15 @@ const Checkout: React.FC<CheckoutProps> = ({
         }),
       });
 
-      const orderData = await orderResponse.json();
-      console.log('[Checkout] Order API response:', orderResponse.status, orderData);
+      const data = await response.json();
+      console.log('[Checkout] Checkout session response:', response.status, data);
 
-      if (!orderResponse.ok || !orderData.order?.id) {
-        // Extract detailed error message from validation response
+      if (!response.ok || !data.checkout_url) {
         let errorMessage = 'Failed to create order';
 
-        if (orderData.details) {
-          // Check for field-specific errors
-          const fieldErrors = [];
-          for (const [field, errors] of Object.entries(orderData.details)) {
+        if (data.details) {
+          const fieldErrors: string[] = [];
+          for (const [, errors] of Object.entries(data.details)) {
             if (Array.isArray(errors)) {
               fieldErrors.push(...errors);
             } else if (typeof errors === 'string') {
@@ -116,33 +116,16 @@ const Checkout: React.FC<CheckoutProps> = ({
           if (fieldErrors.length > 0) {
             errorMessage = fieldErrors.join('. ');
           }
-        } else if (orderData.message && orderData.message !== 'Validation error') {
-          errorMessage = orderData.message;
-        } else if (orderData.error) {
-          errorMessage = orderData.error;
+        } else if (data.message && data.message !== 'Validation error') {
+          errorMessage = data.message;
+        } else if (data.error) {
+          errorMessage = data.error;
         }
 
         throw new Error(errorMessage);
       }
 
-      // Create Stripe checkout session
-      const stripeResponse = await fetch(`${API_BASE_URL}/api/stripe/create-checkout-session/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          order_id: orderData.order.id,
-        }),
-      });
-
-      const stripeData = await stripeResponse.json();
-
-      if (!stripeResponse.ok) {
-        throw new Error(stripeData.error || 'Payment failed');
-      }
-
-      if (stripeData.checkout_url) {
+      if (data.checkout_url) {
         // GA4: Track begin_checkout event via gtag only (avoid duplicate with GTM)
         if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
           const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -163,7 +146,7 @@ const Checkout: React.FC<CheckoutProps> = ({
 
         // Small delay to ensure GA4 event is sent before redirect
         setTimeout(() => {
-          window.location.href = stripeData.checkout_url;
+          window.location.href = data.checkout_url;
         }, 150);
       } else {
         throw new Error('No checkout URL returned');
