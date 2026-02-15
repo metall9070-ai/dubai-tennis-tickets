@@ -274,12 +274,19 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                 </div>
               </div>
             </div>
-            <button
-              onClick={onBack}
-              className="text-[13px] md:text-[14px] font-semibold text-[#1e824c] hover:bg-[#1e824c]/5 transition-all px-6 md:px-8 py-2 md:py-2.5 bg-white rounded-full border border-[#d2d2d7] shadow-sm whitespace-nowrap active:scale-95 self-start md:self-auto"
-            >
-              Change Event
-            </button>
+            <div className="flex flex-col items-start md:items-end gap-2 self-start md:self-auto">
+              {event?.isSoldOut && (
+                <span className="inline-flex items-center px-4 py-1.5 bg-[#86868b] text-white text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-full">
+                  Sold out
+                </span>
+              )}
+              <button
+                onClick={onBack}
+                className="text-[13px] md:text-[14px] font-semibold text-[#1e824c] hover:bg-[#1e824c]/5 transition-all px-6 md:px-8 py-2 md:py-2.5 bg-white rounded-full border border-[#d2d2d7] shadow-sm whitespace-nowrap active:scale-95"
+              >
+                Change Event
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ export interface Event {
   day: string;
   month: string;
   time: string;
-  minPrice: number;
+  minPrice: number | null;
+  isSoldOut: boolean;
   tournamentSlug?: string;
 }

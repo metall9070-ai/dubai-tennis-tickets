@@ -17,19 +17,19 @@ import type { Event } from '@/lib/types';
 // WTA min_price = $300 (Grandstand), ATP min_price = $200 (Grandstand Upper)
 // Slugs are now the primary identifier - IDs are kept for backward compatibility
 export const eventsData: Event[] = [
-  { id: 1, slug: 'womens-day-1-feb-15', type: 'WTA', month: 'FEB', date: '15', day: 'Sun', time: '11:00 AM', title: "Women's Day 1", minPrice: 300 },
-  { id: 2, slug: 'womens-day-2-feb-16', type: 'WTA', month: 'FEB', date: '16', day: 'Mon', time: '11:00 AM', title: "Women's Day 2", minPrice: 300 },
-  { id: 3, slug: 'womens-day-3-feb-17', type: 'WTA', month: 'FEB', date: '17', day: 'Tue', time: '11:00 AM', title: "Women's Day 3", minPrice: 300 },
-  { id: 4, slug: 'womens-day-4-feb-18', type: 'WTA', month: 'FEB', date: '18', day: 'Wed', time: '11:00 AM', title: "Women's Day 4", minPrice: 300 },
-  { id: 5, slug: 'womens-quarter-finals-feb-19', type: 'WTA', month: 'FEB', date: '19', day: 'Thu', time: '2:00 PM', title: "Women's Quarter-Finals", minPrice: 300 },
-  { id: 6, slug: 'womens-semi-finals-feb-20', type: 'WTA', month: 'FEB', date: '20', day: 'Fri', time: '1:00 PM', title: "Women's Semi-Finals", minPrice: 300 },
-  { id: 7, slug: 'womens-finals-feb-21', type: 'WTA', month: 'FEB', date: '21', day: 'Sat', time: '4:30 PM', title: "Women's Finals", minPrice: 300 },
-  { id: 8, slug: 'mens-day-1-feb-23', type: 'ATP', month: 'FEB', date: '23', day: 'Mon', time: '2:00 PM', title: "Men's Day 1", minPrice: 200 },
-  { id: 9, slug: 'mens-day-2-feb-24', type: 'ATP', month: 'FEB', date: '24', day: 'Tue', time: '2:00 PM', title: "Men's Day 2", minPrice: 200 },
-  { id: 10, slug: 'mens-day-3-feb-25', type: 'ATP', month: 'FEB', date: '25', day: 'Wed', time: '2:00 PM', title: "Men's Day 3", minPrice: 200 },
-  { id: 11, slug: 'mens-quarter-finals-feb-26', type: 'ATP', month: 'FEB', date: '26', day: 'Thu', time: '2:00 PM', title: "Men's Quarter-Finals", minPrice: 200 },
-  { id: 12, slug: 'mens-semi-finals-feb-27', type: 'ATP', month: 'FEB', date: '27', day: 'Fri', time: '1:30 PM', title: "Men's Semi-Finals", minPrice: 200 },
-  { id: 13, slug: 'mens-finals-feb-28', type: 'ATP', month: 'FEB', date: '28', day: 'Sat', time: '4:30 PM', title: "Men's Finals", minPrice: 200 },
+  { id: 1, slug: 'womens-day-1-feb-15', type: 'WTA', month: 'FEB', date: '15', day: 'Sun', time: '11:00 AM', title: "Women's Day 1", minPrice: 300, isSoldOut: false },
+  { id: 2, slug: 'womens-day-2-feb-16', type: 'WTA', month: 'FEB', date: '16', day: 'Mon', time: '11:00 AM', title: "Women's Day 2", minPrice: 300, isSoldOut: false },
+  { id: 3, slug: 'womens-day-3-feb-17', type: 'WTA', month: 'FEB', date: '17', day: 'Tue', time: '11:00 AM', title: "Women's Day 3", minPrice: 300, isSoldOut: false },
+  { id: 4, slug: 'womens-day-4-feb-18', type: 'WTA', month: 'FEB', date: '18', day: 'Wed', time: '11:00 AM', title: "Women's Day 4", minPrice: 300, isSoldOut: false },
+  { id: 5, slug: 'womens-quarter-finals-feb-19', type: 'WTA', month: 'FEB', date: '19', day: 'Thu', time: '2:00 PM', title: "Women's Quarter-Finals", minPrice: 300, isSoldOut: false },
+  { id: 6, slug: 'womens-semi-finals-feb-20', type: 'WTA', month: 'FEB', date: '20', day: 'Fri', time: '1:00 PM', title: "Women's Semi-Finals", minPrice: 300, isSoldOut: false },
+  { id: 7, slug: 'womens-finals-feb-21', type: 'WTA', month: 'FEB', date: '21', day: 'Sat', time: '4:30 PM', title: "Women's Finals", minPrice: 300, isSoldOut: false },
+  { id: 8, slug: 'mens-day-1-feb-23', type: 'ATP', month: 'FEB', date: '23', day: 'Mon', time: '2:00 PM', title: "Men's Day 1", minPrice: 200, isSoldOut: false },
+  { id: 9, slug: 'mens-day-2-feb-24', type: 'ATP', month: 'FEB', date: '24', day: 'Tue', time: '2:00 PM', title: "Men's Day 2", minPrice: 200, isSoldOut: false },
+  { id: 10, slug: 'mens-day-3-feb-25', type: 'ATP', month: 'FEB', date: '25', day: 'Wed', time: '2:00 PM', title: "Men's Day 3", minPrice: 200, isSoldOut: false },
+  { id: 11, slug: 'mens-quarter-finals-feb-26', type: 'ATP', month: 'FEB', date: '26', day: 'Thu', time: '2:00 PM', title: "Men's Quarter-Finals", minPrice: 200, isSoldOut: false },
+  { id: 12, slug: 'mens-semi-finals-feb-27', type: 'ATP', month: 'FEB', date: '27', day: 'Fri', time: '1:30 PM', title: "Men's Semi-Finals", minPrice: 200, isSoldOut: false },
+  { id: 13, slug: 'mens-finals-feb-28', type: 'ATP', month: 'FEB', date: '28', day: 'Sat', time: '4:30 PM', title: "Men's Finals", minPrice: 200, isSoldOut: false },
 ];
 
 interface EventsProps {
@@ -253,19 +253,27 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 flex-shrink-0">
-        <div className="flex flex-col items-end">
-          {hasValidPrice ? (
-            <>
-              <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-wide sm:tracking-widest">From</span>
-              <span className="text-[14px] sm:text-[15px] md:text-[17px] font-semibold text-[#1d1d1f]">${event.minPrice}</span>
-            </>
-          ) : (
-            <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#86868b]">Price unavailable</span>
-          )}
-        </div>
-        <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[#1e824c] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
-          Buy tickets
-        </span>
+        {event.isSoldOut ? (
+          <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-5 py-2.5 sm:py-2 md:py-2.5 bg-[#86868b] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg">
+            Sold out
+          </span>
+        ) : (
+          <>
+            <div className="flex flex-col items-end">
+              {hasValidPrice ? (
+                <>
+                  <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-wide sm:tracking-widest">From</span>
+                  <span className="text-[14px] sm:text-[15px] md:text-[17px] font-semibold text-[#1d1d1f]">${event.minPrice}</span>
+                </>
+              ) : (
+                <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#86868b]">Price unavailable</span>
+              )}
+            </div>
+            <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[#1e824c] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
+              Buy tickets
+            </span>
+          </>
+        )}
       </div>
     </div>
   );

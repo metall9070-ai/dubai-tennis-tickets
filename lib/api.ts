@@ -111,7 +111,8 @@ interface APIEvent {
   day: string;
   month: string;
   time: string;
-  min_price: string;
+  min_price: string | null;
+  is_sold_out: boolean;
   type: 'WTA' | 'ATP';
   venue: string;
   tournament_slug?: string;
@@ -320,7 +321,8 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
       day: e.day,
       month: e.month,
       time: e.time,
-      minPrice: parseFloat(e.min_price) || 0,
+      minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
+      isSoldOut: e.is_sold_out ?? false,
       tournamentSlug: e.tournament_slug,
     }));
 
@@ -484,11 +486,12 @@ export async function fetchEventBySlug(
       day: e.day,
       month: e.month,
       time: e.time,
-      minPrice: parseFloat(e.min_price) || 0,
+      minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
+      isSoldOut: e.is_sold_out ?? false,
       tournamentSlug: e.tournament_slug,
     };
 
-    console.log(`[API] SUCCESS: Fetched event "${event.title}" (slug: ${event.slug}, id: ${event.id})`);
+    console.log(`[API] SUCCESS: Fetched event "${event.title}" (slug: ${event.slug}, id: ${event.id}, soldOut: ${event.isSoldOut})`);
     return { data: event, fallback: false };
 
   } catch (error) {
