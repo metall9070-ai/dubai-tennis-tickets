@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ClearCartOnSuccess from './ClearCartOnSuccess';
+import TrackPurchase from './TrackPurchase';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -102,6 +103,15 @@ export default async function OrderCheckoutPage({ params }: Props) {
     <div className="min-h-screen bg-[#f5f5f7]">
       {/* Clear cart when order is paid */}
       <ClearCartOnSuccess orderStatus={order.status} />
+
+      {/* GA4: Fire purchase event for Google Ads / Analytics conversion tracking */}
+      <TrackPurchase
+        orderId={order.id}
+        orderNumber={order.order_number}
+        totalAmount={order.total_amount}
+        status={order.status}
+        items={order.items}
+      />
 
       {/* Header */}
       <header className="bg-white border-b border-[#d2d2d7]">
