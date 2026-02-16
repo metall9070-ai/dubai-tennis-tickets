@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation"
 import { loadSEOStrict } from "@/lib/seo-loader"
+import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
+import ContentPage from "@/app/components/ContentPage"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -29,5 +32,11 @@ export default async function SlugPage({ params }: Props) {
 
   if (!seo) notFound()
 
-  return null
+  return (
+    <div className="relative min-h-screen bg-[#f5f5f7]">
+      <Navbar isVisible />
+      <ContentPage content={seo} />
+      <Footer />
+    </div>
+  )
 }
