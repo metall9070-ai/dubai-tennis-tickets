@@ -237,25 +237,6 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
     }
   }
 
-  // generic — Organization + WebSite only, no event
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        name: config.brand,
-        url: SITE_URL,
-        contactPoint: {
-          "@type": "ContactPoint",
-          contactType: "customer service",
-          availableLanguage: ["English"],
-        },
-      },
-      {
-        "@type": "WebSite",
-        name: config.brand,
-        url: SITE_URL,
-      },
-    ],
-  }
+  // generic / unknown — no JSON-LD to avoid phantom structured data
+  return null
 }
