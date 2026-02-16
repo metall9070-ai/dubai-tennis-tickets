@@ -4,24 +4,19 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
+import { getNavItems, getFooterConfig } from '@/lib/nav-config';
 
 interface NavbarProps {
   isVisible?: boolean;
 }
 
+const navItems = getNavItems();
+const { brandName } = getFooterConfig();
+
 const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const { cartTotalItems } = useCart();
-
-  const navItems = [
-    { label: 'Tickets', href: '/#tickets' },
-    { label: 'ATP Tickets', href: '/tickets/atp' },
-    { label: 'WTA Tickets', href: '/tickets/wta' },
-    { label: 'Seating Guide', href: '/seating-guide' },
-    { label: 'Venue', href: '/venue' },
-    { label: 'FAQ', href: '/faq' }
-  ];
 
   const handleNavItemClick = (label: string, href: string, e: React.MouseEvent) => {
     setIsMenuOpen(false);
@@ -59,7 +54,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
                 }
               }}
               className="flex items-center group cursor-pointer"
-              aria-label="Dubai Tennis Tickets"
+              aria-label={brandName}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
 
           <div className="mt-auto pb-12">
             <p className="text-white/50 text-[13px] font-medium tracking-tight">
-              Dubai Tennis Tickets<br />
+              {brandName}<br />
               Independent ticket service
             </p>
           </div>
