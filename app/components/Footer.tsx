@@ -2,21 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { getFooterConfig } from '@/lib/nav-config';
+
+const footerConfig = getFooterConfig();
 
 const Footer: React.FC = () => {
-  const ticketLinks = [
-    { name: 'All Tickets', href: '/' },
-    { name: 'ATP 500 Tickets', href: '/tickets/atp' },
-    { name: 'WTA 1000 Tickets', href: '/tickets/wta' },
-    { name: 'Seating Guide', href: '/seating-guide' },
-  ];
-
-  const infoLinks = [
-    { name: 'Tournament Info', href: '/tournament' },
-    { name: 'Venue & Directions', href: '/venue' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'About Us', href: '/about' },
-  ];
+  const { brandName, brandDescription, ticketLinks, infoLinks, disclaimer } = footerConfig;
 
   const legalLinks = [
     { name: 'Contact Us', href: '/contact' },
@@ -33,11 +24,10 @@ const Footer: React.FC = () => {
           {/* Column 1: Brand & Contact - appears last on mobile */}
           <div className="col-span-2 lg:col-span-2 flex flex-col space-y-3 sm:space-y-4 order-3 lg:order-1">
             <span className="text-[#1d1d1f] text-[15px] sm:text-[16px] font-bold tracking-tight">
-              Dubai Tennis Tickets
+              {brandName}
             </span>
             <p className="text-[12px] sm:text-[13px] text-[#424245] leading-relaxed">
-              Independent ticket service for Dubai Duty Free Tennis Championships.
-              Secure booking and guaranteed authentic tickets.
+              {brandDescription}
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
@@ -164,7 +154,7 @@ const Footer: React.FC = () => {
         {/* Disclaimer */}
         <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-black/5">
           <p className="text-[10px] sm:text-[11px] text-[#86868b] leading-relaxed text-center mb-3 sm:mb-4">
-            This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.
+            {disclaimer}
           </p>
         </div>
 
