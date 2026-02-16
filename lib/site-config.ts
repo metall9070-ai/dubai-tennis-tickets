@@ -1,0 +1,261 @@
+/* ------------------------------------------------------------------ */
+/*  Per-site configuration — drives layout, metadata, JSON-LD, GA     */
+/* ------------------------------------------------------------------ */
+
+export interface SiteConfig {
+  brand: string
+  defaultTitle: string
+  defaultDescription: string
+  defaultKeywords: string
+  ogImage?: string
+  gaId?: string
+  gtmId?: string
+  gscVerification?: string
+  jsonLdType: "tennis" | "football" | "generic"
+  geo?: {
+    region: string
+    placename: string
+    position: string
+    icbm: string
+  }
+}
+
+const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || "default"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
+
+/* ------------------------------------------------------------------ */
+/*  Configs per site_code                                              */
+/* ------------------------------------------------------------------ */
+
+const SITE_CONFIGS: Record<string, SiteConfig> = {
+  tennis: {
+    brand: "Dubai Tennis Tickets",
+    defaultTitle:
+      "Dubai Tennis Tickets 2026 | ATP 500 & WTA 1000 Championships",
+    defaultDescription:
+      "Dubai Tennis Tickets for Dubai Duty Free Tennis Championships 2026. Feb 15-28 at Aviation Club. ATP 500 & WTA 1000. Prices from $200. Secure checkout.",
+    defaultKeywords:
+      "Dubai Tennis, Dubai Duty Free Tennis Championships, ATP 500 Dubai, WTA 1000 Dubai, tennis tickets Dubai, Dubai Tennis Stadium, tennis 2026, buy tennis tickets",
+    ogImage:
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop",
+    gaId: "G-1R8HSPFZ1S",
+    gscVerification: "Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY",
+    jsonLdType: "tennis",
+    geo: {
+      region: "AE-DU",
+      placename: "Dubai",
+      position: "25.2048;55.2708",
+      icbm: "25.2048, 55.2708",
+    },
+  },
+
+  "test-tournament": {
+    brand: "Finalissima Tickets",
+    defaultTitle: "Finalissima 2026 Tickets — Argentina vs Spain | Lusail",
+    defaultDescription:
+      "Buy Finalissima 2026 tickets. Argentina vs Spain, 27 March at Lusail Stadium, Qatar. Browse seating categories, check availability, and book securely online.",
+    defaultKeywords:
+      "Finalissima 2026, Argentina vs Spain, Lusail Stadium tickets, Finalissima tickets, football tickets Qatar",
+    gaId: process.env.NEXT_PUBLIC_GA_ID,
+    gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+    jsonLdType: "football",
+    geo: {
+      region: "QA",
+      placename: "Lusail",
+      position: "25.4195;51.4903",
+      icbm: "25.4195, 51.4903",
+    },
+  },
+}
+
+/* ------------------------------------------------------------------ */
+/*  Neutral fallback — NOT tennis                                      */
+/* ------------------------------------------------------------------ */
+
+const NEUTRAL_FALLBACK: SiteConfig = {
+  brand: "Event Tickets",
+  defaultTitle: "Event Tickets",
+  defaultDescription:
+    "Browse and purchase event tickets securely. Verified tickets, secure checkout, and dedicated customer support.",
+  defaultKeywords: "event tickets, buy tickets, secure tickets",
+  jsonLdType: "generic",
+}
+
+/* ------------------------------------------------------------------ */
+/*  Public accessors                                                   */
+/* ------------------------------------------------------------------ */
+
+export function getSiteConfig(siteCode?: string): SiteConfig {
+  const code = siteCode || SITE_CODE
+  return SITE_CONFIGS[code] || NEUTRAL_FALLBACK
+}
+
+export function getSiteCode(): string {
+  return SITE_CODE
+}
+
+export function getSiteUrl(): string {
+  return SITE_URL
+}
+
+export function isTennisSite(): boolean {
+  return SITE_CODE === "tennis"
+}
+
+/* ------------------------------------------------------------------ */
+/*  JSON-LD builder                                                    */
+/* ------------------------------------------------------------------ */
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
+  if (config.jsonLdType === "tennis") {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          name: "Dubai Tennis Tickets",
+          url: SITE_URL,
+          logo: `${SITE_URL}/logo.png`,
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "customer service",
+            availableLanguage: ["English", "Arabic", "Russian"],
+          },
+        },
+        {
+          "@type": "SportsEvent",
+          name: "Dubai Duty Free Tennis Championships 2026",
+          description:
+            "Premier ATP 500 and WTA 1000 professional tennis tournament featuring the world's top players at the iconic Dubai Duty Free Tennis Stadium",
+          startDate: "2026-02-15T11:00:00+04:00",
+          endDate: "2026-02-28T22:00:00+04:00",
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode:
+            "https://schema.org/OfflineEventAttendanceMode",
+          location: {
+            "@type": "StadiumOrArena",
+            name: "Dubai Duty Free Tennis Stadium",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Aviation Club, Al Garhoud",
+              addressLocality: "Dubai",
+              postalCode: "25111",
+              addressCountry: "AE",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: "25.2340",
+              longitude: "55.3309",
+            },
+            maximumAttendeeCapacity: 5000,
+          },
+          organizer: {
+            "@type": "Organization",
+            name: "Dubai Duty Free",
+            url: "https://www.dubaidutyfree.com",
+          },
+          offers: {
+            "@type": "AggregateOffer",
+            lowPrice: "200",
+            highPrice: "3000",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            validFrom: "2025-06-01",
+            url: `${SITE_URL}/`,
+            seller: {
+              "@type": "Organization",
+              name: "Dubai Tennis Tickets",
+            },
+            offerCount: "13",
+          },
+        },
+        {
+          "@type": "WebSite",
+          name: "Dubai Tennis Tickets",
+          url: SITE_URL,
+        },
+      ],
+    }
+  }
+
+  if (config.jsonLdType === "football") {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          name: config.brand,
+          url: SITE_URL,
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "customer service",
+            availableLanguage: ["English", "Spanish", "Arabic"],
+          },
+        },
+        {
+          "@type": "SportsEvent",
+          name: "Finalissima 2026 — Argentina vs Spain",
+          description:
+            "The intercontinental championship between Copa America 2024 winners Argentina and UEFA Euro 2024 champions Spain at Lusail Stadium, Qatar.",
+          startDate: "2026-03-27T20:00:00+03:00",
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode:
+            "https://schema.org/OfflineEventAttendanceMode",
+          location: {
+            "@type": "StadiumOrArena",
+            name: "Lusail Stadium",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Lusail",
+              addressCountry: "QA",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: "25.4195",
+              longitude: "51.4903",
+            },
+            maximumAttendeeCapacity: 80000,
+          },
+          offers: {
+            "@type": "AggregateOffer",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: `${SITE_URL}/finalissima-argentina-vs-spain`,
+            seller: {
+              "@type": "Organization",
+              name: config.brand,
+            },
+          },
+        },
+        {
+          "@type": "WebSite",
+          name: config.brand,
+          url: SITE_URL,
+        },
+      ],
+    }
+  }
+
+  // generic — Organization + WebSite only, no event
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: config.brand,
+        url: SITE_URL,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          availableLanguage: ["English"],
+        },
+      },
+      {
+        "@type": "WebSite",
+        name: config.brand,
+        url: SITE_URL,
+      },
+    ],
+  }
+}

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { isTennisSite } from '@/lib/site-config';
 import ATPTicketsClient from './ATPTicketsClient';
 import { fetchATPEventsServer } from '@/lib/api-server';
 
@@ -56,6 +58,8 @@ const jsonLd = {
 };
 
 export default async function ATPTicketsPage() {
+  if (!isTennisSite()) notFound();
+
   const initialEvents = await fetchATPEventsServer();
   return (
     <>

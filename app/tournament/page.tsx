@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { isTennisSite } from '@/lib/site-config';
 import TournamentClient from './TournamentClient';
 
 export const metadata: Metadata = {
@@ -8,5 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function TournamentPage() {
+  if (!isTennisSite()) notFound();
   return <TournamentClient />;
 }

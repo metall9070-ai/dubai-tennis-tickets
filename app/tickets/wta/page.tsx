@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { isTennisSite } from '@/lib/site-config';
 import WTATicketsClient from './WTATicketsClient';
 import { fetchWTAEventsServer } from '@/lib/api-server';
 
@@ -56,6 +58,8 @@ const jsonLd = {
 };
 
 export default async function WTATicketsPage() {
+  if (!isTennisSite()) notFound();
+
   const initialEvents = await fetchWTAEventsServer();
   return (
     <>

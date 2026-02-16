@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { isTennisSite } from '@/lib/site-config';
 import SeatingGuideClient from './SeatingGuideClient';
 
 export const metadata: Metadata = {
@@ -15,5 +17,6 @@ export const metadata: Metadata = {
 };
 
 export default function SeatingGuidePage() {
+  if (!isTennisSite()) notFound();
   return <SeatingGuideClient />;
 }
