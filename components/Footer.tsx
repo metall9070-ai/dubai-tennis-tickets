@@ -1,4 +1,5 @@
 import React from 'react';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface FooterProps {
   onHome?: () => void;
@@ -29,6 +30,8 @@ const Footer: React.FC<FooterProps> = ({
   onSeatingGuide,
   onVenue
 }) => {
+  const { supportEmail } = getSiteConfig();
+
   const ticketLinks = [
     { name: 'All Tickets', href: '/', handler: onHome },
     { name: 'ATP 500 Tickets', href: '/tickets/atp', handler: onATPTickets },
@@ -74,7 +77,7 @@ const Footer: React.FC<FooterProps> = ({
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
-                <span className="font-medium text-[#1d1d1f]">Email:</span> support@dubaitennistickets.com
+                <span className="font-medium text-[#1d1d1f]">Email:</span> {supportEmail}
               </p>
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
                 <span className="font-medium text-[#1d1d1f]">Hours:</span> 24/7 Customer Support

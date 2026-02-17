@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { getSiteConfig } from '@/lib/site-config';
 
 export default function CheckoutCancelPage() {
+  const { supportEmail } = getSiteConfig();
+
   return (
     <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center px-6">
       <div className="max-w-lg w-full text-center">
@@ -31,8 +34,8 @@ export default function CheckoutCancelPage() {
 
             <p className="text-[13px] text-[#86868b]">
               Need help? Contact us at{' '}
-              <a href="mailto:support@dubaitennistickets.com" className="text-[var(--color-primary)] hover:underline">
-                support@dubaitennistickets.com
+              <a href={`mailto:${supportEmail}`} className="text-[var(--color-primary)] hover:underline">
+                {supportEmail}
               </a>
             </p>
           </div>

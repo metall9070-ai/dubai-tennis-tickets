@@ -3,11 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { getFooterConfig } from '@/lib/nav-config';
+import { getSiteConfig } from '@/lib/site-config';
 
 const footerConfig = getFooterConfig();
 
 const Footer: React.FC = () => {
   const { brandName, brandDescription, ticketLinks, infoLinks, disclaimer } = footerConfig;
+  const { supportEmail } = getSiteConfig();
 
   const legalLinks = [
     { name: 'Contact Us', href: '/contact' },
@@ -31,7 +33,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
-                <span className="font-medium text-[#1d1d1f]">Email:</span> support@dubaitennistickets.com
+                <span className="font-medium text-[#1d1d1f]">Email:</span> {supportEmail}
               </p>
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
                 <span className="font-medium text-[#1d1d1f]">Hours:</span> 24/7 Customer Support

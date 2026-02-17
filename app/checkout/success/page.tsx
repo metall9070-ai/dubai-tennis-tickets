@@ -5,10 +5,12 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { CART_STORAGE_KEY } from '@/app/CartContext';
+import { getSiteConfig } from '@/lib/site-config';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
+  const { supportEmail, brand } = getSiteConfig();
 
   useEffect(() => {
     // Clear cart on success
@@ -30,7 +32,7 @@ function SuccessContent() {
       </h1>
 
       <p className="text-[17px] text-[#86868b] leading-relaxed mb-6">
-        Thank you for your order. Your tickets for the Dubai Duty Free Tennis Championships 2026 have been confirmed.
+        Thank you for your order. Your {brand} tickets have been confirmed.
       </p>
 
       <p className="text-[15px] text-[#1d1d1f] mb-6">
@@ -53,8 +55,8 @@ function SuccessContent() {
 
         <p className="text-[13px] text-[#86868b]">
           Questions? Contact us at{' '}
-          <a href="mailto:support@dubaitennistickets.com" className="text-[var(--color-primary)] hover:underline">
-            support@dubaitennistickets.com
+          <a href={`mailto:${supportEmail}`} className="text-[var(--color-primary)] hover:underline">
+            {supportEmail}
           </a>
         </p>
       </div>
