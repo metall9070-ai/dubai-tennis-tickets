@@ -18,7 +18,7 @@ interface APIEvent {
   time: string;
   min_price: string | null;
   is_sold_out: boolean;
-  type: 'WTA' | 'ATP';
+  type: string;
   venue: string;
   tournament_slug?: string;
 }

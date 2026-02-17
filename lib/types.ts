@@ -6,7 +6,7 @@
 export interface Event {
   id: number | string;
   slug: string;
-  type: 'WTA' | 'ATP';
+  type: string;
   title: string;
   date: string;
   day: string;
