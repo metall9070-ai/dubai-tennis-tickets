@@ -204,23 +204,23 @@ const Checkout: React.FC<CheckoutProps> = ({
             <div className="flex items-center justify-between max-w-md mx-auto md:mx-0">
               {/* Step 1: Cart */}
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-[#1e824c] text-white flex items-center justify-center font-semibold text-sm">
+                <div className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-semibold text-sm">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-[11px] font-semibold text-[#1e824c] mt-2">Cart</span>
+                <span className="text-[11px] font-semibold text-[var(--color-primary)] mt-2">Cart</span>
               </div>
 
               {/* Connector 1 */}
-              <div className="flex-1 h-0.5 bg-[#1e824c] mx-2"></div>
+              <div className="flex-1 h-0.5 bg-[var(--color-primary)] mx-2"></div>
 
               {/* Step 2: Details */}
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-[#1e824c] text-white flex items-center justify-center font-semibold text-sm">
+                <div className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-semibold text-sm">
                   2
                 </div>
-                <span className="text-[11px] font-semibold text-[#1e824c] mt-2">Details</span>
+                <span className="text-[11px] font-semibold text-[var(--color-primary)] mt-2">Details</span>
               </div>
 
               {/* Connector 2 */}
@@ -237,7 +237,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           </div>
 
           <h1 className="text-[36px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-8 md:mb-12 leading-tight">
-            Complete Your <span className="text-[#1e824c]">Order</span>
+            Complete Your <span className="text-[var(--color-primary)]">Order</span>
           </h1>
 
           <div className="space-y-10 md:space-y-12">
@@ -248,7 +248,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               {cart.length === 0 ? (
                 <div className="text-center py-10 md:py-12">
                   <p className="text-lg text-[#86868b] mb-4 md:mb-6">Your cart is empty.</p>
-                  <button onClick={onHome} className="text-[#1e824c] font-semibold hover:underline">Return to Events</button>
+                  <button onClick={onHome} className="text-[var(--color-primary)] font-semibold hover:underline">Return to Events</button>
                 </div>
               ) : (
                 cart.map((item, idx) => (
@@ -258,7 +258,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                       {/* Header Row: Event Name and Location */}
                       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                         <div className="flex-1">
-                          <p className="text-[14px] md:text-[16px] font-semibold text-[#1e824c] mb-1.5">{item.eventTitle}</p>
+                          <p className="text-[14px] md:text-[16px] font-semibold text-[var(--color-primary)] mb-1.5">{item.eventTitle}</p>
                           <div className="flex items-center space-x-3">
                             <span className="text-[16px] md:text-[18px] font-semibold text-[#1d1d1f]">{item.eventDate} {item.eventMonth} {item.eventDay}</span>
                             <span className="w-1.5 h-1.5 rounded-full bg-[#d2d2d7]"></span>
@@ -268,7 +268,7 @@ const Checkout: React.FC<CheckoutProps> = ({
 
                         <div className="bg-[#f5f5f7] p-4 md:p-5 rounded-2xl flex-shrink-0 md:max-w-[400px]">
                           <div className="flex items-start space-x-3">
-                            <svg className="w-5 h-5 text-[#1e824c] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <svg className="w-5 h-5 text-[var(--color-primary)] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                             <div>
                               <p className="text-[14px] font-semibold text-[#1d1d1f]">{item.venue}</p>
                               <p className="text-[13px] text-[#86868b] font-normal leading-relaxed">Dubai Duty Free Tennis Stadium, Al Garhoud, Dubai, UAE</p>
@@ -311,7 +311,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                        </div>
                        <div className="flex items-baseline space-x-2">
                           <span className="text-[14px] text-[#86868b]">Total for this day:</span>
-                          <span className="text-[18px] font-bold text-[#1e824c] tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
+                          <span className="text-[18px] font-bold text-[var(--color-primary)] tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
                        </div>
                     </div>
                   </div>
@@ -333,7 +333,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="Enter your full name"
-                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[#1e824c] transition-all outline-none"
+                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[var(--color-primary)] transition-all outline-none"
                       />
                     </div>
                     <div className="flex flex-col">
@@ -345,7 +345,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="example@mail.com"
-                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[#1e824c] transition-all outline-none"
+                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[var(--color-primary)] transition-all outline-none"
                       />
                     </div>
                     <div className="flex flex-col md:col-span-2">
@@ -363,7 +363,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                             setFormData(prev => ({ ...prev, phone: value }));
                           }}
                           placeholder="971501234567"
-                          className="flex-1 bg-[#f5f5f7] border-0 rounded-r-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[#1e824c] transition-all outline-none"
+                          className="flex-1 bg-[#f5f5f7] border-0 rounded-r-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[var(--color-primary)] transition-all outline-none"
                         />
                       </div>
                       <p className="text-[11px] text-[#86868b] mt-1.5 ml-1">Enter country code and number (e.g., 971501234567 for UAE)</p>
@@ -377,7 +377,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                         value={formData.comments}
                         onChange={handleInputChange}
                         placeholder="Any special requests or instructions?"
-                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[#1e824c] transition-all outline-none resize-none"
+                        className="bg-[#f5f5f7] border-0 rounded-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[var(--color-primary)] transition-all outline-none resize-none"
                       ></textarea>
                     </div>
                   </div>
@@ -386,11 +386,11 @@ const Checkout: React.FC<CheckoutProps> = ({
                 <section className="bg-white rounded-[24px] md:rounded-[32px] p-6 md:p-10 shadow-sm border border-black/5">
                   <h2 className="text-2xl font-semibold mb-6 md:mb-8 tracking-tight">Payment Method</h2>
                   <div className="space-y-4">
-                    <div className="block p-4 md:p-6 rounded-[20px] md:rounded-[24px] border-2 border-[#1e824c] bg-[#1e824c]/5 transition-all">
+                    <div className="block p-4 md:p-6 rounded-[20px] md:rounded-[24px] border-2 border-[var(--color-primary)] bg-[var(--color-primary)]/5 transition-all">
                       <div className="flex items-start space-x-4">
                         <div className="mt-1 w-5 h-5 flex items-center justify-center">
-                          <div className="w-5 h-5 rounded-full border-2 border-[#1e824c] flex items-center justify-center">
-                            <div className="w-2.5 h-2.5 rounded-full bg-[#1e824c]"></div>
+                          <div className="w-5 h-5 rounded-full border-2 border-[var(--color-primary)] flex items-center justify-center">
+                            <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)]"></div>
                           </div>
                         </div>
                         <div>
@@ -421,13 +421,13 @@ const Checkout: React.FC<CheckoutProps> = ({
                       <div className="relative flex items-center h-5">
                         <input 
                           type="checkbox" 
-                          className="w-6 h-6 rounded-lg text-[#1e824c] border-[#d2d2d7] focus:ring-[#1e824c] transition-all cursor-pointer"
+                          className="w-6 h-6 rounded-lg text-[var(--color-primary)] border-[#d2d2d7] focus:ring-[var(--color-primary)] transition-all cursor-pointer"
                           checked={agree}
                           onChange={(e) => setAgree(e.target.checked)}
                         />
                       </div>
                       <span className="text-[14px] font-medium text-[#86868b] leading-tight select-none group-hover:text-[#1d1d1f] transition-colors">
-                        I have read and agree to the <button onClick={(e) => { e.preventDefault(); onPrivacyPolicy?.(); }} className="text-[#1e824c] underline hover:text-[#166d3e]">privacy policy</button> and <button onClick={(e) => { e.preventDefault(); onTermsOfService?.(); }} className="text-[#1e824c] underline hover:text-[#166d3e]">Terms of Service</button>.
+                        I have read and agree to the <button onClick={(e) => { e.preventDefault(); onPrivacyPolicy?.(); }} className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">privacy policy</button> and <button onClick={(e) => { e.preventDefault(); onTermsOfService?.(); }} className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Terms of Service</button>.
                       </span>
                     </label>
                   </div>
@@ -437,7 +437,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     disabled={!agree || !formData.name || !formData.email || formData.phone.length < 8 || isLoading}
                     className={`w-full py-4 md:py-5 rounded-[20px] md:rounded-[24px] text-lg md:text-xl font-semibold transition-all transform active:scale-[0.98] shadow-2xl flex items-center justify-center space-x-3
                       ${agree && formData.name && formData.email && formData.phone.length >= 8 && !isLoading
-                        ? 'bg-[#1e824c] text-white hover:bg-[#166d3e] shadow-[#1e824c]/30'
+                        ? 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-[var(--color-primary)]/30'
                         : 'bg-[#ebebed] text-[#86868b] cursor-not-allowed shadow-none'}
                     `}
                   >

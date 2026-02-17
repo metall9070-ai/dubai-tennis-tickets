@@ -18,7 +18,7 @@ const seatingCategories: SeatingCategory[] = [
     name: "Prime A",
     location: "Lower Level — Central",
     description: "The closest seats to the court with a central viewing angle. Experience every serve and volley up close, and feel the intensity of top-level tennis as it unfolds just meters away.",
-    color: "#1e824c"
+    color: "var(--color-primary)"
   },
   {
     name: "Prime B",
@@ -71,7 +71,7 @@ export default function SeatingGuideClient() {
           <Breadcrumbs items={breadcrumbItems} currentPage="Seating Guide" light />
 
           <div className="mt-8 md:mt-12 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1e824c] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[var(--color-primary)] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
               Stadium Map
             </div>
@@ -183,7 +183,7 @@ export default function SeatingGuideClient() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={handleViewSchedule}
-              className="px-8 py-4 bg-[#1e824c] text-white font-semibold rounded-full hover:bg-[#166d3e] transition-colors"
+              className="px-8 py-4 bg-[var(--color-primary)] text-white font-semibold rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
             >
               View Schedule & Tickets
             </button>

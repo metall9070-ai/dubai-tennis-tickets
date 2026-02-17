@@ -67,7 +67,7 @@ export default function ContentPage({ content }: { content: SEOContent }) {
           <div className="text-center py-8 sm:py-10">
             <Link
               href={content.cta.href}
-              className="inline-block bg-[#1e824c] text-white px-8 py-3.5 rounded-full text-[15px] sm:text-[16px] font-semibold hover:bg-[#166b3e] transition-colors"
+              className="inline-block bg-[var(--color-primary)] text-white px-8 py-3.5 rounded-full text-[15px] sm:text-[16px] font-semibold hover:bg-[var(--color-primary-hover)] transition-colors"
             >
               {content.cta.text}
             </Link>

@@ -7,11 +7,17 @@ export interface SiteConfig {
   defaultTitle: string
   defaultDescription: string
   defaultKeywords: string
+  supportEmail: string
   ogImage?: string
   gaId?: string
   gtmId?: string
   gscVerification?: string
-  jsonLdType: "tennis" | "football" | "generic"
+  jsonLdType: "tennis" | "generic"
+  colors: {
+    primary: string
+    primaryHover: string
+    header: string
+  }
   geo?: {
     region: string
     placename: string
@@ -30,6 +36,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
 const SITE_CONFIGS: Record<string, SiteConfig> = {
   tennis: {
     brand: "Dubai Tennis Tickets",
+    supportEmail: "support@dubaitennistickets.com",
     defaultTitle:
       "Dubai Tennis Tickets 2026 | ATP 500 & WTA 1000 Championships",
     defaultDescription:
@@ -41,6 +48,11 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     gaId: "G-1R8HSPFZ1S",
     gscVerification: "Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY",
     jsonLdType: "tennis",
+    colors: {
+      primary: "#1e824c",
+      primaryHover: "#166b3e",
+      header: "#111842",
+    },
     geo: {
       region: "AE-DU",
       placename: "Dubai",
@@ -49,23 +61,6 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     },
   },
 
-  "test-tournament": {
-    brand: "Finalissima Tickets",
-    defaultTitle: "Finalissima 2026 Tickets — Argentina vs Spain | Lusail",
-    defaultDescription:
-      "Buy Finalissima 2026 tickets. Argentina vs Spain, 27 March at Lusail Stadium, Qatar. Browse seating categories, check availability, and book securely online.",
-    defaultKeywords:
-      "Finalissima 2026, Argentina vs Spain, Lusail Stadium tickets, Finalissima tickets, football tickets Qatar",
-    gaId: process.env.NEXT_PUBLIC_GA_ID,
-    gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
-    jsonLdType: "football",
-    geo: {
-      region: "QA",
-      placename: "Lusail",
-      position: "25.4195;51.4903",
-      icbm: "25.4195, 51.4903",
-    },
-  },
 }
 
 /* ------------------------------------------------------------------ */
@@ -74,11 +69,17 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
 
 const NEUTRAL_FALLBACK: SiteConfig = {
   brand: "Event Tickets",
+  supportEmail: "support@example.com",
   defaultTitle: "Event Tickets",
   defaultDescription:
     "Browse and purchase event tickets securely. Verified tickets, secure checkout, and dedicated customer support.",
   defaultKeywords: "event tickets, buy tickets, secure tickets",
   jsonLdType: "generic",
+  colors: {
+    primary: "#1e824c",
+    primaryHover: "#166b3e",
+    header: "#111842",
+  },
 }
 
 /* ------------------------------------------------------------------ */
@@ -173,64 +174,6 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
         {
           "@type": "WebSite",
           name: "Dubai Tennis Tickets",
-          url: SITE_URL,
-        },
-      ],
-    }
-  }
-
-  if (config.jsonLdType === "football") {
-    return {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          name: config.brand,
-          url: SITE_URL,
-          contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "customer service",
-            availableLanguage: ["English", "Spanish", "Arabic"],
-          },
-        },
-        {
-          "@type": "SportsEvent",
-          name: "Finalissima 2026 — Argentina vs Spain",
-          description:
-            "The intercontinental championship between Copa America 2024 winners Argentina and UEFA Euro 2024 champions Spain at Lusail Stadium, Qatar.",
-          startDate: "2026-03-27T20:00:00+03:00",
-          eventStatus: "https://schema.org/EventScheduled",
-          eventAttendanceMode:
-            "https://schema.org/OfflineEventAttendanceMode",
-          location: {
-            "@type": "StadiumOrArena",
-            name: "Lusail Stadium",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Lusail",
-              addressCountry: "QA",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: "25.4195",
-              longitude: "51.4903",
-            },
-            maximumAttendeeCapacity: 80000,
-          },
-          offers: {
-            "@type": "AggregateOffer",
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-            url: `${SITE_URL}/finalissima-argentina-vs-spain`,
-            seller: {
-              "@type": "Organization",
-              name: config.brand,
-            },
-          },
-        },
-        {
-          "@type": "WebSite",
-          name: config.brand,
           url: SITE_URL,
         },
       ],

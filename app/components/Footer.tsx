@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-[12px] sm:text-[13px] text-[#424245] hover:text-[#1e824c] active:text-[#1e824c] transition-colors duration-200 py-1 inline-block"
+                    className="text-[12px] sm:text-[13px] text-[#424245] hover:text-[var(--color-primary)] active:text-[var(--color-primary)] transition-colors duration-200 py-1 inline-block"
                   >
                     {link.name}
                   </Link>
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-[12px] sm:text-[13px] text-[#424245] hover:text-[#1e824c] active:text-[#1e824c] transition-colors duration-200 py-1 inline-block"
+                    className="text-[12px] sm:text-[13px] text-[#424245] hover:text-[var(--color-primary)] active:text-[var(--color-primary)] transition-colors duration-200 py-1 inline-block"
                   >
                     {link.name}
                   </Link>
@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-[12px] sm:text-[13px] text-[#424245] hover:text-[#1e824c] active:text-[#1e824c] transition-colors duration-200 py-1 inline-block"
+                    className="text-[12px] sm:text-[13px] text-[#424245] hover:text-[var(--color-primary)] active:text-[var(--color-primary)] transition-colors duration-200 py-1 inline-block"
                   >
                     {link.name}
                   </Link>
@@ -143,7 +143,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <span className="text-[10px] sm:text-[11px] text-[#86868b]">SSL Secured Checkout</span>

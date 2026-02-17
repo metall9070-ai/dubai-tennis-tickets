@@ -133,7 +133,7 @@ const WTASessionInfo: React.FC<WTASessionInfoProps> = ({ eventTitle }) => {
           <ul className="space-y-2 md:space-y-3">
             {sessionData.seating.map((item, index) => (
               <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#86868b] leading-relaxed">
-                <span className="text-[#1e824c] mt-1">•</span>
+                <span className="text-[var(--color-primary)] mt-1">•</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -148,7 +148,7 @@ const WTASessionInfo: React.FC<WTASessionInfoProps> = ({ eventTitle }) => {
           <ul className="space-y-2 md:space-y-3">
             {sessionData.beforeYouGo.map((item, index) => (
               <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#86868b] leading-relaxed">
-                <span className="text-[#1e824c] mt-1">•</span>
+                <span className="text-[var(--color-primary)] mt-1">•</span>
                 <span>{item}</span>
               </li>
             ))}

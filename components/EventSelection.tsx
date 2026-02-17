@@ -114,7 +114,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         // Map API response to Category format
         const apiCategories = result.data.map((cat, index) => ({
           ...cat,
-          color: cat.color || Object.values(CATEGORY_COLORS)[index] || '#1e824c',
+          color: cat.color || Object.values(CATEGORY_COLORS)[index] || 'var(--color-primary)',
         }));
 
         // Log each category with LIVE FETCH format for network verification
@@ -258,16 +258,16 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <div className="bg-[#f5f5f7] p-5 md:p-8 rounded-[20px] md:rounded-[32px] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border border-black/5">
             <div>
               <h2 className="text-xl md:text-3xl font-semibold mb-1 tracking-tight text-[#1d1d1f]">{event?.title || "Dubai Duty Free Tennis Championships"}</h2>
-              <p className="text-[#1e824c] font-semibold text-[14px] md:text-[17px] mb-3 md:mb-4">{event?.venue || "Dubai Duty Free Tennis Stadium"}</p>
+              <p className="text-[var(--color-primary)] font-semibold text-[14px] md:text-[17px] mb-3 md:mb-4">{event?.venue || "Dubai Duty Free Tennis Stadium"}</p>
               <div className="flex items-center space-x-4 md:space-x-6 text-[#86868b] text-[13px] md:text-[15px] font-medium">
                 <div className="flex items-center">
-                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
                   </svg>
                   <span>{event?.date} {event?.month}, {event?.day}</span>
                 </div>
                 <div className="flex items-center">
-                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>{event?.time}</span>
@@ -282,7 +282,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
               )}
               <button
                 onClick={onBack}
-                className="text-[13px] md:text-[14px] font-semibold text-[#1e824c] hover:bg-[#1e824c]/5 transition-all px-6 md:px-8 py-2 md:py-2.5 bg-white rounded-full border border-[#d2d2d7] shadow-sm whitespace-nowrap active:scale-95"
+                className="text-[13px] md:text-[14px] font-semibold text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 transition-all px-6 md:px-8 py-2 md:py-2.5 bg-white rounded-full border border-[#d2d2d7] shadow-sm whitespace-nowrap active:scale-95"
               >
                 Change Event
               </button>
@@ -382,11 +382,11 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center gap-2.5 md:gap-3">
                       <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${cat.seatsLeft < 20 ? 'bg-red-500' : cat.seatsLeft < 50 ? 'bg-orange-400' : 'bg-[#1e824c]'}`}
+                          className={`h-full rounded-full transition-all ${cat.seatsLeft < 20 ? 'bg-red-500' : cat.seatsLeft < 50 ? 'bg-orange-400' : 'bg-[var(--color-primary)]'}`}
                           style={{ width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%` }}
                         ></div>
                       </div>
-                      <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-wide whitespace-nowrap ${cat.seatsLeft < 20 ? 'text-red-500' : cat.seatsLeft < 50 ? 'text-orange-500' : 'text-[#1e824c]'}`}>
+                      <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-wide whitespace-nowrap ${cat.seatsLeft < 20 ? 'text-red-500' : cat.seatsLeft < 50 ? 'text-orange-500' : 'text-[var(--color-primary)]'}`}>
                         {cat.seatsLeft} left
                       </span>
                     </div>
@@ -422,7 +422,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
               </div>
               <button
                 onClick={onCheckout}
-                className="w-full py-3.5 md:py-4 bg-[#1e824c] text-white font-semibold rounded-xl md:rounded-2xl hover:bg-[#166d3e] transition-all transform active:scale-[0.98] text-[15px] md:text-[16px] shadow-lg shadow-[#1e824c]/20"
+                className="w-full py-3.5 md:py-4 bg-[var(--color-primary)] text-white font-semibold rounded-xl md:rounded-2xl hover:bg-[var(--color-primary-hover)] transition-all transform active:scale-[0.98] text-[15px] md:text-[16px] shadow-lg shadow-[var(--color-primary)]/20"
               >
                 Checkout
               </button>
@@ -467,10 +467,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   </div>
 
                   <div className="mb-3 md:mb-4">
-                    <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[#111842] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
+                    <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[var(--color-header)] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
                     <div className="flex items-baseline space-x-1.5">
                        <span className="text-[15px] md:text-[17px] text-[#86868b]">Price:</span>
-                       <span className="text-[20px] md:text-[24px] font-bold text-[#1e824c]">${selectedCategory.price.toLocaleString()}</span>
+                       <span className="text-[20px] md:text-[24px] font-bold text-[var(--color-primary)]">${selectedCategory.price.toLocaleString()}</span>
                        <span className="text-[14px] md:text-[16px] text-[#86868b]">/ ticket</span>
                     </div>
                   </div>
@@ -478,7 +478,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="bg-[#f8f9fb] rounded-[20px] md:rounded-[24px] p-4 md:p-6 mb-4 md:mb-6">
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div className="flex flex-col">
-                        <span className="text-[15px] md:text-[17px] font-bold text-[#111842]">Quantity</span>
+                        <span className="text-[15px] md:text-[17px] font-bold text-[var(--color-header)]">Quantity</span>
                         <span className="text-[10px] md:text-[11px] text-[#86868b] font-medium mt-0.5">Max 4 per order</span>
                       </div>
                       <div className="flex items-center space-x-4 md:space-x-5">
@@ -488,7 +488,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         >
                           <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1d1d1f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M20 12H4" /></svg>
                         </button>
-                        <span className="text-[17px] md:text-[19px] font-bold text-[#111842] tabular-nums w-4 text-center">{ticketCount}</span>
+                        <span className="text-[17px] md:text-[19px] font-bold text-[var(--color-header)] tabular-nums w-4 text-center">{ticketCount}</span>
                         <button
                           onClick={handlePlus}
                           className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-[#f0f0f0]"
@@ -502,14 +502,14 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
                     <div className="flex justify-between items-center mb-4 md:mb-6">
                        <span className="text-[15px] md:text-[17px] font-semibold text-[#86868b]">Remaining Seats</span>
-                       <span className="text-[15px] md:text-[17px] font-bold text-[#1e824c]">
+                       <span className="text-[15px] md:text-[17px] font-bold text-[var(--color-primary)]">
                          {selectedCategory.seatsLeft - ticketCount} seats left
                        </span>
                     </div>
 
                     <div className="flex justify-between items-center">
-                       <span className="text-[18px] md:text-[20px] font-bold text-[#111842]">Total</span>
-                       <span className="text-[22px] md:text-[28px] font-bold text-[#111842] tracking-tight tabular-nums">${(selectedCategory.price * ticketCount).toLocaleString()}</span>
+                       <span className="text-[18px] md:text-[20px] font-bold text-[var(--color-header)]">Total</span>
+                       <span className="text-[22px] md:text-[28px] font-bold text-[var(--color-header)] tracking-tight tabular-nums">${(selectedCategory.price * ticketCount).toLocaleString()}</span>
                     </div>
                   </div>
 
@@ -522,13 +522,13 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="space-y-3 md:space-y-4">
                     <button
                       onClick={handleCheckoutClick}
-                      className="w-full py-4 md:py-5 bg-[#1e824c] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[#166638] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
+                      className="w-full py-4 md:py-5 bg-[var(--color-primary)] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[var(--color-primary-hover)] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
                     >
                       Checkout
                     </button>
                     <button
                       onClick={handleContinueShopping}
-                      className="w-full py-2.5 text-[#1e824c] font-semibold hover:underline transition-all text-[14px] md:text-[15px]"
+                      className="w-full py-2.5 text-[var(--color-primary)] font-semibold hover:underline transition-all text-[14px] md:text-[15px]"
                     >
                       Continue Shopping
                     </button>

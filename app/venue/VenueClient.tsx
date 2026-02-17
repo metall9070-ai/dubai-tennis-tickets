@@ -93,7 +93,7 @@ export default function VenueClient() {
           <Breadcrumbs items={breadcrumbItems} currentPage="Venue & Directions" light />
 
           <div className="mt-8 md:mt-12 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1e824c] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[var(--color-primary)] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
               Venue Info
             </div>
@@ -115,19 +115,19 @@ export default function VenueClient() {
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">5,000</p>
+              <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">5,000</p>
               <p className="text-sm text-[#86868b]">Seat Capacity</p>
             </div>
             <div>
-              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">1993</p>
+              <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">1993</p>
               <p className="text-sm text-[#86868b]">Established</p>
             </div>
             <div>
-              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">10 min</p>
+              <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">10 min</p>
               <p className="text-sm text-[#86868b]">From Airport</p>
             </div>
             <div>
-              <p className="text-2xl md:text-3xl font-bold text-[#1e824c]">Open-Air</p>
+              <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">Open-Air</p>
               <p className="text-sm text-[#86868b]">Venue Type</p>
             </div>
           </div>
@@ -197,7 +197,7 @@ export default function VenueClient() {
           {/* Address Card */}
           <div className="bg-white rounded-2xl p-6 mb-8">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-[#1e824c]/10 rounded-xl flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 bg-[var(--color-primary)]/10 rounded-xl flex items-center justify-center shrink-0">
                 <span className="text-2xl">🏟️</span>
               </div>
               <div>
@@ -208,7 +208,7 @@ export default function VenueClient() {
                   Al Garhoud Road, Al Garhoud<br />
                   Dubai, United Arab Emirates
                 </p>
-                <p className="text-sm text-[#1e824c] mt-2">
+                <p className="text-sm text-[var(--color-primary)] mt-2">
                   GPS: 25.2340° N, 55.3309° E
                 </p>
               </div>
@@ -225,7 +225,7 @@ export default function VenueClient() {
                   <div>
                     <h4 className="font-bold text-[#1d1d1f] mb-2">{option.mode}</h4>
                     <p className="text-[#86868b] text-sm mb-2">{option.details}</p>
-                    <p className="text-sm text-[#1e824c] font-medium">💡 {option.tip}</p>
+                    <p className="text-sm text-[var(--color-primary)] font-medium">💡 {option.tip}</p>
                   </div>
                 </div>
               </div>
@@ -275,7 +275,7 @@ export default function VenueClient() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#86868b]">Conditions</span>
-                  <span className="font-semibold text-[#1e824c]">Ideal for tennis</span>
+                  <span className="font-semibold text-[var(--color-primary)]">Ideal for tennis</span>
                 </div>
               </div>
             </div>
@@ -286,7 +286,7 @@ export default function VenueClient() {
               <ul className="space-y-3">
                 {['Sunscreen and sunglasses', 'Hat or cap for day sessions', 'Light jacket for evening matches', 'Comfortable walking shoes', 'Phone charger / power bank', 'Your printed or digital ticket'].map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-[#1d1d1f]">
-                    <span className="w-6 h-6 bg-[#1e824c]/10 rounded-full flex items-center justify-center text-xs">✓</span>
+                    <span className="w-6 h-6 bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center text-xs">✓</span>
                     {item}
                   </li>
                 ))}
@@ -308,17 +308,17 @@ export default function VenueClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-[#f5f5f7] rounded-2xl p-6">
-              <div className="text-sm text-[#1e824c] font-medium mb-2">5-Star • 5 min</div>
+              <div className="text-sm text-[var(--color-primary)] font-medium mb-2">5-Star • 5 min</div>
               <h3 className="font-bold text-[#1d1d1f] mb-2">Le Meridien Dubai</h3>
               <p className="text-sm text-[#86868b]">Adjacent to the venue with direct access. Official tournament hotel.</p>
             </div>
             <div className="bg-[#f5f5f7] rounded-2xl p-6">
-              <div className="text-sm text-[#1e824c] font-medium mb-2">5-Star • 10 min</div>
+              <div className="text-sm text-[var(--color-primary)] font-medium mb-2">5-Star • 10 min</div>
               <h3 className="font-bold text-[#1d1d1f] mb-2">Park Hyatt Dubai</h3>
               <p className="text-sm text-[#86868b]">Luxury waterfront resort at Dubai Creek. Shuttle service available.</p>
             </div>
             <div className="bg-[#f5f5f7] rounded-2xl p-6">
-              <div className="text-sm text-[#1e824c] font-medium mb-2">5-Star • 15 min</div>
+              <div className="text-sm text-[var(--color-primary)] font-medium mb-2">5-Star • 15 min</div>
               <h3 className="font-bold text-[#1d1d1f] mb-2">InterContinental Festival City</h3>
               <p className="text-sm text-[#86868b]">Modern hotel at Festival City Mall with excellent dining options.</p>
             </div>
@@ -336,7 +336,7 @@ export default function VenueClient() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => router.push('/')}
-              className="px-8 py-4 bg-[#1e824c] text-white font-semibold rounded-full hover:bg-[#166d3e] transition-colors"
+              className="px-8 py-4 bg-[var(--color-primary)] text-white font-semibold rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
             >
               Browse All Tickets
             </button>

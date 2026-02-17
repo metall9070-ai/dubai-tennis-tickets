@@ -24,7 +24,7 @@ const SEOSection: React.FC<SEOSectionProps> = ({
           <div className="text-center md:text-left">
             <h2 className="text-[26px] sm:text-[32px] md:text-[48px] font-bold tracking-tight mb-4 sm:mb-6 md:mb-8 leading-tight">
               Dubai Tennis Championships 2026:<br />
-              <span className="text-[#1e824c]">ATP 500 & WTA 1000 Tickets</span>
+              <span className="text-[var(--color-primary)]">ATP 500 & WTA 1000 Tickets</span>
             </h2>
           </div>
 

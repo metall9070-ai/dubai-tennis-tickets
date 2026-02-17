@@ -116,7 +116,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
       {/* Header */}
       <header className="bg-white border-b border-[#d2d2d7]">
         <div className="max-w-3xl mx-auto px-4 py-6">
-          <Link href="/" className="text-[#1e824c] font-semibold text-lg hover:underline">
+          <Link href="/" className="text-[var(--color-primary)] font-semibold text-lg hover:underline">
             {SITE_BRAND}
           </Link>
         </div>
@@ -167,7 +167,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
                   </p>
                   <p className="text-sm text-[#86868b]">{item.venue}</p>
                   <div className="mt-2">
-                    <span className="inline-block px-2 py-1 bg-[#1e824c]/10 text-[#1e824c] text-xs font-semibold rounded">
+                    <span className="inline-block px-2 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold rounded">
                       {item.category_name}
                     </span>
                   </div>
@@ -231,7 +231,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
             </p>
             <button
               disabled
-              className="w-full py-4 bg-[#1e824c] text-white font-semibold rounded-xl opacity-50 cursor-not-allowed"
+              className="w-full py-4 bg-[var(--color-primary)] text-white font-semibold rounded-xl opacity-50 cursor-not-allowed"
             >
               Pay ${parseFloat(order.total_amount).toLocaleString()}
             </button>
@@ -273,7 +273,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
 
         {/* Back Link */}
         <div className="mt-8 text-center">
-          <Link href="/" className="text-[#1e824c] font-medium hover:underline">
+          <Link href="/" className="text-[var(--color-primary)] font-medium hover:underline">
             Back to Home
           </Link>
         </div>

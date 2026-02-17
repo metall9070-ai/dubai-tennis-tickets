@@ -146,7 +146,7 @@ export default function FAQClient() {
               >
                 <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-[#f5f5f7] transition-colors">
                   <div className="flex-1 pr-4">
-                    <span className="text-[11px] font-bold text-[#1e824c] uppercase tracking-wider block mb-1">
+                    <span className="text-[11px] font-bold text-[var(--color-primary)] uppercase tracking-wider block mb-1">
                       {faq.category}
                     </span>
                     <span className="font-semibold text-[#1d1d1f]">{faq.question}</span>

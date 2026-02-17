@@ -56,7 +56,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentPage, light = f
                     e.preventDefault();
                     item.onClick?.();
                   }}
-                  className={`transition-colors ${light ? 'hover:text-white' : 'hover:text-[#1e824c]'}`}
+                  className={`transition-colors ${light ? 'hover:text-white' : 'hover:text-[var(--color-primary)]'}`}
                 >
                   {item.label}
                 </a>

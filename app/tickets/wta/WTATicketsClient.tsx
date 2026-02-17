@@ -102,7 +102,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
           <Breadcrumbs items={breadcrumbItems} currentPage="WTA 1000 Tickets" light />
 
           <div className="mt-8 md:mt-12 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1e824c] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[var(--color-primary)] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
               Women's Tournament
             </div>
@@ -126,7 +126,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1d1d1f]">
               Select Your Session
             </h2>
-            <span className="text-sm font-medium text-[#1e824c]">
+            <span className="text-sm font-medium text-[var(--color-primary)]">
               {isLoading ? '...' : `${wtaEvents.length} sessions`}
             </span>
           </div>
@@ -208,7 +208,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
               </div>
               <button
                 onClick={() => router.push('/tickets/atp')}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#1e824c] text-white font-semibold rounded-full hover:bg-[#166d3e] transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
               >
                 View ATP 500 Tickets
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

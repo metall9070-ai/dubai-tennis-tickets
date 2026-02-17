@@ -36,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[60] bg-[#111842]/95 backdrop-blur-md border-b border-white/10 transition-opacity duration-1000 ${
+        className={`fixed top-0 left-0 right-0 z-[60] bg-[var(--color-header)]/95 backdrop-blur-md border-b border-white/10 transition-opacity duration-1000 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
@@ -103,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                 </svg>
                 {cartTotalItems > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#1e824c] rounded-full text-[9px] flex items-center justify-center text-white font-bold animate-fadeIn">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[var(--color-primary)] rounded-full text-[9px] flex items-center justify-center text-white font-bold animate-fadeIn">
                     {cartTotalItems}
                   </span>
                 )}
@@ -132,7 +132,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
       </header>
 
       <div
-        className={`fixed inset-0 z-[55] bg-[#111842] backdrop-blur-3xl transition-transform duration-500 ease-in-out ${
+        className={`fixed inset-0 z-[55] bg-[var(--color-header)] backdrop-blur-3xl transition-transform duration-500 ease-in-out ${
           isMenuOpen ? 'translate-y-0' : '-translate-y-full'
         } md:hidden`}
       >

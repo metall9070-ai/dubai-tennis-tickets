@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getSiteConfig } from '@/lib/site-config';
 
 export default function PaymentClient() {
   const router = useRouter();
+  const config = getSiteConfig();
   const breadcrumbItems = [{ label: 'Home', href: '/', onClick: () => router.push('/') }];
 
   return (
@@ -27,7 +29,7 @@ export default function PaymentClient() {
 
           {/* Page Heading */}
           <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-12 leading-tight">
-            Payment and <span className="text-[#1e824c]">Delivery</span>
+            Payment and <span className="text-[var(--color-primary)]">Delivery</span>
           </h1>
 
           {/* Content Sections */}
@@ -39,7 +41,7 @@ export default function PaymentClient() {
                 Ticket payment is made online after placing an order on the website.
               </p>
 
-              <div className="space-y-8 pl-4 border-l-2 border-[#1e824c]/20">
+              <div className="space-y-8 pl-4 border-l-2 border-[var(--color-primary)]/20">
                 <div>
                   <h3 className="text-xl font-semibold text-[#1d1d1f] mb-4">1.1. Payment by Bank Card</h3>
                   <p className="mb-4">1.1.1. We accept the following bank cards: VISA, Mastercard, Maestro, Visa Electron.</p>
@@ -59,7 +61,7 @@ export default function PaymentClient() {
                 <div>
                   <h3 className="text-xl font-semibold text-[#1d1d1f] mb-4">1.2. Contactless Payment for Legal Entities</h3>
                   <p className="mb-4">1.2.1. Special payment terms are available for legal entities and corporate clients.</p>
-                  <p className="mb-4">1.2.2. To conclude an agreement and receive an invoice, the buyer must send the company's banking and legal details to the following email address: <span className="font-semibold text-[#1e824c]">support@dubaitennistickets.com</span></p>
+                  <p className="mb-4">1.2.2. To conclude an agreement and receive an invoice, the buyer must send the company's banking and legal details to the following email address: <span className="font-semibold text-[var(--color-primary)]">{config.supportEmail}</span></p>
                   <p className="mb-4">1.2.3. After receiving the details, a manager will contact the buyer to coordinate payment terms and next steps.</p>
                 </div>
               </div>
@@ -69,7 +71,7 @@ export default function PaymentClient() {
               <h2 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] mb-6">2. Ticket Delivery</h2>
               <p className="mb-6">2.1. The method of ticket delivery depends on the ticket format and is determined at the time of purchase.</p>
 
-              <div className="space-y-8 pl-4 border-l-2 border-[#1e824c]/20">
+              <div className="space-y-8 pl-4 border-l-2 border-[var(--color-primary)]/20">
                 <div>
                   <h3 className="text-xl font-semibold text-[#1d1d1f] mb-4">2.1. Electronic Tickets (PDF)</h3>
                   <p className="mb-2">2.1.1. Electronic tickets in PDF format are sent to the email address specified during checkout.</p>
@@ -97,7 +99,7 @@ export default function PaymentClient() {
           <div className="mt-16 pt-12 border-t border-[#f5f5f7] text-center">
             <button
               onClick={() => router.push('/')}
-              className="px-10 py-4 bg-[#1e824c] text-white font-semibold rounded-full hover:bg-[#166d3e] transition-all transform active:scale-95 shadow-xl shadow-[#1e824c]/20"
+              className="px-10 py-4 bg-[var(--color-primary)] text-white font-semibold rounded-full hover:bg-[var(--color-primary-hover)] transition-all transform active:scale-95 shadow-xl shadow-[var(--color-primary)]/20"
             >
               Back to Home
             </button>

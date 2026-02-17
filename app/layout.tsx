@@ -64,11 +64,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      style={{
+        '--color-primary': siteConfig.colors.primary,
+        '--color-primary-hover': siteConfig.colors.primaryHover,
+        '--color-header': siteConfig.colors.header,
+      } as React.CSSProperties}
+    >
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <meta name="theme-color" content="#1e824c" />
+        <meta name="theme-color" content={siteConfig.colors.primary} />
 
         {/* Google Search Console Verification — only if configured */}
         {siteConfig.gscVerification && (

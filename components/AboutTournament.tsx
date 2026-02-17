@@ -16,13 +16,13 @@ const AboutTournament: React.FC = () => {
           {/* Left Side: Content */}
           <div className="flex-1 order-2 lg:order-1">
             <div className="max-w-xl">
-              <div className="inline-block px-3 py-1 bg-[#1e824c]/10 text-[#1e824c] rounded-full text-[12px] font-bold tracking-widest uppercase mb-6">
+              <div className="inline-block px-3 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-full text-[12px] font-bold tracking-widest uppercase mb-6">
                 Legacy of Excellence
               </div>
               
               <h2 className="text-[42px] md:text-[56px] font-bold text-[#1d1d1f] leading-[1.1] mb-8 tracking-tight">
                 About the <br />
-                <span className="text-[#1e824c]">Tournament</span>
+                <span className="text-[var(--color-primary)]">Tournament</span>
               </h2>
               
               <p className="text-lg md:text-xl text-[#86868b] leading-relaxed mb-10 font-medium">
@@ -32,7 +32,7 @@ const AboutTournament: React.FC = () => {
               {/* Highlights/Stats Grid */}
               <div className="grid grid-cols-3 gap-4 mb-12">
                 {highlights.map((item, idx) => (
-                  <div key={idx} className="bg-[#f5f5f7] p-5 rounded-2xl border border-black/5 hover:border-[#1e824c]/30 transition-colors duration-300">
+                  <div key={idx} className="bg-[#f5f5f7] p-5 rounded-2xl border border-black/5 hover:border-[var(--color-primary)]/30 transition-colors duration-300">
                     <span className="text-2xl mb-2 block">{item.icon}</span>
                     <p className="text-[11px] font-bold text-[#86868b] uppercase tracking-wider mb-1">{item.label}</p>
                     <p className="text-[14px] md:text-[16px] font-bold text-[#1d1d1f] leading-tight">{item.value}</p>
@@ -41,7 +41,7 @@ const AboutTournament: React.FC = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="px-10 py-4 bg-[#1e824c] text-white font-bold text-[15px] rounded-full hover:bg-[#166d3e] transition-all duration-300 transform active:scale-95 shadow-lg">
+                <button className="px-10 py-4 bg-[var(--color-primary)] text-white font-bold text-[15px] rounded-full hover:bg-[var(--color-primary-hover)] transition-all duration-300 transform active:scale-95 shadow-lg">
                   Learn More
                 </button>
                 <button className="px-10 py-4 bg-transparent text-[#1d1d1f] font-bold text-[15px] rounded-full border-2 border-[#1d1d1f]/10 hover:border-[#1d1d1f]/20 transition-all duration-300">

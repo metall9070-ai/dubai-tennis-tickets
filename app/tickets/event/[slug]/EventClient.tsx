@@ -159,7 +159,7 @@ export default function EventClient({ slug, initialEvent, initialCategories }: E
     return (
       <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1e824c] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
           <p className="text-[#86868b]">Loading event details...</p>
         </div>
       </div>
@@ -185,7 +185,7 @@ export default function EventClient({ slug, initialEvent, initialCategories }: E
           {isNetworkError && (
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-[#1e824c] text-white rounded-full font-medium hover:bg-[#166638] transition-colors mb-4"
+              className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-full font-medium hover:bg-[var(--color-primary-hover)] transition-colors mb-4"
             >
               Try Again
             </button>
@@ -193,7 +193,7 @@ export default function EventClient({ slug, initialEvent, initialCategories }: E
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => router.push('/tickets/wta')}
-              className="px-6 py-3 bg-[#1e824c] text-white rounded-full font-medium hover:bg-[#166638] transition-colors"
+              className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-full font-medium hover:bg-[var(--color-primary-hover)] transition-colors"
             >
               View WTA Events
             </button>

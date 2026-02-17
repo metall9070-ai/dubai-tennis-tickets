@@ -24,14 +24,14 @@ export default function CheckoutCancelPage() {
           <div className="space-y-4">
             <Link
               href="/"
-              className="block w-full py-4 bg-[#1e824c] text-white rounded-[18px] font-semibold text-lg hover:bg-[#166d3e] transition-colors"
+              className="block w-full py-4 bg-[var(--color-primary)] text-white rounded-[18px] font-semibold text-lg hover:bg-[var(--color-primary-hover)] transition-colors"
             >
               Return to Home
             </Link>
 
             <p className="text-[13px] text-[#86868b]">
               Need help? Contact us at{' '}
-              <a href="mailto:support@dubaitennistickets.com" className="text-[#1e824c] hover:underline">
+              <a href="mailto:support@dubaitennistickets.com" className="text-[var(--color-primary)] hover:underline">
                 support@dubaitennistickets.com
               </a>
             </p>

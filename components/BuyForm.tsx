@@ -93,7 +93,7 @@ export default function BuyForm({
         </div>
         <div className="flex justify-between items-center pt-2 border-t border-[#d2d2d7]">
           <span className="font-semibold text-[#1d1d1f]">Total</span>
-          <span className="text-xl font-bold text-[#1e824c]">${totalPrice.toLocaleString()}</span>
+          <span className="text-xl font-bold text-[var(--color-primary)]">${totalPrice.toLocaleString()}</span>
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export default function BuyForm({
           placeholder="John Doe"
           required
           minLength={2}
-          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e824c] focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
         />
       </div>
 
@@ -121,7 +121,7 @@ export default function BuyForm({
           onChange={handleChange}
           placeholder="john@example.com"
           required
-          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e824c] focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
         />
       </div>
 
@@ -135,7 +135,7 @@ export default function BuyForm({
           placeholder="+971 50 123 4567"
           required
           minLength={5}
-          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e824c] focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
         />
       </div>
 
@@ -147,7 +147,7 @@ export default function BuyForm({
           onChange={handleChange}
           placeholder="Special requests..."
           rows={2}
-          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e824c] focus:border-transparent resize-none"
+          className="w-full px-4 py-3 border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent resize-none"
         />
       </div>
 
@@ -171,7 +171,7 @@ export default function BuyForm({
         <button
           type="submit"
           disabled={isPending}
-          className="flex-1 py-3 bg-[#1e824c] text-white font-semibold rounded-xl hover:bg-[#166638] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+          className="flex-1 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-xl hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {isPending ? (
             <>

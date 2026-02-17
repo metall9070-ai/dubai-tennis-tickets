@@ -396,7 +396,7 @@ const StadiumSeatingMap: React.FC<StadiumSeatingMapProps> = ({
         {(!svgLoaded || !scaleReady) && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#f8f9fb] z-30">
             <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 border-3 border-[#1e824c] border-t-transparent rounded-full animate-spin" />
+              <div className="w-8 h-8 border-3 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
               <span className="text-sm text-[#86868b] font-medium">Loading seating map...</span>
             </div>
           </div>

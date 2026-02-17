@@ -144,7 +144,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
         <div className="mb-10 md:mb-24">
           <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
             <h3 className="text-xl md:text-2xl font-semibold tracking-tight">WTA 1000 Tournament</h3>
-            <span className="text-[12px] md:text-sm font-medium text-[#1e824c]">Women's Week</span>
+            <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Women's Week</span>
           </div>
           <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
             {wtaEvents.length === 0 ? (
@@ -165,7 +165,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
         <div className="mb-0">
           <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
             <h3 className="text-xl md:text-2xl font-semibold tracking-tight">ATP 500 Tournament</h3>
-            <span className="text-[12px] md:text-sm font-medium text-[#1e824c]">Men's Week</span>
+            <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Men's Week</span>
           </div>
           <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
             {atpEvents.length === 0 ? (
@@ -245,7 +245,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
                {session.label}
              </span>
           </div>
-          <h4 className="text-[15px] sm:text-base md:text-2xl font-semibold tracking-tight text-[#1d1d1f] group-hover:text-[#1e824c] transition-colors duration-300 leading-snug">
+          <h4 className="text-[15px] sm:text-base md:text-2xl font-semibold tracking-tight text-[#1d1d1f] group-hover:text-[var(--color-primary)] transition-colors duration-300 leading-snug">
             {event.title}
           </h4>
           <p className="hidden md:block text-[14px] text-[#86868b] mt-0.5">Dubai Duty Free Tennis Stadium</p>
@@ -269,7 +269,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
                 <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#86868b]">Price unavailable</span>
               )}
             </div>
-            <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[#1e824c] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
+            <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[var(--color-primary)] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
               Buy tickets
             </span>
           </>

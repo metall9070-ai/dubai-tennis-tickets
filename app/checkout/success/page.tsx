@@ -19,8 +19,8 @@ function SuccessContent() {
 
   return (
     <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-sm border border-black/5">
-      <div className="w-20 h-20 bg-[#1e824c]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-        <svg className="w-10 h-10 text-[#1e824c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-20 h-20 bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg className="w-10 h-10 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
         </svg>
       </div>
@@ -46,14 +46,14 @@ function SuccessContent() {
       <div className="space-y-4">
         <Link
           href="/"
-          className="block w-full py-4 bg-[#1e824c] text-white rounded-[18px] font-semibold text-lg hover:bg-[#166d3e] transition-colors text-center"
+          className="block w-full py-4 bg-[var(--color-primary)] text-white rounded-[18px] font-semibold text-lg hover:bg-[var(--color-primary-hover)] transition-colors text-center"
         >
           Return to Home
         </Link>
 
         <p className="text-[13px] text-[#86868b]">
           Questions? Contact us at{' '}
-          <a href="mailto:support@dubaitennistickets.com" className="text-[#1e824c] hover:underline">
+          <a href="mailto:support@dubaitennistickets.com" className="text-[var(--color-primary)] hover:underline">
             support@dubaitennistickets.com
           </a>
         </p>

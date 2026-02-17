@@ -12,7 +12,7 @@ export default function OrderNotFound() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"
-            className="px-6 py-3 bg-[#1e824c] text-white rounded-full font-medium hover:bg-[#166638] transition-colors"
+            className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-full font-medium hover:bg-[var(--color-primary-hover)] transition-colors"
           >
             Back to Home
           </Link>

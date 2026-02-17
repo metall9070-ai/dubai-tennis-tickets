@@ -34,7 +34,7 @@ export default function TournamentClient() {
           <Breadcrumbs items={breadcrumbItems} currentPage="Tournament Info" light />
 
           <div className="mt-8 md:mt-12 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1e824c] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[var(--color-primary)] rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
               Since 1993
             </div>
@@ -86,14 +86,14 @@ export default function TournamentClient() {
 
             <div
               onClick={handleViewSchedule}
-              className="bg-[#1e824c] rounded-[24px] md:rounded-[32px] p-6 md:p-10 text-white shadow-xl cursor-pointer hover:bg-[#166d3e] transition-all group"
+              className="bg-[var(--color-primary)] rounded-[24px] md:rounded-[32px] p-6 md:p-10 text-white shadow-xl cursor-pointer hover:bg-[var(--color-primary-hover)] transition-all group"
             >
               <h2 className="text-xl md:text-2xl font-semibold tracking-tight mb-4">Buy Tickets for the Dubai Duty Free Tennis Championships</h2>
               <p className="mb-6 md:mb-8 opacity-90 text-[15px] md:text-[17px]">
                 Book your Dubai Duty Free Tennis Championships tickets and experience elite ATP and WTA tennis live in Dubai. Check the official tournament schedule, select your preferred sessions, and secure the best seats.
               </p>
               <button
-                className="w-full md:w-auto px-8 py-3 bg-white text-[#1e824c] font-semibold rounded-full group-hover:bg-white/90 transition-all transform active:scale-95"
+                className="w-full md:w-auto px-8 py-3 bg-white text-[var(--color-primary)] font-semibold rounded-full group-hover:bg-white/90 transition-all transform active:scale-95"
               >
                 View Schedule
               </button>
