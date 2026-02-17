@@ -15,4 +15,5 @@ export interface Event {
   minPrice: number | null;
   isSoldOut: boolean;
   tournamentSlug?: string;
+  venue?: string;
 }

@@ -248,7 +248,9 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
           <h4 className="text-[15px] sm:text-base md:text-2xl font-semibold tracking-tight text-[#1d1d1f] group-hover:text-[var(--color-primary)] transition-colors duration-300 leading-snug">
             {event.title}
           </h4>
-          <p className="hidden md:block text-[14px] text-[#86868b] mt-0.5">Dubai Duty Free Tennis Stadium</p>
+          {event.venue && (
+            <p className="hidden md:block text-[14px] text-[#86868b] mt-0.5">{event.venue}</p>
+          )}
         </div>
       </div>
 

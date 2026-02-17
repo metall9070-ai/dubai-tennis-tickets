@@ -258,7 +258,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <div className="bg-[#f5f5f7] p-5 md:p-8 rounded-[20px] md:rounded-[32px] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border border-black/5">
             <div>
               <h2 className="text-xl md:text-3xl font-semibold mb-1 tracking-tight text-[#1d1d1f]">{event?.title || "Dubai Duty Free Tennis Championships"}</h2>
-              <p className="text-[var(--color-primary)] font-semibold text-[14px] md:text-[17px] mb-3 md:mb-4">{event?.venue || "Dubai Duty Free Tennis Stadium"}</p>
+              <p className="text-[var(--color-primary)] font-semibold text-[14px] md:text-[17px] mb-3 md:mb-4">{event?.venue}</p>
               <div className="flex items-center space-x-4 md:space-x-6 text-[#86868b] text-[13px] md:text-[15px] font-medium">
                 <div className="flex items-center">
                   <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
