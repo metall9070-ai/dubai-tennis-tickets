@@ -94,7 +94,7 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${siteConfig.gaId}', { debug_mode: true });
+                  gtag('config', '${siteConfig.gaId}'${process.env.NODE_ENV !== 'production' ? ", { debug_mode: true }" : ''});
                 `,
               }}
             />
