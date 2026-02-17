@@ -26,6 +26,13 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "Venue", href: "/venue" },
     { label: "FAQ", href: "/faq" },
   ],
+  finalissima: [
+    { label: "Home", href: "/" },
+    { label: "Schedule", href: "/schedule" },
+    { label: "About Tournament", href: "/about-tournament" },
+    { label: "Venue", href: "/venue" },
+    { label: "FAQ", href: "/faq" },
+  ],
 }
 
 /* ------------------------------------------------------------------ */
@@ -51,6 +58,23 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
     ],
     disclaimer:
       "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
+  },
+  finalissima: {
+    brandName: "Football Festival Qatar",
+    brandDescription:
+      "Independent ticket service for Football Festival Qatar 2026. Secure booking and guaranteed authentic tickets for all matches.",
+    ticketLinks: [
+      { name: "All Tickets", href: "/" },
+      { name: "Schedule", href: "/schedule" },
+    ],
+    infoLinks: [
+      { name: "About Tournament", href: "/about-tournament" },
+      { name: "Venue & Directions", href: "/venue" },
+      { name: "FAQ", href: "/faq" },
+      { name: "About Us", href: "/about" },
+    ],
+    disclaimer:
+      "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
   },
 }
 

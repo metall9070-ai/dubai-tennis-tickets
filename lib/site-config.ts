@@ -12,7 +12,7 @@ export interface SiteConfig {
   gaId?: string
   gtmId?: string
   gscVerification?: string
-  jsonLdType: "tennis" | "generic"
+  jsonLdType: "tennis" | "finalissima" | "generic"
   colors: {
     primary: string
     primaryHover: string
@@ -58,6 +58,31 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       placename: "Dubai",
       position: "25.2048;55.2708",
       icbm: "25.2048, 55.2708",
+    },
+  },
+
+  finalissima: {
+    brand: "Football Festival Qatar",
+    supportEmail: "support@footballfestivalqatar.com",
+    defaultTitle:
+      "Football Festival Qatar 2026 | Finalissima Tickets — Lusail, Doha",
+    defaultDescription:
+      "Football Festival Qatar 2026 featuring Finalissima and international football matches. March 26-31 at Lusail Stadium, Ahmad bin Ali Stadium & Jassim bin Hamad Stadium. Secure checkout.",
+    defaultKeywords:
+      "Football Festival Qatar, Finalissima 2026, Finalissima tickets, Qatar football tickets, Lusail Stadium tickets, football Qatar 2026, international football Doha, buy football tickets Qatar",
+    gaId: process.env.NEXT_PUBLIC_GA_ID,
+    gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+    jsonLdType: "finalissima",
+    colors: {
+      primary: "#00627B",
+      primaryHover: "#004F63",
+      header: "#800D2F",
+    },
+    geo: {
+      region: "QA",
+      placename: "Lusail",
+      position: "25.4195;51.4906", // TODO: verify — Lusail Stadium coordinates
+      icbm: "25.4195, 51.4906",
     },
   },
 
@@ -174,6 +199,63 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
         {
           "@type": "WebSite",
           name: "Dubai Tennis Tickets",
+          url: SITE_URL,
+        },
+      ],
+    }
+  }
+
+  if (config.jsonLdType === "finalissima") {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          name: "Football Festival Qatar",
+          url: SITE_URL,
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "customer service",
+            availableLanguage: ["English", "Arabic"],
+          },
+        },
+        {
+          "@type": "SportsEvent",
+          name: "Football Festival Qatar 2026",
+          description:
+            "International football festival featuring Finalissima 2026 and friendly matches at world-class stadiums in Qatar",
+          startDate: "2026-03-26",
+          endDate: "2026-03-31",
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode:
+            "https://schema.org/OfflineEventAttendanceMode",
+          location: {
+            "@type": "StadiumOrArena",
+            name: "Lusail Stadium", // TODO: verify — primary venue for JSON-LD
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Lusail Boulevard", // TODO: verify
+              addressLocality: "Lusail",
+              addressCountry: "QA",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: "25.4195", // TODO: verify
+              longitude: "51.4906", // TODO: verify
+            },
+            maximumAttendeeCapacity: 80000, // TODO: verify
+          },
+          offers: {
+            "@type": "AggregateOffer",
+            lowPrice: "100",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: `${SITE_URL}/`,
+          },
+        },
+        {
+          "@type": "WebSite",
+          name: "Football Festival Qatar",
           url: SITE_URL,
         },
       ],
