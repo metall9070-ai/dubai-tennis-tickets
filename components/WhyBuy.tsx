@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
+import { getSiteConfig } from '@/lib/site-config';
 
 const WhyBuy: React.FC = () => {
+  const { brand } = getSiteConfig();
   const benefits = [
     {
       title: 'Verified Tickets & Guarantee',
@@ -50,7 +52,7 @@ const WhyBuy: React.FC = () => {
             Premium Booking Experience
           </h2>
           <p className="text-[16px] md:text-lg text-[#86868b] font-medium max-w-2xl mx-auto">
-            We provide a secure and premium way to experience world-class tennis in Dubai.
+            We provide a secure and premium way to experience {brand} events.
           </p>
         </div>
 

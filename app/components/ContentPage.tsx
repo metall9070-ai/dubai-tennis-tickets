@@ -1,11 +1,11 @@
 import Link from "next/link"
 import type { SEOContent } from "@/types/seo"
 
-export default function ContentPage({ content }: { content: SEOContent }) {
+export default function ContentPage({ content, embedded }: { content: SEOContent; embedded?: boolean }) {
   if (!content.h1) return null
 
   return (
-    <article className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]">
+    <article className={`${embedded ? 'pt-12 sm:pt-16 md:pt-24' : 'pt-24 sm:pt-28 md:pt-32'} pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
         {/* H1 */}
         <h1 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold tracking-tight mb-8 sm:mb-10 md:mb-12 leading-tight">

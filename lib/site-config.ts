@@ -24,6 +24,15 @@ export interface SiteConfig {
     position: string
     icbm: string
   }
+  hero?: {
+    title: string
+    titleLine2?: string
+    subtitle: string
+    badge?: string
+    description: string
+    image?: string
+    buttonText?: string
+  }
 }
 
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || "default"
@@ -59,6 +68,16 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       position: "25.2048;55.2708",
       icbm: "25.2048, 55.2708",
     },
+    hero: {
+      title: "Dubai Duty Free",
+      titleLine2: "Tennis Championships 2026",
+      subtitle: "February 15th – 28th, 2026",
+      badge: "ATP 500 & WTA 1000 | Dubai Tennis Stadium",
+      description:
+        "Tickets for world-class tennis at the iconic Dubai Duty Free Tennis Stadium.",
+      image:
+        "https://s1.ticketm.net/dam/a/d9b/fe4ff027-d207-4fcd-976c-499a54e4fd9b_SOURCE",
+    },
   },
 
   finalissima: {
@@ -83,6 +102,14 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       placename: "Lusail",
       position: "25.4195;51.4906", // TODO: verify — Lusail Stadium coordinates
       icbm: "25.4195, 51.4906",
+    },
+    hero: {
+      title: "Football Festival",
+      titleLine2: "Qatar 2026",
+      subtitle: "March 26th – 31st, 2026",
+      badge: "Finalissima | Lusail, Al Rayyan & Doha",
+      description:
+        "Tickets for international football at world-class stadiums in Qatar.",
     },
   },
 

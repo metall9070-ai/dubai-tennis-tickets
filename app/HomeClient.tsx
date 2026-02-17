@@ -4,18 +4,20 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ContentPage from './components/ContentPage';
 import Hero from '@/components/Hero';
-import TrustSignals from '@/components/TrustSignals';
 import Events from '@/components/Events';
 import WhyBuy from '@/components/WhyBuy';
 import SEOSection from '@/components/SEOSection';
 import type { Event } from '@/lib/types';
+import type { SEOContent } from '@/types/seo';
 
 interface HomeClientProps {
   initialEvents: Event[];
+  seoContent?: SEOContent;
 }
 
-export default function HomeClient({ initialEvents }: HomeClientProps) {
+export default function HomeClient({ initialEvents, seoContent }: HomeClientProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
@@ -25,9 +27,7 @@ export default function HomeClient({ initialEvents }: HomeClientProps) {
   }, []);
 
   const handleSelectEvent = (eventData: any) => {
-    // Use slug for SEO-friendly URLs, fallback to id for backward compatibility
     const eventSlug = eventData?.slug || `event-${eventData?.id}`;
-    // Store selected event in sessionStorage for the event page
     sessionStorage.setItem('selectedEvent', JSON.stringify(eventData));
     router.push(`/tickets/event/${eventSlug}`);
   };
@@ -45,17 +45,19 @@ export default function HomeClient({ initialEvents }: HomeClientProps) {
       <Hero isVisible={isLoaded} onAction={handleViewShelter} />
       {isLoaded && (
         <>
-          {/* TEMPORARILY DISABLED — can be re-enabled on request */}
-          {/* <TrustSignals /> */}
           <Events onSelectEvent={handleSelectEvent} initialEvents={initialEvents} />
           <WhyBuy />
-          <SEOSection
-            onFAQ={() => router.push('/faq')}
-            onSeatingGuide={() => router.push('/seating-guide')}
-            onVenue={() => router.push('/venue')}
-            onATPTickets={() => router.push('/tickets/atp')}
-            onWTATickets={() => router.push('/tickets/wta')}
-          />
+          {seoContent?.h1 ? (
+            <ContentPage content={seoContent} embedded />
+          ) : (
+            <SEOSection
+              onFAQ={() => router.push('/faq')}
+              onSeatingGuide={() => router.push('/seating-guide')}
+              onVenue={() => router.push('/venue')}
+              onATPTickets={() => router.push('/tickets/atp')}
+              onWTATickets={() => router.push('/tickets/wta')}
+            />
+          )}
           <Footer />
         </>
       )}

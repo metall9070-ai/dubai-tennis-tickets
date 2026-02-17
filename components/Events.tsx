@@ -98,16 +98,22 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
 
   const wtaEvents = events.filter(e => e.type === 'WTA');
   const atpEvents = events.filter(e => e.type === 'ATP');
+  const isTennisLayout = wtaEvents.length > 0 || atpEvents.length > 0;
+
+  // Shared header for all states
+  const header = (
+    <div className="mb-8 md:mb-20 text-center md:text-left">
+      <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
+      <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
+    </div>
+  );
 
   // Loading state
   if (isLoading) {
     return (
       <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-          <div className="mb-8 md:mb-20 text-center md:text-left">
-            <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
-            <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
-          </div>
+          {header}
           <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#86868b]">
             <div className="animate-pulse">Loading sessions...</div>
           </div>
@@ -121,10 +127,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
     return (
       <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-          <div className="mb-8 md:mb-20 text-center md:text-left">
-            <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
-            <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
-          </div>
+          {header}
           <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-red-500">
             {error}. Please refresh the page.
           </div>
@@ -136,52 +139,70 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
   return (
     <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-        <div className="mb-8 md:mb-20 text-center md:text-left">
-          <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
-          <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
-        </div>
+        {header}
 
-        <div className="mb-10 md:mb-24">
-          <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
-            <h3 className="text-xl md:text-2xl font-semibold tracking-tight">WTA 1000 Tournament</h3>
-            <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Women's Week</span>
-          </div>
-          <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
-            {wtaEvents.length === 0 ? (
-              <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
-            ) : (
-              wtaEvents.map((event, index, arr) => (
-                <EventRow
-                  key={event.id}
-                  event={event}
-                  isLast={index === arr.length - 1}
-                  onClick={() => onSelectEvent(event)}
-                />
-              ))
-            )}
-          </div>
-        </div>
+        {isTennisLayout ? (
+          <>
+            <div className="mb-10 md:mb-24">
+              <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
+                <h3 className="text-xl md:text-2xl font-semibold tracking-tight">WTA 1000 Tournament</h3>
+                <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Women&apos;s Week</span>
+              </div>
+              <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
+                {wtaEvents.length === 0 ? (
+                  <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
+                ) : (
+                  wtaEvents.map((event, index, arr) => (
+                    <EventRow
+                      key={event.id}
+                      event={event}
+                      isLast={index === arr.length - 1}
+                      onClick={() => onSelectEvent(event)}
+                    />
+                  ))
+                )}
+              </div>
+            </div>
 
-        <div className="mb-0">
-          <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
-            <h3 className="text-xl md:text-2xl font-semibold tracking-tight">ATP 500 Tournament</h3>
-            <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Men's Week</span>
+            <div className="mb-0">
+              <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
+                <h3 className="text-xl md:text-2xl font-semibold tracking-tight">ATP 500 Tournament</h3>
+                <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Men&apos;s Week</span>
+              </div>
+              <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
+                {atpEvents.length === 0 ? (
+                  <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
+                ) : (
+                  atpEvents.map((event, index, arr) => (
+                    <EventRow
+                      key={event.id}
+                      event={event}
+                      isLast={index === arr.length - 1}
+                      onClick={() => onSelectEvent(event)}
+                    />
+                  ))
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="mb-0">
+            <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
+              {events.length === 0 ? (
+                <div className="p-8 text-center text-[#86868b]">No sessions available yet. Check back soon.</div>
+              ) : (
+                events.map((event, index, arr) => (
+                  <EventRow
+                    key={event.id}
+                    event={event}
+                    isLast={index === arr.length - 1}
+                    onClick={() => onSelectEvent(event)}
+                  />
+                ))
+              )}
+            </div>
           </div>
-          <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
-            {atpEvents.length === 0 ? (
-              <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
-            ) : (
-              atpEvents.map((event, index, arr) => (
-                <EventRow
-                  key={event.id}
-                  event={event}
-                  isLast={index === arr.length - 1}
-                  onClick={() => onSelectEvent(event)}
-                />
-              ))
-            )}
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );
