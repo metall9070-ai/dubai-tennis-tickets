@@ -26,14 +26,6 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "Venue", href: "/venue" },
     { label: "FAQ", href: "/faq" },
   ],
-  "test-tournament": [
-    { label: "Home", href: "/" },
-    { label: "Schedule", href: "/schedule" },
-    { label: "About Tournament", href: "/about-tournament" },
-    { label: "Venue", href: "/venue" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Guarantee", href: "/guarantee" },
-  ],
 }
 
 /* ------------------------------------------------------------------ */
@@ -60,24 +52,6 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
     disclaimer:
       "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
   },
-  "test-tournament": {
-    brandName: "Finalissima Tickets",
-    brandDescription:
-      "Independent ticket marketplace for the Finalissima 2026. Secure booking and trusted delivery for Argentina vs Spain at Lusail Stadium.",
-    ticketLinks: [
-      { name: "All Tickets", href: "/" },
-      { name: "Argentina vs Spain", href: "/finalissima-argentina-vs-spain" },
-      { name: "Schedule", href: "/schedule" },
-    ],
-    infoLinks: [
-      { name: "About Tournament", href: "/about-tournament" },
-      { name: "Venue & Directions", href: "/venue" },
-      { name: "FAQ", href: "/faq" },
-      { name: "Guarantee", href: "/guarantee" },
-    ],
-    disclaimer:
-      "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to UEFA, CONMEBOL, the Finalissima, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
-  },
 }
 
 /* ------------------------------------------------------------------ */
@@ -85,9 +59,18 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
 /* ------------------------------------------------------------------ */
 
 export function getNavItems(): NavItem[] {
-  return NAV_ITEMS[SITE_CODE] || NAV_ITEMS.tennis
+  return NAV_ITEMS[SITE_CODE] || []
+}
+
+const NEUTRAL_FOOTER: FooterConfig = {
+  brandName: "Event Tickets",
+  brandDescription: "Secure ticket booking service.",
+  ticketLinks: [],
+  infoLinks: [],
+  disclaimer:
+    "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service.",
 }
 
 export function getFooterConfig(): FooterConfig {
-  return FOOTER_CONFIGS[SITE_CODE] || FOOTER_CONFIGS.tennis
+  return FOOTER_CONFIGS[SITE_CODE] || NEUTRAL_FOOTER
 }

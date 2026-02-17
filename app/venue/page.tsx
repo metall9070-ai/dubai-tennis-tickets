@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { loadSEOStrict } from '@/lib/seo-loader';
+import { isTennisSite } from '@/lib/site-config';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import ContentPage from '@/app/components/ContentPage';
@@ -19,19 +21,23 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
-  return {
-    title: 'Venue & Directions | Dubai Tennis Stadium',
-    description:
-      'Dubai Duty Free Tennis Stadium location, directions, and facilities. Aviation Club Tennis Centre, Al Garhoud. Getting there by metro, taxi, and car.',
-    keywords:
-      'Dubai Tennis Stadium, Aviation Club, Dubai Tennis venue, how to get to Dubai Tennis',
-    openGraph: {
-      title: 'Dubai Tennis Stadium | Venue & Directions',
+  if (isTennisSite()) {
+    return {
+      title: 'Venue & Directions | Dubai Tennis Stadium',
       description:
-        'Find your way to Dubai Duty Free Tennis Stadium at Aviation Club.',
-    },
-    alternates: { canonical: '/venue' },
-  };
+        'Dubai Duty Free Tennis Stadium location, directions, and facilities. Aviation Club Tennis Centre, Al Garhoud. Getting there by metro, taxi, and car.',
+      keywords:
+        'Dubai Tennis Stadium, Aviation Club, Dubai Tennis venue, how to get to Dubai Tennis',
+      openGraph: {
+        title: 'Dubai Tennis Stadium | Venue & Directions',
+        description:
+          'Find your way to Dubai Duty Free Tennis Stadium at Aviation Club.',
+      },
+      alternates: { canonical: '/venue' },
+    };
+  }
+
+  return {};
 }
 
 export default async function VenuePage() {
@@ -47,5 +53,9 @@ export default async function VenuePage() {
     );
   }
 
-  return <VenueClient />;
+  if (isTennisSite()) {
+    return <VenueClient />;
+  }
+
+  notFound();
 }

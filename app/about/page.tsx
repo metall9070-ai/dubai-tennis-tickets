@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { isTennisSite } from '@/lib/site-config';
+import { getSiteConfig } from '@/lib/site-config';
 import AboutClient from './AboutClient';
 
+const { brand } = getSiteConfig();
+
 export const metadata: Metadata = {
-  title: 'About Us | Dubai Tennis Tickets',
-  description: 'About Dubai Tennis Tickets - independent ticket concierge for Dubai Tennis Championships 2026.',
+  title: `About Us | ${brand}`,
+  description: `About ${brand} - independent ticket concierge service. Secure booking and guaranteed authentic tickets.`,
   alternates: { canonical: '/about' },
 };
 
 export default function AboutPage() {
-  if (!isTennisSite()) notFound();
   return <AboutClient />;
 }

@@ -4,6 +4,7 @@
 import type { Metadata } from 'next';
 import EventClient from './EventClient';
 import { fetchEventWithCategoriesServer } from '@/lib/api-server';
+import { getSiteConfig } from '@/lib/site-config';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,10 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Fetch event data for dynamic metadata
   const { event } = await fetchEventWithCategoriesServer(slug);
 
+  const { brand } = getSiteConfig();
+
   if (event) {
     return {
-      title: `${event.title} Tickets | Dubai Tennis Championships 2026`,
-      description: `Get tickets for ${event.title} at Dubai Tennis Championships 2026. ${event.type} tournament at ${event.date} ${event.month}. Courtside, Prime, and Grandstand options available.`,
+      title: `${event.title} Tickets | ${brand}`,
+      description: `Get tickets for ${event.title}. ${event.type} event on ${event.date} ${event.month}. Secure checkout.`,
       alternates: {
         canonical: `/tickets/event/${event.slug}`,
       },
@@ -33,8 +36,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .join(' ');
 
   return {
-    title: `${title} Tickets | Dubai Tennis Championships 2026`,
-    description: `Get tickets for ${title} at Dubai Tennis Championships 2026. Courtside, Prime, and Grandstand options available.`,
+    title: `${title} Tickets | ${brand}`,
+    description: `Get tickets for ${title}. Secure checkout and authentic tickets guaranteed.`,
     alternates: {
       canonical: `/tickets/event/${slug}`,
     },

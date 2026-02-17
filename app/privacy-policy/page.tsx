@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import { getSiteConfig } from '@/lib/site-config';
 import PrivacyClient from './PrivacyClient';
 
+const { brand } = getSiteConfig();
+
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Dubai Tennis Tickets',
-  description: 'Privacy Policy for Dubai Tennis Tickets. How we collect, use, and protect your personal information.',
+  title: `Privacy Policy | ${brand}`,
+  description: `Privacy Policy for ${brand}. How we collect, use, and protect your personal information.`,
   alternates: { canonical: '/privacy-policy' },
 };
 
