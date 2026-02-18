@@ -14,6 +14,9 @@ const seo: SEOContent = {
   ],
   h1: "Frequently Asked Questions",
   breadcrumbLabel: "FAQ",
+  heroSubtitle:    "Finalissima Tickets — Common Questions",
+  heroDescription: "Everything you need to know about ordering, delivery, and attending the matches.",
+
   faq: [
     {
       question: "How do I place an order?",

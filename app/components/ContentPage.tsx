@@ -21,7 +21,7 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
 
       {/* Hero Section — shown on all standalone info pages (image is optional) */}
       {showHero && (
-        <section className="relative pt-24 sm:pt-28 pb-16 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
+        <section className="relative pt-12 pb-16 md:pt-16 md:pb-24 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
           <div className="absolute inset-0 z-0">
             {/* NOTE: using <img> intentionally — next/image requires domain whitelisting
                 incompatible with data-driven external URLs. fetchPriority=high for LCP. */}
@@ -45,9 +45,21 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
                 light
               />
             )}
-            <h1 className="text-[32px] sm:text-[42px] md:text-[56px] font-bold tracking-tight mt-4 leading-tight">
-              {content.h1}
-            </h1>
+            <div className="mt-8 md:mt-12">
+              <h1 className="text-[32px] sm:text-[42px] md:text-[56px] font-bold tracking-tight leading-tight">
+                {content.h1}
+              </h1>
+              {content.heroSubtitle && (
+                <p className="text-lg md:text-xl text-white/80 max-w-2xl mt-3">
+                  {content.heroSubtitle}
+                </p>
+              )}
+              {content.heroDescription && (
+                <p className="text-base text-white/60 max-w-2xl mt-3">
+                  {content.heroDescription}
+                </p>
+              )}
+            </div>
           </div>
         </section>
       )}

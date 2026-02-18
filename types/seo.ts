@@ -28,6 +28,8 @@ export type SEOContent = {
   h1?: string
   heroImage?:       string     // URL of hero background image (HTTPS required)
   heroAlt?:         string     // alt text for hero; falls back to h1
+  heroSubtitle?:    string     // subtitle line below h1 in hero (e.g. venue location)
+  heroDescription?: string     // secondary description below subtitle in hero
   breadcrumbLabel?: string     // current page label in breadcrumbs (e.g. "Venue & Directions")
   stats?:           StatItem[] // infographic stats grid; recommended max 4 items
   sections?: SEOSection[]

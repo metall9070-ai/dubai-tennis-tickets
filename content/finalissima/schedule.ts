@@ -15,6 +15,9 @@ const seo: SEOContent = {
   ],
   h1: "Schedule — Football Festival Qatar 2026",
   breadcrumbLabel: "Schedule",
+  heroSubtitle:    "Football Festival Qatar 2026 — 26–31 March",
+  heroDescription: "Six days of international football at Lusail Stadium, Ahmad bin Ali Stadium, and Jassim bin Hamad Stadium.",
+
   sections: [
     {
       heading: "Festival Dates & Structure",

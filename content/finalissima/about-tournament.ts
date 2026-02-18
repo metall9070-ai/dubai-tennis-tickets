@@ -15,6 +15,9 @@ const seo: SEOContent = {
   ],
   h1: "Football Festival Qatar 2026 — Your Complete Guide",
   breadcrumbLabel: "About Tournament",
+  heroSubtitle:    "Spain vs Argentina — Lusail Stadium, Qatar",
+  heroDescription: "The intercontinental championship between UEFA EURO and CONMEBOL Copa América winners. 27 March 2026.",
+
   sections: [
     {
       heading: "What Is Football Festival Qatar?",

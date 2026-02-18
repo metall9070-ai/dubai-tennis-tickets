@@ -15,6 +15,9 @@ const seo: SEOContent = {
   ],
   h1: "Venue Guide — Stadiums & Getting There",
   breadcrumbLabel: "Venue & Directions",
+  heroSubtitle:    "Lusail Stadium, Lusail, Qatar",
+  heroDescription: "Host venue of Finalissima 2026 and the 2022 FIFA World Cup Final. Located 20 minutes north of Doha.",
+
   stats: [
     { label: "Lusail Capacity", value: "80,000" },
     { label: "Established", value: "2021" },
