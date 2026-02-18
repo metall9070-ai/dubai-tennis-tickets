@@ -1,16 +1,87 @@
 import Link from "next/link"
+import Breadcrumbs from "@/components/Breadcrumbs"
 import type { SEOContent } from "@/types/seo"
 
 export default function ContentPage({ content, embedded }: { content: SEOContent; embedded?: boolean }) {
   if (!content.h1) return null
 
+  // When embedded, hero is suppressed — ContentPage is used as SEO text block below event listing
+  const heroImage = !embedded ? content.heroImage : undefined
+
   return (
-    <article className={`${embedded ? 'pt-12 sm:pt-16 md:pt-24' : 'pt-24 sm:pt-28 md:pt-32'} pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
-      <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
-        {/* H1 */}
-        <h1 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold tracking-tight mb-8 sm:mb-10 md:mb-12 leading-tight">
-          {content.h1}
-        </h1>
+    <article className={`${embedded
+      ? 'pt-12 sm:pt-16 md:pt-24'
+      : heroImage
+        ? ''
+        : 'pt-24 sm:pt-28 md:pt-32'
+    } pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
+
+      {/* Hero Section — only when heroImage is set and not embedded */}
+      {heroImage && (
+        <section className="relative pt-24 sm:pt-28 pb-16 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            {/* NOTE: using <img> intentionally — next/image requires domain whitelisting
+                incompatible with data-driven external URLs. fetchPriority=high for LCP. */}
+            <img
+              src={heroImage}
+              alt={content.heroAlt ?? content.h1 ?? ''}
+              className="w-full h-full object-cover object-top opacity-50"
+              fetchPriority="high"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1d1d1f] via-[#1d1d1f]/40 to-transparent" />
+          </div>
+          <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-[980px]">
+            {content.breadcrumbLabel && (
+              // TODO: "Home" label is hardcoded English — i18n blocker for future localization
+              <Breadcrumbs
+                items={[{ label: 'Home', href: '/' }]}
+                currentPage={content.breadcrumbLabel}
+                light
+              />
+            )}
+            <h1 className="text-[32px] sm:text-[42px] md:text-[56px] font-bold tracking-tight mt-4 leading-tight">
+              {content.h1}
+            </h1>
+          </div>
+        </section>
+      )}
+
+      <div className={`container mx-auto px-4 sm:px-6 max-w-[980px] ${heroImage ? 'pt-8 sm:pt-10' : ''}`}>
+
+        {/* Breadcrumbs — no-hero fallback */}
+        {!heroImage && content.breadcrumbLabel && (
+          <div className="pt-4 mb-2">
+            {/* TODO: "Home" label is hardcoded English — i18n blocker for future localization */}
+            <Breadcrumbs
+              items={[{ label: 'Home', href: '/' }]}
+              currentPage={content.breadcrumbLabel}
+            />
+          </div>
+        )}
+
+        {/* H1 — only when no hero (hero mode renders h1 inside the hero section) */}
+        {!heroImage && (
+          <h1 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold tracking-tight mb-8 sm:mb-10 md:mb-12 leading-tight">
+            {content.h1}
+          </h1>
+        )}
+
+        {/* Stats Grid — infographic, shown below hero or below h1 */}
+        {content.stats && content.stats.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 sm:mb-12">
+            {content.stats.map((stat, i) => (
+              <div key={i} className="bg-white rounded-xl p-4 sm:p-5 text-center">
+                <div className="text-[22px] sm:text-[26px] font-bold text-[#1d1d1f]">
+                  {stat.value}
+                </div>
+                <div className="text-[12px] sm:text-[13px] text-[#86868b] mt-1">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Sections */}
         {content.sections?.map((section, i) => (

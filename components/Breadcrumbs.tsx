@@ -26,7 +26,8 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentPage, light = f
         "@type": "ListItem",
         "position": index + 1,
         "name": item.label,
-        "item": item.href ? `${SITE_URL}${item.href}` : undefined
+        // Guard: omit item URL if SITE_URL is not configured (avoids invalid relative URLs in Schema.org)
+        "item": item.href && SITE_URL ? `${SITE_URL}${item.href}` : undefined
       })),
       {
         "@type": "ListItem",
@@ -50,12 +51,21 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentPage, light = f
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
               {item.onClick ? (
+                // Client-side navigation (used by tennis *Client.tsx pages)
                 <a
                   href={item.href || '#'}
                   onClick={(e) => {
                     e.preventDefault();
                     item.onClick?.();
                   }}
+                  className={`transition-colors ${light ? 'hover:text-white' : 'hover:text-[var(--color-primary)]'}`}
+                >
+                  {item.label}
+                </a>
+              ) : item.href ? (
+                // Server-side / static navigation (used by ContentPage server component)
+                <a
+                  href={item.href}
                   className={`transition-colors ${light ? 'hover:text-white' : 'hover:text-[var(--color-primary)]'}`}
                 >
                   {item.label}
