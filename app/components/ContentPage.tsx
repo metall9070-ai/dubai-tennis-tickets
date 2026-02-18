@@ -7,28 +7,33 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
 
   // When embedded, hero is suppressed — ContentPage is used as SEO text block below event listing
   const heroImage = !embedded ? content.heroImage : undefined
+  // Show hero block on all standalone info pages (those with breadcrumbLabel)
+  // Hero renders with dark gradient background; heroImage is optional on top
+  const showHero = !embedded && !!content.breadcrumbLabel
 
   return (
     <article className={`${embedded
       ? 'pt-12 sm:pt-16 md:pt-24'
-      : heroImage
+      : showHero
         ? ''
         : 'pt-24 sm:pt-28 md:pt-32'
     } pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
 
-      {/* Hero Section — only when heroImage is set and not embedded */}
-      {heroImage && (
+      {/* Hero Section — shown on all standalone info pages (image is optional) */}
+      {showHero && (
         <section className="relative pt-24 sm:pt-28 pb-16 bg-gradient-to-b from-[#1d1d1f] to-[#2d2d2f] text-white overflow-hidden">
           <div className="absolute inset-0 z-0">
             {/* NOTE: using <img> intentionally — next/image requires domain whitelisting
                 incompatible with data-driven external URLs. fetchPriority=high for LCP. */}
-            <img
-              src={heroImage}
-              alt={content.heroAlt ?? content.h1 ?? ''}
-              className="w-full h-full object-cover object-top opacity-50"
-              fetchPriority="high"
-              loading="eager"
-            />
+            {heroImage && (
+              <img
+                src={heroImage}
+                alt={content.heroAlt ?? content.h1 ?? ''}
+                className="w-full h-full object-cover object-top opacity-50"
+                fetchPriority="high"
+                loading="eager"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-[#1d1d1f] via-[#1d1d1f]/40 to-transparent" />
           </div>
           <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-[980px]">
@@ -47,10 +52,10 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
         </section>
       )}
 
-      <div className={`container mx-auto px-4 sm:px-6 max-w-[980px] ${heroImage ? 'pt-8 sm:pt-10' : ''}`}>
+      <div className={`container mx-auto px-4 sm:px-6 max-w-[980px] ${showHero ? 'pt-8 sm:pt-10' : ''}`}>
 
-        {/* Breadcrumbs — no-hero fallback */}
-        {!heroImage && content.breadcrumbLabel && (
+        {/* Breadcrumbs — no-hero fallback (pages without breadcrumbLabel) */}
+        {!showHero && content.breadcrumbLabel && (
           <div className="pt-4 mb-2">
             {/* TODO: "Home" label is hardcoded English — i18n blocker for future localization */}
             <Breadcrumbs
@@ -60,8 +65,8 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
           </div>
         )}
 
-        {/* H1 — only when no hero (hero mode renders h1 inside the hero section) */}
-        {!heroImage && (
+        {/* H1 — only when no hero */}
+        {!showHero && (
           <h1 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold tracking-tight mb-8 sm:mb-10 md:mb-12 leading-tight">
             {content.h1}
           </h1>
