@@ -35,9 +35,11 @@ export const eventsData: Event[] = [
 interface EventsProps {
   onSelectEvent: (event: any) => void;
   initialEvents?: Event[];
+  title?: string;
+  subtitle?: string;
 }
 
-const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
+const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, subtitle }) => {
   // Use initialEvents from SSR if available, otherwise empty array
   const [events, setEvents] = useState<Event[]>(initialEvents || []);
   // Skip loading state if we have SSR data
@@ -103,8 +105,8 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents }) => {
   // Shared header for all states
   const header = (
     <div className="mb-8 md:mb-20 text-center md:text-left">
-      <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">Match Schedule</h2>
-      <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">Discover the matches and get ready for an unforgettable experience.</p>
+      <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">{title ?? 'Match Schedule'}</h2>
+      <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">{subtitle ?? 'Discover the matches and get ready for an unforgettable experience.'}</p>
     </div>
   );
 

@@ -20,6 +20,8 @@ export default function ScheduleClient({ initialEvents }: ScheduleClientProps) {
     <Events
       onSelectEvent={handleSelectEvent}
       initialEvents={initialEvents}
+      title="Select Your Match"
+      subtitle="Choose a session and secure your seat at Football Festival Qatar 2026."
     />
   );
 }
