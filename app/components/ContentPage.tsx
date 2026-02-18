@@ -2,7 +2,7 @@ import Link from "next/link"
 import Breadcrumbs from "@/components/Breadcrumbs"
 import type { SEOContent } from "@/types/seo"
 
-export default function ContentPage({ content, embedded }: { content: SEOContent; embedded?: boolean }) {
+export default function ContentPage({ content, embedded, children }: { content: SEOContent; embedded?: boolean; children?: React.ReactNode }) {
   if (!content.h1) return null
 
   // When embedded, hero is suppressed — ContentPage is used as SEO text block below event listing
@@ -112,6 +112,9 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
             ))}
           </div>
         )}
+
+        {/* Children slot — rendered after highlights, before sections */}
+        {children}
 
         {/* Sections */}
         {content.sections?.map((section, i) => (

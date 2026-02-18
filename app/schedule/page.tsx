@@ -33,8 +33,9 @@ export default async function SchedulePage() {
   return (
     <div className="relative min-h-screen bg-[#f5f5f7]">
       <Navbar isVisible />
-      <ContentPage content={seo} />
-      <ScheduleClient initialEvents={initialEvents} />
+      <ContentPage content={seo}>
+        <ScheduleClient initialEvents={initialEvents} />
+      </ContentPage>
       <Footer />
     </div>
   );
