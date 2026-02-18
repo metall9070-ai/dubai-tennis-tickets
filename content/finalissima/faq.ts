@@ -14,6 +14,14 @@ const seo: SEOContent = {
   ],
   h1: "Frequently Asked Questions",
   breadcrumbLabel: "FAQ",
+  highlights: [
+    { icon: "📱", title: "Mobile Tickets", body: "Tickets are delivered as mobile tickets via a ticketing app. Keep your phone charged on match day." },
+    { icon: "🔒", title: "Secure Checkout", body: "All orders are processed through an encrypted checkout. Payment is taken immediately upon confirmation." },
+    { icon: "📧", title: "Order Confirmation", body: "You will receive a confirmation email immediately after your purchase. Check your spam folder if it doesn't arrive." },
+    { icon: "🏟️", title: "Arrive Early", body: "Stadium gates typically open 2–3 hours before kick-off. Arriving early helps avoid queues at entry points." },
+    { icon: "🪪", title: "ID Required", body: "Bring a valid photo ID that matches your booking details. This may be checked at the gate." },
+    { icon: "💬", title: "Need Help?", body: "Our support team is available by email. Find the contact address on our Contact page for any questions about your order." },
+  ],
   heroSubtitle:    "Finalissima Tickets — Common Questions",
   heroDescription: "Everything you need to know about ordering, delivery, and attending the matches.",
 

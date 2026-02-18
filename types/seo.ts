@@ -19,6 +19,12 @@ export type StatItem = {
   value: string
 }
 
+export type HighlightItem = {
+  icon: string   // emoji, e.g. "🏟️", "🚇", "☀️"
+  title: string
+  body: string
+}
+
 export type SEOContent = {
   title: string
   description: string
@@ -31,7 +37,8 @@ export type SEOContent = {
   heroSubtitle?:    string     // subtitle line below h1 in hero (e.g. venue location)
   heroDescription?: string     // secondary description below subtitle in hero
   breadcrumbLabel?: string     // current page label in breadcrumbs (e.g. "Venue & Directions")
-  stats?:           StatItem[] // infographic stats grid; recommended max 4 items
+  stats?:           StatItem[]      // infographic stats grid; recommended max 4 items
+  highlights?:      HighlightItem[] // icon cards grid; recommended max 6 items
   sections?: SEOSection[]
   faq?: FAQItem[]
   cta?: { text: string; href: string }

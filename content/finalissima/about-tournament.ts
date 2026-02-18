@@ -15,6 +15,14 @@ const seo: SEOContent = {
   ],
   h1: "Football Festival Qatar 2026 — Your Complete Guide",
   breadcrumbLabel: "About Tournament",
+  highlights: [
+    { icon: "🏆", title: "What Is the Finalissima", body: "A one-off match between the reigning UEFA EURO champion and the CONMEBOL Copa América champion — two continents, one decisive encounter." },
+    { icon: "🌍", title: "Two Continents", body: "Brings together the best of European and South American football, representing the two most prestigious continental championships in the world." },
+    { icon: "⚽", title: "Spain vs Argentina", body: "UEFA EURO 2024 winners Spain face CONMEBOL Copa América 2024 champions Argentina — a clash of the world's top-ranked nations." },
+    { icon: "📅", title: "27 March 2026", body: "The match kicks off at 21:00 local time (19:00 CET) at Lusail Stadium as part of the wider Qatar Football Festival." },
+    { icon: "🥇", title: "Previous Edition", body: "Argentina won the 2022 Finalissima 3–0 against Italy at Wembley Stadium, London, in front of 87,000 fans." },
+    { icon: "🎟️", title: "Part of a Festival", body: "The Finalissima headlines the Qatar Football Festival 2026 — six days of top-level international football at three stadiums." },
+  ],
   heroSubtitle:    "Spain vs Argentina — Lusail Stadium, Qatar",
   heroDescription: "The intercontinental championship between UEFA EURO and CONMEBOL Copa América winners. 27 March 2026.",
 

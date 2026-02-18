@@ -15,6 +15,14 @@ const seo: SEOContent = {
   ],
   h1: "Schedule — Football Festival Qatar 2026",
   breadcrumbLabel: "Schedule",
+  highlights: [
+    { icon: "📅", title: "6 Days of Football", body: "The Qatar Football Festival runs from 26 to 31 March 2026 across three world-class stadiums in Qatar." },
+    { icon: "🏟️", title: "Three Venues", body: "Matches take place at Lusail Stadium, Ahmad bin Ali Stadium (Al Rayyan), and Jassim bin Hamad Stadium (Doha)." },
+    { icon: "🌟", title: "Finalissima — 27 March", body: "The headline fixture: Spain vs Argentina at Lusail Stadium. Kick-off at 21:00 local time." },
+    { icon: "⚽", title: "International Friendlies", body: "Top national teams compete in high-profile friendly matches across the festival days surrounding the Finalissima." },
+    { icon: "🎟️", title: "Individual Match Tickets", body: "Each match has separate ticketing. Browse available sessions on the home page and choose the matches that interest you." },
+    { icon: "📍", title: "Plan Your Visit", body: "All venues are well connected by metro and taxi. Check the Venue page for transport details and directions to each stadium." },
+  ],
   heroSubtitle:    "Football Festival Qatar 2026 — 26–31 March",
   heroDescription: "Six days of international football at Lusail Stadium, Ahmad bin Ali Stadium, and Jassim bin Hamad Stadium.",
 

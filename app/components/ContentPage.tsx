@@ -100,6 +100,19 @@ export default function ContentPage({ content, embedded }: { content: SEOContent
           </div>
         )}
 
+        {/* Highlights Grid — icon cards */}
+        {content.highlights && content.highlights.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-10 sm:mb-12">
+            {content.highlights.map((item, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6">
+                <div className="text-3xl mb-3">{item.icon}</div>
+                <h3 className="font-bold text-[#1d1d1f] text-[15px] sm:text-[16px] mb-2">{item.title}</h3>
+                <p className="text-[13px] sm:text-[14px] text-[#86868b] leading-relaxed">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Sections */}
         {content.sections?.map((section, i) => (
           <section key={i} className="mb-10 sm:mb-12">
