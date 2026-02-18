@@ -14,10 +14,17 @@ const seo: SEOContent = {
     "football venue Qatar metro",
   ],
   h1: "Venue Guide — Stadiums & Getting There",
+  breadcrumbLabel: "Venue & Directions",
+  stats: [
+    { label: "Lusail Capacity", value: "80,000" },
+    { label: "Established", value: "2021" },
+    { label: "From Doha Centre", value: "20 min" },
+    { label: "Metro Access", value: "Red Line" },
+  ],
   sections: [
     {
       heading: "Lusail Stadium, Lusail",
-      body: `<p><strong>Lusail Stadium</strong> is the largest venue hosting Football Festival Qatar 2026 and the most likely setting for the Finalissima. Located in Lusail City, roughly 20 km north of central Doha, this 80,000-capacity ground was purpose-built for the 2022 FIFA World Cup and hosted the final between Argentina and France.</p>
+      body: `<p><strong>Lusail Stadium</strong> is the largest venue hosting Football Festival Qatar 2026 and the confirmed venue for the Finalissima. Located in Lusail City, roughly 20 km north of central Doha, this 80,000-capacity ground was purpose-built for the 2022 FIFA World Cup and hosted the final between Argentina and France.</p>
 <p>The stadium's exterior features a distinctive golden facade inspired by traditional Arabic lanterns. Inside, the bowl design provides excellent sightlines from every tier.</p>
 <p><strong>Getting there:</strong></p>
 <ul>

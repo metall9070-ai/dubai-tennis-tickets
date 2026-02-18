@@ -14,6 +14,7 @@ const seo: SEOContent = {
     "continental champions football",
   ],
   h1: "Football Festival Qatar 2026 — Your Complete Guide",
+  breadcrumbLabel: "About Tournament",
   sections: [
     {
       heading: "What Is Football Festival Qatar?",
@@ -26,7 +27,7 @@ const seo: SEOContent = {
       body: `<p>The festival is structured around several match days spread across six days. The Finalissima itself is a single knockout encounter — one match, one winner, with the trophy decided on the night. Supporting fixtures follow a standard international friendly format.</p>
 <p>Matches are distributed across three stadiums in different parts of Qatar:</p>
 <ul>
-  <li><strong>Lusail Stadium</strong> in Lusail — the largest venue and likely host of the Finalissima</li>
+  <li><strong>Lusail Stadium</strong> in Lusail — the largest venue and confirmed host of the Finalissima</li>
   <li><strong>Ahmad bin Ali Stadium</strong> in Al Rayyan — set against Qatar's striking desert landscape</li>
   <li><strong>Jassim bin Hamad Stadium</strong> in Doha — a more intimate, city-centre ground</li>
 </ul>

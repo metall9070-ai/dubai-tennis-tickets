@@ -14,11 +14,12 @@ const seo: SEOContent = {
     "March 2026 football Qatar",
   ],
   h1: "Schedule — Football Festival Qatar 2026",
+  breadcrumbLabel: "Schedule",
   sections: [
     {
       heading: "Festival Dates & Structure",
       body: `<p>Football Festival Qatar 2026 runs from <strong>Wednesday 26 March to Tuesday 31 March 2026</strong> — six days of international football across three stadiums. The programme is designed so that each day features one or two match sessions, giving fans time to travel between venues and explore Qatar between fixtures.</p>
-<p>Matches are spread across Lusail Stadium, Ahmad bin Ali Stadium, and Jassim bin Hamad Stadium. The headline fixture — the Finalissima — is expected to take place at Lusail Stadium, though the full confirmed schedule will be updated on individual match pages as details are announced.</p>
+<p>Matches are spread across Lusail Stadium, Ahmad bin Ali Stadium, and Jassim bin Hamad Stadium. The headline fixture — the Finalissima — will take place at Lusail Stadium. Individual match pages will display exact kick-off times and seat availability as they are confirmed.</p>
 <p>Evening kick-offs are typical for March events in Qatar, with temperatures dropping to a comfortable 22–25°C after sunset. Some daytime sessions may also be scheduled, particularly for friendly matches at smaller venues.</p>`,
     },
     {

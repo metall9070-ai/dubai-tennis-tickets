@@ -13,6 +13,7 @@ const seo: SEOContent = {
     "Qatar match day guide",
   ],
   h1: "Frequently Asked Questions",
+  breadcrumbLabel: "FAQ",
   faq: [
     {
       question: "How do I place an order?",
@@ -27,12 +28,12 @@ const seo: SEOContent = {
     {
       question: "What happens after I complete my purchase?",
       answer:
-        "You will receive an order confirmation email immediately. Your e-tickets will be delivered to the email address you provided during checkout, typically within 24–72 hours of purchase.",
+        "You will receive an order confirmation email immediately. Your tickets will be delivered no later than 2 days before the event date.",
     },
     {
       question: "How will I receive my tickets?",
       answer:
-        "Tickets are delivered electronically as e-tickets (PDF or mobile pass) to your registered email address. No physical delivery is required — simply present your e-ticket at the stadium entrance.",
+        "Tickets are delivered as mobile tickets via a ticketing app to your registered email address. In rare cases, tickets may be provided as a PDF. No physical delivery is required — simply present your ticket at the stadium entrance.",
     },
     {
       question: "How do I enter the stadium on match day?",
