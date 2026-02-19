@@ -6,7 +6,7 @@ const config = getSiteConfig();
 
 export const metadata = buildMetadata({
   path: '/privacy-policy',
-  title: `Privacy Policy | ${config.brand}`,
+  title: 'Privacy Policy',
   description: `Privacy Policy for ${config.brand}. How we collect, use, and protect your personal information.`,
 });
 

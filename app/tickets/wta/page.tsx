@@ -9,7 +9,7 @@ export function generateMetadata() {
 
   return buildMetadata({
     path: '/tickets/wta',
-    title: 'WTA 1000 Tickets Dubai 2026 | Dubai Tennis Championships',
+    title: 'WTA 1000 Tickets Dubai 2026',
     description:
       "Buy WTA 1000 Dubai 2026 tickets. Women's tournament February 15-21. See Swiatek, Sabalenka, Gauff compete at Dubai Tennis Stadium. Prime from $1000, Grandstand from $300.",
     keywords: "WTA 1000 Dubai, WTA Dubai tickets, women's tennis Dubai, Dubai Tennis 2026, Swiatek Dubai, tennis tickets",

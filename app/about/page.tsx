@@ -6,7 +6,7 @@ const config = getSiteConfig();
 
 export const metadata = buildMetadata({
   path: '/about',
-  title: `About Us | ${config.brand}`,
+  title: 'About Us',
   description: `About ${config.brand} - independent ticket concierge service. Secure booking and guaranteed authentic tickets.`,
 });
 

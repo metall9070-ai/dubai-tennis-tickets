@@ -6,7 +6,7 @@ const config = getSiteConfig();
 
 export const metadata = buildMetadata({
   path: '/terms-of-service',
-  title: `Terms of Service | ${config.brand}`,
+  title: 'Terms of Service',
   description: `Terms of Service for ${config.brand}. Purchase terms, refund policy, and user agreements for ticket orders.`,
 });
 

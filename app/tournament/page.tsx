@@ -8,7 +8,7 @@ export function generateMetadata() {
 
   return buildMetadata({
     path: '/tournament',
-    title: 'Tournament Info | Dubai Tennis Championships 2026',
+    title: 'Tournament Info – Dubai Tennis Championships 2026',
     description:
       'Dubai Duty Free Tennis Championships 2026 tournament information. ATP 500 and WTA 1000 events, schedule, and past champions.',
   });

@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props) {
 
     return buildMetadata({
       path,
-      title: `${event.title} Tickets | ${config.brand}`,
+      title: `${event.title} Tickets`,
       description: `Buy tickets for ${event.title}${venuePart}${datePart}.${pricePart} Secure checkout.`,
     });
   }
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: Props) {
 
   return buildMetadata({
     path,
-    title: `${title} Tickets | ${config2.brand}`,
+    title: `${title} Tickets`,
     description: `Get tickets for ${title}. Secure checkout and authentic tickets guaranteed.`,
   });
 }

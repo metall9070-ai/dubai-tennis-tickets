@@ -9,7 +9,7 @@ const config = getSiteConfig();
 // (seo_architecture.md §12.4)
 export const metadata = buildMetadata({
   path: '/checkout',
-  title: `Checkout | ${config.brand}`,
+  title: 'Checkout',
   description: 'Complete your ticket purchase. Secure checkout with instant confirmation.',
   noindex: true,
 });

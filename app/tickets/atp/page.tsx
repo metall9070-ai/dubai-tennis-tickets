@@ -9,7 +9,7 @@ export function generateMetadata() {
 
   return buildMetadata({
     path: '/tickets/atp',
-    title: 'ATP 500 Tickets Dubai 2026 | Dubai Tennis Championships',
+    title: 'ATP 500 Tickets Dubai 2026',
     description:
       "Buy ATP 500 Dubai 2026 tickets. Men's tournament February 23-28. See Djokovic, Sinner, Alcaraz compete at Dubai Tennis Stadium. Prime from $1500, Grandstand from $200.",
     keywords: "ATP 500 Dubai, ATP Dubai tickets, men's tennis Dubai, Dubai Tennis 2026, Djokovic Dubai, tennis tickets",

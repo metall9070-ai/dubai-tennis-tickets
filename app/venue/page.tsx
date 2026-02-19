@@ -23,7 +23,7 @@ export async function generateMetadata() {
   if (isTennisSite()) {
     return buildMetadata({
       path: '/venue',
-      title: 'Venue & Directions | Dubai Tennis Stadium',
+      title: 'Venue & Directions – Dubai Tennis Stadium',
       description:
         'Dubai Duty Free Tennis Stadium location, directions, and facilities. Aviation Club Tennis Centre, Al Garhoud. Getting there by metro, taxi, and car.',
       keywords: 'Dubai Tennis Stadium, Aviation Club, Dubai Tennis venue, how to get to Dubai Tennis',

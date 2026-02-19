@@ -6,7 +6,7 @@ const config = getSiteConfig();
 
 export const metadata = buildMetadata({
   path: '/contact',
-  title: `Contact Us | ${config.brand}`,
+  title: 'Contact Us',
   description: `Contact ${config.brand} for support. 24/7 customer service for event tickets.`,
 });
 

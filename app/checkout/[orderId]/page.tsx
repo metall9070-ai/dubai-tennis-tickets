@@ -4,7 +4,6 @@ import Link from 'next/link';
 import ClearCartOnSuccess from './ClearCartOnSuccess';
 import TrackPurchase from './TrackPurchase';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
-import { getSiteConfig } from '@/lib/site-config';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -73,10 +72,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { orderId } = await params;
-  const config = getSiteConfig();
   return buildMetadata({
     path: `/checkout/${orderId}`,
-    title: `Order ${orderId.slice(0, 8)}... | ${config.brand}`,
+    title: `Order ${orderId.slice(0, 8)}...`,
     description: 'Review your order details and complete payment.',
     noindex: true,
   });

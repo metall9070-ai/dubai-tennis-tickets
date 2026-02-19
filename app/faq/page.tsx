@@ -23,7 +23,7 @@ export async function generateMetadata() {
   if (isTennisSite()) {
     return buildMetadata({
       path: '/faq',
-      title: 'FAQ | Dubai Tennis Championships 2026 Tickets',
+      title: 'FAQ – Dubai Tennis Championships 2026 Tickets',
       description:
         'Frequently asked questions about Dubai Duty Free Tennis Championships 2026 tickets. Ticket delivery, refund policy, seating information, and event details.',
       keywords: 'Dubai Tennis FAQ, ticket questions, refund policy, Dubai Tennis 2026 help',

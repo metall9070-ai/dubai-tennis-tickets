@@ -6,7 +6,7 @@ const config = getSiteConfig();
 
 export const metadata = buildMetadata({
   path: '/payment-and-delivery',
-  title: `Payment & Delivery | ${config.brand}`,
+  title: 'Payment & Delivery',
   description: `Payment methods and ticket delivery information for ${config.brand}. Secure payment via Stripe. Instant e-ticket delivery after purchase.`,
 });
 
