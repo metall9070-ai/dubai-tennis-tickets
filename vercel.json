@@ -2,6 +2,12 @@
   "framework": "nextjs",
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.dubaitennistickets.com" }],
+      "destination": "https://dubaitennistickets.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.dubaitennistickets.com" }],
       "destination": "https://dubaitennistickets.com/:path*",
