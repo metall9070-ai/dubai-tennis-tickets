@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ClearCartOnSuccess from './ClearCartOnSuccess';
 import TrackPurchase from './TrackPurchase';
+import { buildMetadata } from '@/lib/seo/buildMetadata';
+import { getSiteConfig } from '@/lib/site-config';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -71,11 +73,13 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { orderId } = await params;
-  return {
-    title: `Order ${orderId.slice(0, 8)}... | ${SITE_BRAND}`,
+  const config = getSiteConfig();
+  return buildMetadata({
+    path: `/checkout/${orderId}`,
+    title: `Order ${orderId.slice(0, 8)}... | ${config.brand}`,
     description: 'Review your order details and complete payment.',
-    robots: 'noindex, nofollow',
-  };
+    noindex: true,
+  });
 }
 
 export default async function OrderCheckoutPage({ params }: Props) {
