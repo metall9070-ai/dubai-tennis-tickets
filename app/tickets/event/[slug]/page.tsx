@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props) {
     return buildMetadata({
       path,
       title: `${event.title} Tickets`,
-      description: `Buy tickets for ${event.title}${venuePart}${datePart}.${pricePart} Secure checkout.`,
+      description: `Secure your tickets for ${event.title}${venuePart}${datePart}.${pricePart} Verified seller, instant confirmation guaranteed.`,
     });
   }
 

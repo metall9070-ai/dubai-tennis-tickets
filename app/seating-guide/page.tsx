@@ -10,7 +10,7 @@ export function generateMetadata() {
     path: '/seating-guide',
     title: 'Seating Guide – Dubai Tennis Championships 2026',
     description:
-      'Complete seating guide for Dubai Duty Free Tennis Stadium. Compare Courtside, Prime, and Grandstand seats. View pricing, amenities, and choose the best seats.',
+      'Compare Courtside, Prime, and Grandstand seats at Dubai Tennis Stadium. Find the best view for your budget — prices from $200.',
     keywords: 'Dubai Tennis seating, Dubai Tennis Stadium seats, courtside tickets, tennis seating chart',
   });
 }

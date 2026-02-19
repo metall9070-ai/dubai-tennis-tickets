@@ -25,7 +25,7 @@ export async function generateMetadata() {
       path: '/faq',
       title: 'FAQ – Dubai Tennis Championships 2026 Tickets',
       description:
-        'Frequently asked questions about Dubai Duty Free Tennis Championships 2026 tickets. Ticket delivery, refund policy, seating information, and event details.',
+        'Got questions about Dubai Tennis 2026 tickets? Find answers on delivery, refund policy, seating options, and event day details.',
       keywords: 'Dubai Tennis FAQ, ticket questions, refund policy, Dubai Tennis 2026 help',
     });
   }

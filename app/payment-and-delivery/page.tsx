@@ -7,7 +7,7 @@ const config = getSiteConfig();
 export const metadata = buildMetadata({
   path: '/payment-and-delivery',
   title: 'Payment & Delivery',
-  description: `Payment methods and ticket delivery information for ${config.brand}. Secure payment via Stripe. Instant e-ticket delivery after purchase.`,
+  description: `Secure payment via Stripe with instant e-ticket delivery. All orders confirmed within minutes. Multiple payment methods accepted.`,
 });
 
 export default function PaymentPage() {

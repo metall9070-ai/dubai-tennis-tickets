@@ -10,7 +10,7 @@ export function generateMetadata() {
     path: '/tournament',
     title: 'Tournament Info – Dubai Tennis Championships 2026',
     description:
-      'Dubai Duty Free Tennis Championships 2026 tournament information. ATP 500 and WTA 1000 events, schedule, and past champions.',
+      'Everything about Dubai Duty Free Tennis Championships 2026. ATP 500 & WTA 1000 events, Feb 15–28 at Dubai Tennis Stadium.',
   });
 }
 

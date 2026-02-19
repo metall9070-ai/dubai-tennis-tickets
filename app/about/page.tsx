@@ -7,7 +7,7 @@ const config = getSiteConfig();
 export const metadata = buildMetadata({
   path: '/about',
   title: 'About Us',
-  description: `About ${config.brand} - independent ticket concierge service. Secure booking and guaranteed authentic tickets.`,
+  description: `Dubai Tennis Tickets is an independent concierge service. Verified tickets, secure booking, and 24/7 support for every order.`,
 });
 
 export default function AboutPage() {

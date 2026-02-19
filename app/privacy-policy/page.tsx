@@ -7,7 +7,7 @@ const config = getSiteConfig();
 export const metadata = buildMetadata({
   path: '/privacy-policy',
   title: 'Privacy Policy',
-  description: `Privacy Policy for ${config.brand}. How we collect, use, and protect your personal information.`,
+  description: `How Dubai Tennis Tickets collects, uses, and protects your data. Your information is handled securely and never sold to third parties.`,
 });
 
 export default function PrivacyPage() {

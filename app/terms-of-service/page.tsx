@@ -7,7 +7,7 @@ const config = getSiteConfig();
 export const metadata = buildMetadata({
   path: '/terms-of-service',
   title: 'Terms of Service',
-  description: `Terms of Service for ${config.brand}. Purchase terms, refund policy, and user agreements for ticket orders.`,
+  description: `Review purchase terms, refund policy, and booking conditions for Dubai Tennis Tickets. Transparent terms, no hidden fees.`,
 });
 
 export default function TermsPage() {
