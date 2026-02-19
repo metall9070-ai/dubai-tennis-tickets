@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { loadSEOStrict } from "@/lib/seo-loader"
+import { buildMetadata } from "@/lib/seo/buildMetadata"
 import Navbar from "@/app/components/Navbar"
 import Footer from "@/app/components/Footer"
 import ContentPage from "@/app/components/ContentPage"
@@ -11,18 +12,15 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || "default"
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || ""
   const seo = await loadSEOStrict(siteCode, slug)
 
   if (!seo) return {}
 
-  return {
+  return buildMetadata({
+    path: `/${slug}`,
     title: seo.title,
     description: seo.description,
-    alternates: {
-      canonical: `${baseUrl}/${slug}`,
-    },
-  }
+  })
 }
 
 export default async function SlugPage({ params }: Props) {

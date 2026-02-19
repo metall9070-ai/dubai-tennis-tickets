@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo/buildMetadata';
 import { getSiteConfig } from '@/lib/site-config';
 import PaymentClient from './PaymentClient';
 
-const { brand } = getSiteConfig();
+const config = getSiteConfig();
 
-export const metadata: Metadata = {
-  title: `Payment & Delivery | ${brand}`,
-  description: `Payment methods and ticket delivery information for ${brand}.`,
-  alternates: { canonical: '/payment-and-delivery' },
-};
+export const metadata = buildMetadata({
+  path: '/payment-and-delivery',
+  title: `Payment & Delivery | ${config.brand}`,
+  description: `Payment methods and ticket delivery information for ${config.brand}. Secure payment via Stripe. Instant e-ticket delivery after purchase.`,
+});
 
 export default function PaymentPage() {
   return <PaymentClient />;

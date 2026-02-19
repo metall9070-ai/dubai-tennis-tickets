@@ -5,44 +5,38 @@
 // 1. Content file (content/{site_code}/events/{slug}.ts) — rich, hand-crafted SEO
 // 2. Auto-generated from API data (venue, date, price) — good default
 
-import type { Metadata } from 'next';
 import EventClient from './EventClient';
 import { fetchEventWithCategoriesServer } from '@/lib/api-server';
 import { getSiteConfig } from '@/lib/site-config';
 import { loadSEOStrict } from '@/lib/seo-loader';
+import { buildMetadata } from '@/lib/seo/buildMetadata';
 
 const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'default';
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
+  const path = `/tickets/event/${slug}`;
 
   // Priority 1: hand-crafted SEO from content file
   const seo = await loadSEOStrict(siteCode, `events/${slug}`);
   if (seo) {
-    return {
+    return buildMetadata({
+      path,
       title: seo.title,
       description: seo.description,
       keywords: seo.keywords?.join(', '),
-      openGraph: seo.og ? {
-        title: seo.og.title,
-        description: seo.og.description,
-        images: seo.og.image ? [seo.og.image] : undefined,
-      } : undefined,
-      alternates: {
-        canonical: `${baseUrl}/tickets/event/${slug}`,
-      },
-    };
+      ogImage: seo.og?.image,
+    });
   }
 
   // Priority 2: auto-generated from API data
   const { event } = await fetchEventWithCategoriesServer(slug);
-  const { brand } = getSiteConfig();
+  const config = getSiteConfig();
 
   if (event) {
     const pricePart = event.minPrice ? ` Prices from $${event.minPrice}.` : '';
@@ -51,28 +45,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? `, ${event.day} ${event.date} ${event.month}`
       : '';
 
-    return {
-      title: `${event.title} Tickets | ${brand}`,
+    return buildMetadata({
+      path,
+      title: `${event.title} Tickets | ${config.brand}`,
       description: `Buy tickets for ${event.title}${venuePart}${datePart}.${pricePart} Secure checkout.`,
-      alternates: {
-        canonical: `${baseUrl}/tickets/event/${event.slug}`,
-      },
-    };
+    });
   }
 
-  // Fallback for not found events
+  // Fallback for not-found events
+  const config2 = getSiteConfig();
   const title = slug
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-  return {
-    title: `${title} Tickets | ${brand}`,
+  return buildMetadata({
+    path,
+    title: `${title} Tickets | ${config2.brand}`,
     description: `Get tickets for ${title}. Secure checkout and authentic tickets guaranteed.`,
-    alternates: {
-      canonical: `${baseUrl}/tickets/event/${slug}`,
-    },
-  };
+  });
 }
 
 export default async function EventPage({ params }: Props) {

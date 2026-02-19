@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
 import { loadSEOStrict } from '@/lib/seo-loader';
+import { buildMetadata } from '@/lib/seo/buildMetadata';
 import { fetchEventsServer } from '@/lib/api-server';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
@@ -9,17 +9,16 @@ import ScheduleClient from './ScheduleClient';
 
 const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'default';
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata() {
   const seo = await loadSEOStrict(siteCode, 'schedule');
-  if (!seo?.h1) return {};
+  if (!seo) return {};
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
-  return {
+  return buildMetadata({
+    path: '/schedule',
     title: seo.title,
     description: seo.description,
     keywords: seo.keywords?.join(', '),
-    alternates: { canonical: `${baseUrl}/schedule` },
-  };
+  });
 }
 
 export default async function SchedulePage() {

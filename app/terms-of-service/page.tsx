@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo/buildMetadata';
 import { getSiteConfig } from '@/lib/site-config';
 import TermsClient from './TermsClient';
 
-const { brand } = getSiteConfig();
+const config = getSiteConfig();
 
-export const metadata: Metadata = {
-  title: `Terms of Service | ${brand}`,
-  description: `Terms of Service for ${brand}. Purchase terms, refund policy, and user agreements.`,
-  alternates: { canonical: '/terms-of-service' },
-};
+export const metadata = buildMetadata({
+  path: '/terms-of-service',
+  title: `Terms of Service | ${config.brand}`,
+  description: `Terms of Service for ${config.brand}. Purchase terms, refund policy, and user agreements for ticket orders.`,
+});
 
 export default function TermsPage() {
   return <TermsClient />;

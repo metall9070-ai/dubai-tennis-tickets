@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo/buildMetadata';
 import { getSiteConfig } from '@/lib/site-config';
 import PrivacyClient from './PrivacyClient';
 
-const { brand } = getSiteConfig();
+const config = getSiteConfig();
 
-export const metadata: Metadata = {
-  title: `Privacy Policy | ${brand}`,
-  description: `Privacy Policy for ${brand}. How we collect, use, and protect your personal information.`,
-  alternates: { canonical: '/privacy-policy' },
-};
+export const metadata = buildMetadata({
+  path: '/privacy-policy',
+  title: `Privacy Policy | ${config.brand}`,
+  description: `Privacy Policy for ${config.brand}. How we collect, use, and protect your personal information.`,
+});
 
 export default function PrivacyPage() {
   return <PrivacyClient />;

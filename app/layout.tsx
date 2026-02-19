@@ -18,18 +18,25 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
 /* ------------------------------------------------------------------ */
 
 export const metadata: Metadata = {
-  title: siteConfig.defaultTitle,
+  // title.template allows pages to set their own title while inheriting brand suffix.
+  // Pages that define their own title via buildMetadata() will use the template.
+  title: {
+    default: siteConfig.defaultTitle,
+    template: `%s | ${siteConfig.brand}`,
+  },
   description: siteConfig.defaultDescription,
   keywords: siteConfig.defaultKeywords,
   authors: [{ name: siteConfig.brand }],
-  robots: 'index, follow',
+  robots: { index: true, follow: true },
+  // metadataBase is set ONCE here — all relative canonical/og:url in pages
+  // resolve against this base. Must come from site-config, never hardcoded.
   metadataBase: new URL(siteUrl),
-  alternates: {
-    canonical: '/',
-  },
+  // openGraph.url is intentionally NOT defined here.
+  // Every page must supply its own og:url via buildMetadata({ path }).
+  // Defining it here would cause all pages without generateMetadata
+  // to inherit "/" as og:url — which is cross-page OG contamination.
   openGraph: {
     type: 'website',
-    url: `${siteUrl}/`,
     title: siteConfig.defaultTitle,
     description: siteConfig.defaultDescription,
     ...(siteConfig.ogImage ? { images: [siteConfig.ogImage] } : {}),
