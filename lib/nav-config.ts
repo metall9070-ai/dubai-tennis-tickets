@@ -22,6 +22,7 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "Tickets", href: "/#tickets" },
     { label: "ATP Tickets", href: "/tickets/atp" },
     { label: "WTA Tickets", href: "/tickets/wta" },
+    { label: "Schedule", href: "/schedule" },
     { label: "Seating Guide", href: "/seating-guide" },
     { label: "Venue", href: "/venue" },
     { label: "FAQ", href: "/faq" },
@@ -52,6 +53,7 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
     ],
     infoLinks: [
       { name: "Tournament Info", href: "/tournament" },
+      { name: "Schedule", href: "/schedule" },
       { name: "Venue & Directions", href: "/venue" },
       { name: "FAQ", href: "/faq" },
       { name: "About Us", href: "/about" },
