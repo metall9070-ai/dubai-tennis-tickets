@@ -7,8 +7,12 @@
  * - No fallback to other site configs
  * - No hardcoded brand or domain
  * - No API data used for metadata
- * - metadataBase lives in layout.tsx only — this builder uses relative paths
- *   so Next.js resolves them against metadataBase automatically
+ * - metadataBase lives in layout.tsx only
+ *
+ * og:image 3-level fallback (guaranteed — never omitted):
+ *   1. page-level ogImage (passed into buildMetadata)
+ *   2. site-config ogImage
+ *   3. ${siteUrl}/og/default.jpg  — absolute, per-site, no external domain
  */
 
 import type { Metadata } from 'next'
@@ -26,7 +30,7 @@ export interface BuildMetadataOptions {
   title: string
   /** Page-level description. */
   description: string
-  /** Optional override og:image URL. Falls back to siteConfig.ogImage. */
+  /** Optional override og:image URL. Falls back to siteConfig.ogImage, then /og/default.jpg. */
   ogImage?: string
   /** Set true to add robots: noindex, nofollow */
   noindex?: boolean
@@ -59,8 +63,29 @@ export function buildMetadata(options: BuildMetadataOptions): Metadata {
   // Uses absolute URL to guarantee correctness regardless of metadataBase
   const pageUrl = `${siteUrl}${path}`
 
-  // og:image priority: explicit override > site-level ogImage > nothing
-  const resolvedOgImage = ogImage ?? config.ogImage
+  // og:image — 3-level fallback, always resolves to an absolute URL:
+  //   1. page-level ogImage param
+  //   2. site-config ogImage (per-site, set in site-config.ts)
+  //   3. ${siteUrl}/og/default.jpg — absolute, uses current site domain, no external dependency
+  const resolvedOgImage =
+    ogImage ??
+    config.ogImage ??
+    `${siteUrl}/og/default.jpg`
+
+  // DEV-only warning when a storefront has no ogImage configured.
+  // Does NOT throw — purely diagnostic.
+  if (!config.ogImage && process.env.NODE_ENV === 'development') {
+    console.warn(
+      `[SEO WARNING] Missing ogImage in site-config for "${config.brand}". Using neutral fallback: ${siteUrl}/og/default.jpg`
+    )
+  }
+
+  // og:image object with explicit dimensions — always present, never conditional
+  const ogImageEntry = {
+    url: resolvedOgImage,
+    width: 1200,
+    height: 630,
+  }
 
   return {
     title,
@@ -79,7 +104,7 @@ export function buildMetadata(options: BuildMetadataOptions): Metadata {
       url: pageUrl,
       title,
       description,
-      ...(resolvedOgImage ? { images: [resolvedOgImage] } : {}),
+      images: [ogImageEntry],
       locale: 'en_US',
       siteName: config.brand,
     },
@@ -87,7 +112,7 @@ export function buildMetadata(options: BuildMetadataOptions): Metadata {
       card: 'summary_large_image',
       title,
       description,
-      ...(resolvedOgImage ? { images: [resolvedOgImage] } : {}),
+      images: [resolvedOgImage],
     },
   }
 }
