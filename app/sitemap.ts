@@ -1,103 +1,106 @@
-import fs from "fs"
-import path from "path"
+/**
+ * sitemap.ts — canonical sitemap for all public routes.
+ *
+ * Architecture rules (docs/SEO_ARCHITECTURE.md):
+ * - Sitemap generated on frontend only.
+ * - No dependency on visibility, availability, or backend SEO fields.
+ * - No process.env direct usage — getSiteUrl() only.
+ * - No hardcoded domains.
+ * - Canonical URL === sitemap URL (both built from getSiteUrl() + path).
+ * - Multi-site safe: getSiteUrl() resolves per-site at build time.
+ */
+
 import { MetadataRoute } from "next"
-import { fetchEventsServer } from "@/lib/api-server"
 import { getSiteUrl } from "@/lib/site-config"
+import { fetchEventsServer } from "@/lib/api-server"
 
-const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || "default"
-// Use getSiteUrl() — same source as buildMetadata() — guarantees no trailing slash
-// and prevents URL rsynch between sitemap and canonical.
-const SITE_URL = getSiteUrl()
+const SITE_URL = getSiteUrl() // e.g. "https://dubaitennistickets.com" — no trailing slash
 
-/**
- * Known page candidates with SEO priority.
- * Included in sitemap ONLY if /content/{site_code}/{key}.ts exists.
- */
-const STATIC_PAGES: Record<
-  string,
-  { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }
-> = {
-  // key = content filename stem (without .ts)
-  // path = actual Next.js route — MUST match app/ directory structure exactly
-  homepage:              { path: "/",                      priority: 1.0, changeFrequency: "weekly" },
-  schedule:              { path: "/schedule",               priority: 0.9, changeFrequency: "weekly" },
-  "about-tournament":    { path: "/about-tournament",       priority: 0.7, changeFrequency: "monthly" },
-  venue:                 { path: "/venue",                  priority: 0.8, changeFrequency: "monthly" },
-  faq:                   { path: "/faq",                    priority: 0.8, changeFrequency: "monthly" },
-  "seating-guide":       { path: "/seating-guide",          priority: 0.7, changeFrequency: "monthly" },
-  tournament:            { path: "/tournament",             priority: 0.7, changeFrequency: "monthly" },
-  guarantee:             { path: "/guarantee",              priority: 0.6, changeFrequency: "monthly" },
-  contact:               { path: "/contact",                priority: 0.6, changeFrequency: "monthly" },
-  about:                 { path: "/about",                  priority: 0.6, changeFrequency: "monthly" },
-  "terms-of-service":    { path: "/terms-of-service",       priority: 0.3, changeFrequency: "yearly" },
-  "privacy-policy":      { path: "/privacy-policy",         priority: 0.3, changeFrequency: "yearly" },
-  "payment-and-delivery":{ path: "/payment-and-delivery",   priority: 0.5, changeFrequency: "monthly" },
-  "tickets-atp":         { path: "/tickets/atp",            priority: 0.9, changeFrequency: "weekly" },
-  "tickets-wta":         { path: "/tickets/wta",            priority: 0.9, changeFrequency: "weekly" },
+// ─────────────────────────────────────────────────────────────────────────────
+// STATIC ROUTES
+// All public pages that are always present regardless of content files.
+// Must match actual app/ directory structure exactly.
+// Excluded: /checkout, /checkout/*, /api/*, /admin/* (noindex or private).
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface StaticRoute {
+  path: string
+  priority: number
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]
 }
 
-const STATIC_KEYS = new Set(Object.keys(STATIC_PAGES))
+const STATIC_ROUTES: StaticRoute[] = [
+  { path: "/",                    priority: 1.0, changeFrequency: "weekly"  },
+  { path: "/schedule",            priority: 0.9, changeFrequency: "weekly"  },
+  { path: "/tickets/atp",         priority: 0.9, changeFrequency: "weekly"  },
+  { path: "/tickets/wta",         priority: 0.9, changeFrequency: "weekly"  },
+  { path: "/faq",                 priority: 0.8, changeFrequency: "monthly" },
+  { path: "/venue",               priority: 0.8, changeFrequency: "monthly" },
+  { path: "/tournament",          priority: 0.7, changeFrequency: "monthly" },
+  { path: "/seating-guide",       priority: 0.7, changeFrequency: "monthly" },
+  { path: "/about",               priority: 0.6, changeFrequency: "monthly" },
+  { path: "/contact",             priority: 0.6, changeFrequency: "monthly" },
+  { path: "/payment-and-delivery",priority: 0.5, changeFrequency: "monthly" },
+  { path: "/terms-of-service",    priority: 0.3, changeFrequency: "yearly"  },
+  { path: "/privacy-policy",      priority: 0.3, changeFrequency: "yearly"  },
+]
 
-/**
- * Read content slugs from /content/{siteCode}/.
- * Returns filename stems (without .ts), excluding _ prefixed files.
- */
-function getContentSlugs(siteCode: string): string[] {
-  const dir = path.join(process.cwd(), "content", siteCode)
-  if (!fs.existsSync(dir)) return []
-  return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith(".ts") && !f.startsWith("_"))
-    .map((f) => f.replace(".ts", ""))
-}
+// ─────────────────────────────────────────────────────────────────────────────
+// SITEMAP GENERATOR
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const slugs = getContentSlugs(SITE_CODE)
-
-  // No content folder → fallback to homepage only
-  if (slugs.length === 0) {
-    return [{ url: `${SITE_URL}/`, lastModified: new Date(), priority: 1.0 }]
-  }
-
-  const entries: MetadataRoute.Sitemap = []
   const now = new Date()
+  const seen = new Set<string>()
+  const entries: MetadataRoute.Sitemap = []
 
-  // 1. Static pages — known candidates with assigned priority
-  for (const [key, config] of Object.entries(STATIC_PAGES)) {
-    if (slugs.includes(key)) {
-      entries.push({
-        url: `${SITE_URL}${config.path}`,
-        lastModified: now,
-        changeFrequency: config.changeFrequency,
-        priority: config.priority,
-      })
+  /**
+   * Add entry only if URL has not been seen yet (deduplication).
+   */
+  function addEntry(
+    path: string,
+    opts: {
+      priority: number
+      changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]
+      lastModified?: Date
     }
-  }
+  ) {
+    // Guarantee: no double slashes, no trailing slash on non-root paths
+    const url = path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`
 
-  // 2. Dynamic flat pages — everything else from content folder
-  for (const slug of slugs) {
-    if (STATIC_KEYS.has(slug)) continue
+    if (seen.has(url)) return
+    seen.add(url)
+
     entries.push({
-      url: `${SITE_URL}/${slug}`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.7,
+      url,
+      lastModified: opts.lastModified ?? now,
+      changeFrequency: opts.changeFrequency,
+      priority: opts.priority,
     })
   }
 
-  // 3. Event pages from API (backward compat for sites with /tickets/event/ routes)
+  // 1. Static routes — always included, no content-file dependency
+  for (const route of STATIC_ROUTES) {
+    addEntry(route.path, {
+      priority: route.priority,
+      changeFrequency: route.changeFrequency,
+    })
+  }
+
+  // 2. Dynamic event pages from API — /tickets/event/{slug}
+  //    fetchEventsServer('') skips visibility filter (SEO must not depend on visibility)
   try {
     const events = await fetchEventsServer("")
     for (const event of events) {
-      entries.push({
-        url: `${SITE_URL}/tickets/event/${event.slug}`,
-        lastModified: now,
-        changeFrequency: "daily",
+      if (!event.slug) continue
+      addEntry(`/tickets/event/${event.slug}`, {
         priority: 0.8,
+        changeFrequency: "daily",
       })
     }
   } catch {
-    // API unavailable — skip event pages silently
+    // API unavailable at build time — skip event pages silently
+    // Static pages are already included above
   }
 
   return entries
