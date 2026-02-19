@@ -6,9 +6,10 @@ import type { Event } from '@/lib/types';
 
 interface ScheduleClientProps {
   initialEvents: Event[];
+  subtitle?: string;
 }
 
-export default function ScheduleClient({ initialEvents }: ScheduleClientProps) {
+export default function ScheduleClient({ initialEvents, subtitle }: ScheduleClientProps) {
   const router = useRouter();
 
   const handleSelectEvent = (event: Event) => {
@@ -21,7 +22,7 @@ export default function ScheduleClient({ initialEvents }: ScheduleClientProps) {
       onSelectEvent={handleSelectEvent}
       initialEvents={initialEvents}
       title="Select Your Match"
-      subtitle="Choose a session and secure your seat at Football Festival Qatar 2026."
+      subtitle={subtitle}
     />
   );
 }
