@@ -15,27 +15,27 @@ const seo: SEOContent = {
     "Qatar football tickets March 2026",
     "international football Qatar",
   ],
-  h1: "Finalissima 2026 Tickets — Spain vs Argentina",
+  h1: "Football Festival Qatar — Finalissima 2026",
   sections: [
     {
-      heading: "What Is the Finalissima?",
-      body: `<p>The Finalissima is a single high-stakes football match between the reigning <strong>UEFA EURO champion</strong> and the <strong>Copa América champion</strong>. This intercontinental showdown determines supremacy between Europe and South America — two of the world's most competitive football regions.</p>
-<p>The 2026 edition brings together Spain, fresh from their UEFA EURO 2024 triumph, and Argentina, Copa América 2024 winners and current world champions. This fixture is part of Football Festival Qatar 2026, a week-long celebration of international football across multiple stadiums.</p>`,
+      heading: "About Football Festival Qatar 2026",
+      body: `<p><strong>Football Festival Qatar 2026</strong> is an international football celebration bringing together top national teams for a series of high-profile matches across Qatar from March 26 to 31. The festival showcases world-class football at three iconic stadiums: Lusail Stadium, Ahmad bin Ali Stadium, and Jassim bin Hamad Stadium.</p>
+<p>The headline event is the <strong>Finalissima 2026</strong> — an intercontinental final between UEFA EURO 2024 champion Spain and Copa América 2024 champion Argentina. This prestigious match determines supremacy between Europe and South America on March 27 at Lusail Stadium.</p>`,
     },
     {
-      heading: "Match Details",
-      body: `<p>The Finalissima takes place on <strong>March 27, 2026</strong> at Lusail Stadium — the same venue that hosted the 2022 FIFA World Cup final. With a capacity of 80,000, Lusail offers a world-class setting for this intercontinental clash.</p>
-<p>Beyond the headline fixture, the festival programme includes international friendly matches at Ahmad bin Ali Stadium and Jassim bin Hamad Stadium, giving fans multiple opportunities to experience top-level football in Qatar.</p>`,
+      heading: "Finalissima — The Headline Match",
+      body: `<p>The Finalissima represents the pinnacle of the festival programme. This single high-stakes encounter brings together the reigning <strong>UEFA EURO champion</strong> and <strong>Copa América champion</strong> for an intercontinental showdown at the same venue that hosted the 2022 FIFA World Cup final.</p>
+<p>Spain enters fresh from their UEFA EURO 2024 triumph, while Argentina arrives as Copa América 2024 winners and current world champions. With a capacity of 80,000, Lusail Stadium offers an unmatched setting for this clash between two of the world's most competitive football regions.</p>`,
     },
     {
-      heading: "Ticket Categories & Access",
-      body: `<p>Tickets are available across multiple seating sections, offering views suited to different preferences and budgets. Each session is ticketed individually, allowing you to attend the Finalissima alone or combine it with other matches from the festival programme.</p>
-<p>All tickets are delivered electronically as mobile tickets or PDF files. Delivery is completed no later than 2 days before the event date, ensuring you have secure access well ahead of match day.</p>`,
+      heading: "Festival Programme & Venues",
+      body: `<p>Beyond the Finalissima, the festival features international friendly matches across three world-class stadiums. Each venue offers a distinct matchday experience, from the grandeur of Lusail Stadium to the more intimate atmosphere of Ahmad bin Ali and Jassim bin Hamad stadiums.</p>
+<p>All stadiums are well-connected via Doha Metro, making multi-match attendance practical for visiting fans. March temperatures in Qatar range from 22–30°C, providing comfortable conditions for outdoor football.</p>`,
     },
     {
-      heading: "Secure Booking",
-      body: `<p>All transactions are processed through our secure checkout, powered by Stripe. You can purchase with confidence knowing your payment information is protected by industry-standard encryption.</p>
-<p>Football Festival Qatar is an independent ticket concierge service. We specialise in providing verified access to high-demand sporting events, with dedicated customer support available at <strong>support@footballfestivalqatar.com</strong>.</p>`,
+      heading: "Ticket Access & Booking",
+      body: `<p>Tickets are available for individual matches across all seating categories. Each session is ticketed separately, allowing you to attend the Finalissima alone or build a multi-match itinerary around the festival programme.</p>
+<p>All transactions are processed through secure checkout powered by Stripe. Tickets are delivered electronically no later than 2 days before the event date. Football Festival Qatar operates as an independent ticket concierge service with dedicated support at <strong>support@footballfestivalqatar.com</strong>.</p>`,
     },
   ],
   cta: {

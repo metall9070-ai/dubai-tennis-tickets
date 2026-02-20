@@ -84,9 +84,9 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     brand: "Football Festival Qatar",
     supportEmail: "support@footballfestivalqatar.com",
     defaultTitle:
-      "Football Festival Qatar 2026 | Finalissima Tickets — Lusail Stadium",
+      "Football Festival Qatar – Finalissima 2026 | Lusail Stadium",
     defaultDescription:
-      "Finalissima 2026 Spain vs Argentina at Lusail Stadium, Qatar. March 27, 2026. Plus international friendly matches. Secure checkout.",
+      "Football Festival Qatar 2026 features Finalissima Spain vs Argentina and international friendlies. March 27-31 at world-class Qatar stadiums.",
     defaultKeywords:
       "Finalissima 2026 tickets, Spain vs Argentina Qatar, Lusail Stadium football, Football Festival Qatar, intercontinental football final, Qatar football March 2026, international friendly matches Qatar, Finalissima Lusail",
     gaId: process.env.NEXT_PUBLIC_GA_ID,
@@ -104,12 +104,12 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       icbm: "25.4195, 51.4906",
     },
     hero: {
-      title: "Finalissima 2026",
-      titleLine2: "Spain vs Argentina",
-      subtitle: "March 27, 2026 — Lusail Stadium, Qatar",
+      title: "Football Festival Qatar 2026",
+      titleLine2: "Featuring Finalissima",
+      subtitle: "Spain vs Argentina — March 27, Lusail Stadium",
       badge: "UEFA EURO Champion vs Copa América Champion",
       description:
-        "Intercontinental final between Europe and South America. Plus international friendlies across Qatar.",
+        "International football celebration headlined by the Finalissima intercontinental final. Six days of world-class matches across Qatar.",
       buttonText: "",
     },
   },
