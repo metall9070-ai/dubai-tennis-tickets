@@ -2,16 +2,16 @@ import { SEOContent } from "@/types/seo"
 
 const seo: SEOContent = {
   title:
-    "Football Festival Qatar 2026 Schedule — Dates & Match Days",
+    "Match Calendar — Football Festival Qatar 2026 (March 26-31)",
   description:
-    "Football Festival Qatar 2026 runs March 26-31. Discover the day-by-day structure, match sessions, and how to plan your visit across Lusail, Al Rayyan, and Doha.",
+    "Complete match calendar for Football Festival Qatar 2026. Six days of international football from March 26 to 31 across Lusail, Al Rayyan, and Doha stadiums. Plan your multi-match visit.",
   keywords: [
-    "Football Festival Qatar schedule",
-    "Finalissima 2026 dates",
-    "Qatar football match times",
-    "when is Finalissima 2026",
-    "football festival match days",
-    "March 2026 football Qatar",
+    "Finalissima 2026 match dates",
+    "Qatar football calendar March 2026",
+    "when is Spain vs Argentina Finalissima",
+    "Football Festival Qatar fixture list",
+    "Lusail Stadium schedule",
+    "international football Qatar timing",
   ],
   h1: "Schedule — Football Festival Qatar 2026",
   breadcrumbLabel: "Schedule",

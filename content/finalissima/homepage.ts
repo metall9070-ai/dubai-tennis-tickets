@@ -2,69 +2,55 @@ import { SEOContent } from "@/types/seo"
 
 const seo: SEOContent = {
   title:
-    "Football Festival Qatar 2026 | Finalissima Tickets — Lusail & Doha",
+    "Finalissima 2026 Tickets | Spain vs Argentina — Lusail Stadium, Qatar",
   description:
-    "Buy tickets for Football Festival Qatar 2026 featuring Finalissima and international football matches. March 26-31 at Lusail Stadium, Ahmad bin Ali Stadium & Jassim bin Hamad Stadium. Secure checkout.",
+    "Buy Finalissima 2026 tickets — Spain vs Argentina at Lusail Stadium, Qatar. March 27, 2026. Intercontinental final plus international friendlies. Secure checkout.",
   keywords: [
-    "Football Festival Qatar",
-    "Finalissima 2026",
-    "Finalissima tickets",
-    "Qatar football tickets",
-    "Lusail Stadium tickets",
-    "international football Doha",
-    "football matches Qatar 2026",
-    "buy football tickets",
+    "Finalissima 2026 tickets",
+    "Spain Argentina tickets",
+    "Lusail Stadium football tickets",
+    "buy Finalissima Qatar",
+    "intercontinental football final 2026",
+    "UEFA vs Copa América champion",
+    "Qatar football tickets March 2026",
+    "international football Qatar",
   ],
-  h1: "Football Festival Qatar 2026 — Tickets",
+  h1: "Finalissima 2026 Tickets — Spain vs Argentina",
   sections: [
     {
-      heading: "About the Festival",
-      body: `<p>Football Festival Qatar 2026 brings top international football to the world-class stadiums of Qatar. Featuring the <strong>Finalissima 2026</strong> and exciting friendly matches, this festival celebrates the beautiful game across multiple venues in Lusail, Al Rayyan, and Doha.</p>
-<p>Experience world-class football at three iconic stadiums — <strong>Lusail Stadium</strong>, <strong>Ahmad bin Ali Stadium</strong>, and <strong>Jassim bin Hamad Stadium</strong> — from March 26 to March 31, 2026.</p>`,
+      heading: "What Is the Finalissima?",
+      body: `<p>The Finalissima is a single high-stakes football match between the reigning <strong>UEFA EURO champion</strong> and the <strong>Copa América champion</strong>. This intercontinental showdown determines supremacy between Europe and South America — two of the world's most competitive football regions.</p>
+<p>The 2026 edition brings together Spain, fresh from their UEFA EURO 2024 triumph, and Argentina, Copa América 2024 winners and current world champions. This fixture is part of Football Festival Qatar 2026, a week-long celebration of international football across multiple stadiums.</p>`,
     },
     {
-      heading: "Matches & Schedule",
-      body: `<p>The festival features a packed schedule of international football across six days:</p>
-<ul>
-  <li><strong>Finalissima 2026</strong> — the showpiece clash between continental champions</li>
-  <li><strong>International friendly matches</strong> — top nations competing at world-class venues</li>
-</ul>
-<p>Check the full schedule for match dates, kick-off times, and venue details.</p>`,
+      heading: "Match Details",
+      body: `<p>The Finalissima takes place on <strong>March 27, 2026</strong> at Lusail Stadium — the same venue that hosted the 2022 FIFA World Cup final. With a capacity of 80,000, Lusail offers a world-class setting for this intercontinental clash.</p>
+<p>Beyond the headline fixture, the festival programme includes international friendly matches at Ahmad bin Ali Stadium and Jassim bin Hamad Stadium, giving fans multiple opportunities to experience top-level football in Qatar.</p>`,
     },
     {
-      heading: "Venues",
-      body: `<p>Matches are held across three stadiums in Qatar:</p>
-<ul>
-  <li><strong>Lusail Stadium</strong> (Lusail) — 80,000 capacity, the iconic FIFA World Cup 2022 final venue</li>
-  <li><strong>Ahmad bin Ali Stadium</strong> (Al Rayyan) — 44,740 capacity, surrounded by the Qatari desert landscape</li>
-  <li><strong>Jassim bin Hamad Stadium</strong> (Doha) — home of Al Sadd SC in the heart of Doha</li>
-</ul>`,
+      heading: "Ticket Categories & Access",
+      body: `<p>Tickets are available across multiple seating sections, offering views suited to different preferences and budgets. Each session is ticketed individually, allowing you to attend the Finalissima alone or combine it with other matches from the festival programme.</p>
+<p>All tickets are delivered electronically as mobile tickets or PDF files. Delivery is completed no later than 2 days before the event date, ensuring you have secure access well ahead of match day.</p>`,
     },
     {
-      heading: "How to Buy Tickets",
-      body: `<p>Purchasing tickets is simple and secure:</p>
-<ul>
-  <li>Browse available matches on our schedule page</li>
-  <li>Select your preferred category and number of tickets</li>
-  <li>Complete your purchase with our secure checkout powered by Stripe</li>
-  <li>Receive your e-tickets via email</li>
-</ul>
-<p>All transactions are processed securely. Our dedicated support team is available at <strong>support@footballfestivalqatar.com</strong>.</p>`,
+      heading: "Secure Booking",
+      body: `<p>All transactions are processed through our secure checkout, powered by Stripe. You can purchase with confidence knowing your payment information is protected by industry-standard encryption.</p>
+<p>Football Festival Qatar is an independent ticket concierge service. We specialise in providing verified access to high-demand sporting events, with dedicated customer support available at <strong>support@footballfestivalqatar.com</strong>.</p>`,
     },
   ],
   cta: {
-    text: "Browse All Matches",
+    text: "View Available Sessions",
     href: "/",
   },
   internalLinks: [
-    { label: "Schedule", sublabel: "All matches", href: "/schedule" },
+    { label: "Schedule", sublabel: "All match days", href: "/schedule" },
     {
       label: "About Tournament",
-      sublabel: "Festival details",
+      sublabel: "Format & history",
       href: "/about-tournament",
     },
-    { label: "Venues", sublabel: "Stadiums & directions", href: "/venue" },
-    { label: "FAQ", sublabel: "Common questions", href: "/faq" },
+    { label: "Venues", sublabel: "Stadium guide", href: "/venue" },
+    { label: "FAQ", sublabel: "Questions & policies", href: "/faq" },
   ],
 }
 

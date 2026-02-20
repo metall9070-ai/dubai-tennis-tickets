@@ -2,16 +2,16 @@ import { SEOContent } from "@/types/seo"
 
 const seo: SEOContent = {
   title:
-    "Stadium Guide — Lusail, Ahmad bin Ali & Jassim bin Hamad",
+    "Venue Guide — Lusail, Ahmad bin Ali & Jassim bin Hamad Stadiums",
   description:
-    "Practical guide to the three Football Festival Qatar 2026 venues. Directions, metro access, facilities, and travel tips for Lusail Stadium, Ahmad bin Ali Stadium, and Jassim bin Hamad Stadium.",
+    "Navigate the three Football Festival Qatar 2026 stadiums. Practical transport directions, metro connections, and insider tips for attending matches at Lusail, Al Rayyan, and Doha venues.",
   keywords: [
-    "Lusail Stadium guide",
-    "Ahmad bin Ali Stadium directions",
-    "Jassim bin Hamad Stadium Doha",
-    "Qatar stadium transport",
-    "how to get to Lusail Stadium",
-    "football venue Qatar metro",
+    "Lusail Stadium metro access",
+    "Ahmad bin Ali Stadium Al Rayyan",
+    "Jassim bin Hamad Stadium transport",
+    "Qatar football venue guide",
+    "Doha metro to stadiums",
+    "Finalissima venue directions",
   ],
   h1: "Venue Guide — Stadiums & Getting There",
   breadcrumbLabel: "Venue & Directions",

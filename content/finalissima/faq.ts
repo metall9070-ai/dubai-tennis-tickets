@@ -2,15 +2,15 @@ import { SEOContent } from "@/types/seo"
 
 const seo: SEOContent = {
   title:
-    "FAQ — Football Festival Qatar 2026 | Common Questions",
+    "Common Questions — Football Festival Qatar 2026",
   description:
-    "Answers to frequently asked questions about Football Festival Qatar 2026. Learn about ordering, e-ticket delivery, venue entry, refund policy, and what to expect on match day.",
+    "Get answers about Football Festival Qatar 2026. Ordering process, mobile ticket delivery, stadium entry requirements, refund procedures, and practical match day advice.",
   keywords: [
-    "Football Festival Qatar FAQ",
-    "Finalissima questions",
-    "e-ticket delivery football Qatar",
-    "refund policy football festival",
-    "Qatar match day guide",
+    "Finalissima 2026 FAQ",
+    "Qatar football festival questions",
+    "mobile ticket delivery Finalissima",
+    "Football Festival Qatar refund",
+    "stadium entry Qatar guide",
   ],
   h1: "Frequently Asked Questions",
   breadcrumbLabel: "FAQ",
@@ -19,9 +19,39 @@ const seo: SEOContent = {
 
   faq: [
     {
+      question: "How will I receive my tickets?",
+      answer:
+        "Tickets are delivered as mobile tickets via a ticketing app to your registered email address. In rare cases, tickets may be provided as a PDF. No physical delivery is required — simply present your ticket at the stadium entrance.",
+    },
+    {
+      question: "What is the weather like in Qatar in late March?",
+      answer:
+        "Late March in Qatar is warm and dry, with daytime temperatures around 28–32°C and evenings cooling to 20–22°C. Sunscreen and a water bottle are recommended for any daytime sessions.",
+    },
+    {
+      question: "Can I get a refund or change my order?",
+      answer:
+        "For any refund or modification requests, please contact our support team at support@footballfestivalqatar.com. Each case is reviewed individually and we will do our best to assist you.",
+    },
+    {
       question: "How do I place an order?",
       answer:
         "Browse available matches on the homepage, select the session and category you want, choose the number of seats, and proceed to checkout. Payment is processed securely via Stripe.",
+    },
+    {
+      question: "Is there a dress code for the stadiums?",
+      answer:
+        "Qatar does not impose a strict dress code at sporting events, but modest clothing is appreciated as a sign of respect for local customs. Casual sportswear and team jerseys are perfectly fine.",
+    },
+    {
+      question: "How do I enter the stadium on match day?",
+      answer:
+        "Show your e-ticket (printed or on your phone screen) at the stadium gate. Security screening is standard at all venues. Arrive at least 60 minutes before kick-off to allow time for entry.",
+    },
+    {
+      question: "Can I bring children to the matches?",
+      answer:
+        "Yes, children are welcome. Check individual match listings for any age-specific entry requirements or pricing. Younger children may need to be accompanied by an adult.",
     },
     {
       question: "What payment methods are accepted?",
@@ -32,36 +62,6 @@ const seo: SEOContent = {
       question: "What happens after I complete my purchase?",
       answer:
         "You will receive an order confirmation email immediately. Your tickets will be delivered no later than 2 days before the event date.",
-    },
-    {
-      question: "How will I receive my tickets?",
-      answer:
-        "Tickets are delivered as mobile tickets via a ticketing app to your registered email address. In rare cases, tickets may be provided as a PDF. No physical delivery is required — simply present your ticket at the stadium entrance.",
-    },
-    {
-      question: "How do I enter the stadium on match day?",
-      answer:
-        "Show your e-ticket (printed or on your phone screen) at the stadium gate. Security screening is standard at all venues. Arrive at least 60 minutes before kick-off to allow time for entry.",
-    },
-    {
-      question: "Can I get a refund or change my order?",
-      answer:
-        "For any refund or modification requests, please contact our support team at support@footballfestivalqatar.com. Each case is reviewed individually and we will do our best to assist you.",
-    },
-    {
-      question: "Is there a dress code for the stadiums?",
-      answer:
-        "Qatar does not impose a strict dress code at sporting events, but modest clothing is appreciated as a sign of respect for local customs. Casual sportswear and team jerseys are perfectly fine.",
-    },
-    {
-      question: "What is the weather like in Qatar in late March?",
-      answer:
-        "Late March in Qatar is warm and dry, with daytime temperatures around 28–32°C and evenings cooling to 20–22°C. Sunscreen and a water bottle are recommended for any daytime sessions.",
-    },
-    {
-      question: "Can I bring children to the matches?",
-      answer:
-        "Yes, children are welcome. Check individual match listings for any age-specific entry requirements or pricing. Younger children may need to be accompanied by an adult.",
     },
     {
       question: "Are food and drink available inside the stadiums?",

@@ -84,11 +84,11 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     brand: "Football Festival Qatar",
     supportEmail: "support@footballfestivalqatar.com",
     defaultTitle:
-      "Football Festival Qatar 2026 | Finalissima Tickets — Lusail, Doha",
+      "Football Festival Qatar 2026 | Finalissima Tickets — Lusail Stadium",
     defaultDescription:
-      "Football Festival Qatar 2026 featuring Finalissima and international football matches. March 26-31 at Lusail Stadium, Ahmad bin Ali Stadium & Jassim bin Hamad Stadium. Secure checkout.",
+      "Finalissima 2026 Spain vs Argentina at Lusail Stadium, Qatar. March 27, 2026. Plus international friendly matches. Secure checkout.",
     defaultKeywords:
-      "Football Festival Qatar, Finalissima 2026, Finalissima tickets, Qatar football tickets, Lusail Stadium tickets, football Qatar 2026, international football Doha, buy football tickets Qatar",
+      "Finalissima 2026 tickets, Spain vs Argentina Qatar, Lusail Stadium football, Football Festival Qatar, intercontinental football final, Qatar football March 2026, international friendly matches Qatar, Finalissima Lusail",
     gaId: process.env.NEXT_PUBLIC_GA_ID,
     gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
     jsonLdType: "finalissima",
@@ -100,16 +100,17 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     geo: {
       region: "QA",
       placename: "Lusail",
-      position: "25.4195;51.4906", // TODO: verify — Lusail Stadium coordinates
+      position: "25.4195;51.4906",
       icbm: "25.4195, 51.4906",
     },
     hero: {
-      title: "Football Festival",
-      titleLine2: "Qatar 2026",
-      subtitle: "March 26th – 31st, 2026",
-      badge: "Finalissima | Lusail, Al Rayyan & Doha",
+      title: "Finalissima 2026",
+      titleLine2: "Spain vs Argentina",
+      subtitle: "March 27, 2026 — Lusail Stadium, Qatar",
+      badge: "UEFA EURO Champion vs Copa América Champion",
       description:
-        "Tickets for international football at world-class stadiums in Qatar.",
+        "Intercontinental final between Europe and South America. Plus international friendlies across Qatar.",
+      buttonText: "",
     },
   },
 
@@ -248,29 +249,28 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
         },
         {
           "@type": "SportsEvent",
-          name: "Football Festival Qatar 2026",
+          name: "Finalissima 2026",
           description:
-            "International football festival featuring Finalissima 2026 and friendly matches at world-class stadiums in Qatar",
-          startDate: "2026-03-26",
-          endDate: "2026-03-31",
+            "Intercontinental football final between UEFA EURO 2024 champion Spain and Copa América 2024 champion Argentina at Lusail Stadium",
+          startDate: "2026-03-27",
+          endDate: "2026-03-27",
           eventStatus: "https://schema.org/EventScheduled",
           eventAttendanceMode:
             "https://schema.org/OfflineEventAttendanceMode",
           location: {
             "@type": "StadiumOrArena",
-            name: "Lusail Stadium", // TODO: verify — primary venue for JSON-LD
+            name: "Lusail Stadium",
             address: {
               "@type": "PostalAddress",
-              streetAddress: "Lusail Boulevard", // TODO: verify
               addressLocality: "Lusail",
               addressCountry: "QA",
             },
             geo: {
               "@type": "GeoCoordinates",
-              latitude: "25.4195", // TODO: verify
-              longitude: "51.4906", // TODO: verify
+              latitude: "25.4195",
+              longitude: "51.4906",
             },
-            maximumAttendeeCapacity: 80000, // TODO: verify
+            maximumAttendeeCapacity: 80000,
           },
           offers: {
             "@type": "AggregateOffer",

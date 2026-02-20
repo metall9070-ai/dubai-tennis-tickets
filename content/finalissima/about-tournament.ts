@@ -2,16 +2,16 @@ import { SEOContent } from "@/types/seo"
 
 const seo: SEOContent = {
   title:
-    "Football Festival Qatar 2026 — Guide, Format & History",
+    "Inside Football Festival Qatar 2026 — Format, History & Spain vs Argentina",
   description:
-    "Learn about Football Festival Qatar 2026 featuring the Finalissima. Discover the tournament format, participating teams, match structure, and what makes this international football celebration unique.",
+    "Discover Football Festival Qatar 2026 featuring Finalissima — Spain vs Argentina in Lusail. Understand the intercontinental format, its revival history, and what makes this March 2026 event distinctive.",
   keywords: [
-    "what is Football Festival Qatar",
-    "Finalissima format",
-    "international football festival guide",
-    "football tournament Qatar format",
-    "Finalissima 2026 history",
-    "continental champions football",
+    "Finalissima 2026 explained",
+    "Spain vs Argentina intercontinental final",
+    "Football Festival Qatar format",
+    "UEFA vs CONMEBOL champion history",
+    "Artemio Franchi Cup revival",
+    "international football Qatar March 2026",
   ],
   h1: "Football Festival Qatar 2026 — Your Complete Guide",
   breadcrumbLabel: "About Tournament",
