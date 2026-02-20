@@ -104,8 +104,8 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       icbm: "25.4195, 51.4906",
     },
     hero: {
-      title: "Football Festival Qatar 2026",
-      titleLine2: "Featuring Finalissima",
+      title: "Football Festival Qatar",
+      titleLine2: "Finalissima 2026",
       subtitle: "Spain vs Argentina — March 27, Lusail Stadium",
       badge: "UEFA EURO Champion vs Copa América Champion",
       description:
