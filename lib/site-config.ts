@@ -241,11 +241,7 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
           "@type": "Organization",
           name: "Football Festival Qatar",
           url: SITE_URL,
-          contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "customer service",
-            availableLanguage: ["English", "Arabic"],
-          },
+          email: "support@footballfestivalqatar.com",
         },
         {
           "@type": "SportsEvent",
