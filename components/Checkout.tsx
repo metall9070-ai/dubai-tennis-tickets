@@ -176,16 +176,7 @@ const Checkout: React.FC<CheckoutProps> = ({
         isVisible={true}
         cartCount={cartTotalItems}
         onHome={onHome}
-        onTournament={onTournament}
-        onATPTickets={onATPTickets}
-        onWTATickets={onWTATickets}
-        onContacts={onContacts}
-        onAboutUs={onAboutUs}
-        onPaymentDelivery={onPaymentDelivery}
         onCart={onCart}
-        onSeatingGuide={onSeatingGuide}
-        onVenue={onVenue}
-        onFAQ={onFAQ}
       />
 
       <main className="flex-1 pt-20 md:pt-24 pb-12 md:pb-20">

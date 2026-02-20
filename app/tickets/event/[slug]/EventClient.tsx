@@ -142,18 +142,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
 
   const navigationHandlers = {
     onHome: () => router.push('/'),
-    onTournament: () => router.push('/tournament'),
-    onATPTickets: () => router.push('/tickets/atp'),
-    onWTATickets: () => router.push('/tickets/wta'),
-    onPaymentDelivery: () => router.push('/payment-and-delivery'),
-    onPrivacyPolicy: () => router.push('/privacy-policy'),
-    onTermsOfService: () => router.push('/terms-of-service'),
-    onContacts: () => router.push('/contact'),
-    onAboutUs: () => router.push('/about'),
     onCart: () => router.push('/checkout'),
-    onFAQ: () => router.push('/faq'),
-    onSeatingGuide: () => router.push('/seating-guide'),
-    onVenue: () => router.push('/venue'),
   };
 
   // Loading state

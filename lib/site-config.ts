@@ -13,6 +13,10 @@ export interface SiteConfig {
   gtmId?: string
   gscVerification?: string
   jsonLdType: "tennis" | "finalissima" | "generic"
+  navigation: Array<{
+    label: string
+    href: string
+  }>
   colors: {
     primary: string
     primaryHover: string
@@ -68,6 +72,14 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       position: "25.2048;55.2708",
       icbm: "25.2048, 55.2708",
     },
+    navigation: [
+      { label: 'Tickets', href: '/#tickets' },
+      { label: 'ATP Tickets', href: '/tickets/atp' },
+      { label: 'WTA Tickets', href: '/tickets/wta' },
+      { label: 'Seating Guide', href: '/seating-guide' },
+      { label: 'Venue', href: '/venue' },
+      { label: 'FAQ', href: '/faq' }
+    ],
     hero: {
       title: "Dubai Duty Free",
       titleLine2: "Tennis Championships 2026",
@@ -103,6 +115,13 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       position: "25.4195;51.4906",
       icbm: "25.4195, 51.4906",
     },
+    navigation: [
+      { label: 'Tickets', href: '/#tickets' },
+      { label: 'Schedule', href: '/schedule' },
+      { label: 'About Tournament', href: '/about-tournament' },
+      { label: 'Venue', href: '/venue' },
+      { label: 'FAQ', href: '/faq' }
+    ],
     hero: {
       title: "Football Festival Qatar",
       titleLine2: "Finalissima 2026",
@@ -128,6 +147,7 @@ const NEUTRAL_FALLBACK: SiteConfig = {
     "Browse and purchase event tickets securely. Verified tickets, secure checkout, and dedicated customer support.",
   defaultKeywords: "event tickets, buy tickets, secure tickets",
   jsonLdType: "generic",
+  navigation: [],
   colors: {
     primary: "#1e824c",
     primaryHover: "#166b3e",

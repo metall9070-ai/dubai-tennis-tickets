@@ -1,46 +1,24 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface NavbarProps {
   isVisible: boolean;
   cartCount?: number;
   onHome?: () => void;
-  onTournament?: () => void;
-  onATPTickets?: () => void;
-  onWTATickets?: () => void;
   onCart?: () => void;
-  onContacts?: () => void;
-  onAboutUs?: () => void;
-  onPaymentDelivery?: () => void;
-  onSeatingGuide?: () => void;
-  onVenue?: () => void;
-  onFAQ?: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   isVisible,
   cartCount = 0,
   onHome,
-  onTournament,
-  onATPTickets,
-  onWTATickets,
-  onCart,
-  onContacts,
-  onAboutUs,
-  onPaymentDelivery,
-  onSeatingGuide,
-  onVenue,
-  onFAQ
+  onCart
 }) => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navItems = [
-    { label: 'Tickets', href: '/#tickets' },
-    { label: 'ATP Tickets', href: '/tickets/atp' },
-    { label: 'WTA Tickets', href: '/tickets/wta' },
-    { label: 'Seating Guide', href: '/seating-guide' },
-    { label: 'Venue', href: '/venue' },
-    { label: 'FAQ', href: '/faq' }
-  ];
+  const { navigation } = getSiteConfig();
+  const navItems = navigation;
 
   const handleLogoClick = (e: React.MouseEvent) => {
     if (onHome) {
@@ -50,11 +28,11 @@ const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
-  const handleNavItemClick = (label: string, e: React.MouseEvent) => {
+  const handleNavItemClick = (href: string, label: string, e: React.MouseEvent) => {
     e.preventDefault();
     setIsMenuOpen(false);
 
-    if (label === 'Tickets') {
+    if (label === 'Tickets' && href === '/#tickets') {
       if (onHome) onHome();
       setTimeout(() => {
         const ticketsSection = document.getElementById('tickets');
@@ -62,18 +40,8 @@ const Navbar: React.FC<NavbarProps> = ({
           ticketsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }, 100);
-    } else if (label === 'Tournament') {
-      if (onTournament) onTournament();
-    } else if (label === 'ATP Tickets') {
-      if (onATPTickets) onATPTickets();
-    } else if (label === 'WTA Tickets') {
-      if (onWTATickets) onWTATickets();
-    } else if (label === 'Seating Guide') {
-      if (onSeatingGuide) onSeatingGuide();
-    } else if (label === 'Venue') {
-      if (onVenue) onVenue();
-    } else if (label === 'FAQ') {
-      if (onFAQ) onFAQ();
+    } else {
+      router.push(href);
     }
   };
 
@@ -118,7 +86,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => handleNavItemClick(item.label, e)}
+                onClick={(e) => handleNavItemClick(item.href, item.label, e)}
                 className="text-[12px] font-normal text-white/80 hover:text-white transition-colors duration-300"
               >
                 {item.label}
@@ -186,7 +154,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => handleNavItemClick(item.label, e)}
+                onClick={(e) => handleNavItemClick(item.href, item.label, e)}
                 className="text-[28px] font-semibold text-white/90 hover:text-white transition-colors"
               >
                 {item.label}

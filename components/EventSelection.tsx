@@ -18,22 +18,11 @@ interface EventSelectionProps {
   initialCategories?: Category[];
   eventSEO?: EventSEO | null;
   onBack: () => void;
-  onTournament: () => void;
-  onATPTickets: () => void;
-  onWTATickets: () => void;
-  onPaymentDelivery?: () => void;
-  onPrivacyPolicy?: () => void;
-  onTermsOfService?: () => void;
-  onContacts?: () => void;
-  onAboutUs?: () => void;
   onCart?: () => void;
   onHome: () => void;
   cart: CartItem[];
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
   onCheckout: () => void;
-  onFAQ?: () => void;
-  onSeatingGuide?: () => void;
-  onVenue?: () => void;
 }
 
 interface Category {
@@ -67,9 +56,8 @@ const _ATP_REFERENCE_CATEGORIES: Category[] = [
 ];
 
 const EventSelection: React.FC<EventSelectionProps> = ({
-  event, initialCategories, eventSEO, onBack, onTournament, onATPTickets, onWTATickets,
-  onPaymentDelivery, onPrivacyPolicy, onTermsOfService, onContacts, onAboutUs, onCart, onHome,
-  cart, setCart, onCheckout, onFAQ, onSeatingGuide, onVenue
+  event, initialCategories, eventSEO, onBack, onCart, onHome,
+  cart, setCart, onCheckout
 }) => {
   // State for categories - Django API is single source of truth
   // Use SSR data if available
@@ -243,7 +231,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
   return (
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
-      <Navbar isVisible={true} cartCount={cartTotalItems} onHome={onHome} onTournament={onTournament} onATPTickets={onATPTickets} onWTATickets={onWTATickets} onCart={onCart} onSeatingGuide={onSeatingGuide} onVenue={onVenue} onFAQ={onFAQ} />
+      <Navbar isVisible={true} cartCount={cartTotalItems} onHome={onHome} onCart={onCart} />
 
       {/* Main Header Section */}
       <div className="pt-20 md:pt-24 pb-6 md:pb-8 bg-white border-b border-[#f5f5f7]">
@@ -448,20 +436,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
       <RelatedMatches currentSlug={event?.slug || ''} currentEvent={event} />
 
       <WhyBuy />
-      <Footer
-        onHome={onHome}
-        onTournament={onTournament}
-        onATPTickets={onATPTickets}
-        onWTATickets={onWTATickets}
-        onPaymentDelivery={onPaymentDelivery}
-        onPrivacyPolicy={onPrivacyPolicy}
-        onTermsOfService={onTermsOfService}
-        onContacts={onContacts}
-        onAboutUs={onAboutUs}
-        onFAQ={onFAQ}
-        onSeatingGuide={onSeatingGuide}
-        onVenue={onVenue}
-      />
+      <Footer onHome={onHome} />
 
       {/* Modal Window */}
       {isModalOpen && selectedCategory && (
