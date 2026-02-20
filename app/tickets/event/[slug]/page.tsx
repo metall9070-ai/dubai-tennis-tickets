@@ -32,17 +32,47 @@ export async function generateMetadata({ params }: Props) {
       description: eventSEO.description,
     });
 
+    const breadcrumbList = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://footballfestivalqatar.com/',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Schedule',
+          item: 'https://footballfestivalqatar.com/schedule',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: eventSEO.h1,
+          item: `https://footballfestivalqatar.com${path}`,
+        },
+      ],
+    };
+
     // Inject JSON-LD structured data if provided
     if (eventSEO.jsonLd) {
       return {
         ...metadata,
         other: {
-          'script:ld+json': JSON.stringify(eventSEO.jsonLd),
+          'script:ld+json': JSON.stringify([eventSEO.jsonLd, breadcrumbList]),
         },
       };
     }
 
-    return metadata;
+    return {
+      ...metadata,
+      other: {
+        'script:ld+json': JSON.stringify(breadcrumbList),
+      },
+    };
   }
 
   // Priority 2: hand-crafted SEO from old content file structure (backward compatibility)
