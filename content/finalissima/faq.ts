@@ -19,9 +19,44 @@ const seo: SEOContent = {
 
   faq: [
     {
-      question: "How will I receive my tickets?",
+      question: "What types of tickets do you offer?",
       answer:
-        "Tickets are delivered as mobile tickets via a ticketing app to your registered email address. In rare cases, tickets may be provided as a PDF. No physical delivery is required — simply present your ticket at the stadium entrance.",
+        "We offer access to all officially released seating categories, subject to availability. Each match has separate ticketing, allowing you to select the sessions and categories that suit your preferences.",
+    },
+    {
+      question: "When will I receive my tickets?",
+      answer:
+        "Tickets are delivered no later than 2 days before the event date. They are delivered as mobile tickets via a ticketing app. In rare cases, tickets may be provided as a PDF.",
+    },
+    {
+      question: "Can I transfer my tickets to someone else?",
+      answer:
+        "Yes, tickets can generally be transferred to another person. Specific transfer procedures depend on the ticketing platform used for delivery. Contact support@footballfestivalqatar.com if you need assistance with ticket transfers.",
+    },
+    {
+      question: "What happens if the event is cancelled or postponed?",
+      answer:
+        "If the event is cancelled by the organiser, a full refund will be issued. If the event is postponed to a new date, your tickets remain valid for the rescheduled fixture. For specific cases, contact our support team at support@footballfestivalqatar.com.",
+    },
+    {
+      question: "What is Football Festival Qatar?",
+      answer:
+        "Football Festival Qatar is an independent ticket concierge service for Finalissima 2026 and associated international friendly matches. We are not affiliated with, endorsed by, or connected to any venue or event organiser.",
+    },
+    {
+      question: "Can I purchase tickets for multiple matches?",
+      answer:
+        "Yes, you can purchase tickets for as many matches as you like. Each session is ticketed separately, so simply add the matches you want to your cart and complete checkout.",
+    },
+    {
+      question: "What items are prohibited inside the stadiums?",
+      answer:
+        "Prohibited items typically include large bags, professional cameras with detachable lenses, outside food and beverages, pyrotechnics, and laser pointers. Security screening is conducted at all venue entrances. Check with the specific stadium for a complete list of restrictions.",
+    },
+    {
+      question: "Can I cancel my order?",
+      answer:
+        "Cancellation requests are handled on a case-by-case basis. Please contact our support team at support@footballfestivalqatar.com as soon as possible to discuss your situation.",
     },
     {
       question: "What is the weather like in Qatar in late March?",
@@ -29,49 +64,14 @@ const seo: SEOContent = {
         "Late March in Qatar is warm and dry, with daytime temperatures around 28–32°C and evenings cooling to 20–22°C. Sunscreen and a water bottle are recommended for any daytime sessions.",
     },
     {
-      question: "Can I get a refund or change my order?",
-      answer:
-        "For any refund or modification requests, please contact our support team at support@footballfestivalqatar.com. Each case is reviewed individually and we will do our best to assist you.",
-    },
-    {
-      question: "How do I place an order?",
-      answer:
-        "Browse available matches on the homepage, select the session and category you want, choose the number of seats, and proceed to checkout. Payment is processed securely via Stripe.",
-    },
-    {
-      question: "Is there a dress code for the stadiums?",
-      answer:
-        "Qatar does not impose a strict dress code at sporting events, but modest clothing is appreciated as a sign of respect for local customs. Casual sportswear and team jerseys are perfectly fine.",
-    },
-    {
       question: "How do I enter the stadium on match day?",
       answer:
-        "Show your e-ticket (printed or on your phone screen) at the stadium gate. Security screening is standard at all venues. Arrive at least 60 minutes before kick-off to allow time for entry.",
+        "Present your e-ticket (on your phone or printed) at the stadium gate. Security screening is standard at all venues. Arrive at least 60 minutes before kick-off to allow time for entry.",
     },
     {
-      question: "Can I bring children to the matches?",
+      question: "Is there a dress code?",
       answer:
-        "Yes, children are welcome. Check individual match listings for any age-specific entry requirements or pricing. Younger children may need to be accompanied by an adult.",
-    },
-    {
-      question: "What payment methods are accepted?",
-      answer:
-        "We accept all major credit and debit cards (Visa, Mastercard, American Express) through our secure Stripe-powered checkout.",
-    },
-    {
-      question: "What happens after I complete my purchase?",
-      answer:
-        "You will receive an order confirmation email immediately. Your tickets will be delivered no later than 2 days before the event date.",
-    },
-    {
-      question: "Are food and drink available inside the stadiums?",
-      answer:
-        "All three venues have concession stands offering food and beverages. Note that alcohol availability varies by venue and event — check specific venue policies closer to the event date.",
-    },
-    {
-      question: "How do I contact customer support?",
-      answer:
-        "Email us at support@footballfestivalqatar.com for any questions about your order, delivery, or general enquiries. Our team typically responds within 24 hours.",
+        "Qatar does not impose a strict dress code at sporting events, but modest clothing is appreciated as a sign of respect for local customs. Casual sportswear and team jerseys are perfectly fine.",
     },
   ],
   cta: {
