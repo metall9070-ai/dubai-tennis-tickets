@@ -26,12 +26,12 @@ export const eventSEO: EventSEO = {
 
     <p>Argentina's recent tournament pedigree includes multiple Copa América titles and a World Cup triumph, while Spain's tactical evolution and deep talent pool have made them European champions once again. The tactical contrast between South American flair and European structure adds narrative depth to the encounter.</p>
 
-    <p>Beyond the football itself, the Finalissima 2026 forms part of <strong>Football Festival Qatar 2026</strong>, a week-long series of international friendlies and showcase matches across Qatar's world-class stadiums. This provides additional context and atmosphere for traveling supporters and neutral attendees.</p>
+    <p>Beyond the football itself, the Finalissima 2026 forms part of <strong>Football Festival Qatar 2026</strong>, a week-long series of international friendlies and showcase matches across Qatar's world-class stadiums. Learn more about the <a href="/about-tournament">tournament format and history</a>. This provides additional context and atmosphere for traveling supporters and neutral attendees.</p>
 
     <h2>Venue Information</h2>
     <p><strong>Lusail Stadium</strong> is Qatar's flagship sporting venue, located approximately 15 kilometers north of central Doha in the purpose-built city of Lusail. The stadium has a seating capacity exceeding 80,000 and hosted the 2022 World Cup Final, establishing its credentials as a world-class football venue.</p>
 
-    <p>The venue features advanced climate control systems, ensuring comfortable viewing conditions despite Qatar's warm climate. Sightlines are engineered for optimal visibility from all seating tiers, and the stadium's modern design includes premium hospitality zones, accessible seating areas, and integrated technology for enhanced matchday experience.</p>
+    <p>The venue features advanced climate control systems, ensuring comfortable viewing conditions despite Qatar's warm climate. Sightlines are engineered for optimal visibility from all seating tiers, and the stadium's modern design includes premium hospitality zones, accessible seating areas, and integrated technology for enhanced matchday experience. Explore detailed <a href="/venue">venue information and facilities</a>.</p>
 
     <p>Transport links include the Doha Metro Red Line, with Lusail South Station providing direct access to the stadium precinct. Journey time from central Doha is approximately 30 minutes via metro. Road access is supported by dedicated parking facilities, though public transport is recommended on matchday due to high attendance volumes.</p>
 
@@ -55,11 +55,11 @@ export const eventSEO: EventSEO = {
 
     <p>Customer support is available to assist with purchase queries, delivery timelines, ticket transfer procedures, and any technical issues that may arise during the buying process. Assistance is typically provided via email, live chat, or telephone depending on the platform.</p>
 
-    <p>International visitors attending the Finalissima 2026 should plan travel arrangements well in advance, particularly if attending as part of the broader Football Festival Qatar 2026 programme. Accommodation options in Doha range from luxury hotels to mid-range properties, with the Lusail area itself offering several hospitality options within walking distance of the stadium.</p>
+    <p>International visitors attending the Finalissima 2026 should plan travel arrangements well in advance, particularly if attending as part of the broader Football Festival Qatar 2026 programme. View the <a href="/schedule">complete match calendar</a> to plan your visit around other fixtures. Accommodation options in Doha range from luxury hotels to mid-range properties, with the Lusail area itself offering several hospitality options within walking distance of the stadium.</p>
 
     <p>Matchday advice includes arriving at the stadium at least 90 minutes before kickoff to allow time for security screening, bag checks, and navigating to your seating section. Outside food and beverages are typically not permitted, but the stadium features extensive concessions offering a range of refreshments.</p>
 
-    <p>Qatar's climate in late March is generally warm but more moderate than summer months, with daytime temperatures typically in the mid-20s to low 30s Celsius. Evening temperatures are comfortable, and the stadium's climate control further enhances viewing conditions.</p>
+    <p>Qatar's climate in late March is generally warm but more moderate than summer months, with daytime temperatures typically in the mid-20s to low 30s Celsius. Evening temperatures are comfortable, and the stadium's climate control further enhances viewing conditions. Browse <a href="/">all available tickets</a> for the Football Festival Qatar 2026.</p>
   `,
 
   faq: [
