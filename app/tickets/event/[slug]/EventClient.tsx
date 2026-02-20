@@ -7,6 +7,7 @@ import EventSelection from '@/components/EventSelection';
 import { fetchEventBySlug } from '@/lib/api';
 import type { Event } from '@/lib/types';
 import type { Category } from '@/lib/api-server';
+import type { EventSEO } from '@/types/seo';
 
 // Storage version - must match CartContext.tsx
 const CURRENT_CART_VERSION = 3;
@@ -27,9 +28,10 @@ interface EventClientProps {
   slug: string;
   initialEvent?: Event | null;
   initialCategories?: Category[];
+  eventSEO?: EventSEO | null;
 }
 
-export default function EventClient({ slug, initialEvent, initialCategories }: EventClientProps) {
+export default function EventClient({ slug, initialEvent, initialCategories, eventSEO }: EventClientProps) {
   const router = useRouter();
   const { cart, setCart } = useCart();
   // Use SSR data if available, otherwise start with null/loading
@@ -213,6 +215,7 @@ export default function EventClient({ slug, initialEvent, initialCategories }: E
     <EventSelection
       event={selectedEvent}
       initialCategories={initialCategories}
+      eventSEO={eventSEO}
       onBack={() => {
         // Navigate to homepage and scroll to schedule section
         router.push('/#tickets');

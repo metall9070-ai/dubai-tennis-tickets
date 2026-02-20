@@ -7,12 +7,15 @@ import WhyBuy from './WhyBuy';
 import WTASessionInfo from './WTASessionInfo';
 import ATPSessionInfo from './ATPSessionInfo';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
+import EventSEOContent from './EventSEOContent';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
+import type { EventSEO } from '@/types/seo';
 
 interface EventSelectionProps {
   event: any;
   initialCategories?: Category[];
+  eventSEO?: EventSEO | null;
   onBack: () => void;
   onTournament: () => void;
   onATPTickets: () => void;
@@ -63,7 +66,7 @@ const _ATP_REFERENCE_CATEGORIES: Category[] = [
 ];
 
 const EventSelection: React.FC<EventSelectionProps> = ({
-  event, initialCategories, onBack, onTournament, onATPTickets, onWTATickets,
+  event, initialCategories, eventSEO, onBack, onTournament, onATPTickets, onWTATickets,
   onPaymentDelivery, onPrivacyPolicy, onTermsOfService, onContacts, onAboutUs, onCart, onHome,
   cart, setCart, onCheckout, onFAQ, onSeatingGuide, onVenue
 }) => {
@@ -436,6 +439,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
       {/* ATP Session Info - only shown for ATP events */}
       {event?.type === 'ATP' && <ATPSessionInfo eventTitle={event?.title || ''} />}
+
+      {/* Event-Level SEO Content Block (if exists) */}
+      {eventSEO && <EventSEOContent eventSEO={eventSEO} />}
 
       <WhyBuy />
       <Footer

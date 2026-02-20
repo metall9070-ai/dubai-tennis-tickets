@@ -10,6 +10,7 @@ import { fetchEventWithCategoriesServer } from '@/lib/api-server';
 import { getSiteConfig } from '@/lib/site-config';
 import { loadSEOStrict } from '@/lib/seo-loader';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
+import { loadEventSEO } from '@/lib/event-seo-loader';
 
 const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'default';
 
@@ -22,7 +23,29 @@ export async function generateMetadata({ params }: Props) {
   const slug = resolvedParams.slug;
   const path = `/tickets/event/${slug}`;
 
-  // Priority 1: hand-crafted SEO from content file
+  // Priority 1: EventSEO (event-level SEO with JSON-LD support)
+  const eventSEO = await loadEventSEO(siteCode, slug);
+  if (eventSEO) {
+    const metadata = buildMetadata({
+      path,
+      title: eventSEO.title,
+      description: eventSEO.description,
+    });
+
+    // Inject JSON-LD structured data if provided
+    if (eventSEO.jsonLd) {
+      return {
+        ...metadata,
+        other: {
+          'script:ld+json': JSON.stringify(eventSEO.jsonLd),
+        },
+      };
+    }
+
+    return metadata;
+  }
+
+  // Priority 2: hand-crafted SEO from old content file structure (backward compatibility)
   const seo = await loadSEOStrict(siteCode, `events/${slug}`);
   if (seo) {
     return buildMetadata({
@@ -70,16 +93,18 @@ export default async function EventPage({ params }: Props) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  // SSR: Fetch event + categories in parallel (ISR revalidate: 60s)
+  // SSR: Fetch event + categories + eventSEO in parallel (ISR revalidate: 60s)
   const { event, categories } = await fetchEventWithCategoriesServer(slug);
+  const eventSEO = await loadEventSEO(siteCode, slug);
 
-  console.log(`[SSR] EventPage: event=${event?.title || 'null'}, categories=${categories.length}`);
+  console.log(`[SSR] EventPage: event=${event?.title || 'null'}, categories=${categories.length}, eventSEO=${eventSEO ? 'loaded' : 'null'}`);
 
   return (
     <EventClient
       slug={slug}
       initialEvent={event}
       initialCategories={categories}
+      eventSEO={eventSEO}
     />
   );
 }

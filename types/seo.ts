@@ -44,3 +44,17 @@ export type SEOContent = {
   cta?: { text: string; href: string }
   internalLinks?: InternalLink[]
 }
+
+/**
+ * Event-level SEO content.
+ * Stored in /content/{site_code}/events/{slug}.ts
+ * Frontend-only. CRM does not store SEO.
+ */
+export type EventSEO = {
+  title: string              // Page title (<title> tag)
+  description: string        // Meta description
+  h1: string                // Main heading
+  content: string           // HTML content (informational block)
+  faq?: FAQItem[]           // Event-specific FAQ items
+  jsonLd?: Record<string, unknown>  // Custom JSON-LD structured data
+}
