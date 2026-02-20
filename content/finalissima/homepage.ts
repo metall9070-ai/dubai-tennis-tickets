@@ -2,7 +2,7 @@ import { SEOContent } from "@/types/seo"
 
 const seo: SEOContent = {
   title:
-    "Finalissima 2026 Tickets | Spain vs Argentina — Lusail Stadium, Qatar",
+    "Finalissima 2026 Tickets | Buy Football Festival Qatar Tickets",
   description:
     "Buy Finalissima 2026 tickets — Spain vs Argentina at Lusail Stadium, Qatar. Intercontinental final plus international friendlies. Secure checkout.",
   keywords: [
