@@ -8,6 +8,7 @@ import WTASessionInfo from './WTASessionInfo';
 import ATPSessionInfo from './ATPSessionInfo';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
 import EventSEOContent from './EventSEOContent';
+import RelatedMatches from './RelatedMatches';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
 import type { EventSEO } from '@/types/seo';
@@ -442,6 +443,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
       {/* Event-Level SEO Content Block (if exists) */}
       {eventSEO && <EventSEOContent eventSEO={eventSEO} />}
+
+      {/* Related Matches - Internal Linking */}
+      <RelatedMatches currentSlug={event?.slug || ''} currentEvent={event} />
 
       <WhyBuy />
       <Footer
