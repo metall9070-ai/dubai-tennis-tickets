@@ -11,8 +11,9 @@
  */
 
 import { MetadataRoute } from "next"
-import { getSiteUrl } from "@/lib/site-config"
+import { getSiteUrl, getSiteConfig } from "@/lib/site-config"
 import { fetchEventsServer } from "@/lib/api-server"
+import { filterEventsForCurrentSite } from "@/lib/event-filter"
 
 const SITE_URL = getSiteUrl() // e.g. "https://dubaitennistickets.com" — no trailing slash
 
@@ -89,9 +90,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 2. Dynamic event pages from API — /tickets/event/{slug}
   //    fetchEventsServer('') skips visibility filter (SEO must not depend on visibility)
+  //    Event filtering is done via unified filter layer (lib/event-filter.ts)
+  //    (SEO_ARCHITECTURE §3C: Cross-Site SEO Isolation)
+  //
+  //    IMPORTANT: Sitemap is FAIL-CLOSED for SEO safety.
+  //    - If allowedEventTypes is defined → include filtered events
+  //    - If allowedEventTypes is missing → include NO events (prevents SEO contamination)
+  //
+  //    This differs from UI pages which are FAIL-OPEN (show all events if misconfigured).
+  //    SEO safety and runtime stability are decoupled.
   try {
-    const events = await fetchEventsServer("")
-    for (const event of events) {
+    const config = getSiteConfig()
+    const allEvents = await fetchEventsServer("")
+
+    // FAIL-CLOSED: Only include events if site policy is explicitly defined
+    // This prevents cross-site SEO contamination if config is misconfigured
+    // UI pages use filterEventsForCurrentSite() which is FAIL-OPEN
+    const siteEvents =
+      config.allowedEventTypes && config.allowedEventTypes.length > 0
+        ? filterEventsForCurrentSite(allEvents)
+        : []
+
+    for (const event of siteEvents) {
       if (!event.slug) continue
       addEntry(`/tickets/event/${event.slug}`, {
         priority: 0.8,

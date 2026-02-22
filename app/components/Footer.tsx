@@ -1,13 +1,12 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { getFooterConfig } from '@/lib/nav-config';
 import { getSiteConfig } from '@/lib/site-config';
 
 const footerConfig = getFooterConfig();
 
-const Footer: React.FC = () => {
+export default function Footer() {
   const { brandName, brandDescription, ticketLinks, infoLinks, disclaimer } = footerConfig;
   const { supportEmail } = getSiteConfig();
 
@@ -170,6 +169,4 @@ const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

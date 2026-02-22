@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import Image from 'next/image';
 import { getSiteConfig } from '@/lib/site-config';
 
 interface HeroProps {
@@ -8,7 +8,7 @@ interface HeroProps {
   onAction?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ isVisible, onAction }) => {
+export default function Hero({ isVisible, onAction }: HeroProps) {
   const { hero, brand } = getSiteConfig();
 
   const title = hero?.title || brand;
@@ -27,15 +27,22 @@ const Hero: React.FC<HeroProps> = ({ isVisible, onAction }) => {
         }`}
       >
         {bgImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-center hero-image-zoom"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-              backgroundPosition: 'center 40%',
-            }}
-          />
+          <>
+            <Image
+              src={bgImage}
+              alt=""
+              fill
+              priority
+              quality={85}
+              className="object-cover object-[center_40%] hero-image-zoom"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90 z-10" />
+          </>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90" />
+        {!bgImage && (
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90" />
+        )}
       </div>
 
       <div className="relative z-10 container mx-auto px-6 text-center">
@@ -79,6 +86,4 @@ const Hero: React.FC<HeroProps> = ({ isVisible, onAction }) => {
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

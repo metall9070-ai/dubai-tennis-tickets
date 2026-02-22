@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { loadSEOStrict } from '@/lib/seo-loader';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
 import { fetchEventsServer } from '@/lib/api-server';
+import { filterEventsForCurrentSite } from '@/lib/event-filter';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import ContentPage from '@/app/components/ContentPage';
@@ -22,12 +23,14 @@ export async function generateMetadata() {
 }
 
 export default async function SchedulePage() {
-  const [seo, initialEvents] = await Promise.all([
+  const [seo, allEvents] = await Promise.all([
     loadSEOStrict(siteCode, 'schedule'),
     fetchEventsServer(),
   ]);
 
   if (!seo?.h1) notFound();
+
+  const initialEvents = filterEventsForCurrentSite(allEvents);
 
   return (
     <div className="relative min-h-screen bg-[#f5f5f7]">

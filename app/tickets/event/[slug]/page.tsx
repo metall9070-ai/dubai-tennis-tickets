@@ -7,12 +7,15 @@
 
 import EventClient from './EventClient';
 import { fetchEventWithCategoriesServer } from '@/lib/api-server';
-import { getSiteConfig } from '@/lib/site-config';
+import { getSiteConfig, getSiteUrl } from '@/lib/site-config';
 import { loadSEOStrict } from '@/lib/seo-loader';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
 import { loadEventSEO } from '@/lib/event-seo-loader';
+import { notFound, permanentRedirect } from 'next/navigation';
+import { getRedirectSlug } from '@/lib/slug-redirect-map';
 
 const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'default';
+const SITE_URL = getSiteUrl(); // Dynamic domain resolution (SEO_ARCHITECTURE §3C)
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -40,19 +43,19 @@ export async function generateMetadata({ params }: Props) {
           '@type': 'ListItem',
           position: 1,
           name: 'Home',
-          item: 'https://footballfestivalqatar.com/',
+          item: `${SITE_URL}/`,
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Schedule',
-          item: 'https://footballfestivalqatar.com/schedule',
+          item: `${SITE_URL}/schedule`,
         },
         {
           '@type': 'ListItem',
           position: 3,
           name: eventSEO.h1,
-          item: `https://footballfestivalqatar.com${path}`,
+          item: `${SITE_URL}${path}`,
         },
       ],
     };
@@ -125,6 +128,25 @@ export default async function EventPage({ params }: Props) {
 
   // SSR: Fetch event + categories + eventSEO in parallel (ISR revalidate: 60s)
   const { event, categories } = await fetchEventWithCategoriesServer(slug);
+
+  // P1 FIX: SEO hardening — 308 permanent redirect for changed event slugs
+  // If event not found, check if slug has a redirect mapping
+  // This preserves backlinks and SEO equity when slugs change in CRM
+  if (!event) {
+    const newSlug = getRedirectSlug(slug);
+    if (newSlug) {
+      // Permanent redirect (308) to new slug
+      // Next.js App Router uses 308 for permanent redirects (treated same as 301 by Google)
+      // ISR-safe: Next.js will cache the redirect
+      // Multi-site isolated: redirect stays within same domain
+      permanentRedirect(`/tickets/event/${newSlug}`);
+    }
+
+    // No event and no redirect → proper 404
+    // ISR-safe: Next.js will cache 404 response, revalidation restores 200 when event reappears
+    notFound();
+  }
+
   const eventSEO = await loadEventSEO(siteCode, slug);
 
   console.log(`[SSR] EventPage: event=${event?.title || 'null'}, categories=${categories.length}, eventSEO=${eventSEO ? 'loaded' : 'null'}`);

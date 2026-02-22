@@ -37,6 +37,22 @@ export interface SiteConfig {
     image?: string
     buttonText?: string
   }
+  /**
+   * Allowed event types for this site (presentation policy).
+   * Used for frontend read-only filtering across catalog, schedule, and sitemap.
+   * - If undefined: no events will be shown (neutral fallback)
+   * - If empty array: no events will be shown
+   * - If defined: only events matching these types will be displayed
+   *
+   * This is NOT business logic - it's presentation policy.
+   * Backend remains site-agnostic.
+   *
+   * Examples:
+   * - tennis: ["ATP", "WTA"]
+   * - finalissima: ["FOOTBALL"]
+   * - ufc: ["UFC"]
+   */
+  allowedEventTypes?: string[]
 }
 
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || "default"
@@ -61,6 +77,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     gaId: "G-1R8HSPFZ1S",
     gscVerification: "Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY",
     jsonLdType: "tennis",
+    allowedEventTypes: ["ATP", "WTA"],
     colors: {
       primary: "#1e824c",
       primaryHover: "#166b3e",
@@ -104,6 +121,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     gaId: process.env.NEXT_PUBLIC_GA_ID,
     gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
     jsonLdType: "finalissima",
+    allowedEventTypes: ["FOOTBALL"],
     colors: {
       primary: "#00627B",
       primaryHover: "#004F63",

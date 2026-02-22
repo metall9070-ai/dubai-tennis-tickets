@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
@@ -13,7 +13,7 @@ interface NavbarProps {
 const navItems = getNavItems();
 const { brandName } = getFooterConfig();
 
-const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
+export default function Navbar({ isVisible = true }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const { cartTotalItems } = useCart();
@@ -160,6 +160,4 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible = true }) => {
       </div>
     </>
   );
-};
-
-export default Navbar;
+}

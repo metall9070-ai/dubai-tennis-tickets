@@ -123,7 +123,8 @@ export const eventSEO: EventSEO = {
     offers: {
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
-      url: 'https://footballfestivalqatar.com/tickets/event/argentina-spain-finalissima-2026-mar-27',
+      // NOTE: url is dynamically injected by page.tsx using getSiteUrl()
+      // Hardcoded URLs violate SEO_ARCHITECTURE §3C (Cross-Site SEO Isolation)
       priceCurrency: 'USD',
       validFrom: '2025-11-01T00:00:00+00:00',
     },

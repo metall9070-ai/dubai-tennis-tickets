@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -22,8 +22,8 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
+    // Trigger animations immediately after mount (no artificial delay)
+    setIsLoaded(true);
   }, []);
 
   const handleSelectEvent = (eventData: any) => {
@@ -43,24 +43,22 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
     <div className="relative min-h-screen bg-[#f5f5f7]">
       <Navbar isVisible={isLoaded} />
       <Hero isVisible={isLoaded} onAction={handleViewShelter} />
-      {isLoaded && (
-        <>
-          <Events onSelectEvent={handleSelectEvent} initialEvents={initialEvents} />
-          <WhyBuy />
-          {seoContent?.h1 ? (
-            <ContentPage content={seoContent} embedded />
-          ) : (
-            <SEOSection
-              onFAQ={() => router.push('/faq')}
-              onSeatingGuide={() => router.push('/seating-guide')}
-              onVenue={() => router.push('/venue')}
-              onATPTickets={() => router.push('/tickets/atp')}
-              onWTATickets={() => router.push('/tickets/wta')}
-            />
-          )}
-          <Footer />
-        </>
-      )}
+      <div className={`transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+        <Events onSelectEvent={handleSelectEvent} initialEvents={initialEvents} />
+        <WhyBuy />
+        {seoContent?.h1 ? (
+          <ContentPage content={seoContent} embedded />
+        ) : (
+          <SEOSection
+            onFAQ={() => router.push('/faq')}
+            onSeatingGuide={() => router.push('/seating-guide')}
+            onVenue={() => router.push('/venue')}
+            onATPTickets={() => router.push('/tickets/atp')}
+            onWTATickets={() => router.push('/tickets/wta')}
+          />
+        )}
+        <Footer />
+      </div>
     </div>
   );
 }

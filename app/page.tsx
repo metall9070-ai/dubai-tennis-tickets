@@ -3,6 +3,7 @@ import { getSiteCode } from '@/lib/site-config';
 import { loadSEOStrict } from '@/lib/seo-loader';
 import HomeClient from './HomeClient';
 import { fetchEventsServer } from '@/lib/api-server';
+import { filterEventsForCurrentSite } from '@/lib/event-filter';
 import type { SEOContent } from '@/types/seo';
 
 export async function generateMetadata() {
@@ -24,7 +25,8 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  const initialEvents = await fetchEventsServer();
+  const allEvents = await fetchEventsServer();
+  const initialEvents = filterEventsForCurrentSite(allEvents);
   const seo = await loadSEOStrict(getSiteCode(), 'homepage');
 
   return (

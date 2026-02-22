@@ -1,12 +1,22 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { CartProvider } from './CartContext';
 import { getSiteConfig, getSiteUrl, buildJsonLd } from '@/lib/site-config';
+import { CartProvider } from './CartContext';
 import './globals.css';
 
 /* ------------------------------------------------------------------ */
 /*  Resolve config at build time (env vars are static)                 */
 /* ------------------------------------------------------------------ */
+
+// CRITICAL: Enforce NEXT_PUBLIC_SITE_URL is defined (SEO_ARCHITECTURE v1.7 §3B)
+// Prevents deployment with missing canonical domain (anti-deindexation protection)
+if (!process.env.NEXT_PUBLIC_SITE_URL) {
+  throw new Error(
+    '[FATAL] NEXT_PUBLIC_SITE_URL is required for canonical generation (SEO_ARCHITECTURE v1.7 §3B). ' +
+    'All pages must have self-referential canonical URLs built from this domain. ' +
+    'Set NEXT_PUBLIC_SITE_URL in .env.local or deployment environment.'
+  );
+}
 
 const siteConfig = getSiteConfig();
 const siteUrl = getSiteUrl();
@@ -93,16 +103,17 @@ export default function RootLayout({
         )}
 
         {/* Google Analytics 4 — only if GA ID configured */}
+        {/* PERFORMANCE: afterInteractive to prevent blocking LCP */}
         {siteConfig.gaId && (
           <>
             <Script
               id="gtag-js"
               src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`}
-              strategy="beforeInteractive"
+              strategy="afterInteractive"
             />
             <Script
               id="gtag-config"
-              strategy="beforeInteractive"
+              strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
@@ -153,7 +164,9 @@ export default function RootLayout({
           </noscript>
         )}
 
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

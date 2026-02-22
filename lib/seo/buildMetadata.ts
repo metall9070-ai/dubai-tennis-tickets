@@ -18,6 +18,7 @@
 import type { Metadata } from 'next'
 import type { SiteConfig } from '@/lib/site-config'
 import { getSiteConfig, getSiteUrl } from '@/lib/site-config'
+import { buildCanonical } from './buildCanonical'
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
@@ -59,17 +60,21 @@ export function buildMetadata(options: BuildMetadataOptions): Metadata {
   const config = configOverride ?? getSiteConfig()
   const siteUrl = getSiteUrl()
 
-  // Self-referential canonical and og:url — always matches current page
-  // Uses absolute URL to guarantee correctness regardless of metadataBase
-  // Normalize: remove trailing slash from siteUrl to prevent double slashes
-  const normalizedSiteUrl = siteUrl.replace(/\/$/, '')
-  const pageUrl = `${normalizedSiteUrl}${path}`
+  // Self-referential canonical — ALWAYS self-referential (SEO_ARCHITECTURE v1.7 §3B, §12.4)
+  // Built via buildCanonical() for guaranteed normalization:
+  // - Strips query strings
+  // - Strips hash fragments
+  // - Normalizes trailing slashes
+  // - Prevents double slashes
+  // - Forces lowercase
+  const pageUrl = buildCanonical(path)
 
   // og:image — 3-level fallback, always resolves to an absolute URL:
   //   1. page-level ogImage param (must be absolute, relative not allowed)
   //   2. site-config ogImage (per-site, set in site-config.ts)
   //   3. ${siteUrl}/og/default.jpg — absolute, uses current site domain, no external dependency
   // Security: If ogImage is relative, convert to absolute to prevent metadataBase cross-site leakage
+  const normalizedSiteUrl = siteUrl.replace(/\/$/, '')
   const absoluteOgImage = ogImage && !ogImage.startsWith('http')
     ? `${normalizedSiteUrl}${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`
     : ogImage

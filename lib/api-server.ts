@@ -1,9 +1,15 @@
 /**
  * Server-side API functions for Next.js App Router.
  * Used in Server Components for SSR/ISR data fetching.
+ *
+ * ARCHITECTURE RULE:
+ * This layer is TRANSPORT-ONLY. It fetches data from API and returns it.
+ * NO filtering, NO site-policy, NO presentation logic.
+ * Filtering happens in page components using lib/event-filter.ts.
  */
 
 import type { Event } from '@/lib/types';
+import { isReservedSlug } from '@/lib/reserved-slugs';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -60,20 +66,32 @@ export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
     const json = await response.json();
     const results = json.results || json;
 
-    const events: Event[] = results.map((e: APIEvent) => ({
-      id: e.id,
-      slug: e.slug || `event-${e.id}`,
-      type: e.type,
-      title: e.title,
-      date: e.date,
-      day: e.day,
-      month: e.month,
-      time: e.time,
-      minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
-      isSoldOut: e.is_sold_out ?? false,
-      tournamentSlug: e.tournament_slug,
-      venue: e.venue,
-    }));
+    const events: Event[] = results.map((e: APIEvent) => {
+      const slug = e.slug || `event-${e.id}`;
+
+      // Validate against reserved slugs (SEO_ARCHITECTURE §12.3)
+      if (isReservedSlug(slug)) {
+        console.error(
+          `[SERVER API] Reserved slug detected: "${slug}" (Event ID: ${e.id}). ` +
+          `This slug conflicts with static routes and must be changed in CRM.`
+        );
+      }
+
+      return {
+        id: e.id,
+        slug,
+        type: e.type,
+        title: e.title,
+        date: e.date,
+        day: e.day,
+        month: e.month,
+        time: e.time,
+        minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
+        isSoldOut: e.is_sold_out ?? false,
+        tournamentSlug: e.tournament_slug,
+        venue: e.venue,
+      };
+    });
 
     console.log(`[SERVER API] Loaded ${events.length} events for SSR`);
     return events;
@@ -86,6 +104,7 @@ export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
 
 /**
  * Fetch ATP events from Django API (server-side).
+ * TRANSPORT-ONLY: filters by type, does NOT apply site policy.
  */
 export async function fetchATPEventsServer(): Promise<Event[]> {
   const allEvents = await fetchEventsServer();
@@ -96,6 +115,7 @@ export async function fetchATPEventsServer(): Promise<Event[]> {
 
 /**
  * Fetch WTA events from Django API (server-side).
+ * TRANSPORT-ONLY: filters by type, does NOT apply site policy.
  */
 export async function fetchWTAEventsServer(): Promise<Event[]> {
   const allEvents = await fetchEventsServer();

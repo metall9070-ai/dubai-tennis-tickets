@@ -32,6 +32,7 @@
 // If API is unavailable, UI must show error - NOT stale prices
 // NOTE: Event type moved to lib/types.ts to break circular dependency with components/Events.tsx
 import type { Event } from '@/lib/types';
+import { isReservedSlug } from '@/lib/reserved-slugs';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -312,20 +313,32 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
 
     // Transform API response - THESE ARE THE AUTHORITATIVE PRICES
     const results = json.results || json;
-    const djangoEvents: Event[] = results.map((e: APIEvent) => ({
-      id: e.id,
-      slug: e.slug || `event-${e.id}`,  // Fallback for legacy support
-      type: e.type,
-      title: e.title,
-      date: e.date,
-      day: e.day,
-      month: e.month,
-      time: e.time,
-      minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
-      isSoldOut: e.is_sold_out ?? false,
-      tournamentSlug: e.tournament_slug,
-      venue: e.venue,
-    }));
+    const djangoEvents: Event[] = results.map((e: APIEvent) => {
+      const slug = e.slug || `event-${e.id}`;  // Fallback for legacy support
+
+      // Validate against reserved slugs (SEO_ARCHITECTURE §12.3)
+      if (isReservedSlug(slug)) {
+        console.error(
+          `[API CLIENT] Reserved slug detected: "${slug}" (Event ID: ${e.id}). ` +
+          `This slug conflicts with static routes and must be changed in CRM.`
+        );
+      }
+
+      return {
+        id: e.id,
+        slug,
+        type: e.type,
+        title: e.title,
+        date: e.date,
+        day: e.day,
+        month: e.month,
+        time: e.time,
+        minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
+        isSoldOut: e.is_sold_out ?? false,
+        tournamentSlug: e.tournament_slug,
+        venue: e.venue,
+      };
+    });
 
     // Log each event with price source for audit trail
     console.log(`[API] Loaded ${djangoEvents.length} events from Django API (SINGLE SOURCE OF TRUTH)`);
@@ -478,9 +491,19 @@ export async function fetchEventBySlug(
 
     const e: APIEvent = await response.json();
 
+    const slug = e.slug || `event-${e.id}`;
+
+    // Validate against reserved slugs (SEO_ARCHITECTURE §12.3)
+    if (isReservedSlug(slug)) {
+      console.error(
+        `[API CLIENT] Reserved slug detected: "${slug}" (Event ID: ${e.id}). ` +
+        `This slug conflicts with static routes and must be changed in CRM.`
+      );
+    }
+
     const event: Event = {
       id: e.id,
-      slug: e.slug || `event-${e.id}`,
+      slug,
       type: e.type,
       title: e.title,
       date: e.date,
