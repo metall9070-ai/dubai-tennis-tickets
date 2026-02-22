@@ -61,22 +61,29 @@ export function buildMetadata(options: BuildMetadataOptions): Metadata {
 
   // Self-referential canonical and og:url — always matches current page
   // Uses absolute URL to guarantee correctness regardless of metadataBase
-  const pageUrl = `${siteUrl}${path}`
+  // Normalize: remove trailing slash from siteUrl to prevent double slashes
+  const normalizedSiteUrl = siteUrl.replace(/\/$/, '')
+  const pageUrl = `${normalizedSiteUrl}${path}`
 
   // og:image — 3-level fallback, always resolves to an absolute URL:
-  //   1. page-level ogImage param
+  //   1. page-level ogImage param (must be absolute, relative not allowed)
   //   2. site-config ogImage (per-site, set in site-config.ts)
   //   3. ${siteUrl}/og/default.jpg — absolute, uses current site domain, no external dependency
+  // Security: If ogImage is relative, convert to absolute to prevent metadataBase cross-site leakage
+  const absoluteOgImage = ogImage && !ogImage.startsWith('http')
+    ? `${normalizedSiteUrl}${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`
+    : ogImage
+
   const resolvedOgImage =
-    ogImage ??
+    absoluteOgImage ??
     config.ogImage ??
-    `${siteUrl}/og/default.jpg`
+    `${normalizedSiteUrl}/og/default.jpg`
 
   // DEV-only warning when a storefront has no ogImage configured.
   // Does NOT throw — purely diagnostic.
   if (!config.ogImage && process.env.NODE_ENV === 'development') {
     console.warn(
-      `[SEO WARNING] Missing ogImage in site-config for "${config.brand}". Using neutral fallback: ${siteUrl}/og/default.jpg`
+      `[SEO WARNING] Missing ogImage in site-config for "${config.brand}". Using neutral fallback: ${normalizedSiteUrl}/og/default.jpg`
     )
   }
 
