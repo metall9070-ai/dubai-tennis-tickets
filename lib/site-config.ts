@@ -125,7 +125,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     colors: {
       primary: "#00627B",
       primaryHover: "#004F63",
-      header: "#800D2F",
+      header: "#1d1d1f",
     },
     geo: {
       region: "QA",
