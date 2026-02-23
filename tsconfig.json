@@ -40,6 +40,7 @@
     "backend",
     "vite.config.ts",
     "index.tsx",
-    "App.tsx"
+    "App.tsx",
+    "design-preview/**/*"
   ]
 }

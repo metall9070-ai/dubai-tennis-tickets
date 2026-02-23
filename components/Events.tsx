@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchEvents } from '@/lib/api';
+import { getSiteCode } from '@/lib/site-config';
+import { FootballEventCard } from './FootballEventCard';
 
 // Re-export Event type from lib/types.ts for backward compatibility
 // This breaks the circular dependency: api.ts <-> Events.tsx
@@ -102,6 +104,10 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   const atpEvents = events.filter(e => e.type === 'ATP');
   const isTennisLayout = wtaEvents.length > 0 || atpEvents.length > 0;
 
+  // Detect if we're on Finalissima site
+  const siteCode = getSiteCode();
+  const isFinalissimaLayout = siteCode === 'finalissima' && !isTennisLayout;
+
   // Shared header for all states
   const header = (
     <div className="mb-8 md:mb-20 text-center md:text-left">
@@ -187,7 +193,27 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
               </div>
             </div>
           </>
+        ) : isFinalissimaLayout ? (
+          // NEW FOOTBALL CARD DESIGN FOR FINALISSIMA
+          <div className="mb-0">
+            {events.length === 0 ? (
+              <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#86868b]">
+                No sessions available yet. Check back soon.
+              </div>
+            ) : (
+              <div className="flex flex-col gap-6">
+                {events.map((event) => (
+                  <FootballEventCard
+                    key={event.id}
+                    event={event}
+                    onClick={() => onSelectEvent(event)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         ) : (
+          // FALLBACK: OLD DESIGN FOR OTHER SITES
           <div className="mb-0">
             <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
               {events.length === 0 ? (
