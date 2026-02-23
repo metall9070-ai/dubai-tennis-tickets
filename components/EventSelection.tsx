@@ -59,6 +59,48 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   event, initialCategories, eventSEO, onBack, onCart, onHome,
   cart, setCart, onCheckout
 }) => {
+  // Detect if this is a Finalissima event (check env at runtime on client)
+  const [isFinalissima, setIsFinalissima] = useState(false);
+
+  useEffect(() => {
+    // NEXT_PUBLIC_ env vars are embedded at build time and available in browser
+    const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || '';
+    setIsFinalissima(siteCode === 'finalissima');
+  }, []);
+
+  // Parse team names from event title for Finalissima events
+  const getTeamInfo = () => {
+    if (!isFinalissima || !event?.title) return null;
+
+    const titlePart = event.title.split('—')[0]?.trim() || event.title;
+    const teams = titlePart.includes('vs')
+      ? titlePart.split('vs').map((t: string) => t.trim())
+      : titlePart.includes(' - ')
+      ? titlePart.split(' - ').map((t: string) => t.trim())
+      : [];
+
+    if (teams.length !== 2) return null;
+
+    // Map team names to country codes
+    const codeMap: Record<string, string> = {
+      'Argentina': 'ar', 'Spain': 'es', 'Brazil': 'br', 'Germany': 'de',
+      'France': 'fr', 'Italy': 'it', 'Portugal': 'pt', 'Netherlands': 'nl',
+      'England': 'gb-eng', 'Uruguay': 'uy', 'Mexico': 'mx', 'Japan': 'jp',
+      'Qatar': 'qa', 'Serbia': 'rs', 'Saudi Arabia': 'sa', 'Egypt': 'eg',
+      'United States': 'us', 'Belgium': 'be', 'Croatia': 'hr', 'Denmark': 'dk',
+      'Morocco': 'ma', 'South Korea': 'kr',
+    };
+
+    return {
+      team1: teams[0],
+      team2: teams[1],
+      team1Code: codeMap[teams[0]] || 'un',
+      team2Code: codeMap[teams[1]] || 'un',
+    };
+  };
+
+  const teamInfo = getTeamInfo();
+
   // State for categories - Django API is single source of truth
   // Use SSR data if available
   const [categories, setCategories] = useState<Category[]>(initialCategories || []);
@@ -248,10 +290,42 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
           {/* Event Description */}
           <div className="bg-[#f5f5f7] p-5 md:p-8 rounded-[20px] md:rounded-[32px] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border border-black/5">
-            <div>
-              <h2 className="text-xl md:text-3xl font-semibold mb-1 tracking-tight text-[#1d1d1f]">{event?.title || "Dubai Duty Free Tennis Championships"}</h2>
-              <p className="text-[var(--color-primary)] font-semibold text-[14px] md:text-[17px] mb-3 md:mb-4">{event?.venue}</p>
-              <div className="flex items-center space-x-4 md:space-x-6 text-[#86868b] text-[13px] md:text-[15px] font-medium">
+            <div className="w-full md:w-auto">
+              {/* Title with flags for Finalissima */}
+              {isFinalissima && teamInfo ? (
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={`https://flagcdn.com/w80/${teamInfo.team1Code}.png`}
+                        alt={teamInfo.team1}
+                        className="w-6 h-4 md:w-8 md:h-6 object-cover rounded shadow-sm border border-slate-200"
+                      />
+                      <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
+                        {teamInfo.team1}
+                      </h2>
+                    </div>
+                    <span className="text-sm md:text-base font-bold text-slate-400">VS</span>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
+                        {teamInfo.team2}
+                      </h2>
+                      <img
+                        src={`https://flagcdn.com/w80/${teamInfo.team2Code}.png`}
+                        alt={teamInfo.team2}
+                        className="w-6 h-4 md:w-8 md:h-6 object-cover rounded shadow-sm border border-slate-200"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <h2 className="text-xl md:text-3xl font-semibold mb-1 tracking-tight text-[#1d1d1f]">
+                  {event?.title || "Dubai Duty Free Tennis Championships"}
+                </h2>
+              )}
+
+              {/* Date, Time, and Venue */}
+              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-[#86868b] text-[13px] md:text-[15px] font-medium mt-3">
                 <div className="flex items-center">
                   <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
@@ -264,6 +338,15 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   </svg>
                   <span>{event?.time}</span>
                 </div>
+                {event?.venue && (
+                  <div className="flex items-center">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span className="font-semibold text-[var(--color-primary)]">{event.venue}</span>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex flex-col items-start md:items-end gap-2 self-start md:self-auto">
