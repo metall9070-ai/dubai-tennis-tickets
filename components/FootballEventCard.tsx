@@ -22,9 +22,11 @@ interface FootballEventCardProps {
  */
 export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onClick }) => {
   // Extract team data from event
-  // Format: "Argentina vs Spain" or similar
+  // Format: "Argentina vs Spain" or "Qatar - Argentina"
   const teams = event.title?.includes('vs')
     ? event.title.split('vs').map(t => t.trim())
+    : event.title?.includes(' - ')
+    ? event.title.split(' - ').map(t => t.trim())
     : [event.title || 'Team 1', 'Team 2'];
 
   const team1 = teams[0] || 'Team 1';
