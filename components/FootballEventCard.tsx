@@ -118,6 +118,15 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
 
         {/* Match Info Section */}
         <div className="flex-grow flex flex-col gap-4 px-8">
+          {/* Finalissima Title - Above Teams */}
+          {isFinalissimaEvent && (
+            <div className="text-center -mb-2">
+              <span className="text-[11px] font-bold text-[#00627B] uppercase tracking-widest">
+                Finalissima 2026
+              </span>
+            </div>
+          )}
+
           {/* Teams */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
@@ -151,11 +160,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
               <MapPin className="w-4 h-4" />
               <span>{event.venue || 'Lusail Stadium'}</span>
             </div>
-            {isFinalissimaEvent && (
-              <span className="text-[10px] font-bold text-[#00627B] uppercase tracking-widest bg-[#e6f0f2] px-3 py-1 rounded-full">
-                Finalissima 2026
-              </span>
-            )}
           </div>
         </div>
 
@@ -189,6 +193,15 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
 
       {/* --- MOBILE LAYOUT (up to lg) --- */}
       <div className="lg:hidden p-8 flex flex-col gap-8">
+        {/* Finalissima Title - Above Everything */}
+        {isFinalissimaEvent && (
+          <div className="text-center -mb-4">
+            <span className="text-[11px] font-bold text-[#00627B] uppercase tracking-widest">
+              Finalissima 2026
+            </span>
+          </div>
+        )}
+
         {/* 1. Teams Section */}
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center justify-center gap-4 w-full">
@@ -238,15 +251,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
           <MapPin className="w-4 h-4" />
           <span>{event.venue || 'Lusail Stadium'}</span>
         </div>
-
-        {/* 3a. Finalissima Badge if applicable */}
-        {isFinalissimaEvent && (
-          <div className="text-center -mt-2">
-            <span className="text-[10px] font-bold text-[#00627B] uppercase tracking-widest bg-[#e6f0f2] px-3 py-1 rounded-full">
-              Finalissima 2026
-            </span>
-          </div>
-        )}
 
         {/* 4. Bottom Action Section */}
         <div className="flex items-center justify-between pt-6 border-t border-slate-100">
