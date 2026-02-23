@@ -121,7 +121,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     gaId: process.env.NEXT_PUBLIC_GA_ID,
     gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
     jsonLdType: "finalissima",
-    allowedEventTypes: ["FOOTBALL"],
+    allowedEventTypes: ["MATCH"],
     colors: {
       primary: "#00627B",
       primaryHover: "#004F63",
@@ -216,53 +216,6 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
           },
         },
         {
-          "@type": "SportsEvent",
-          name: "Dubai Duty Free Tennis Championships 2026",
-          description:
-            "Premier ATP 500 and WTA 1000 professional tennis tournament featuring the world's top players at the iconic Dubai Duty Free Tennis Stadium",
-          startDate: "2026-02-15T11:00:00+04:00",
-          endDate: "2026-02-28T22:00:00+04:00",
-          eventStatus: "https://schema.org/EventScheduled",
-          eventAttendanceMode:
-            "https://schema.org/OfflineEventAttendanceMode",
-          location: {
-            "@type": "StadiumOrArena",
-            name: "Dubai Duty Free Tennis Stadium",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Aviation Club, Al Garhoud",
-              addressLocality: "Dubai",
-              postalCode: "25111",
-              addressCountry: "AE",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: "25.2340",
-              longitude: "55.3309",
-            },
-            maximumAttendeeCapacity: 5000,
-          },
-          organizer: {
-            "@type": "Organization",
-            name: "Dubai Duty Free",
-            url: "https://www.dubaidutyfree.com",
-          },
-          offers: {
-            "@type": "AggregateOffer",
-            lowPrice: "200",
-            highPrice: "3000",
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-            validFrom: "2025-06-01",
-            url: `${SITE_URL}/`,
-            seller: {
-              "@type": "Organization",
-              name: "Dubai Tennis Tickets",
-            },
-            offerCount: "13",
-          },
-        },
-        {
           "@type": "WebSite",
           name: "Dubai Tennis Tickets",
           url: SITE_URL,
@@ -280,39 +233,6 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
           name: "Football Festival Qatar",
           url: SITE_URL,
           email: "support@footballfestivalqatar.com",
-        },
-        {
-          "@type": "SportsEvent",
-          name: "Finalissima 2026",
-          description:
-            "Intercontinental football final between UEFA EURO 2024 champion Spain and Copa América 2024 champion Argentina at Lusail Stadium",
-          startDate: "2026-03-27",
-          endDate: "2026-03-27",
-          eventStatus: "https://schema.org/EventScheduled",
-          eventAttendanceMode:
-            "https://schema.org/OfflineEventAttendanceMode",
-          location: {
-            "@type": "StadiumOrArena",
-            name: "Lusail Stadium",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Lusail",
-              addressCountry: "QA",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: "25.4195",
-              longitude: "51.4906",
-            },
-            maximumAttendeeCapacity: 80000,
-          },
-          offers: {
-            "@type": "AggregateOffer",
-            lowPrice: "100",
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-            url: `${SITE_URL}/`,
-          },
         },
         {
           "@type": "WebSite",
