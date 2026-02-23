@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSiteConfig, getSiteCode } from '@/lib/site-config';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface NavbarProps {
   isVisible: boolean;
@@ -17,7 +19,8 @@ const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const siteCode = getSiteCode();
+  // Get site_code from environment variable (works in client component)
+  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'tennis';
   const { navigation } = getSiteConfig();
   const navItems = navigation;
   const isFinalissimaLogo = siteCode === 'finalissima';
