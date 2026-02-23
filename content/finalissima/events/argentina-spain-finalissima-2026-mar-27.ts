@@ -8,85 +8,53 @@ import type { EventSEO } from '@/types/seo'
  * CRM does not store SEO.
  */
 export const eventSEO: EventSEO = {
-  title: 'Argentina vs Spain Finalissima 2026 Tickets | March 27 Qatar',
+  title: 'Argentina vs Spain Tickets March 27 2026 | Finalissima Qatar',
   description:
-    'Secure tickets for Argentina vs Spain Finalissima 2026 at Lusail Stadium, Qatar. March 27 intercontinental final. Compare prices, verified sellers, instant delivery.',
+    'Buy Argentina vs Spain Finalissima tickets for March 27, 2026 at Lusail Stadium. Secure seating for this intercontinental showdown. Market pricing, verified delivery.',
   h1: 'Argentina vs Spain Finalissima 2026 — March 27, Lusail Stadium',
 
   content: `
     <h2>About the Match</h2>
-    <p>On <strong>March 27, 2026</strong>, <strong>Argentina</strong> and <strong>Spain</strong> will meet at Lusail Stadium in Qatar to contest the <strong>Finalissima 2026</strong> intercontinental championship. This single high-stakes encounter brings together the reigning champions of South America and Europe in a prestigious match between continental champions.</p>
+    <p>On <strong>March 27, 2026</strong>, <strong>Argentina</strong> and <strong>Spain</strong> clash at Lusail Stadium in the <strong>Finalissima 2026</strong>, a prestigious intercontinental final bringing together South America's Copa América champions and Europe's reigning title holders. This match represents a rare high-profile meeting outside the World Cup, with both nations arriving in Qatar with recent continental success and world-class squads. As part of the <a href="/about-tournament">Football Festival Qatar 2026</a>, this fixture offers fans a unique chance to witness elite international football in a trophy-bearing contest that blends tactical excellence with competitive intensity.</p>
 
-    <p>This fixture represents a continuation of the Finalissima tradition, which pits the Copa América champion against the European Championship winner. Both nations enter the match with recent continental success and world-class squads, making this one of the most anticipated international fixtures of 2026.</p>
+    <h2>Why Buy Argentina vs Spain Tickets Early</h2>
+    <p>Demand for the <strong>Argentina vs Spain Finalissima</strong> is driven by the prestige of both teams and the rarity of this fixture. Matches featuring continental champions typically attract significant interest from international supporters, collectors, and neutral fans. Ticket inventory for high-profile fixtures at Lusail Stadium tends to tighten as the event approaches, particularly for premium seating categories offering optimal sightlines. Securing tickets early provides access to a wider selection of seating options and allows for better travel planning. Market-based pricing reflects availability fluctuations, with prices generally rising closer to match day as inventory becomes limited.</p>
 
-    <p>Argentina arrives as the reigning Copa América champion, while Spain holds the European title. The match serves as both a competitive test and a celebration of international football excellence ahead of the broader 2026 World Cup cycle.</p>
+    <h2>Lusail Stadium & Matchday Experience</h2>
+    <p><strong>Lusail Stadium</strong> is Qatar's flagship venue, located 15 kilometers north of central Doha with an 80,000+ capacity. The stadium hosted the 2022 World Cup Final and features advanced climate control, premium hospitality zones, and engineered sightlines from all tiers. Access is straightforward via Doha Metro Red Line (Lusail South Station), with a 30-minute journey from central Doha. The venue's modern infrastructure supports a world-class matchday experience, while Qatar's moderate late-March climate adds comfort to the evening kickoff. Explore detailed <a href="/venue">venue facilities and access information</a> before your visit.</p>
 
-    <h2>Why This Match Matters</h2>
-    <p>The <strong>Argentina vs Spain Finalissima 2026</strong> carries significant prestige as a rare fixture between continental champions outside of the World Cup. For fans, it offers a unique opportunity to see elite national teams compete in a neutral, trophy-bearing contest.</p>
+    <h2>Ticket Categories & Availability</h2>
+    <p>Tickets for <strong>Argentina vs Spain on March 27, 2026</strong> are available across multiple seating categories, including lower tier sections for close-to-pitch views, upper tier seating with elevated perspective, and various side and corner positions. Pricing is determined by market demand, category designation, and proximity to kickoff. Independent resale platforms provide access to released inventory when primary channels are exhausted or when buyers seek specific seating preferences. Availability fluctuates based on demand dynamics, so early purchase is recommended for securing preferred sections. Premium categories typically see the fastest inventory movement given limited allocation and high demand for this level of fixture.</p>
 
-    <p>Argentina's recent tournament pedigree includes multiple Copa América titles and a World Cup triumph, while Spain's tactical evolution and deep talent pool have made them European champions once again. The tactical contrast between South American flair and European structure adds narrative depth to the encounter.</p>
-
-    <p>The <strong>March 27</strong> fixture forms part of Football Festival Qatar 2026, a week-long series of international friendlies and showcase matches across Qatar's world-class stadiums. Learn more about the <a href="/about-tournament">tournament format and history</a>. This provides additional context and atmosphere for traveling supporters and neutral attendees.</p>
-
-    <h2>Venue Information</h2>
-    <p><strong>Lusail Stadium</strong> is Qatar's flagship sporting venue, located approximately 15 kilometers north of central Doha in the purpose-built city of Lusail. The stadium has a seating capacity exceeding 80,000 and hosted the 2022 World Cup Final, establishing its credentials as a world-class football venue.</p>
-
-    <p>The venue features advanced climate control systems, ensuring comfortable viewing conditions despite Qatar's warm climate. Sightlines are engineered for optimal visibility from all seating tiers, and the stadium's modern design includes premium hospitality zones, accessible seating areas, and integrated technology for enhanced matchday experience. Explore detailed <a href="/venue">venue information and facilities</a>.</p>
-
-    <p>Transport links include the Doha Metro Red Line, with Lusail South Station providing direct access to the stadium precinct. Journey time from central Doha is approximately 30 minutes via metro. Road access is supported by dedicated parking facilities, though public transport is recommended on matchday due to high attendance volumes.</p>
-
-    <h2>Ticket Information</h2>
-    <p>Tickets for the <strong>Argentina vs Spain match on March 27, 2026</strong> are available across multiple seating categories, reflecting the stadium's tiered structure. Pricing varies based on viewing position, proximity to the pitch, and category designation. Independent ticket providers offer access to released inventory, with prices determined by market demand and availability.</p>
-
-    <p>All tickets are delivered electronically, typically no later than two days before the event date. Digital delivery ensures secure access and eliminates the risk of physical ticket loss or postal delays. Buyers receive clear instructions on how to access and present their tickets at stadium entry points.</p>
-
-    <p>Seating categories generally include lower tier sections offering close-to-pitch views, upper tier sections with elevated perspective, and corner or side-angle positions. Specific category names and availability are subject to inventory allocation schedules.</p>
-
-    <p>Ticket transfers are supported in most cases, allowing purchasers to reassign tickets to friends or family members if plans change. Transfer procedures are outlined in the delivery confirmation email and typically require simple digital reassignment through the ticketing platform.</p>
-
-    <h2>How to Buy Tickets</h2>
-    <p>Purchasing tickets for the <strong>Argentina vs Spain Finalissima 2026</strong> through independent resale platforms follows a straightforward process. Buyers select their preferred seating category, specify the number of tickets required, and proceed to secure checkout. Payment is processed via encrypted channels, and confirmation is issued immediately upon successful transaction.</p>
-
-    <p>When ordering multiple tickets, seats are allocated together wherever possible, ensuring groups can sit side by side. This is particularly important for families or traveling supporter groups attending the match together.</p>
-
-    <p>Independent sellers provide access to tickets that may no longer be available through primary channels, or offer flexibility in category selection when initial sales have concluded. Prices reflect current market conditions and may differ from original face value depending on demand, availability, and proximity to the event date.</p>
-
-    <p>Refund policies typically include provisions for full refunds in the event of match cancellation. If the match is postponed rather than cancelled, tickets generally remain valid for the rescheduled date. Buyers are advised to review specific terms and conditions before completing purchase.</p>
-
-    <p>Customer support is available to assist with purchase queries, delivery timelines, ticket transfer procedures, and any technical issues that may arise during the buying process. Assistance is typically provided via email, live chat, or telephone depending on the platform.</p>
-
-    <p>International visitors attending the <strong>March 27 Argentina vs Spain match</strong> should plan travel arrangements well in advance. View the <a href="/schedule">complete match calendar</a> to plan your visit around other fixtures. Accommodation options in Doha range from luxury hotels to mid-range properties, with the Lusail area itself offering several hospitality options within walking distance of the stadium.</p>
-
-    <p>Matchday advice includes arriving at the stadium at least 90 minutes before kickoff to allow time for security screening, bag checks, and navigating to your seating section. Outside food and beverages are typically not permitted, but the stadium features extensive concessions offering a range of refreshments.</p>
-
-    <p>Qatar's climate in late March is generally warm but more moderate than summer months, with daytime temperatures typically in the mid-20s to low 30s Celsius. Evening temperatures are comfortable, and the stadium's climate control further enhances viewing conditions. Browse <a href="/">additional match options</a> during your visit to Qatar.</p>
+    <h2>Secure Booking & Delivery</h2>
+    <p>Purchasing tickets follows a secure digital process: select your seating category, specify quantity, and proceed through encrypted checkout. Confirmation is issued immediately, and tickets are delivered electronically no later than two days before March 27. Digital delivery eliminates postal risk and ensures reliable access. Tickets can typically be transferred if plans change, with transfer procedures outlined in the delivery email. In the event of cancellation, full refunds are standard; if postponed, tickets remain valid for the rescheduled date. View the <a href="/schedule">complete tournament calendar</a> to coordinate attendance with other fixtures during Football Festival Qatar 2026.</p>
   `,
 
   faq: [
     {
-      question: 'When will I receive my Argentina vs Spain Finalissima 2026 tickets?',
+      question: 'When is the best time to buy Argentina vs Spain Finalissima tickets?',
       answer:
-        'Tickets are delivered electronically no later than 2 days before the event date (March 27, 2026). You will receive an email with access instructions and a digital ticket file that can be saved to your mobile device or printed.',
+        'Purchasing tickets as early as possible is recommended for the Argentina vs Spain match on March 27, 2026. Inventory for high-demand fixtures at Lusail Stadium typically tightens as the event approaches, especially for premium seating categories. Early buyers benefit from wider category selection and better pricing stability before demand-driven price adjustments occur closer to match day.',
     },
     {
-      question: 'What seating categories are available for this match at Lusail Stadium?',
+      question: 'How are ticket prices determined for Argentina vs Spain on March 27?',
       answer:
-        'Seating categories include lower tier, upper tier, and various viewing angles around the pitch. Specific category names and availability depend on inventory releases. All categories provide clear sightlines and access to stadium facilities.',
+        'Ticket prices for the Argentina vs Spain Finalissima reflect market demand, seating category, and availability. Independent resale platforms price tickets based on current inventory levels and buyer interest. Prices may differ from original face value depending on how close the event date is and which categories remain available. Premium sections typically command higher prices due to limited allocation and strong demand for this caliber of fixture.',
     },
     {
-      question: 'Can I transfer my Argentina vs Spain tickets to someone else if I cannot attend?',
+      question: 'When will I receive my Argentina vs Spain tickets after purchasing?',
       answer:
-        'Yes, tickets can typically be transferred to another person. Transfer procedures are outlined in your ticket delivery email and usually involve digital reassignment through the ticketing platform or by forwarding the ticket file.',
+        'Tickets for the Argentina vs Spain match on March 27, 2026 are delivered electronically no later than 2 days before the event. You will receive an email with digital access instructions. This secure delivery method eliminates postal delays and ensures you have reliable entry credentials well before kickoff at Lusail Stadium.',
     },
     {
-      question: 'What happens if the Argentina vs Spain match is cancelled or postponed?',
+      question: 'Can I choose my exact seats for Argentina vs Spain at Lusail Stadium?',
       answer:
-        'If the match is cancelled, a full refund will be issued. If the match is postponed to a different date, your tickets will remain valid for the rescheduled fixture. Notification will be sent via email if any changes occur.',
+        'Seating is allocated within the category you select when purchasing Argentina vs Spain Finalissima tickets. While exact seat numbers may not be choosable in advance, tickets within the same order are seated together. Lower tier, upper tier, and various viewing angle categories are available depending on current inventory. All sections at Lusail Stadium offer clear sightlines and access to venue facilities.',
     },
     {
-      question: 'How do I get to Lusail Stadium for the March 27 match?',
+      question: 'What happens if the Argentina vs Spain match on March 27 is postponed or cancelled?',
       answer:
-        'Lusail Stadium is accessible via Doha Metro Red Line (Lusail South Station), approximately 30 minutes from central Doha. Taxis and ride-sharing services are also available. Arriving 90 minutes before kickoff is recommended to allow time for security and entry procedures.',
+        'If the Argentina vs Spain Finalissima is cancelled, a full refund will be processed. If the match is postponed to a different date, your tickets remain valid for the rescheduled fixture. Any changes to the March 27, 2026 event will be communicated immediately via email, and buyer protections apply in either scenario.',
     },
   ],
 
@@ -95,7 +63,7 @@ export const eventSEO: EventSEO = {
     '@type': 'SportsEvent',
     name: 'Argentina vs Spain – Finalissima 2026',
     description:
-      'Intercontinental final between Copa América champion Argentina and European champion Spain at Lusail Stadium, Qatar.',
+      'Intercontinental final between Argentina and Spain at Lusail Stadium, Qatar on March 27, 2026.',
     startDate: '2026-03-27T19:00:00+03:00',
     endDate: '2026-03-27T21:00:00+03:00',
     eventStatus: 'https://schema.org/EventScheduled',
@@ -132,35 +100,37 @@ export const eventSEO: EventSEO = {
 }
 
 /*
-Long-tail keyword cluster (match-specific only):
+Long-tail keyword cluster (commercial intent — match-specific only):
 
-Purchase Intent:
-- buy argentina vs spain finalissima 2026 tickets
-- argentina spain finalissima tickets march 27
-- argentina vs spain march 27 2026 lusail tickets
-- how to buy argentina spain finalissima tickets
+High-Intent Purchase:
+1. buy argentina vs spain finalissima tickets march 27 2026
+2. argentina spain finalissima 2026 tickets lusail stadium
+3. secure argentina vs spain march 27 tickets online
+4. argentina spain intercontinental final tickets march 27
 
-Pricing & Comparison:
-- argentina vs spain finalissima ticket prices
-- argentina spain march 27 ticket prices
-- compare argentina spain finalissima tickets
-- argentina vs spain lusail stadium ticket deals
+Pricing & Availability:
+5. argentina vs spain finalissima ticket prices march 2026
+6. best price argentina spain tickets march 27 lusail
+7. argentina spain finalissima resale tickets march 27
+8. argentina vs spain march 27 ticket availability
 
-Venue-Specific:
-- lusail stadium argentina spain march 27 tickets
-- argentina vs spain lusail seating categories
-- best seats argentina vs spain lusail stadium
-- lusail stadium argentina spain finalissima seating
+Seating & Categories:
+9. premium seats argentina vs spain lusail march 27
+10. lower tier tickets argentina spain finalissima 2026
+11. argentina vs spain lusail stadium seating march 27
+12. best view seats argentina spain finalissima qatar
 
-Event-Specific:
-- argentina spain march 27 2026 qatar tickets
-- argentina spain intercontinental final march 27
-- spain argentina finalissima march 27 ticket sales
-- argentina vs spain march 2026 lusail tickets
+Venue-Specific Commercial:
+13. lusail stadium argentina spain tickets march 27 2026
+14. argentina vs spain lusail qatar march 27 seating
+15. buy lusail stadium argentina spain finalissima tickets
 
-Travel & Logistics:
-- argentina vs spain march 27 travel packages
-- argentina vs spain qatar march 27 tickets tourists
-- argentina spain finalissima march 27 doha tickets
-- how to attend argentina spain finalissima march 27
+Timing & Urgency:
+16. early booking argentina spain finalissima march 27
+17. last minute argentina vs spain tickets march 2026
+18. argentina spain march 27 2026 ticket demand
+
+Event-Specific Long-Tail:
+19. argentina vs spain qatar football festival march 27 tickets
+20. finalissima 2026 argentina spain march 27 lusail tickets
 */
