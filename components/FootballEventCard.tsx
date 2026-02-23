@@ -72,10 +72,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
 
   const dateInfo = formatDate();
 
-  // Check if it's a special event (Finalissima)
-  const isSpecial = event.title?.toLowerCase().includes('finalissima') ||
-                    event.title?.toLowerCase().includes('argentina') && event.title?.toLowerCase().includes('spain');
-
   // Check if price is valid
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
@@ -106,12 +102,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
       onClick={handleClick}
       className="group relative bg-white rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden max-w-4xl mx-auto w-full cursor-pointer"
     >
-      {/* Top Event Badge */}
-      {isSpecial && (
-        <div className="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider z-10">
-          Top Event
-        </div>
-      )}
 
       {/* --- DESKTOP LAYOUT (lg and up) --- */}
       <div className="hidden lg:flex flex-row items-center p-0 h-[160px]">
@@ -157,11 +147,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
               <MapPin className="w-4 h-4" />
               <span>{event.venue || 'Lusail Stadium'}</span>
             </div>
-            {isSpecial && (
-              <span className="text-[10px] font-bold text-[#00627B] uppercase tracking-widest bg-[#e6f0f2] px-3 py-1 rounded-full">
-                Finalissima 2026
-              </span>
-            )}
           </div>
         </div>
 
@@ -245,16 +230,7 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
           <span>{event.venue || 'Lusail Stadium'}</span>
         </div>
 
-        {/* 4. Special Title if exists */}
-        {isSpecial && (
-          <div className="text-center -mt-4">
-            <span className="text-[10px] font-bold text-[#00627B] uppercase tracking-widest bg-[#e6f0f2] px-3 py-1 rounded-full">
-              Finalissima 2026
-            </span>
-          </div>
-        )}
-
-        {/* 5. Bottom Action Section */}
+        {/* 4. Bottom Action Section */}
         <div className="flex items-center justify-between pt-6 border-t border-slate-100">
           {!event.isSoldOut && hasValidPrice && (
             <>
