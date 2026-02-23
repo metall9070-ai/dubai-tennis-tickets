@@ -68,7 +68,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
     setIsFinalissima(siteCode === 'finalissima');
   }, []);
 
-  // Parse team names from event title for Finalissima events
+  // Parse team names and venue from event title for Finalissima events
   const getTeamInfo = () => {
     if (!isFinalissima || !event?.title) return null;
 
@@ -100,6 +100,20 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   };
 
   const teamInfo = getTeamInfo();
+
+  // Parse venue from eventSEO h1 for Finalissima (fallback if event.venue is empty)
+  const getVenueFromSEO = () => {
+    if (!isFinalissima || !eventSEO?.h1 || event?.venue) return event?.venue;
+
+    // Format: "Team1 vs Team2 — Date, Venue"
+    const lastCommaIndex = eventSEO.h1.lastIndexOf(',');
+    if (lastCommaIndex !== -1) {
+      return eventSEO.h1.substring(lastCommaIndex + 1).trim();
+    }
+    return event?.venue;
+  };
+
+  const displayVenue = getVenueFromSEO();
 
   // State for categories - Django API is single source of truth
   // Use SSR data if available
@@ -338,13 +352,13 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   </svg>
                   <span>{event?.time}</span>
                 </div>
-                {event?.venue && (
+                {displayVenue && (
                   <div className="flex items-center">
                     <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span className="font-semibold text-[var(--color-primary)]">{event.venue}</span>
+                    <span className="font-semibold text-[var(--color-primary)]">{displayVenue}</span>
                   </div>
                 )}
               </div>
