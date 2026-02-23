@@ -72,6 +72,10 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
 
   const dateInfo = formatDate();
 
+  // Check if it's the Finalissima main event (Argentina vs Spain)
+  const isFinalissimaEvent = (event.title?.toLowerCase().includes('argentina') && event.title?.toLowerCase().includes('spain')) ||
+                              (event.title?.toLowerCase().includes('spain') && event.title?.toLowerCase().includes('argentina'));
+
   // Check if price is valid
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
@@ -147,6 +151,11 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
               <MapPin className="w-4 h-4" />
               <span>{event.venue || 'Lusail Stadium'}</span>
             </div>
+            {isFinalissimaEvent && (
+              <span className="text-[10px] font-bold text-[#00627B] uppercase tracking-widest bg-[#e6f0f2] px-3 py-1 rounded-full">
+                Finalissima 2026
+              </span>
+            )}
           </div>
         </div>
 
@@ -229,6 +238,15 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
           <MapPin className="w-4 h-4" />
           <span>{event.venue || 'Lusail Stadium'}</span>
         </div>
+
+        {/* 3a. Finalissima Badge if applicable */}
+        {isFinalissimaEvent && (
+          <div className="text-center -mt-2">
+            <span className="text-[10px] font-bold text-[#00627B] uppercase tracking-widest bg-[#e6f0f2] px-3 py-1 rounded-full">
+              Finalissima 2026
+            </span>
+          </div>
+        )}
 
         {/* 4. Bottom Action Section */}
         <div className="flex items-center justify-between pt-6 border-t border-slate-100">
