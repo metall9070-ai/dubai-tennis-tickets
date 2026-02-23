@@ -452,7 +452,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   </div>
 
                   <div className="mb-3 md:mb-4">
-                    <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[var(--color-header)] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
+                    <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[#1d1d1f] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
                     <div className="flex items-baseline space-x-1.5">
                        <span className="text-[15px] md:text-[17px] text-[#86868b]">Price:</span>
                        <span className="text-[20px] md:text-[24px] font-bold text-[var(--color-primary)]">${selectedCategory.price.toLocaleString()}</span>
@@ -463,7 +463,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="bg-[#f8f9fb] rounded-[20px] md:rounded-[24px] p-4 md:p-6 mb-4 md:mb-6">
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div className="flex flex-col">
-                        <span className="text-[15px] md:text-[17px] font-bold text-[var(--color-header)]">Quantity</span>
+                        <span className="text-[15px] md:text-[17px] font-bold text-[#1d1d1f]">Quantity</span>
                         <span className="text-[10px] md:text-[11px] text-[#86868b] font-medium mt-0.5">Max 4 per order</span>
                       </div>
                       <div className="flex items-center space-x-4 md:space-x-5">
@@ -473,7 +473,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         >
                           <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1d1d1f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M20 12H4" /></svg>
                         </button>
-                        <span className="text-[17px] md:text-[19px] font-bold text-[var(--color-header)] tabular-nums w-4 text-center">{ticketCount}</span>
+                        <span className="text-[17px] md:text-[19px] font-bold text-[#1d1d1f] tabular-nums w-4 text-center">{ticketCount}</span>
                         <button
                           onClick={handlePlus}
                           className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-[#f0f0f0]"
@@ -493,8 +493,8 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     </div>
 
                     <div className="flex justify-between items-center">
-                       <span className="text-[18px] md:text-[20px] font-bold text-[var(--color-header)]">Total</span>
-                       <span className="text-[22px] md:text-[28px] font-bold text-[var(--color-header)] tracking-tight tabular-nums">${(selectedCategory.price * ticketCount).toLocaleString()}</span>
+                       <span className="text-[18px] md:text-[20px] font-bold text-[#1d1d1f]">Total</span>
+                       <span className="text-[22px] md:text-[28px] font-bold text-[#1d1d1f] tracking-tight tabular-nums">${(selectedCategory.price * ticketCount).toLocaleString()}</span>
                     </div>
                   </div>
 
