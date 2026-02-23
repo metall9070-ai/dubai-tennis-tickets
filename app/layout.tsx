@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { getSiteConfig, getSiteUrl, buildJsonLd } from '@/lib/site-config';
+import { getSiteConfig, getSiteUrl, buildJsonLd, getSiteCode } from '@/lib/site-config';
 import { CartProvider } from './CartContext';
 import './globals.css';
 
@@ -18,10 +18,12 @@ if (!process.env.NEXT_PUBLIC_SITE_URL) {
   );
 }
 
+const siteCode = getSiteCode();
 const siteConfig = getSiteConfig();
 const siteUrl = getSiteUrl();
 const jsonLd = buildJsonLd(siteConfig);
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+const faviconPath = siteCode === 'finalissima' ? '/favicon-finalissima.svg' : '/favicon.svg';
 
 /* ------------------------------------------------------------------ */
 /*  Metadata — driven by site-config                                   */
@@ -90,8 +92,8 @@ export default function RootLayout({
       } as React.CSSProperties}
     >
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href={faviconPath} />
+        <link rel="apple-touch-icon" href={faviconPath} />
         <meta name="theme-color" content={siteConfig.colors.primary} />
 
         {/* Google Search Console Verification — only if configured */}
