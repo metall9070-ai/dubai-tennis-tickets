@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 -32 966.8 1036.9" xml:space="preserve">
   <style>
+    [data-category="category-1"],
+    [data-category="category-2"],
+    [data-category="category-3"] {
+      cursor: pointer;
+    }
+
     [data-category="category-1"] path,
     [data-category="category-1"] rect,
     [data-category="category-1"] circle,
@@ -52,7 +58,7 @@
     [data-category="category-3"]:hover:not(.sold-out) rect,
     [data-category="category-3"]:hover:not(.sold-out) circle,
     [data-category="category-3"]:hover:not(.sold-out) polygon {
-      filter: brightness(1.2);
+      filter: brightness(1.35);
       cursor: pointer;
       opacity: 0.95;
     }
@@ -62,7 +68,7 @@
     [data-category].active:not(.sold-out) rect,
     [data-category].active:not(.sold-out) circle,
     [data-category].active:not(.sold-out) polygon {
-      filter: brightness(1.2);
+      filter: brightness(1.35);
       opacity: 0.95;
     }
 

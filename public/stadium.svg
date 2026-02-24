@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 133.56 102.34">
   <style>
+    [data-category="category-1"],
+    [data-category="category-2"],
+    [data-category="category-3"] {
+      cursor: pointer;
+    }
+
     /* Category colors matching Lusail stadium */
     [data-category="category-1"] path,
     [data-category="category-1"] rect,
@@ -32,7 +38,7 @@
     [data-category="category-3"]:hover:not(.sold-out) path,
     [data-category="category-3"]:hover:not(.sold-out) rect,
     [data-category="category-3"]:hover:not(.sold-out) polygon {
-      filter: brightness(1.2);
+      filter: brightness(1.35);
       cursor: pointer;
       opacity: 0.95;
     }
@@ -41,7 +47,7 @@
     [data-category].active:not(.sold-out) path,
     [data-category].active:not(.sold-out) rect,
     [data-category].active:not(.sold-out) polygon {
-      filter: brightness(1.2);
+      filter: brightness(1.35);
       opacity: 0.95;
     }
 
