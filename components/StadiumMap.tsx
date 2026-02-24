@@ -20,7 +20,6 @@ export default function StadiumMap({
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgLoaded, setSvgLoaded] = useState(false);
 
-  // Hide map for Jassim Bin Hamad Stadium
   if (venue?.includes('Jassim Bin Ham')) {
     return (
       <div className="flex items-center justify-center h-[400px] bg-white rounded-lg border border-gray-200">
@@ -33,7 +32,13 @@ export default function StadiumMap({
 
   const svgPath = venue?.includes('Lusail') ? '/lusail.svg' : '/stadium.svg';
 
-  // Load SVG and inject into DOM
+  // Category base colors - must match the SVG styles
+  const categoryColors: Record<string, string> = {
+    'category-1': '#800D2F',
+    'category-2': '#C73866',
+    'category-3': '#FFB5A7',
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -43,12 +48,11 @@ export default function StadiumMap({
       .then(svgText => {
         container.innerHTML = svgText;
         setSvgLoaded(true);
-        console.log('[StadiumMap] SVG loaded and injected');
+        console.log('[StadiumMap] SVG loaded');
       })
       .catch(err => console.error('[StadiumMap] Failed to load SVG:', err));
   }, [svgPath]);
 
-  // Setup interactivity after SVG is loaded
   useEffect(() => {
     if (!svgLoaded || !containerRef.current) return;
 
@@ -57,52 +61,65 @@ export default function StadiumMap({
     const cleanupFunctions: (() => void)[] = [];
 
     categories.forEach((category) => {
-      const groups = container.querySelectorAll(`[data-category="${category}"]`);
-      console.log(`[StadiumMap] Found ${groups.length} groups for ${category}`);
+      const parentGroups = container.querySelectorAll(`[data-category="${category}"]`);
+      
+      parentGroups.forEach((parentGroup) => {
+        const childSections = parentGroup.querySelectorAll('[data-section]');
+        console.log(`[StadiumMap] ${category}: ${childSections.length} sections`);
 
-      groups.forEach((group) => {
-        const element = group as SVGGElement;
+        childSections.forEach((section) => {
+          const element = section as SVGGElement;
 
-        // Set cursor
-        element.style.cursor = soldOutCategories.includes(category) ? 'not-allowed' : 'pointer';
+          // Apply uniform base color to ALL shapes in this section
+          const baseColor = categoryColors[category];
+          if (baseColor && !soldOutCategories.includes(category)) {
+            const shapes = element.querySelectorAll('path, rect, polygon, circle');
+            shapes.forEach((shape) => {
+              (shape as SVGElement).style.fill = baseColor;
+            });
+          }
 
-        // Apply active state brightness
-        if (activeCategory === category && !soldOutCategories.includes(category)) {
-          element.style.filter = 'brightness(1.35)';
-        } else {
-          element.style.filter = '';
-        }
+          // Set cursor
+          element.style.cursor = soldOutCategories.includes(category) ? 'not-allowed' : 'pointer';
 
-        const handleMouseEnter = () => {
-          if (!soldOutCategories.includes(category)) {
+          // Apply active state
+          if (activeCategory === category && !soldOutCategories.includes(category)) {
             element.style.filter = 'brightness(1.35)';
-            onCategoryHover?.(category);
+          } else {
+            element.style.filter = '';
           }
-        };
 
-        const handleMouseLeave = () => {
-          if (!soldOutCategories.includes(category)) {
-            if (activeCategory !== category) {
-              element.style.filter = '';
+          const handleMouseEnter = () => {
+            if (!soldOutCategories.includes(category)) {
+              element.style.filter = 'brightness(1.35)';
+              onCategoryHover?.(category);
             }
-            onCategoryHover?.(null);
-          }
-        };
+          };
 
-        const handleClick = () => {
-          if (!soldOutCategories.includes(category)) {
-            onCategoryClick?.(category);
-          }
-        };
+          const handleMouseLeave = () => {
+            if (!soldOutCategories.includes(category)) {
+              if (activeCategory !== category) {
+                element.style.filter = '';
+              }
+              onCategoryHover?.(null);
+            }
+          };
 
-        element.addEventListener("mouseenter", handleMouseEnter);
-        element.addEventListener("mouseleave", handleMouseLeave);
-        element.addEventListener("click", handleClick);
+          const handleClick = () => {
+            if (!soldOutCategories.includes(category)) {
+              onCategoryClick?.(category);
+            }
+          };
 
-        cleanupFunctions.push(() => {
-          element.removeEventListener("mouseenter", handleMouseEnter);
-          element.removeEventListener("mouseleave", handleMouseLeave);
-          element.removeEventListener("click", handleClick);
+          element.addEventListener("mouseenter", handleMouseEnter);
+          element.addEventListener("mouseleave", handleMouseLeave);
+          element.addEventListener("click", handleClick);
+
+          cleanupFunctions.push(() => {
+            element.removeEventListener("mouseenter", handleMouseEnter);
+            element.removeEventListener("mouseleave", handleMouseLeave);
+            element.removeEventListener("click", handleClick);
+          });
         });
       });
     });
