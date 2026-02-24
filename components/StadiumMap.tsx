@@ -39,6 +39,13 @@ export default function StadiumMap({
     'category-3': '#FFB5A7',
   };
 
+  // Lighter versions of the same colors for hover effect (30% lighter)
+  const categoryHoverColors: Record<string, string> = {
+    'category-1': '#A61C47', // Lighter burgundy - same hue, more lightness
+    'category-2': '#E05788', // Lighter pink - same hue, more lightness
+    'category-3': '#FFD4CA', // Lighter peachy pink - same hue, more lightness
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -84,14 +91,20 @@ export default function StadiumMap({
 
           // Apply active state
           if (activeCategory === category && !soldOutCategories.includes(category)) {
-            element.style.filter = 'brightness(1.35)';
-          } else {
-            element.style.filter = '';
+            const hoverColor = categoryHoverColors[category];
+            const shapes = element.querySelectorAll('path, rect, polygon, circle');
+            shapes.forEach((shape) => {
+              (shape as SVGElement).style.fill = hoverColor;
+            });
           }
 
           const handleMouseEnter = () => {
             if (!soldOutCategories.includes(category)) {
-              element.style.filter = 'brightness(1.35)';
+              const hoverColor = categoryHoverColors[category];
+              const shapes = element.querySelectorAll('path, rect, polygon, circle');
+              shapes.forEach((shape) => {
+                (shape as SVGElement).style.fill = hoverColor;
+              });
               onCategoryHover?.(category);
             }
           };
@@ -99,7 +112,11 @@ export default function StadiumMap({
           const handleMouseLeave = () => {
             if (!soldOutCategories.includes(category)) {
               if (activeCategory !== category) {
-                element.style.filter = '';
+                const baseColor = categoryColors[category];
+                const shapes = element.querySelectorAll('path, rect, polygon, circle');
+                shapes.forEach((shape) => {
+                  (shape as SVGElement).style.fill = baseColor;
+                });
               }
               onCategoryHover?.(null);
             }
