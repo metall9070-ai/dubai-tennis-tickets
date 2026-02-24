@@ -82,7 +82,7 @@ export default function StadiumMap({
           if (baseColor && !soldOutCategories.includes(category)) {
             const shapes = element.querySelectorAll('path, rect, polygon, circle');
             shapes.forEach((shape) => {
-              (shape as SVGElement).style.fill = baseColor;
+              (shape as SVGElement).setAttribute('fill', baseColor);
             });
           }
 
@@ -94,7 +94,7 @@ export default function StadiumMap({
             const hoverColor = categoryHoverColors[category];
             const shapes = element.querySelectorAll('path, rect, polygon, circle');
             shapes.forEach((shape) => {
-              (shape as SVGElement).style.fill = hoverColor;
+              (shape as SVGElement).setAttribute('fill', hoverColor);
             });
           }
 
@@ -103,7 +103,7 @@ export default function StadiumMap({
               const hoverColor = categoryHoverColors[category];
               const shapes = element.querySelectorAll('path, rect, polygon, circle');
               shapes.forEach((shape) => {
-                (shape as SVGElement).style.fill = hoverColor;
+                (shape as SVGElement).setAttribute('fill', hoverColor);
               });
               onCategoryHover?.(category);
             }
@@ -115,7 +115,7 @@ export default function StadiumMap({
                 const baseColor = categoryColors[category];
                 const shapes = element.querySelectorAll('path, rect, polygon, circle');
                 shapes.forEach((shape) => {
-                  (shape as SVGElement).style.fill = baseColor;
+                  (shape as SVGElement).setAttribute('fill', baseColor);
                 });
               }
               onCategoryHover?.(null);
