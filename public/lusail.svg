@@ -1,81 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 -32 966.8 1036.9" xml:space="preserve">
-  <style>
-    [data-category="category-1"],
-    [data-category="category-2"],
-    [data-category="category-3"] {
-      cursor: pointer;
-    }
-
-    [data-category="category-1"] path,
-    [data-category="category-1"] rect,
-    [data-category="category-1"] circle,
-    [data-category="category-1"] polygon {
-      fill: #800D2F;
-      transition: filter 0.2s ease;
-    }
-
-    [data-category="category-2"] path,
-    [data-category="category-2"] rect,
-    [data-category="category-2"] circle,
-    [data-category="category-2"] polygon {
-      fill: #C73866;
-      transition: filter 0.2s ease;
-    }
-
-    [data-category="category-3"] path,
-    [data-category="category-3"] rect,
-    [data-category="category-3"] circle,
-    [data-category="category-3"] polygon {
-      fill: #FFB5A7;
-      transition: filter 0.2s ease;
-    }
-
-    [data-category="category-3"] path,
-    [data-category="category-3"] rect,
-    [data-category="category-3"] circle,
-    [data-category="category-3"] polygon {
-      fill: #FFB5A7;
-      transition: filter 0.2s ease;
+    <style>
+    /* JavaScript controls all colors - no CSS fill styles */
+    [data-category] path,
+    [data-category] rect,
+    [data-category] circle,
+    [data-category] polygon {
+      transition: fill 0.3s ease;
     }
 
     [data-category].sold-out path,
     [data-category].sold-out rect,
     [data-category].sold-out circle,
     [data-category].sold-out polygon {
-      fill: #CFCFCF;
+      fill: #CFCFCF !important;
       cursor: not-allowed;
-    }
-
-    [data-category="category-1"]:hover:not(.sold-out) path,
-    [data-category="category-1"]:hover:not(.sold-out) rect,
-    [data-category="category-1"]:hover:not(.sold-out) circle,
-    [data-category="category-1"]:hover:not(.sold-out) polygon,
-    [data-category="category-2"]:hover:not(.sold-out) path,
-    [data-category="category-2"]:hover:not(.sold-out) rect,
-    [data-category="category-2"]:hover:not(.sold-out) circle,
-    [data-category="category-2"]:hover:not(.sold-out) polygon,
-    [data-category="category-3"]:hover:not(.sold-out) path,
-    [data-category="category-3"]:hover:not(.sold-out) rect,
-    [data-category="category-3"]:hover:not(.sold-out) circle,
-    [data-category="category-3"]:hover:not(.sold-out) polygon {
-      filter: brightness(1.35);
-      cursor: pointer;
-      opacity: 0.95;
-    }
-
-    /* Active category (highlighted from card hover) */
-    [data-category].active:not(.sold-out) path,
-    [data-category].active:not(.sold-out) rect,
-    [data-category].active:not(.sold-out) circle,
-    [data-category].active:not(.sold-out) polygon {
-      filter: brightness(1.35);
-      opacity: 0.95;
     }
 
     [data-category] text {
       pointer-events: none;
       fill: white;
     }
+
+
 
     /* Футбольное поле - из исходной схемы Map.svg */
     .st0 {
