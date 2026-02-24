@@ -66,9 +66,11 @@ export default function StadiumMap({
         // Set cursor
         element.style.cursor = soldOutCategories.includes(category) ? 'not-allowed' : 'pointer';
 
-        // Apply active state
+        // Apply active state brightness
         if (activeCategory === category && !soldOutCategories.includes(category)) {
           element.style.filter = 'brightness(1.35)';
+        } else {
+          element.style.filter = '';
         }
 
         const handleMouseEnter = () => {
