@@ -1,0 +1,316 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 133.56 102.34">
+  <style>
+    /* Category colors matching Lusail stadium */
+    [data-category="category-1"] path,
+    [data-category="category-1"] rect,
+    [data-category="category-1"] polygon {
+      fill: #800D2F;
+      transition: filter 0.2s ease;
+    }
+
+    [data-category="category-2"] path,
+    [data-category="category-2"] rect,
+    [data-category="category-2"] polygon {
+      fill: #C73866;
+      transition: filter 0.2s ease;
+    }
+
+    [data-category="category-3"] path,
+    [data-category="category-3"] rect,
+    [data-category="category-3"] polygon {
+      fill: #FFB5A7;
+      transition: filter 0.2s ease;
+    }
+
+    /* Hover effects */
+    [data-category="category-1"]:hover:not(.sold-out) path,
+    [data-category="category-1"]:hover:not(.sold-out) rect,
+    [data-category="category-1"]:hover:not(.sold-out) polygon,
+    [data-category="category-2"]:hover:not(.sold-out) path,
+    [data-category="category-2"]:hover:not(.sold-out) rect,
+    [data-category="category-2"]:hover:not(.sold-out) polygon,
+    [data-category="category-3"]:hover:not(.sold-out) path,
+    [data-category="category-3"]:hover:not(.sold-out) rect,
+    [data-category="category-3"]:hover:not(.sold-out) polygon {
+      filter: brightness(1.2);
+      cursor: pointer;
+      opacity: 0.95;
+    }
+
+    /* Active category (highlighted from card hover) */
+    [data-category].active:not(.sold-out) path,
+    [data-category].active:not(.sold-out) rect,
+    [data-category].active:not(.sold-out) polygon {
+      filter: brightness(1.2);
+      opacity: 0.95;
+    }
+
+    /* Football field - from Lusail stadium */
+    .st0 {
+      fill: #5C9E4F;
+    }
+
+    .st1 {
+      fill: #538D43;
+    }
+
+    .st2 {
+      fill: none;
+      stroke: #FFFFFF;
+      stroke-miterlimit: 10;
+    }
+  </style>
+  <defs>
+    <clipPath id="clippath">
+      <rect x="19.52" y="25.1" width="94.48" height="52.68" style="fill: none;"></rect>
+    </clipPath>
+    <mask id="mask" x="25.93" y="37.59" width="11.07" height="27.7" maskUnits="userSpaceOnUse">
+      <g id="path-13-inside-1_0_1" data-name="path-13-inside-1 0 1">
+        <path d="m26.23,37.89h10.46v27.1h-10.46v-27.1Z" style="fill: #fff;"></path>
+      </g>
+    </mask>
+    <mask id="mask-1" x="96.58" y="37.59" width="11.07" height="27.7" maskUnits="userSpaceOnUse">
+      <g id="path-14-inside-2_0_1" data-name="path-14-inside-2 0 1">
+        <path d="m107.34,64.99h-10.46v-27.1h10.46v27.1Z" style="fill: #fff;"></path>
+      </g>
+    </mask>
+    <mask id="mask-2" x="25.97" y="70.89" width="3.16" height="3.16" maskUnits="userSpaceOnUse">
+      <g id="path-130-inside-3_0_1" data-name="path-130-inside-3 0 1">
+        <path d="m28.83,73.75c0-.34-.07-.67-.19-.98-.13-.31-.32-.59-.55-.83-.24-.24-.52-.43-.83-.55-.31-.13-.64-.19-.98-.19v2.56h2.56Z" style="fill: #fff;"></path>
+      </g>
+    </mask>
+    <mask id="mask-3" x="25.97" y="28.84" width="3.16" height="3.16" maskUnits="userSpaceOnUse">
+      <g id="path-131-inside-4_0_1" data-name="path-131-inside-4 0 1">
+        <path d="m26.28,31.69c.34,0,.67-.07.98-.19.31-.13.59-.32.83-.55.24-.24.43-.52.55-.83.13-.31.19-.64.19-.98h-2.56v2.56Z" style="fill: #fff;"></path>
+      </g>
+    </mask>
+    <mask id="mask-4" x="104.38" y="28.84" width="3.16" height="3.16" maskUnits="userSpaceOnUse">
+      <g id="path-132-inside-5_0_1" data-name="path-132-inside-5 0 1">
+        <path d="m104.68,29.14c0,.34.07.67.19.98.13.31.32.59.55.83.24.24.52.43.83.55.31.13.64.19.98.19v-2.56h-2.56Z" style="fill: #fff;"></path>
+      </g>
+    </mask>
+    <mask id="mask-5" x="104.37" y="70.87" width="3.17" height="3.16" maskUnits="userSpaceOnUse">
+      <g id="path-133-inside-6_0_1" data-name="path-133-inside-6 0 1">
+        <path d="m107.23,71.17c-.34,0-.67.06-.98.19-.31.13-.59.32-.83.55-.24.24-.43.52-.56.83-.13.31-.2.64-.2.98h2.56s0-2.55,0-2.55Z" style="fill: #fff;"></path>
+      </g>
+    </mask>
+  </defs>
+
+  <!-- VVIP Section (not styled, kept as is) -->
+  <g data-category="vvip">
+    <g data-section="vvip_1">
+      <rect data-seat="vvip" x="48.94" y="94.86" width="35.64" height="7.23" style="stroke: darkgray; fill: white;opacity: 0.3;" tc-sector-uid="0.5419270147618405" tc-selectable="true"></rect>
+      <text transform="translate(62.75 99.98)" style="font-family: ArialMT, Arial; font-size: 4px;"><tspan x="0" y="0">VVI</tspan><tspan x="6.45" y="0" style="letter-spacing: -.02em;">P</tspan></text>
+    </g>
+  </g>
+
+  <!-- Category 1 (was category-1, burgundy #800D2F) -->
+  <g data-category="category-1">
+    <g data-section="category-1_1">
+      <polygon data-seat="category-1" points="124.24 96.69 113.24 85.68 112.03 86.9 67.81 86.9 67.81 92.86 86.58 92.86 86.58 102.09 118.84 102.09 124.24 96.69" tc-sector-uid="0.5531147988592847" tc-selectable="true"></polygon>
+      <text transform="translate(88.3 91.3)" style="font-family: ArialMT, Arial; font-size: 4px;"><tspan x="0" y="0">C</tspan><tspan x="2.89" y="0" style="letter-spacing: -.07em;">A</tspan><tspan x="5.26" y="0">T1</tspan></text>
+    </g>
+    <g data-section="category-1_2">
+      <polygon data-seat="category-1" points="65.81 92.86 65.81 86.9 21.96 86.9 20.68 85.62 9.97 96.33 15.73 102.09 25.16 102.09 25.16 92.86 65.81 92.86" tc-sector-uid="0.22072544676871908" tc-selectable="true"></polygon>
+      <text transform="translate(35.65 91.3)" style="font-family: ArialMT, Arial; font-size: 4px;"><tspan x="0" y="0">C</tspan><tspan x="2.89" y="0" style="letter-spacing: -.07em;">A</tspan><tspan x="5.26" y="0">T1</tspan></text>
+    </g>
+  </g>
+
+  <!-- Category 2 (was category-2, magenta #C73866) -->
+  <g data-category="category-2">
+    <g data-section="category-2_1">
+      <polygon data-seat="category-2" points="21.52 15.13 111.52 15.13 113.89 17.5 124.47 6.92 117.8 .25 14.77 .25 8.47 6.55 19.28 17.36 21.52 15.13" tc-sector-uid="0.14966661636083012" tc-selectable="true"></polygon>
+      <text transform="translate(61.51 9.79)" style="font-family: ArialMT, Arial; font-size: 4px;"><tspan x="0" y="0">C</tspan><tspan x="2.89" y="0" style="letter-spacing: -.07em;">A</tspan><tspan x="5.26" y="0">T2</tspan></text>
+    </g>
+  </g>
+
+  <!-- Category 3 (was category-3, light peach #FFB5A7) -->
+  <g data-category="category-3">
+    <g data-section="category-3_1">
+      <polygon data-seat="category-3" points="15.26 80.19 15.19 21.45 17.87 18.78 7.06 7.96 .25 14.77 .29 86.65 8.56 94.92 19.27 84.21 15.26 80.19" tc-sector-uid="0.524101566978864" tc-selectable="true"></polygon>
+      <text transform="translate(8.97 56.41) rotate(-90)" style="font-family: ArialMT, Arial; font-size: 4px;"><tspan x="0" y="0">C</tspan><tspan x="2.89" y="0" style="letter-spacing: -.07em;">A</tspan><tspan x="5.26" y="0">T3</tspan></text>
+    </g>
+    <g data-section="category-3_2">
+      <polygon data-seat="category-3" points="133.31 15.76 125.88 8.33 115.3 18.92 118.42 22.03 118.42 80.5 114.65 84.27 125.65 95.27 133.31 87.62 133.31 15.76" tc-sector-uid="0.8046696696065738" tc-selectable="true"></polygon>
+      <text transform="translate(126.76 56.77) rotate(-90)" style="font-family: ArialMT, Arial; font-size: 4px;"><tspan x="0" y="0">C</tspan><tspan x="2.89" y="0" style="letter-spacing: -.07em;">A</tspan><tspan x="5.26" y="0">T3</tspan></text>
+    </g>
+  </g>
+
+  <!-- Football Field -->
+  <g style="clip-path: url(#clippath);">
+    <g id="Frame_1" data-name="Frame 1">
+      <rect x="19.52" y="25.1" width="94.48" height="52.68" style="fill: #fff;"></rect>
+      <g id="Group_91" data-name="Group 91">
+        <g id="Group_88" data-name="Group 88">
+          <g id="Group_60" data-name="Group 60">
+            <path id="Rectangle_25" data-name="Rectangle 25" d="m113.99,77.51H19.52V25.14s94.48,0,94.48,0v52.37Z" class="st0"></path>
+          </g>
+          <g id="Group_90" data-name="Group 90">
+            <rect class="st1" x="19.52" y="25.1" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="28.11" y="25.13" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="36.7" y="25.16" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="45.28" y="25.19" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="53.87" y="25.22" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="62.46" y="25.25" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="71.05" y="25.28" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="79.64" y="25.31" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="88.23" y="25.34" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="96.82" y="25.37" width="4.29" height="52.38"></rect>
+            <rect class="st1" x="105.41" y="25.4" width="4.29" height="52.38"></rect>
+          </g>
+          <g id="Group_62" data-name="Group 62">
+            <g id="Rectangle_150" data-name="Rectangle 150">
+              <g style="mask: url(#mask);">
+                <path d="m26.23,37.89h10.46v27.1h-10.46v-27.1Z" class="st2" style="stroke-width: .6px;"></path>
+              </g>
+            </g>
+            <g id="Rectangle_177" data-name="Rectangle 177">
+              <g style="mask: url(#mask-1);">
+                <path d="m107.34,64.99h-10.46v-27.1h10.46v27.1Z" class="st2" style="stroke-width: .6px;"></path>
+              </g>
+            </g>
+            <rect class="st2" x="26.35" y="42.58" width="4.02" height="17.72" style="stroke-width: .3px;"></rect>
+            <rect class="st2" x="103.2" y="42.58" width="4.02" height="17.72" style="stroke-width: .3px;"></rect>
+            <g id="Group_43" data-name="Group 43">
+              <line class="st2" x1="25.87" y1="57.6" x2="25.87" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="54.42" x2="26.17" y2="54.42" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="51.3" x2="26.17" y2="51.3" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="48.18" x2="26.23" y2="48.18" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="25.53" y1="57.6" x2="25.53" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="57.29" x2="26.17" y2="57.29" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="54.14" x2="26.17" y2="54.14" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="51.02" x2="26.17" y2="51.02" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="47.91" x2="26.23" y2="47.91" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="25.2" y1="57.6" x2="25.2" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="56.98" x2="26.17" y2="56.98" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="53.83" x2="26.17" y2="53.83" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="50.72" x2="26.17" y2="50.72" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="47.6" x2="26.23" y2="47.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="24.86" y1="57.6" x2="24.86" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="56.71" x2="26.17" y2="56.71" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="53.56" x2="26.17" y2="53.56" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="50.44" x2="26.17" y2="50.44" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="47.32" x2="26.23" y2="47.32" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="24.53" y1="57.6" x2="24.53" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="56.43" x2="26.17" y2="56.43" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="53.28" x2="26.17" y2="53.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="50.16" x2="26.17" y2="50.16" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="47.04" x2="26.23" y2="47.04" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="24.19" y1="57.6" x2="24.19" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="56.18" x2="26.17" y2="56.18" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="53.03" x2="26.17" y2="53.03" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="49.91" x2="26.17" y2="49.91" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="46.79" x2="26.23" y2="46.79" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="23.86" y1="57.6" x2="23.86" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="55.84" x2="26.17" y2="55.84" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="52.69" x2="26.17" y2="52.69" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="49.57" x2="26.17" y2="49.57" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="46.45" x2="26.23" y2="46.45" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="23.52" y1="57.6" x2="23.52" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="55.56" x2="26.17" y2="55.56" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="52.41" x2="26.17" y2="52.41" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="49.3" x2="26.17" y2="49.3" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="46.18" x2="26.23" y2="46.18" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="23.18" y1="57.6" x2="23.18" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="55.29" x2="26.17" y2="55.29" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="52.14" x2="26.17" y2="52.14" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="49.02" x2="26.17" y2="49.02" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="45.9" x2="26.23" y2="45.9" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.85" y1="57.6" x2="22.85" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="54.98" x2="26.17" y2="54.98" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="51.83" x2="26.17" y2="51.83" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="48.71" x2="26.17" y2="48.71" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="45.59" x2="26.23" y2="45.59" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.51" y1="57.6" x2="22.51" y2="45.28" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="54.7" x2="26.17" y2="54.7" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="51.55" x2="26.17" y2="51.55" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.24" y1="48.43" x2="26.17" y2="48.43" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="22.3" y1="45.31" x2="26.23" y2="45.31" style="stroke-width: .06px;"></line>
+              <rect class="st2" x="22.27" y="45.3" width="3.9" height="12.28" style="stroke-width: .06px;"></rect>
+            </g>
+            <g id="Group_44" data-name="Group 44">
+              <line class="st2" x1="107.71" y1="45.28" x2="107.71" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="48.46" x2="107.4" y2="48.46" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="51.58" x2="107.4" y2="51.58" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="54.7" x2="107.34" y2="54.7" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="108.04" y1="45.28" x2="108.04" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="45.59" x2="107.4" y2="45.59" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="48.74" x2="107.4" y2="48.74" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="51.86" x2="107.4" y2="51.86" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="54.98" x2="107.34" y2="54.98" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="108.38" y1="45.28" x2="108.38" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="45.9" x2="107.4" y2="45.9" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="49.05" x2="107.4" y2="49.05" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="52.17" x2="107.4" y2="52.17" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="55.29" x2="107.34" y2="55.29" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="108.71" y1="45.28" x2="108.71" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="46.18" x2="107.4" y2="46.18" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="49.33" x2="107.4" y2="49.33" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="52.45" x2="107.4" y2="52.45" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="55.57" x2="107.34" y2="55.57" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="109.05" y1="45.28" x2="109.05" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="46.46" x2="107.4" y2="46.46" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="49.61" x2="107.4" y2="49.61" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="52.72" x2="107.4" y2="52.72" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="55.84" x2="107.34" y2="55.84" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="109.38" y1="45.28" x2="109.38" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="46.7" x2="107.4" y2="46.7" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="49.85" x2="107.4" y2="49.85" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="52.97" x2="107.4" y2="52.97" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="56.09" x2="107.34" y2="56.09" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="109.72" y1="45.28" x2="109.72" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="47.04" x2="107.4" y2="47.04" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="50.19" x2="107.4" y2="50.19" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="53.31" x2="107.4" y2="53.31" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="56.43" x2="107.34" y2="56.43" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="110.05" y1="45.28" x2="110.05" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="47.32" x2="107.4" y2="47.32" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="50.47" x2="107.4" y2="50.47" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="53.59" x2="107.4" y2="53.59" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="56.71" x2="107.34" y2="56.71" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="110.39" y1="45.28" x2="110.39" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="47.6" x2="107.4" y2="47.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="50.75" x2="107.4" y2="50.75" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="53.87" x2="107.4" y2="53.87" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="56.99" x2="107.34" y2="56.99" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="110.72" y1="45.28" x2="110.72" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="47.91" x2="107.4" y2="47.91" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="51.06" x2="107.4" y2="51.06" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="54.18" x2="107.4" y2="54.18" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="57.29" x2="107.34" y2="57.29" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.06" y1="45.28" x2="111.06" y2="57.6" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="48.19" x2="107.4" y2="48.19" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="51.33" x2="107.4" y2="51.33" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.33" y1="54.45" x2="107.4" y2="54.45" style="stroke-width: .06px;"></line>
+              <line class="st2" x1="111.27" y1="57.57" x2="107.34" y2="57.57" style="stroke-width: .06px;"></line>
+              <rect class="st2" x="107.43" y="45.3" width="3.9" height="12.28" style="stroke-width: .06px;"></rect>
+            </g>
+            <rect class="st2" x="26.37" y="29.23" width="80.78" height="44.43" style="stroke-width: .45px;"></rect>
+          </g>
+        </g>
+        <path class="st2" d="m66.76,29v44.85" style="stroke-width: .3px;"></path>
+        <circle class="st2" cx="66.76" cy="51.44" r="7.92" style="stroke-width: .3px;"></circle>
+        <g id="Ellipse_27" data-name="Ellipse 27">
+          <g style="mask: url(#mask-2);">
+            <path d="m28.83,73.75c0-.34-.07-.67-.19-.98-.13-.31-.32-.59-.55-.83-.24-.24-.52-.43-.83-.55-.31-.13-.64-.19-.98-.19v2.56h2.56Z" class="st2" style="stroke-width: .6px;"></path>
+          </g>
+        </g>
+        <g id="Ellipse_28" data-name="Ellipse 28">
+          <g style="mask: url(#mask-3);">
+            <path d="m26.28,31.69c.34,0,.67-.07.98-.19.31-.13.59-.32.83-.55.24-.24.43-.52.55-.83.13-.31.19-.64.19-.98h-2.56v2.56Z" class="st2" style="stroke-width: .6px;"></path>
+          </g>
+        </g>
+        <g id="Ellipse_29" data-name="Ellipse 29">
+          <g style="mask: url(#mask-4);">
+            <path d="m104.68,29.14c0,.34.07.67.19.98.13.31.32.59.55.83.24.24.52.43.83.55.31.13.64.19.98.19v-2.56h-2.56Z" class="st2" style="stroke-width: .6px;"></path>
+          </g>
+        </g>
+        <g id="Ellipse_30" data-name="Ellipse 30">
+          <g style="mask: url(#mask-5);">
+            <path d="m107.23,71.17c-.34,0-.67.06-.98.19-.31.13-.59.32-.83.55-.24.24-.43.52-.56.83-.13.31-.2.64-.2.98h2.56s0-2.55,0-2.55Z" class="st2" style="stroke-width: .6px;"></path>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

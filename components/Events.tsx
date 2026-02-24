@@ -202,13 +202,23 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
               </div>
             ) : (
               <div className="flex flex-col gap-6">
-                {events.map((event) => (
-                  <FootballEventCard
-                    key={event.id}
-                    event={event}
-                    onClick={() => onSelectEvent(event)}
-                  />
-                ))}
+                {events
+                  .sort((a, b) => {
+                    // Custom order: saudi-arabia-egypt-mar-26 first, then sort by date
+                    if (a.slug === 'saudi-arabia-egypt-mar-26') return -1;
+                    if (b.slug === 'saudi-arabia-egypt-mar-26') return 1;
+                    // For other events, sort by date (assuming date format is consistent)
+                    const dateA = `${a.month}-${a.date}`;
+                    const dateB = `${b.month}-${b.date}`;
+                    return dateA.localeCompare(dateB);
+                  })
+                  .map((event) => (
+                    <FootballEventCard
+                      key={event.id}
+                      event={event}
+                      onClick={() => onSelectEvent(event)}
+                    />
+                  ))}
               </div>
             )}
           </div>

@@ -198,6 +198,7 @@ export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | 
       minPrice: e.min_price != null ? parseFloat(e.min_price) : null,
       isSoldOut: e.is_sold_out ?? false,
       tournamentSlug: e.tournament_slug,
+      venue: e.venue,
     };
 
     console.log(`[SERVER API] Loaded event "${event.title}" for SSR`);

@@ -7,6 +7,7 @@ import WhyBuy from './WhyBuy';
 import WTASessionInfo from './WTASessionInfo';
 import ATPSessionInfo from './ATPSessionInfo';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
+import StadiumMap from './StadiumMap';
 import EventSEOContent from './EventSEOContent';
 import RelatedMatches from './RelatedMatches';
 import { CartItem } from '@/app/CartContext';
@@ -55,18 +56,19 @@ const _ATP_REFERENCE_CATEGORIES: Category[] = [
   { id: 'prime-a', name: 'Prime A', price: 3000, color: CATEGORY_COLORS['prime-a'], seatsLeft: 100 },
 ];
 
+// Finalissima category colors (matching stadium map)
+const FINALISSIMA_CATEGORY_COLORS: Record<string, string> = {
+  'category-1': '#800D2F',
+  'category-2': '#C73866',
+  'category-3': '#FFB5A7',
+};
+
 const EventSelection: React.FC<EventSelectionProps> = ({
   event, initialCategories, eventSEO, onBack, onCart, onHome,
   cart, setCart, onCheckout
 }) => {
-  // Detect if this is a Finalissima event (check env at runtime on client)
-  const [isFinalissima, setIsFinalissima] = useState(false);
-
-  useEffect(() => {
-    // NEXT_PUBLIC_ env vars are embedded at build time and available in browser
-    const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || '';
-    setIsFinalissima(siteCode === 'finalissima');
-  }, []);
+  // Detect if this is a Finalissima event (check env at build time)
+  const isFinalissima = process.env.NEXT_PUBLIC_SITE_CODE === 'finalissima';
 
   // Parse team names and venue from event title for Finalissima events
   const getTeamInfo = () => {
@@ -391,13 +393,23 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           </div>
 
           <div className="bg-[#f8f9fb] rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5">
-            <StaticSeatingMap
-              hoveredCategory={hoveredCategory}
-              onHoverCategory={setHoveredCategory}
-              onSelectCategory={handleSelectCategory}
-              eventType={event?.type}
-              soldOutCategories={soldOutCategories}
-            />
+            {isFinalissima ? (
+              <StadiumMap
+                activeCategory={hoveredCategory}
+                onCategoryHover={setHoveredCategory}
+                onCategoryClick={handleSelectCategory}
+                soldOutCategories={soldOutCategories}
+                venue={event?.venue}
+              />
+            ) : (
+              <StaticSeatingMap
+                hoveredCategory={hoveredCategory}
+                onHoverCategory={setHoveredCategory}
+                onSelectCategory={handleSelectCategory}
+                eventType={event?.type}
+                soldOutCategories={soldOutCategories}
+              />
+            )}
           </div>
         </div>
 
@@ -405,7 +417,15 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         <div className="flex flex-col h-full">
           <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 tracking-tight text-[#1d1d1f]">Price Categories</h3>
           <div className="flex flex-col gap-3 md:gap-4 mb-6 md:mb-8">
-            {categories.map((cat) => {
+            {(isFinalissima
+              ? [...categories].sort((a, b) => {
+                  // Sort by category number for Finalissima (Category 1, Category 2, Category 3)
+                  const numA = parseInt(a.name.match(/\d+/)?.[0] || '999');
+                  const numB = parseInt(b.name.match(/\d+/)?.[0] || '999');
+                  return numA - numB;
+                })
+              : categories
+            ).map((cat) => {
               // Normalize name to slug for map compatibility (e.g., "Prime A" -> "prime-a")
               const catSlug = cat.name.toLowerCase().replace(/\s+/g, '-');
               const isHovered = hoveredCategory === cat.id || hoveredCategory === catSlug;
@@ -429,30 +449,45 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     }
                   `}
                   style={{
-                    boxShadow: isHovered && !categoryIsSoldOut ? `0 20px 40px -10px ${cat.color}40` : undefined,
+                    boxShadow: isHovered && !categoryIsSoldOut
+                      ? `0 20px 40px -10px ${isFinalissima ? (FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color) : cat.color}40`
+                      : undefined,
                   }}
                 >
                   <div className="flex items-center justify-between mb-2.5 md:mb-3">
                     <div className="flex items-center space-x-3 md:space-x-4">
-                      <div
-                        className={`w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center font-semibold text-white shadow-md text-base md:text-lg transition-all duration-300`}
-                        style={{
-                          backgroundColor: categoryIsSoldOut ? '#86868b' : cat.color,
-                          filter: isHovered && !categoryIsSoldOut ? 'brightness(1.15) saturate(1.2)' : 'none',
-                        }}
-                      >
-                        {cat.id === 'prime-a' ? 'A' : cat.id === 'prime-b' ? 'B' : 'G'}
-                      </div>
+                      {/* Show icon only for non-Finalissima events */}
+                      {!isFinalissima && (
+                        <div
+                          className={`w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center font-semibold text-white shadow-md text-base md:text-lg transition-all duration-300`}
+                          style={{
+                            backgroundColor: categoryIsSoldOut ? '#86868b' : cat.color,
+                            filter: isHovered && !categoryIsSoldOut ? 'brightness(1.15) saturate(1.2)' : 'none',
+                          }}
+                        >
+                          {cat.id === 'prime-a' ? 'A' : cat.id === 'prime-b' ? 'B' : 'G'}
+                        </div>
+                      )}
                       <div>
                         <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#86868b]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
                         {categoryIsSoldOut ? (
-                          <span className="inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-[#86868b] uppercase tracking-wide">
+                          <span className={`inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-[#86868b] ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}>
                             <span className="w-1.5 h-1.5 bg-[#86868b] rounded-full"></span>
                             Sold Out
                           </span>
-                        ) : cat.seatsLeft < 30 ? (
-                          <span className="inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-red-500 uppercase tracking-wide animate-pulse">
-                            <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                        ) : cat.seatsLeft < (isFinalissima ? 50 : 30) ? (
+                          <span
+                            className={`inline-flex items-center gap-1 ${isFinalissima ? 'text-[11px] md:text-[12px]' : 'text-[9px] md:text-[10px]'} font-semibold animate-pulse ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}
+                            style={{
+                              color: isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : '#ef4444'
+                            }}
+                          >
+                            <span
+                              className={isFinalissima ? 'w-2 h-2 rounded-full' : 'w-1.5 h-1.5 rounded-full'}
+                              style={{
+                                backgroundColor: isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : '#ef4444'
+                              }}
+                            ></span>
                             Selling Fast
                           </span>
                         ) : null}
@@ -471,11 +506,23 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center gap-2.5 md:gap-3">
                       <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${cat.seatsLeft < 20 ? 'bg-red-500' : cat.seatsLeft < 50 ? 'bg-orange-400' : 'bg-[var(--color-primary)]'}`}
-                          style={{ width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%` }}
+                          className={`h-full rounded-full transition-all`}
+                          style={{
+                            width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%`,
+                            backgroundColor: isFinalissima
+                              ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color
+                              : cat.seatsLeft < 20 ? '#ef4444' : cat.seatsLeft < 50 ? '#fb923c' : 'var(--color-primary)'
+                          }}
                         ></div>
                       </div>
-                      <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-wide whitespace-nowrap ${cat.seatsLeft < 20 ? 'text-red-500' : cat.seatsLeft < 50 ? 'text-orange-500' : 'text-[var(--color-primary)]'}`}>
+                      <span
+                        className={`${isFinalissima ? 'text-[12px] md:text-[13px]' : 'text-[10px] md:text-[11px]'} font-semibold whitespace-nowrap ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}
+                        style={{
+                          color: isFinalissima
+                            ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color
+                            : cat.seatsLeft < 20 ? '#ef4444' : cat.seatsLeft < 50 ? '#fb923c' : 'var(--color-primary)'
+                        }}
+                      >
                         {cat.seatsLeft} left
                       </span>
                     </div>

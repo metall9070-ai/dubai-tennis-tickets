@@ -104,7 +104,7 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
         transition: { duration: 0.2, ease: 'easeOut' }
       }}
       onClick={handleClick}
-      className="group relative bg-white rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden max-w-4xl mx-auto w-full cursor-pointer"
+      className="group relative bg-white rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden w-full cursor-pointer"
     >
 
       {/* --- DESKTOP LAYOUT (lg and up) --- */}
