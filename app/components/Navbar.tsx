@@ -18,8 +18,8 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
 
   // Get config inside component to ensure correct site_code is used
   const navItems = getNavItems();
-  const { brandName } = getFooterConfig();
   const siteConfig = getSiteConfig();
+  const brandName = siteConfig.brand; // Use brand from site-config for consistency
 
   // Get site_code from environment variable (works in client component)
   const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'tennis';
