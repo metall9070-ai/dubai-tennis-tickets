@@ -393,6 +393,43 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           </div>
 
           <div className="bg-[#f8f9fb] rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5">
+            {/* Category Legend - only for Finalissima */}
+            {isFinalissima && categories.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-4 md:mb-6 px-2">
+                {[...categories]
+                  .sort((a, b) => {
+                    const numA = parseInt(a.name.match(/\d+/)?.[0] || '999');
+                    const numB = parseInt(b.name.match(/\d+/)?.[0] || '999');
+                    return numA - numB;
+                  })
+                  .map((cat) => {
+                    const catSlug = cat.name.toLowerCase().replace(/\s+/g, '-');
+                    const categoryColor = FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color;
+                    const categoryIsSoldOut = isSoldOut(cat.isActive, cat.seatsLeft, cat.showOnFrontend);
+
+                    return (
+                      <div
+                        key={cat.id}
+                        className="flex items-center gap-2 bg-white px-3 md:px-4 py-2 md:py-2.5 rounded-full border border-gray-200 shadow-sm"
+                      >
+                        <div
+                          className="w-3 h-3 md:w-4 md:h-4 rounded-full flex-shrink-0"
+                          style={{
+                            backgroundColor: categoryIsSoldOut ? '#CFCFCF' : categoryColor
+                          }}
+                        ></div>
+                        <span className="text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                          {cat.name}
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500">
+                          ({categoryIsSoldOut ? 'Sold Out' : `${cat.seatsLeft} left`})
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
             {isFinalissima ? (
               <StadiumMap
                 activeCategory={hoveredCategory}
