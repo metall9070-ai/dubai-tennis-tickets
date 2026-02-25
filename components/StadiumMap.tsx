@@ -67,12 +67,32 @@ export default function StadiumMap({
     const categories = ["category-1", "category-2", "category-3"];
     const cleanupFunctions: (() => void)[] = [];
 
-    categories.forEach((category) => {
+    // Helper: apply color to ALL sections of a category
+    const applyColorToCategory = (category: string, color: string) => {
       const parentGroups = container.querySelectorAll(`[data-category="${category}"]`);
-      
+      let totalShapes = 0;
       parentGroups.forEach((parentGroup) => {
         const childSections = parentGroup.querySelectorAll('[data-section]');
-        console.log(`[StadiumMap] ${category}: ${childSections.length} sections`);
+        childSections.forEach((section) => {
+          const shapes = section.querySelectorAll('path, rect, polygon, circle');
+          shapes.forEach((shape) => {
+            const svgEl = shape as SVGElement;
+            // Use setAttribute to directly set fill attribute - this overrides any CSS
+            svgEl.setAttribute('fill', color);
+            totalShapes++;
+          });
+        });
+      });
+      console.log(`[StadiumMap] Applied ${color} to ${totalShapes} shapes in ${category}`);
+    };
+
+    categories.forEach((category) => {
+      const parentGroups = container.querySelectorAll(`[data-category="${category}"]`);
+      console.log(`[StadiumMap] ${category}: found ${parentGroups.length} parent groups`);
+
+      parentGroups.forEach((parentGroup, groupIndex) => {
+        const childSections = parentGroup.querySelectorAll('[data-section]');
+        console.log(`[StadiumMap] ${category} group ${groupIndex}: ${childSections.length} sections`);
 
         childSections.forEach((section) => {
           const element = section as SVGGElement;
@@ -82,7 +102,9 @@ export default function StadiumMap({
           if (baseColor && !soldOutCategories.includes(category)) {
             const shapes = element.querySelectorAll('path, rect, polygon, circle');
             shapes.forEach((shape) => {
-              (shape as SVGElement).style.fill = baseColor;
+              const svgEl = shape as SVGElement;
+              svgEl.removeAttribute('fill');
+              svgEl.style.setProperty('fill', baseColor, 'important');
             });
           }
 
@@ -91,32 +113,26 @@ export default function StadiumMap({
 
           // Apply active state
           if (activeCategory === category && !soldOutCategories.includes(category)) {
-            const hoverColor = categoryHoverColors[category];
-            const shapes = element.querySelectorAll('path, rect, polygon, circle');
-            shapes.forEach((shape) => {
-              (shape as SVGElement).style.fill = hoverColor;
-            });
+            applyColorToCategory(category, categoryHoverColors[category]);
           }
 
           const handleMouseEnter = () => {
+            console.log(`[StadiumMap] Mouse ENTER on ${category} section`);
             if (!soldOutCategories.includes(category)) {
-              const hoverColor = categoryHoverColors[category];
-              const shapes = element.querySelectorAll('path, rect, polygon, circle');
-              shapes.forEach((shape) => {
-                (shape as SVGElement).style.fill = hoverColor;
-              });
+              // Highlight ALL sections of this category
+              applyColorToCategory(category, categoryHoverColors[category]);
               onCategoryHover?.(category);
+            } else {
+              console.log(`[StadiumMap] ${category} is sold out, skipping highlight`);
             }
           };
 
           const handleMouseLeave = () => {
+            console.log(`[StadiumMap] Mouse LEAVE from ${category} section`);
             if (!soldOutCategories.includes(category)) {
               if (activeCategory !== category) {
-                const baseColor = categoryColors[category];
-                const shapes = element.querySelectorAll('path, rect, polygon, circle');
-                shapes.forEach((shape) => {
-                  (shape as SVGElement).style.fill = baseColor;
-                });
+                // Reset ALL sections of this category to base color
+                applyColorToCategory(category, categoryColors[category]);
               }
               onCategoryHover?.(null);
             }
