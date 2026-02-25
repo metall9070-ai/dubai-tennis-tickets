@@ -295,7 +295,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
       <Navbar isVisible={true} cartCount={cartTotalItems} onHome={onHome} onCart={onCart} />
 
       {/* Main Header Section */}
-      <div className={`${hasTopDisclaimer ? 'pt-[84px] md:pt-[92px]' : 'pt-20 md:pt-24'} pb-6 md:pb-8 bg-white border-b border-[#f5f5f7]`}>
+      <div className={`${hasTopDisclaimer ? 'pt-20 md:pt-[88px]' : 'pt-20 md:pt-24'} pb-6 md:pb-8 bg-white border-b border-[#f5f5f7]`}>
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
 
           {/* Breadcrumbs */}

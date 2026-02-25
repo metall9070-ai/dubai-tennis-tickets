@@ -45,11 +45,12 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
       {/* Top Disclaimer Bar */}
       {siteConfig.topDisclaimer && (
         <div
-          className={`fixed top-0 left-0 right-0 z-[61] bg-black text-white text-center py-0.5 px-4 transition-opacity duration-1000 ${
+          className={`fixed top-0 left-0 right-0 z-[61] bg-black text-white flex items-center justify-center px-4 transition-opacity duration-1000 ${
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
+          style={{ height: '32px' }}
         >
-          <p className="text-[12px] font-normal leading-tight max-w-[1200px] mx-auto">
+          <p className="text-[12px] font-normal leading-tight max-w-[1200px] text-center">
             {siteConfig.topDisclaimer}
           </p>
         </div>
@@ -60,7 +61,7 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
-          top: siteConfig.topDisclaimer ? '16px' : '0',
+          top: siteConfig.topDisclaimer ? '32px' : '0',
           paddingTop: 'env(safe-area-inset-top)'
         }}
       >

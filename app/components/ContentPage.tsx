@@ -12,11 +12,11 @@ export default function ContentPage({ content, embedded, children }: { content: 
   // Hero renders with dark gradient background; heroImage is optional on top
   const showHero = !embedded && !!content.breadcrumbLabel
 
-  // Add extra padding if top disclaimer is present
+  // Add extra padding if top disclaimer is present (32px disclaimer + 48px header = 80px total)
   const siteConfig = getSiteConfig()
   const hasTopDisclaimer = !!siteConfig.topDisclaimer
   const topPadding = hasTopDisclaimer
-    ? (embedded ? 'pt-12 sm:pt-16 md:pt-24' : (showHero ? 'pt-4' : 'pt-[104px] sm:pt-[116px] md:pt-[128px]'))
+    ? (embedded ? 'pt-12 sm:pt-16 md:pt-24' : (showHero ? 'pt-8' : 'pt-[80px] sm:pt-[88px] md:pt-[96px]'))
     : (embedded ? 'pt-12 sm:pt-16 md:pt-24' : (showHero ? '' : 'pt-24 sm:pt-28 md:pt-32'))
 
   return (
