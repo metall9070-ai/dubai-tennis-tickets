@@ -42,6 +42,7 @@ export interface SiteConfig {
     description: string
     disclaimer: string
   }
+  topDisclaimer?: string
   /**
    * Allowed event types for this site (presentation policy).
    * Used for frontend read-only filtering across catalog, schedule, and sitemap.
@@ -165,6 +166,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       description: "Independent ticket concierge service for Football Festival Qatar 2026. Secure booking and guaranteed authentic tickets for all matches.",
       disclaimer: "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with FIFA, UEFA, CONMEBOL, national associations, venues, or event organizers; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
     },
+    topDisclaimer: "Independent ticket concierge service in the secondary ticket market. Prices are market-based and may exceed face value.",
   },
 
 }

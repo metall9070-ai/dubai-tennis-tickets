@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Breadcrumbs from "@/components/Breadcrumbs"
 import type { SEOContent } from "@/types/seo"
+import { getSiteConfig } from "@/lib/site-config"
 
 export default function ContentPage({ content, embedded, children }: { content: SEOContent; embedded?: boolean; children?: React.ReactNode }) {
   if (!content.h1) return null
@@ -11,13 +12,15 @@ export default function ContentPage({ content, embedded, children }: { content: 
   // Hero renders with dark gradient background; heroImage is optional on top
   const showHero = !embedded && !!content.breadcrumbLabel
 
+  // Add extra padding if top disclaimer is present
+  const siteConfig = getSiteConfig()
+  const hasTopDisclaimer = !!siteConfig.topDisclaimer
+  const topPadding = hasTopDisclaimer
+    ? (embedded ? 'pt-12 sm:pt-16 md:pt-24' : (showHero ? 'pt-4' : 'pt-[104px] sm:pt-[116px] md:pt-[128px]'))
+    : (embedded ? 'pt-12 sm:pt-16 md:pt-24' : (showHero ? '' : 'pt-24 sm:pt-28 md:pt-32'))
+
   return (
-    <article className={`${embedded
-      ? 'pt-12 sm:pt-16 md:pt-24'
-      : showHero
-        ? ''
-        : 'pt-24 sm:pt-28 md:pt-32'
-    } pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
+    <article className={`${topPadding} pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
 
       {/* Hero Section — shown on all standalone info pages (image is optional) */}
       {showHero && (

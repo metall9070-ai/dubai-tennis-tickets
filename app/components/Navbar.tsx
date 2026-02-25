@@ -5,18 +5,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
 import { getNavItems, getFooterConfig } from '@/lib/nav-config';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface NavbarProps {
   isVisible?: boolean;
 }
 
-const navItems = getNavItems();
-const { brandName } = getFooterConfig();
-
 export default function Navbar({ isVisible = true }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const { cartTotalItems } = useCart();
+
+  // Get config inside component to ensure correct site_code is used
+  const navItems = getNavItems();
+  const { brandName } = getFooterConfig();
+  const siteConfig = getSiteConfig();
 
   // Get site_code from environment variable (works in client component)
   const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'tennis';
@@ -39,11 +42,27 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
 
   return (
     <>
+      {/* Top Disclaimer Bar */}
+      {siteConfig.topDisclaimer && (
+        <div
+          className={`fixed top-0 left-0 right-0 z-[61] bg-black text-white text-center py-0.5 px-4 transition-opacity duration-1000 ${
+            isVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <p className="text-[12px] font-normal leading-tight max-w-[1200px] mx-auto">
+            {siteConfig.topDisclaimer}
+          </p>
+        </div>
+      )}
+
       <header
-        className={`fixed top-0 left-0 right-0 z-[60] bg-[var(--color-header)]/95 backdrop-blur-md border-b border-white/10 transition-opacity duration-1000 ${
+        className={`fixed left-0 right-0 z-[60] bg-[var(--color-header)]/95 backdrop-blur-md border-b border-white/10 transition-opacity duration-1000 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
-        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        style={{
+          top: siteConfig.topDisclaimer ? '16px' : '0',
+          paddingTop: 'env(safe-area-inset-top)'
+        }}
       >
         <div className="max-w-[1200px] mx-auto h-12 flex items-center justify-between px-4 sm:px-6">
           <div className="flex-shrink-0">
