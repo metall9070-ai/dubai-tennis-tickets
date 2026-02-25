@@ -58,9 +58,9 @@ const _ATP_REFERENCE_CATEGORIES: Category[] = [
 
 // Finalissima category colors (matching stadium map)
 const FINALISSIMA_CATEGORY_COLORS: Record<string, string> = {
-  'category-1': '#800D2F',
-  'category-2': '#C73866',
-  'category-3': '#FFB5A7',
+  'category-1': '#3F8ABF', // Blue
+  'category-2': '#137F3A', // Green
+  'category-3': '#E3122B', // Red
 };
 
 const EventSelection: React.FC<EventSelectionProps> = ({
@@ -392,10 +392,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
             <span className="text-[10px] md:text-[11px] font-medium text-[#86868b] bg-[#f5f5f7] px-2.5 md:px-3 py-1 rounded-full">Live availability</span>
           </div>
 
-          <div className="bg-[#f8f9fb] rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5">
+          <div className={`${isFinalissima && event?.venue?.includes('Lusail') ? 'bg-white' : 'bg-[#f8f9fb]'} rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5`}>
             {/* Category Legend - only for Finalissima */}
             {isFinalissima && categories.length > 0 && (
-              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-4 md:mb-6 px-2">
+              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6 px-2">
                 {[...categories]
                   .sort((a, b) => {
                     const numA = parseInt(a.name.match(/\d+/)?.[0] || '999');
@@ -410,7 +410,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     return (
                       <div
                         key={cat.id}
-                        className="flex items-center gap-2 bg-white px-3 md:px-4 py-2 md:py-2.5 rounded-full border border-gray-200 shadow-sm"
+                        className="flex items-center gap-2 bg-white px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-gray-200 shadow-sm"
                       >
                         <div
                           className="w-3 h-3 md:w-4 md:h-4 rounded-full flex-shrink-0"
@@ -418,11 +418,8 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                             backgroundColor: categoryIsSoldOut ? '#CFCFCF' : categoryColor
                           }}
                         ></div>
-                        <span className="text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <span className="text-xs md:text-sm font-medium text-gray-700 whitespace-nowrap">
                           {cat.name}
-                        </span>
-                        <span className="text-xs md:text-sm text-gray-500">
-                          ({categoryIsSoldOut ? 'Sold Out' : `${cat.seatsLeft} left`})
                         </span>
                       </div>
                     );

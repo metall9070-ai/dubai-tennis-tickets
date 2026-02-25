@@ -31,7 +31,22 @@ export default function StadiumMap({
     );
   }
 
-  const svgPath = venue?.includes('Lusail') ? '/lusail.svg?v=6' : '/stadium.svg';
+  const svgPath = venue?.includes('Lusail') ? '/lusail-stadium-new.png?v=1' : '/stadium.svg';
+  const isLusailStadium = venue?.includes('Lusail');
+
+  // For Lusail Stadium - display as static image only (no interaction)
+  if (isLusailStadium) {
+    return (
+      <div className="stadium-map-container w-full flex items-center justify-center" style={{ minHeight: '400px' }}>
+        <img
+          src={svgPath}
+          alt="Lusail Stadium Seating Map"
+          className="w-full h-auto max-w-[600px]"
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    );
+  }
 
   // Active category is either controlled (from parent) or local hover
   const effectiveActiveCategory = activeCategory || hoveredCategory;
@@ -163,19 +178,19 @@ export default function StadiumMap({
       <style jsx global>{`
         .stadium-map-container {
           /* Category base colors */
-          --category-1-base: #800D2F;
-          --category-1-hover: #A61C47;  /* Subtle - +8% lightness (reduced by 2 tones) */
+          --category-1-base: #3F8ABF;  /* Blue */
+          --category-1-hover: #5A9FD4;  /* Lighter blue on hover */
 
-          --category-2-base: #C73866;
-          --category-2-hover: #D44B7A;  /* Subtle - +8% lightness (reduced by 2 tones) */
+          --category-2-base: #137F3A;  /* Green */
+          --category-2-hover: #1A9B4A;  /* Lighter green on hover */
 
-          --category-3-base: #FFB5A7;
-          --category-3-hover: #FFC2B8;  /* Subtle - +3% lightness (reduced by 2 tones) */
+          --category-3-base: #E3122B;  /* Red */
+          --category-3-hover: #F2273E;  /* Lighter red on hover */
 
           --sold-out-color: #CFCFCF;
         }
 
-        /* Category 1 - Burgundy */
+        /* Category 1 - Blue */
         [data-category="category-1"] {
           color: var(--category-1-base);
           cursor: pointer;
@@ -186,7 +201,7 @@ export default function StadiumMap({
           color: var(--category-1-hover);
         }
 
-        /* Category 2 - Pink */
+        /* Category 2 - Green */
         [data-category="category-2"] {
           color: var(--category-2-base);
           cursor: pointer;
@@ -197,7 +212,7 @@ export default function StadiumMap({
           color: var(--category-2-hover);
         }
 
-        /* Category 3 - Peach */
+        /* Category 3 - Red */
         [data-category="category-3"] {
           color: var(--category-3-base);
           cursor: pointer;
