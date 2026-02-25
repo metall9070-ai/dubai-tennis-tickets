@@ -30,7 +30,8 @@ const Footer: React.FC<FooterProps> = ({
   onSeatingGuide,
   onVenue
 }) => {
-  const { supportEmail } = getSiteConfig();
+  const config = getSiteConfig();
+  const { supportEmail, footer } = config;
 
   const ticketLinks = [
     { name: 'All Tickets', href: '/', handler: onHome },
@@ -69,11 +70,10 @@ const Footer: React.FC<FooterProps> = ({
           {/* Column 1: Brand & Contact - on mobile shows LAST, on desktop shows FIRST */}
           <div className="col-span-2 lg:col-span-2 flex flex-col space-y-3 sm:space-y-4 order-last lg:order-first">
             <span className="text-[#1d1d1f] text-[15px] sm:text-[16px] font-bold tracking-tight">
-              Dubai Tennis Tickets
+              {footer?.brandTitle || config.brand}
             </span>
             <p className="text-[12px] sm:text-[13px] text-[#424245] leading-relaxed">
-              Independent ticket service for Dubai Duty Free Tennis Championships.
-              Secure booking and guaranteed authentic tickets.
+              {footer?.description || config.defaultDescription}
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
@@ -203,7 +203,7 @@ const Footer: React.FC<FooterProps> = ({
         {/* Disclaimer */}
         <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-black/5">
           <p className="text-[10px] sm:text-[11px] text-[#86868b] leading-relaxed text-center mb-3 sm:mb-4">
-            This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.
+            {footer?.disclaimer || "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only."}
           </p>
         </div>
 

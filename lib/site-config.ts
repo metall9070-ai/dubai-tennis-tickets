@@ -37,6 +37,11 @@ export interface SiteConfig {
     image?: string
     buttonText?: string
   }
+  footer?: {
+    brandTitle: string
+    description: string
+    disclaimer: string
+  }
   /**
    * Allowed event types for this site (presentation policy).
    * Used for frontend read-only filtering across catalog, schedule, and sitemap.
@@ -107,6 +112,11 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       image:
         "https://s1.ticketm.net/dam/a/d9b/fe4ff027-d207-4fcd-976c-499a54e4fd9b_SOURCE",
     },
+    footer: {
+      brandTitle: "Dubai Tennis Tickets",
+      description: "Independent ticket service for Dubai Duty Free Tennis Championships. Secure booking and guaranteed authentic tickets.",
+      disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
+    },
   },
 
   finalissima: {
@@ -149,6 +159,11 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
         "International football celebration headlined by the Finalissima intercontinental final. Six days of world-class matches across Qatar.",
       image: "/images/lusail-stadium-hero.png",
       buttonText: "Get Tickets Now",
+    },
+    footer: {
+      brandTitle: "Football Festival Qatar",
+      description: "Independent ticket concierge service for Football Festival Qatar 2026. Secure booking and guaranteed authentic tickets for all matches.",
+      disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to FIFA, UEFA, CONMEBOL, Qatar Football Association, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
     },
   },
 
