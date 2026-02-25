@@ -76,7 +76,7 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
       { name: "About Us", href: "/about" },
     ],
     disclaimer:
-      "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
+      "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with FIFA, UEFA, CONMEBOL, national associations, venues, or event organizers; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
   },
 }
 
