@@ -36,7 +36,7 @@ export default function StadiumMap({
   // Active category is either controlled (from parent) or local hover
   const effectiveActiveCategory = activeCategory || hoveredCategory;
 
-  // Load SVG once
+  // Load SVG once and immediately apply sold-out state
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -45,11 +45,25 @@ export default function StadiumMap({
       .then(res => res.text())
       .then(svgText => {
         container.innerHTML = svgText;
+
+        // IMMEDIATELY apply sold-out classes after SVG loads (before setSvgLoaded)
+        // This prevents flash of colored categories before sold-out state is applied
+        const categories = ["category-1", "category-2", "category-3"];
+        categories.forEach((category) => {
+          const groups = container.querySelectorAll(`[data-category="${category}"]`);
+          groups.forEach((group) => {
+            if (soldOutCategories.includes(category)) {
+              group.classList.add('sold-out');
+              (group as SVGGElement).style.cursor = 'not-allowed';
+            }
+          });
+        });
+
         setSvgLoaded(true);
         console.log(`[StadiumMap] Loaded ${svgPath}`);
       })
       .catch(err => console.error('[StadiumMap] Failed to load SVG:', err));
-  }, [svgPath]);
+  }, [svgPath, soldOutCategories]);
 
   // Apply CSS classes to categories based on state
   useEffect(() => {

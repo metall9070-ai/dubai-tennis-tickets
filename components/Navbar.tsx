@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleNavItemClick(item.href, item.label, e)}
-                className="text-[12px] font-normal text-white/80 hover:text-white transition-colors duration-300"
+                className="text-[15px] font-medium text-white/90 hover:text-white transition-colors duration-300"
               >
                 {item.label}
               </a>
