@@ -395,7 +395,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
             <span className="text-[10px] md:text-[11px] font-medium text-[#86868b] bg-[#f5f5f7] px-2.5 md:px-3 py-1 rounded-full">Live availability</span>
           </div>
 
-          <div className={`${isFinalissima && event?.venue?.includes('Lusail') ? 'bg-white' : 'bg-[#f8f9fb]'} rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5`}>
+          <div className={`${isFinalissima && (event?.venue?.includes('Lusail') || event?.venue?.includes('Jassim Bin Ham') || event?.venue?.includes('Ahmad Bin Ali')) ? 'bg-white' : 'bg-[#f8f9fb]'} rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5`}>
             {/* Category Legend - only for Finalissima */}
             {isFinalissima && categories.length > 0 && (
               <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6 px-2">

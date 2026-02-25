@@ -21,25 +21,17 @@ export default function StadiumMap({
   const [svgLoaded, setSvgLoaded] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
-  if (venue?.includes('Jassim Bin Ham')) {
-    return (
-      <div className="flex items-center justify-center h-[400px] bg-white rounded-lg border border-gray-200">
-        <p className="text-gray-500 text-center px-6">
-          Stadium seating map will be available soon
-        </p>
-      </div>
-    );
-  }
-
-  const svgPath = venue?.includes('Lusail') ? '/lusail-stadium-new.png?v=1' : '/stadium.svg';
+  // Determine which stadium image to display
   const isLusailStadium = venue?.includes('Lusail');
+  const isJassimStadium = venue?.includes('Jassim Bin Ham');
+  const isAhmadBinAliStadium = venue?.includes('Ahmad Bin Ali');
 
   // For Lusail Stadium - display as static image only (no interaction)
   if (isLusailStadium) {
     return (
       <div className="stadium-map-container w-full flex items-center justify-center" style={{ minHeight: '400px' }}>
         <img
-          src={svgPath}
+          src="/lusail-stadium-new.png?v=1"
           alt="Lusail Stadium Seating Map"
           className="w-full h-auto max-w-[600px]"
           style={{ objectFit: 'contain' }}
@@ -47,6 +39,36 @@ export default function StadiumMap({
       </div>
     );
   }
+
+  // For Jassim bin Hamad Stadium - display as static image only (no interaction)
+  if (isJassimStadium) {
+    return (
+      <div className="stadium-map-container w-full flex items-center justify-center" style={{ minHeight: '400px' }}>
+        <img
+          src="/jassim-stadium.png"
+          alt="Jassim bin Hamad Stadium Seating Map"
+          className="w-full h-auto max-w-[600px]"
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    );
+  }
+
+  // For Ahmad bin Ali Stadium - display as static image only (no interaction)
+  if (isAhmadBinAliStadium) {
+    return (
+      <div className="stadium-map-container w-full flex items-center justify-center" style={{ minHeight: '400px' }}>
+        <img
+          src="/ahmad-bin-ali-stadium.png"
+          alt="Ahmad bin Ali Stadium Seating Map"
+          className="w-full h-auto max-w-[600px]"
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    );
+  }
+
+  const svgPath = '/stadium.svg';
 
   // Active category is either controlled (from parent) or local hover
   const effectiveActiveCategory = activeCategory || hoveredCategory;
