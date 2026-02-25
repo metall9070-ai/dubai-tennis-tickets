@@ -115,7 +115,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     footer: {
       brandTitle: "Dubai Tennis Tickets",
       description: "Independent ticket service for Dubai Duty Free Tennis Championships. Secure booking and guaranteed authentic tickets.",
-      disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
+      disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only. Prices listed on this website differ from face value and may be higher than the original ticket price.",
     },
   },
 
@@ -163,7 +163,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     footer: {
       brandTitle: "Football Festival Qatar",
       description: "Independent ticket concierge service for Football Festival Qatar 2026. Secure booking and guaranteed authentic tickets for all matches.",
-      disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to FIFA, UEFA, CONMEBOL, Qatar Football Association, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only.",
+      disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to FIFA, UEFA, CONMEBOL, Qatar Football Association, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only. Prices listed on this website differ from face value and may be higher than the original ticket price.",
     },
   },
 
