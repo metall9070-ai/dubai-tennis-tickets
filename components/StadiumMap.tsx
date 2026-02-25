@@ -19,6 +19,7 @@ export default function StadiumMap({
 }: StadiumMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgLoaded, setSvgLoaded] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
   if (venue?.includes('Jassim Bin Ham')) {
     return (
@@ -30,22 +31,12 @@ export default function StadiumMap({
     );
   }
 
-  const svgPath = venue?.includes('Lusail') ? '/lusail.svg' : '/stadium.svg';
+  const svgPath = venue?.includes('Lusail') ? '/lusail.svg?v=6' : '/stadium.svg';
 
-  // Category base colors - must match the SVG styles
-  const categoryColors: Record<string, string> = {
-    'category-1': '#800D2F',
-    'category-2': '#C73866',
-    'category-3': '#FFB5A7',
-  };
+  // Active category is either controlled (from parent) or local hover
+  const effectiveActiveCategory = activeCategory || hoveredCategory;
 
-  // Lighter versions of the same colors for hover effect (30% lighter)
-  const categoryHoverColors: Record<string, string> = {
-    'category-1': '#A61C47', // Lighter burgundy - same hue, more lightness
-    'category-2': '#E05788', // Lighter pink - same hue, more lightness
-    'category-3': '#FFD4CA', // Lighter peachy pink - same hue, more lightness
-  };
-
+  // Load SVG once
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -55,110 +46,181 @@ export default function StadiumMap({
       .then(svgText => {
         container.innerHTML = svgText;
         setSvgLoaded(true);
-        console.log('[StadiumMap] SVG loaded');
+        console.log(`[StadiumMap] Loaded ${svgPath}`);
       })
       .catch(err => console.error('[StadiumMap] Failed to load SVG:', err));
   }, [svgPath]);
 
+  // Apply CSS classes to categories based on state
   useEffect(() => {
     if (!svgLoaded || !containerRef.current) return;
 
     const container = containerRef.current;
     const categories = ["category-1", "category-2", "category-3"];
-    const cleanupFunctions: (() => void)[] = [];
-
-    // Helper: apply color to ALL sections of a category
-    const applyColorToCategory = (category: string, color: string) => {
-      const parentGroups = container.querySelectorAll(`[data-category="${category}"]`);
-      let totalShapes = 0;
-      parentGroups.forEach((parentGroup) => {
-        const childSections = parentGroup.querySelectorAll('[data-section]');
-        childSections.forEach((section) => {
-          const shapes = section.querySelectorAll('path, rect, polygon, circle');
-          shapes.forEach((shape) => {
-            const svgEl = shape as SVGElement;
-            // Use setAttribute to directly set fill attribute - this overrides any CSS
-            svgEl.setAttribute('fill', color);
-            totalShapes++;
-          });
-        });
-      });
-      console.log(`[StadiumMap] Applied ${color} to ${totalShapes} shapes in ${category}`);
-    };
 
     categories.forEach((category) => {
-      const parentGroups = container.querySelectorAll(`[data-category="${category}"]`);
-      console.log(`[StadiumMap] ${category}: found ${parentGroups.length} parent groups`);
+      const groups = container.querySelectorAll(`[data-category="${category}"]`);
 
-      parentGroups.forEach((parentGroup, groupIndex) => {
-        const childSections = parentGroup.querySelectorAll('[data-section]');
-        console.log(`[StadiumMap] ${category} group ${groupIndex}: ${childSections.length} sections`);
+      groups.forEach((group) => {
+        // Remove all state classes
+        group.classList.remove('active', 'sold-out', 'inactive');
 
-        childSections.forEach((section) => {
-          const element = section as SVGGElement;
+        // Add sold-out class
+        if (soldOutCategories.includes(category)) {
+          group.classList.add('sold-out');
+        }
 
-          // Apply uniform base color to ALL shapes in this section
-          const baseColor = categoryColors[category];
-          if (baseColor && !soldOutCategories.includes(category)) {
-            const shapes = element.querySelectorAll('path, rect, polygon, circle');
-            shapes.forEach((shape) => {
-              const svgEl = shape as SVGElement;
-              svgEl.removeAttribute('fill');
-              svgEl.style.setProperty('fill', baseColor, 'important');
-            });
-          }
+        // Add active class if this category is hovered
+        if (effectiveActiveCategory === category && !soldOutCategories.includes(category)) {
+          group.classList.add('active');
+        }
 
-          // Set cursor
-          element.style.cursor = soldOutCategories.includes(category) ? 'not-allowed' : 'pointer';
+        // Add inactive class if another category is hovered (dimmed effect)
+        if (effectiveActiveCategory && effectiveActiveCategory !== category && !soldOutCategories.includes(category)) {
+          group.classList.add('inactive');
+        }
 
-          // Apply active state
-          if (activeCategory === category && !soldOutCategories.includes(category)) {
-            applyColorToCategory(category, categoryHoverColors[category]);
-          }
-
-          const handleMouseEnter = () => {
-            console.log(`[StadiumMap] Mouse ENTER on ${category} section`);
-            if (!soldOutCategories.includes(category)) {
-              // Highlight ALL sections of this category
-              applyColorToCategory(category, categoryHoverColors[category]);
-              onCategoryHover?.(category);
-            } else {
-              console.log(`[StadiumMap] ${category} is sold out, skipping highlight`);
-            }
-          };
-
-          const handleMouseLeave = () => {
-            console.log(`[StadiumMap] Mouse LEAVE from ${category} section`);
-            if (!soldOutCategories.includes(category)) {
-              if (activeCategory !== category) {
-                // Reset ALL sections of this category to base color
-                applyColorToCategory(category, categoryColors[category]);
-              }
-              onCategoryHover?.(null);
-            }
-          };
-
-          const handleClick = () => {
-            if (!soldOutCategories.includes(category)) {
-              onCategoryClick?.(category);
-            }
-          };
-
-          element.addEventListener("mouseenter", handleMouseEnter);
-          element.addEventListener("mouseleave", handleMouseLeave);
-          element.addEventListener("click", handleClick);
-
-          cleanupFunctions.push(() => {
-            element.removeEventListener("mouseenter", handleMouseEnter);
-            element.removeEventListener("mouseleave", handleMouseLeave);
-            element.removeEventListener("click", handleClick);
-          });
-        });
+        // Set cursor
+        (group as SVGGElement).style.cursor = soldOutCategories.includes(category)
+          ? 'not-allowed'
+          : 'pointer';
       });
     });
+  }, [svgLoaded, effectiveActiveCategory, soldOutCategories]);
 
-    return () => cleanupFunctions.forEach(fn => fn());
-  }, [svgLoaded, onCategoryHover, onCategoryClick, soldOutCategories, activeCategory]);
+  // Set up event handlers
+  useEffect(() => {
+    if (!svgLoaded || !containerRef.current) return;
 
-  return <div ref={containerRef} className="stadium-map w-full" style={{ minHeight: '400px' }} />;
+    const container = containerRef.current;
+    const categories = ["category-1", "category-2", "category-3"];
+
+    // Helper: get category from element or its parents
+    const getCategoryFromElement = (element: Element | null): string | null => {
+      let current = element;
+      while (current && current !== container) {
+        const category = current.getAttribute('data-category');
+        if (category && categories.includes(category)) {
+          return category;
+        }
+        current = current.parentElement;
+      }
+      return null;
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const category = getCategoryFromElement(e.target as Element);
+      if (category && !soldOutCategories.includes(category)) {
+        setHoveredCategory(category);
+        onCategoryHover?.(category);
+      }
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const fromCategory = getCategoryFromElement(e.target as Element);
+      const toCategory = getCategoryFromElement(e.relatedTarget as Element);
+
+      if (fromCategory && fromCategory !== toCategory) {
+        setHoveredCategory(null);
+        onCategoryHover?.(null);
+      }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      const category = getCategoryFromElement(e.target as Element);
+      if (category && !soldOutCategories.includes(category)) {
+        onCategoryClick?.(category);
+      }
+    };
+
+    container.addEventListener("mouseover", handleMouseOver);
+    container.addEventListener("mouseout", handleMouseOut);
+    container.addEventListener("click", handleClick);
+
+    return () => {
+      container.removeEventListener("mouseover", handleMouseOver);
+      container.removeEventListener("mouseout", handleMouseOut);
+      container.removeEventListener("click", handleClick);
+    };
+  }, [svgLoaded, onCategoryHover, onCategoryClick, soldOutCategories]);
+
+  return (
+    <div className="stadium-map-container w-full" style={{ minHeight: '400px' }}>
+      <style jsx global>{`
+        .stadium-map-container {
+          /* Category base colors */
+          --category-1-base: #800D2F;
+          --category-1-hover: #A61C47;  /* Subtle - +8% lightness (reduced by 2 tones) */
+
+          --category-2-base: #C73866;
+          --category-2-hover: #D44B7A;  /* Subtle - +8% lightness (reduced by 2 tones) */
+
+          --category-3-base: #FFB5A7;
+          --category-3-hover: #FFC2B8;  /* Subtle - +3% lightness (reduced by 2 tones) */
+
+          --sold-out-color: #CFCFCF;
+        }
+
+        /* Category 1 - Burgundy */
+        [data-category="category-1"] {
+          color: var(--category-1-base);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        [data-category="category-1"].active {
+          color: var(--category-1-hover);
+        }
+
+        /* Category 2 - Pink */
+        [data-category="category-2"] {
+          color: var(--category-2-base);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        [data-category="category-2"].active {
+          color: var(--category-2-hover);
+        }
+
+        /* Category 3 - Peach */
+        [data-category="category-3"] {
+          color: var(--category-3-base);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        [data-category="category-3"].active {
+          color: var(--category-3-hover);
+        }
+
+        /* Inactive state - dimmed when another category is hovered */
+        [data-category].inactive {
+          opacity: 0.35;
+          filter: none;
+        }
+
+        /* Sold out state */
+        [data-category].sold-out {
+          color: var(--sold-out-color) !important;
+          cursor: not-allowed;
+        }
+
+        /* All shapes inherit color from parent */
+        [data-category] polygon,
+        [data-category] path,
+        [data-category] rect,
+        [data-category] circle {
+          fill: currentColor !important;
+        }
+
+        /* Text labels always white */
+        [data-category] text {
+          fill: white !important;
+          pointer-events: none;
+        }
+      `}</style>
+      <div ref={containerRef} className="w-full" />
+    </div>
+  );
 }

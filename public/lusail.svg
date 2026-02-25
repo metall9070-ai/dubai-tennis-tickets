@@ -1,80 +1,88 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 -32 966.8 1036.9" xml:space="preserve">
     <style>
-    /* JavaScript controls all colors - no CSS fill styles */
-    [data-category] path,
-    [data-category] rect,
-    [data-category] circle,
-    [data-category] polygon {
-      transition: fill 0.3s ease;
+    /* Field styling - MAXIMUM SPECIFICITY */
+    [data-category="field"] rect.st0 {
+      fill: #5C9E4F !important;
     }
 
-    [data-category].sold-out path,
-    [data-category].sold-out rect,
-    [data-category].sold-out circle,
-    [data-category].sold-out polygon {
-      fill: #CFCFCF !important;
-      cursor: not-allowed;
+    [data-category="field"] rect.st1 {
+      fill: #538D43 !important;
     }
 
-    [data-category] text {
-      pointer-events: none;
-      fill: white;
+    [data-category="field"] .st2 {
+      fill: none !important;
+      stroke: #FFFFFF !important;
+      stroke-miterlimit: 10;
     }
 
-
-
-    /* Футбольное поле - из исходной схемы Map.svg */
+    /* Fallback */
     .st0 {
-      fill: #5C9E4F;
+      fill: #5C9E4F !important;
     }
 
     .st1 {
-      fill: #538D43;
+      fill: #538D43 !important;
     }
 
     .st2 {
-      fill: none;
-      stroke: #FFFFFF;
+      fill: none !important;
+      stroke: #FFFFFF !important;
       stroke-miterlimit: 10;
     }
+
+    /* Colors managed via currentColor - React controls CSS classes */
+    /* Exclude field elements from currentColor system */
+    [data-category]:not([data-category="field"]) path,
+    [data-category]:not([data-category="field"]) rect,
+    [data-category]:not([data-category="field"]) circle,
+    [data-category]:not([data-category="field"]) polygon {
+      fill: currentColor;
+      transition: fill 0.3s ease;
+    }
+
+    [data-category] text {
+      fill: white;
+      pointer-events: none;
+    }
+
   </style>
   <g data-category="field">
     <g data-additional-flag="false" data-section="field_" data-category-aliases="field">
-      <rect x="278.5" y="364.7" class="st0" width="409" height="245.2" />
-      <rect x="478.2" y="376.4" class="st1" width="18.2" height="221.4" />
-      <rect x="515.4" y="376.4" class="st1" width="18.2" height="221.4" />
-      <rect x="552" y="376.4" class="st1" width="18.2" height="221.4" />
-      <rect x="589.4" y="376.4" class="st1" width="18.2" height="221.4" />
-      <rect x="623.7" y="376.4" class="st1" width="16.4" height="221.3" />
-      <rect x="656.1" y="376.4" class="st1" width="16.4" height="221.3" />
-      <rect x="330.8" y="376.4" class="st1" width="18.5" height="221.3" />
-      <rect x="294.4" y="376.4" class="st1" width="18.5" height="221.3" />
-      <rect x="441.7" y="376.4" class="st1" width="18.5" height="221.4" />
-      <rect x="367.8" y="376.4" class="st1" width="18.5" height="221.3" />
-      <rect x="404.8" y="376.4" class="st1" width="18.5" height="221" />
-      <rect x="294.9" y="376.4" class="st2" width="378" height="221.4" />
+      <rect x="278.5" y="364.7" class="st0" width="409" height="245.2"></rect>
+      <rect x="478.2" y="376.4" class="st1" width="18.2" height="221.4"></rect>
+      <rect x="515.4" y="376.4" class="st1" width="18.2" height="221.4"></rect>
+      <rect x="552" y="376.4" class="st1" width="18.2" height="221.4"></rect>
+      <rect x="589.4" y="376.4" class="st1" width="18.2" height="221.4"></rect>
+      <rect x="623.7" y="376.4" class="st1" width="16.4" height="221.3"></rect>
+      <rect x="656.1" y="376.4" class="st1" width="16.4" height="221.3"></rect>
+      <rect x="330.8" y="376.4" class="st1" width="18.5" height="221.3"></rect>
+      <rect x="294.4" y="376.4" class="st1" width="18.5" height="221.3"></rect>
+      <rect x="441.7" y="376.4" class="st1" width="18.5" height="221.4"></rect>
+      <rect x="367.8" y="376.4" class="st1" width="18.5" height="221.3"></rect>
+      <rect x="404.8" y="376.4" class="st1" width="18.5" height="221"></rect>
+      <rect x="294.9" y="376.4" class="st2" width="378" height="221.4" style="fill: transparent;"></rect>
       <g>
-        <rect x="294.9" y="415.1" class="st2" width="47.5" height="144.1" />
-        <rect x="294.9" y="453.6" class="st2" width="17.2" height="67.1" />
-        <path class="st2" d="M342.1,513.3c2.1-2.4,9.6-12.1,9.4-26.5c-0.1-14-7.4-23.3-9.6-25.9" />
-        <rect x="287.1" y="474.2" class="st2" width="7.6" height="22.6" />
+        <rect x="294.9" y="415.1" class="st2" width="47.5" height="144.1" style="fill: transparent;"></rect>
+        <rect x="294.9" y="453.6" class="st2" width="17.2" height="67.1" style="fill: transparent;"></rect>
+        <path class="st2" d="M342.1,513.3c2.1-2.4,9.6-12.1,9.4-26.5c-0.1-14-7.4-23.3-9.6-25.9" style="fill: transparent;"></path>
+        <rect x="287.1" y="474.2" class="st2" width="7.6" height="22.6" style="fill: transparent;"></rect>
       </g>
       <g>
-        <rect x="625.4" y="415.1" class="st2" width="47.5" height="144.1" />
-        <rect x="655.5" y="453.6" class="st2" width="17.2" height="67.1" />
-        <path class="st2" d="M625.4,461c-2.1,2.6-9.4,11.9-9.6,25.9c-0.2,14.3,7.4,23.9,9.4,26.5" />
-        <rect x="672.7" y="474.2" class="st2" width="7.6" height="22.6" />
+        <rect x="625.4" y="415.1" class="st2" width="47.5" height="144.1" style="fill: transparent;"></rect>
+        <rect x="655.5" y="453.6" class="st2" width="17.2" height="67.1" style="fill: transparent;"></rect>
+        <path class="st2" d="M625.4,461c-2.1,2.6-9.4,11.9-9.6,25.9c-0.2,14.3,7.4,23.9,9.4,26.5" style="fill: transparent;"></path>
+        <rect x="672.7" y="474.2" class="st2" width="7.6" height="22.6" style="fill: transparent;"></rect>
       </g>
       <g>
-        <path class="st2" d="M301.1,597.8c0,0,0.2-7-6.5-8.6" />
-        <path class="st2" d="M294.9,384.9c6.7-1.5,6.5-8.6,6.5-8.6" />
+        <path class="st2" d="M301.1,597.8c0,0,0.2-7-6.5-8.6" style="fill: transparent;"></path>
+        <path class="st2" d="M294.9,384.9c6.7-1.5,6.5-8.6,6.5-8.6" style="fill: transparent;"></path>
       </g>
       <g>
-        <path class="st2" d="M672.7,589.2c-6.7,1.5-6.5,8.6-6.5,8.6" />
-        <path class="st2" d="M666.3,376.4c0,0-0.2,7,6.5,8.6" />
+        <path class="st2" d="M672.7,589.2c-6.7,1.5-6.5,8.6-6.5,8.6" style="fill: transparent;"></path>
+        <path class="st2" d="M666.3,376.4c0,0-0.2,7,6.5,8.6" style="fill: transparent;"></path>
       </g>
-      <circle id="white_circle" class="st2" cx="483" cy="487.2" r="33.6" data-seat="field" />
-      <line class="st2" x1="483.2" y1="376.4" x2="483.2" y2="597.9" />
+      <circle id="white_circle" class="st2" cx="483" cy="487.2" r="33.6" style="fill: transparent;" data-seat="field"></circle>
+      <line class="st2" x1="483.2" y1="376.4" x2="483.2" y2="597.9" style="fill: transparent;"></line>
     </g>
   </g>
   <g data-category="category-1">
