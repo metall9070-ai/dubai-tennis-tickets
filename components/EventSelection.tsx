@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
-import Footer from './Footer';
+import Footer from '@/app/components/Footer';
 import WhyBuy from './WhyBuy';
 import WTASessionInfo from './WTASessionInfo';
 import ATPSessionInfo from './ATPSessionInfo';
@@ -614,7 +614,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
       <RelatedMatches currentSlug={event?.slug || ''} currentEvent={event} />
 
       <WhyBuy />
-      <Footer onHome={onHome} />
+      <Footer />
 
       {/* Modal Window */}
       {isModalOpen && selectedCategory && (

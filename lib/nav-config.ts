@@ -64,7 +64,7 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
   finalissima: {
     brandName: "Football Festival Qatar",
     brandDescription:
-      "Independent ticket concierge service for Football Festival Qatar 2026. Secure booking and guaranteed authentic tickets for all matches.",
+      "Independent ticket concierge service in the secondary ticket market. Prices are market-based and may exceed face value.",
     ticketLinks: [
       { name: "All Tickets", href: "/" },
       { name: "Schedule", href: "/schedule" },

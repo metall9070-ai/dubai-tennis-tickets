@@ -32,22 +32,37 @@ const EventSEOContent: React.FC<EventSEOContentProps> = ({ eventSEO }) => {
 
       {/* FAQ Block */}
       {eventSEO.faq && eventSEO.faq.length > 0 && (
-        <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 md:py-12 border-b border-[#f5f5f7]">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1d1d1f] mb-6 md:mb-8 tracking-tight">
-            Frequently Asked Questions
-          </h2>
+        <div className="w-full border-b border-[#f5f5f7]">
+          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 md:py-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#1d1d1f] mb-6 md:mb-8 tracking-tight">
+              Frequently Asked Questions
+            </h2>
 
-          <div className="space-y-6">
-            {eventSEO.faq.map((item, index) => (
-              <div key={index} className="bg-[#f5f5f7] rounded-2xl p-6 md:p-8">
-                <h3 className="text-lg md:text-xl font-semibold text-[#1d1d1f] mb-3">
-                  {item.question}
-                </h3>
-                <p className="text-[15px] md:text-[17px] text-[#86868b] leading-relaxed">
+            <div className="space-y-4">
+              {eventSEO.faq.map((item, index) => (
+                <details
+                  key={index}
+                  className="group bg-white rounded-2xl border border-black/5 overflow-hidden block"
+                >
+                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-[#f5f5f7] transition-colors list-none">
+                  <div className="flex-1 pr-4">
+                    <span className="font-semibold text-[#1d1d1f] text-base md:text-lg">{item.question}</span>
+                  </div>
+                  <svg
+                    className="w-5 h-5 text-[#86868b] group-open:rotate-180 transition-transform flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#424245] leading-relaxed text-[15px] md:text-base">
                   {item.answer}
-                </p>
-              </div>
+                </div>
+              </details>
             ))}
+          </div>
           </div>
         </div>
       )}

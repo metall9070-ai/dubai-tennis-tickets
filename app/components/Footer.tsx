@@ -37,12 +37,6 @@ export default function Footer() {
               <p className="text-[11px] sm:text-[12px] text-[#86868b]">
                 <span className="font-medium text-[#1d1d1f]">Hours:</span> 24/7 Customer Support
               </p>
-              <p className="text-[11px] sm:text-[12px] text-[#86868b]">
-                <span className="font-medium text-[#1d1d1f]">Company:</span> WORLD TICKETS 365 INC
-              </p>
-              <p className="text-[11px] sm:text-[12px] text-[#86868b]">
-                <span className="font-medium text-[#1d1d1f]">Address:</span> 7901 4th St N STE 300, St. Petersburg, FL 33702, USA
-              </p>
             </div>
           </div>
 
@@ -161,9 +155,8 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-black/5">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 text-[10px] sm:text-[11px] text-[#86868b]">
-            <p>© 2026 WORLD TICKETS 365 INC. All rights reserved.</p>
-            <p>7901 4th St N STE 300, St. Petersburg, FL 33702, USA</p>
+          <div className="flex justify-center items-center text-[10px] sm:text-[11px] text-[#86868b]">
+            <p>© 2026 {brandName}. All rights reserved.</p>
           </div>
         </div>
       </div>
