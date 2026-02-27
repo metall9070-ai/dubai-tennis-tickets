@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Navbar from './Navbar';
+import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import WhyBuy from './WhyBuy';
 import WTASessionInfo from './WTASessionInfo';
@@ -292,7 +292,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
   return (
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
-      <Navbar isVisible={true} cartCount={cartTotalItems} onHome={onHome} onCart={onCart} />
+      <Navbar isVisible />
 
       {/* Main Header Section */}
       <div className={`${hasTopDisclaimer ? 'pt-20 md:pt-[88px]' : 'pt-20 md:pt-24'} pb-6 md:pb-8 bg-white border-b border-[#f5f5f7]`}>

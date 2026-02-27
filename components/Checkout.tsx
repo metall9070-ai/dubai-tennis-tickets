@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Navbar from './Navbar';
+import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { CartItem } from '@/app/CartContext';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface CheckoutProps {
   cart: CartItem[];
@@ -25,6 +26,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   });
   const [agree, setAgree] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const hasTopDisclaimer = !!getSiteConfig().topDisclaimer;
 
   const handlePayment = async () => {
     // Validation check
@@ -147,7 +149,6 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
 
   const totalValue = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const cartTotalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -160,14 +161,9 @@ const Checkout: React.FC<CheckoutProps> = ({
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col font-sans">
-      <Navbar
-        isVisible={true}
-        cartCount={cartTotalItems}
-        onHome={onHome}
-        onCart={onCart}
-      />
+      <Navbar isVisible />
 
-      <main className="flex-1 pt-20 md:pt-24 pb-12 md:pb-20">
+      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-20 md:pt-[88px]' : 'pt-20 md:pt-24'} pb-12 md:pb-20`}>
         <div className="max-w-[900px] mx-auto px-6">
           
           <nav className="flex items-center space-x-2 text-[13px] font-semibold text-[#86868b] mb-6 md:mb-8">
