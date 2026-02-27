@@ -172,7 +172,7 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
                 <span className="text-3xl font-display font-bold text-slate-900 leading-none">${event.minPrice}</span>
               </div>
               <button
-                className="px-8 py-4 bg-[#00627B] hover:bg-[#004e62] text-white rounded-2xl font-bold text-sm transition-all duration-300 shadow-xl shadow-[#00627B]/20 flex items-center gap-3 group/btn"
+                className="px-8 py-4 bg-[#00627B] hover:bg-[#004e62] active:scale-95 text-white rounded-2xl font-bold text-sm transition-all duration-300 shadow-xl shadow-[#00627B]/20 flex items-center gap-3 group/btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleClick();
@@ -261,7 +261,7 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
                 <span className="text-3xl font-display font-bold text-slate-900 leading-none">${event.minPrice}</span>
               </div>
               <button
-                className="px-8 py-4 bg-[#00627B] hover:bg-[#004e62] text-white rounded-2xl font-bold text-sm transition-all duration-300 shadow-xl shadow-[#00627B]/20 flex items-center gap-3 group/btn"
+                className="px-8 py-4 bg-[#00627B] hover:bg-[#004e62] active:scale-95 text-white rounded-2xl font-bold text-sm transition-all duration-300 shadow-xl shadow-[#00627B]/20 flex items-center gap-3 group/btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleClick();

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Navbar from './Navbar';
-import Footer from './Footer';
+import Footer from '@/app/components/Footer';
 import { CartItem } from '@/app/CartContext';
 
 interface CheckoutProps {
@@ -10,24 +11,11 @@ interface CheckoutProps {
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
   onBack: () => void;
   onHome: () => void;
-  onTournament?: () => void;
-  onATPTickets?: () => void;
-  onWTATickets?: () => void;
-  onPaymentDelivery?: () => void;
-  onPrivacyPolicy?: () => void;
-  onTermsOfService?: () => void;
-  onContacts?: () => void;
-  onAboutUs?: () => void;
   onCart?: () => void;
-  onFAQ?: () => void;
-  onSeatingGuide?: () => void;
-  onVenue?: () => void;
 }
 
 const Checkout: React.FC<CheckoutProps> = ({
-  cart, setCart, onBack, onHome, onTournament, onATPTickets, onWTATickets,
-  onPaymentDelivery, onPrivacyPolicy, onTermsOfService, onContacts, onAboutUs, onCart,
-  onFAQ, onSeatingGuide, onVenue
+  cart, setCart, onBack, onHome, onCart
 }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -262,7 +250,6 @@ const Checkout: React.FC<CheckoutProps> = ({
                             <svg className="w-5 h-5 text-[var(--color-primary)] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                             <div>
                               <p className="text-[14px] font-semibold text-[#1d1d1f]">{item.venue}</p>
-                              <p className="text-[13px] text-[#86868b] font-normal leading-relaxed">Dubai Duty Free Tennis Stadium, Al Garhoud, Dubai, UAE</p>
                             </div>
                           </div>
                         </div>
@@ -418,7 +405,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                         />
                       </div>
                       <span className="text-[14px] font-medium text-[#86868b] leading-tight select-none group-hover:text-[#1d1d1f] transition-colors">
-                        I have read and agree to the <button onClick={(e) => { e.preventDefault(); onPrivacyPolicy?.(); }} className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">privacy policy</button> and <button onClick={(e) => { e.preventDefault(); onTermsOfService?.(); }} className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Terms of Service</button>.
+                        I have read and agree to the <Link href="/privacy-policy" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">privacy policy</Link> and <Link href="/terms-of-service" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Terms of Service</Link>.
                       </span>
                     </label>
                   </div>
@@ -453,20 +440,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           </div>
         </div>
       </main>
-      <Footer
-        onHome={onHome}
-        onTournament={onTournament}
-        onATPTickets={onATPTickets}
-        onWTATickets={onWTATickets}
-        onPaymentDelivery={onPaymentDelivery}
-        onPrivacyPolicy={onPrivacyPolicy}
-        onTermsOfService={onTermsOfService}
-        onContacts={onContacts}
-        onAboutUs={onAboutUs}
-        onFAQ={onFAQ}
-        onSeatingGuide={onSeatingGuide}
-        onVenue={onVenue}
-      />
+      <Footer />
     </div>
   );
 };

@@ -330,7 +330,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
                 <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#86868b]">Price unavailable</span>
               )}
             </div>
-            <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[var(--color-primary)] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 transition-transform">
+            <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[var(--color-primary)] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 active:scale-95 transition-transform">
               Buy tickets
             </span>
           </>

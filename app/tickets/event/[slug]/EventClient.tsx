@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart, CART_VERSION_KEY } from '@/app/CartContext';
 import EventSelection from '@/components/EventSelection';
@@ -38,6 +38,15 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(initialEvent || null);
   const [isLoading, setIsLoading] = useState(!initialEvent);
   const [error, setError] = useState<string | null>(null);
+
+  // Instantly scroll to top on mount, bypassing global smooth scroll
+  useLayoutEffect(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = '';
+    });
+  }, []);
 
   // Only fetch client-side if NO SSR data was provided
   useEffect(() => {
