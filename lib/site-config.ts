@@ -130,6 +130,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     defaultKeywords:
       "Finalissima 2026 tickets, Spain vs Argentina Qatar, Lusail Stadium football, Football Festival Qatar, intercontinental football final, Qatar football March 2026, international friendly matches Qatar, Finalissima Lusail",
     gaId: process.env.NEXT_PUBLIC_GA_ID,
+    ogImage: "/images/lusail-stadium-hero.png",
     gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
     jsonLdType: "finalissima",
     allowedEventTypes: ["MATCH"],
