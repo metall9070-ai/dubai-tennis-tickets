@@ -62,10 +62,18 @@ export async function generateMetadata({ params }: Props) {
 
     // Inject JSON-LD structured data if provided
     if (eventSEO.jsonLd) {
+      // Clone jsonLd to avoid mutating source object
+      const eventJsonLd = JSON.parse(JSON.stringify(eventSEO.jsonLd));
+
+      // Inject dynamic offers.url if offers object exists (SEO_ARCHITECTURE §3C)
+      if (eventJsonLd.offers) {
+        eventJsonLd.offers.url = `${SITE_URL}${path}`;
+      }
+
       return {
         ...metadata,
         other: {
-          'script:ld+json': JSON.stringify([eventSEO.jsonLd, breadcrumbList]),
+          'script:ld+json': JSON.stringify([eventJsonLd, breadcrumbList]),
         },
       };
     }
