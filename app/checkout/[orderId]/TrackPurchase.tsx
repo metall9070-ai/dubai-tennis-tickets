@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface OrderItem {
   event_id: number;
@@ -21,6 +22,7 @@ interface TrackPurchaseProps {
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+const siteConfig = getSiteConfig();
 
 export default function TrackPurchase({ orderId, orderNumber, totalAmount, status, items }: TrackPurchaseProps) {
   const hasFired = useRef(false);
@@ -36,7 +38,7 @@ export default function TrackPurchase({ orderId, orderNumber, totalAmount, statu
     if (typeof (window as any).gtag === 'function') {
       (window as any).gtag('event', 'purchase', {
         transaction_id: orderId,
-        affiliation: 'Dubai Tennis Tickets',
+        affiliation: siteConfig.brand,
         value: parseFloat(totalAmount),
         currency: 'USD',
         tax: 0,
