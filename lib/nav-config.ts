@@ -34,6 +34,12 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "Venue", href: "/venue" },
     { label: "FAQ", href: "/faq" },
   ],
+  yasarena: [
+    { label: "Events", href: "/events" },
+    { label: "About Venue", href: "/about-venue" },
+    { label: "Getting There", href: "/getting-there" },
+    { label: "FAQ", href: "/faq" },
+  ],
 }
 
 /* ------------------------------------------------------------------ */
@@ -77,6 +83,27 @@ const FOOTER_CONFIGS: Record<string, FooterConfig> = {
     ],
     disclaimer:
       "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with FIFA, UEFA, CONMEBOL, national associations, venues, or event organizers; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
+  },
+  yasarena: {
+    brandName: "Yas Arena Concierge",
+    brandDescription:
+      "Independent ticket concierge for events at Etihad Arena, Abu Dhabi. Secure booking and guaranteed authentic tickets.",
+    ticketLinks: [
+      { name: "All Events", href: "/" },
+      { name: "Events", href: "/events" },
+    ],
+    infoLinks: [
+      { name: "About Venue", href: "/about-venue" },
+      { name: "Getting There", href: "/getting-there" },
+      { name: "FAQ", href: "/faq" },
+      { name: "Contact", href: "/contact" },
+      { name: "Terms", href: "/terms" },
+      { name: "Privacy", href: "/privacy" },
+      { name: "About Us", href: "/about-us" },
+      { name: "Payment & Delivery", href: "/payment-delivery" },
+    ],
+    disclaimer:
+      "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with Etihad Arena, Yas Island, Miral, or any venue or event organizer; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
   },
 }
 

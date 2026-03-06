@@ -32,6 +32,12 @@ export const RESERVED_SLUGS = new Set<string>([
   // Additional reserved words (SEO_ARCHITECTURE §12.3)
   'about-tournament',  // Used by finalissima via [slug]
   'about-us',
+  'about-venue',       // Used by venue-type storefronts
+  'events',            // Used by venue-type storefronts
+  'getting-there',     // Used by venue-type storefronts
+  'terms',
+  'privacy',
+  'payment-delivery',
   'guarantee',
   'admin',
 ]);

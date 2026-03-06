@@ -12,7 +12,9 @@ export interface SiteConfig {
   gaId?: string
   gtmId?: string
   gscVerification?: string
-  jsonLdType: "tennis" | "finalissima" | "generic"
+  jsonLdType: "tennis" | "finalissima" | "yasarena" | "generic"
+  templateType?: "tournament" | "artist" | "venue" | "festival"
+  catalogSlug?: string
   navigation: Array<{
     label: string
     href: string
@@ -170,6 +172,57 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     topDisclaimer: "Independent ticket concierge service in the secondary ticket market. Prices are market-based and may exceed face value.",
   },
 
+  yasarena: {
+    brand: "Yas Arena Concierge",
+    supportEmail: "support@yasarena.com",
+    defaultTitle:
+      "Etihad Arena Tickets | Concerts, Shows & Events in Abu Dhabi",
+    defaultDescription:
+      "Independent ticket concierge for events at Etihad Arena, Abu Dhabi. Browse upcoming concerts, shows, and sports events with premium seating options.",
+    defaultKeywords:
+      "Etihad Arena tickets, Yas Island events, Abu Dhabi concerts, Etihad Arena Abu Dhabi, live shows Yas Island, Etihad Arena events 2026, Abu Dhabi entertainment, premium seating Etihad Arena",
+    gaId: process.env.NEXT_PUBLIC_GA_ID,
+    gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+    jsonLdType: "yasarena",
+    templateType: "venue",
+    catalogSlug: "events",
+    // TODO: verify — set allowedEventTypes when events are configured in CRM
+    colors: {
+      primary: "#DD900C",
+      primaryHover: "#BC7A0A",
+      header: "#1E293B",
+    },
+    geo: {
+      region: "AE-AZ",
+      placename: "Abu Dhabi",
+      position: "24.4899;54.6076",
+      icbm: "24.4899, 54.6076",
+    },
+    navigation: [
+      { label: "Events", href: "/events" },
+      { label: "About Venue", href: "/about-venue" },
+      { label: "Getting There", href: "/getting-there" },
+      { label: "FAQ", href: "/faq" },
+    ],
+    hero: {
+      title: "Etihad Arena",
+      subtitle: "Abu Dhabi's premier entertainment venue on Yas Island",
+      badge: "Abu Dhabi",
+      description:
+        "Browse upcoming concerts, shows, and sports events with premium seating options at Etihad Arena.",
+      buttonText: "",
+    },
+    footer: {
+      brandTitle: "Yas Arena Concierge",
+      description:
+        "Independent ticket concierge for events at Etihad Arena, Abu Dhabi. Secure booking and guaranteed authentic tickets.",
+      disclaimer:
+        "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with Etihad Arena, Yas Island, Miral, or any venue or event organizer; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
+    },
+    topDisclaimer:
+      "Independent ticket concierge service in the secondary ticket market. Prices are market-based and may exceed face value.",
+  },
+
 }
 
 /* ------------------------------------------------------------------ */
@@ -256,6 +309,25 @@ export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
         {
           "@type": "WebSite",
           name: "Football Festival Qatar",
+          url: SITE_URL,
+        },
+      ],
+    }
+  }
+
+  if (config.jsonLdType === "yasarena") {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          name: "Yas Arena Concierge",
+          url: SITE_URL,
+          email: "support@yasarena.com",
+        },
+        {
+          "@type": "WebSite",
+          name: "Yas Arena Concierge",
           url: SITE_URL,
         },
       ],
