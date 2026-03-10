@@ -10,6 +10,7 @@ import { getSiteConfig, getSiteUrl } from '@/lib/site-config';
 export default function TermsClient() {
   const router = useRouter();
   const config = getSiteConfig();
+  const hasTopDisclaimer = !!config.topDisclaimer;
   const siteUrl = getSiteUrl();
   const breadcrumbItems = [{ label: 'Home', href: '/', onClick: () => router.push('/') }];
 
@@ -17,7 +18,7 @@ export default function TermsClient() {
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20">
+      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-24' : 'pt-16'} pb-12 md:pb-20`}>
         <div className="max-w-[980px] mx-auto px-4 sm:px-6">
 
           {/* Breadcrumbs */}

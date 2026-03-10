@@ -12,13 +12,14 @@ export default function AboutClient() {
   const router = useRouter();
   const config = getSiteConfig();
   const footer = getFooterConfig();
+  const hasTopDisclaimer = !!config.topDisclaimer;
   const breadcrumbItems = [{ label: 'Home', href: '/', onClick: () => router.push('/') }];
 
   return (
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 pt-16 md:pt-24 pb-12 md:pb-20">
+      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-24' : 'pt-16'} pb-12 md:pb-20`}>
         <div className="max-w-[980px] mx-auto px-4 sm:px-6">
 
           {/* Breadcrumbs */}

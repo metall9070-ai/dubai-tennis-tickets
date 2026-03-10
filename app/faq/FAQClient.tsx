@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getSiteConfig } from '@/lib/site-config';
 
 const faqData = [
   // Tickets & Pricing
@@ -115,6 +116,7 @@ const faqData = [
 
 export default function FAQClient() {
   const router = useRouter();
+  const hasTopDisclaimer = !!getSiteConfig().topDisclaimer;
 
   const breadcrumbItems = [
     { label: 'Home', href: '/', onClick: () => router.push('/') },
@@ -124,7 +126,7 @@ export default function FAQClient() {
     <div className="min-h-screen bg-[#f5f5f7]">
       <Navbar />
 
-      <section className="pt-16 pb-12 bg-white border-b border-black/5">
+      <section className={`${hasTopDisclaimer ? 'pt-24' : 'pt-16'} pb-12 bg-white border-b border-black/5`}>
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           <Breadcrumbs items={breadcrumbItems} currentPage="FAQ" />
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d1d1f] mt-6">

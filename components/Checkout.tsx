@@ -163,15 +163,15 @@ const Checkout: React.FC<CheckoutProps> = ({
     <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col font-sans">
       <Navbar isVisible />
 
-      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-20 md:pt-[88px]' : 'pt-20 md:pt-24'} pb-12 md:pb-20`}>
+      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-24' : 'pt-16'} pb-12 md:pb-20`}>
         <div className="max-w-[900px] mx-auto px-6">
           
-          <nav className="flex items-center space-x-2 text-[13px] font-semibold text-[#6e6e73] mb-6 md:mb-8">
+          <nav className="flex items-center space-x-2 text-[13px] md:text-[15px] font-medium text-[#6e6e73] mb-6 md:mb-8">
             <button onClick={onHome} className="hover:text-[#1d1d1f] transition-colors">Home</button>
-            <span className="text-[#d2d2d7]">/</span>
+            <span>/</span>
             <button onClick={onBack} className="hover:text-[#1d1d1f] transition-colors">Cart</button>
-            <span className="text-[#d2d2d7]">/</span>
-            <span className="text-[#1d1d1f]">Order</span>
+            <span>/</span>
+            <span className="font-semibold text-[#1d1d1f]">Order</span>
           </nav>
 
           {/* Progress Steps */}
@@ -211,14 +211,14 @@ const Checkout: React.FC<CheckoutProps> = ({
             </div>
           </div>
 
-          <h1 className="text-[36px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-8 md:mb-12 leading-tight">
+          <h1 className="text-[28px] md:text-[42px] font-bold tracking-tight text-[#1d1d1f] mb-8 md:mb-12 leading-tight">
             Complete Your <span className="text-[var(--color-primary)]">Order</span>
           </h1>
 
           <div className="space-y-10 md:space-y-12">
             
             <section className="bg-white rounded-[24px] md:rounded-[32px] p-6 md:p-10 shadow-sm border border-black/5">
-              <h2 className="text-2xl font-semibold mb-6 md:mb-8 tracking-tight border-b border-[#f5f5f7] pb-6">Order Summary</h2>
+              <h2 className="text-[20px] md:text-[24px] font-bold mb-6 md:mb-8 tracking-tight border-b border-black/5 pb-6">Order Summary</h2>
               
               {cart.length === 0 ? (
                 <div className="text-center py-10 md:py-12">
@@ -227,65 +227,66 @@ const Checkout: React.FC<CheckoutProps> = ({
                 </div>
               ) : (
                 cart.map((item, idx) => (
-                  <div key={item.id} className={`mb-8 md:mb-10 last:mb-0 ${idx !== cart.length - 1 ? 'pb-8 md:pb-10 border-b border-[#f5f5f7]' : ''}`}>
-                    <div className="flex flex-col space-y-8">
-                      
-                      {/* Header Row: Event Name and Location */}
-                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-                        <div className="flex-1">
-                          <p className="text-[14px] md:text-[16px] font-semibold text-[var(--color-primary)] mb-1.5">{item.eventTitle}</p>
-                          <div className="flex items-center space-x-3">
-                            <span className="text-[16px] md:text-[18px] font-semibold text-[#1d1d1f]">{item.eventDate} {item.eventMonth} {item.eventDay}</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#d2d2d7]"></span>
-                            <span className="text-[16px] md:text-[18px] font-semibold text-[#6e6e73]">{item.eventTime}</span>
-                          </div>
-                        </div>
+                  <div key={item.id} className={`mb-8 md:mb-10 last:mb-0 ${idx !== cart.length - 1 ? 'pb-8 md:pb-10 border-b border-black/5' : ''}`}>
+                    {/* Event title — primary attention */}
+                    <h3 className="text-[18px] md:text-[22px] font-bold tracking-tight text-[#1d1d1f] mb-2">{item.eventTitle}</h3>
 
-                        <div className="bg-[#f5f5f7] p-4 md:p-5 rounded-2xl flex-shrink-0 md:max-w-[400px]">
-                          <div className="flex items-start space-x-3">
-                            <svg className="w-5 h-5 text-[var(--color-primary)] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            <div>
-                              <p className="text-[14px] font-semibold text-[#1d1d1f]">{item.venue}</p>
-                            </div>
-                          </div>
-                        </div>
+                    {/* Date, time, venue — secondary meta row */}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] md:text-[15px] font-medium text-[#6e6e73] mb-6">
+                      <div className="flex items-center gap-1.5">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span>{item.eventDate} {item.eventMonth}{item.eventDay ? `, ${item.eventDay}` : ''}</span>
                       </div>
-
-                      {/* Detail Row: Category (Left) and Quantity + Remove Icon (Right) */}
-                      <div className="flex items-center justify-between border-t border-[#f5f5f7] pt-8">
-                        <div className="text-left">
-                          <p className="text-[12px] font-medium text-[#6e6e73] mb-1.5">Category / Sector</p>
-                          <p className="text-xl md:text-2xl font-semibold text-[#1d1d1f] tracking-tight">{item.categoryName}</p>
-                        </div>
-
-                        <div className="flex items-center space-x-4 md:space-x-6">
-                          <div className="text-right">
-                            <p className="text-[12px] font-medium text-[#6e6e73] mb-1.5">Quantity</p>
-                            <p className="text-xl md:text-2xl font-semibold text-[#1d1d1f] tabular-nums">{item.quantity} {item.quantity > 1 ? 'tickets' : 'ticket'}</p>
-                          </div>
-                          
-                          <button 
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-[#fff1f1] text-[#ff4d4f] rounded-xl md:rounded-2xl hover:bg-[#ffe4e4] transition-all transform active:scale-95 border border-[#ffe4e4] shadow-sm group"
-                            title="Remove from cart"
-                          >
-                            <svg className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </button>
-                        </div>
+                      <span className="w-1 h-1 rounded-full bg-[#d2d2d7]" />
+                      <div className="flex items-center gap-1.5">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>{item.eventTime}</span>
                       </div>
-
+                      {item.venue && (
+                        <>
+                          <span className="w-1 h-1 rounded-full bg-[#d2d2d7]" />
+                          <div className="flex items-center gap-1.5">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <span>{item.venue}</span>
+                          </div>
+                        </>
+                      )}
                     </div>
 
-                    <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:justify-between md:items-baseline mt-8 pt-6 border-t border-[#f5f5f7]">
+                    {/* Category, Quantity, Remove — detail row */}
+                    <div className="flex items-center justify-between border-t border-black/5 pt-5">
+                      <div className="text-left">
+                        <p className="text-[11px] md:text-[12px] font-medium text-[#6e6e73] mb-1">Category / Sector</p>
+                        <p className="text-[17px] md:text-[20px] font-bold text-[#1d1d1f] tracking-tight">{item.categoryName}</p>
+                      </div>
+
+                      <div className="flex items-center space-x-4 md:space-x-6">
+                        <div className="text-right">
+                          <p className="text-[11px] md:text-[12px] font-medium text-[#6e6e73] mb-1">Quantity</p>
+                          <p className="text-[17px] md:text-[20px] font-bold text-[#1d1d1f] tabular-nums">{item.quantity} {item.quantity > 1 ? 'tickets' : 'ticket'}</p>
+                        </div>
+
+                        <button
+                          onClick={() => handleRemoveItem(item.id)}
+                          className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-[#fff1f1] text-[#ff4d4f] rounded-xl hover:bg-[#ffe4e4] transition-all transform active:scale-95 border border-black/5 group"
+                          title="Remove from cart"
+                        >
+                          <svg className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Price row */}
+                    <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:justify-between md:items-baseline mt-5 pt-5 border-t border-black/5">
                        <div className="flex items-baseline space-x-2">
-                          <span className="text-[14px] text-[#6e6e73]">Price per ticket:</span>
-                          <span className="text-[16px] font-semibold text-[#1d1d1f]">${item.price.toLocaleString()}</span>
+                          <span className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">Price per ticket:</span>
+                          <span className="text-[15px] md:text-[17px] font-bold text-[#1d1d1f] tabular-nums">${item.price.toLocaleString()}</span>
                        </div>
                        <div className="flex items-baseline space-x-2">
-                          <span className="text-[14px] text-[#6e6e73]">Total for this day:</span>
-                          <span className="text-[18px] font-bold text-[var(--color-primary)] tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
+                          <span className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">Subtotal:</span>
+                          <span className="text-[17px] md:text-[20px] font-bold text-[var(--color-primary)] tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
                        </div>
                     </div>
                   </div>
@@ -296,7 +297,7 @@ const Checkout: React.FC<CheckoutProps> = ({
             {cart.length > 0 && (
               <>
                 <section className="bg-white rounded-[24px] md:rounded-[32px] p-6 md:p-10 shadow-sm border border-black/5">
-                  <h2 className="text-2xl font-semibold mb-6 md:mb-8 tracking-tight">Personal Information</h2>
+                  <h2 className="text-[20px] md:text-[24px] font-bold mb-6 md:mb-8 tracking-tight">Personal Information</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="flex flex-col">
                       <label className="text-[13px] font-medium text-[#6e6e73] mb-2 ml-1" htmlFor="name">Full Name</label>
@@ -358,7 +359,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                 </section>
 
                 <section className="bg-white rounded-[24px] md:rounded-[32px] p-6 md:p-10 shadow-sm border border-black/5">
-                  <h2 className="text-2xl font-semibold mb-6 md:mb-8 tracking-tight">Payment Method</h2>
+                  <h2 className="text-[20px] md:text-[24px] font-bold mb-6 md:mb-8 tracking-tight">Payment Method</h2>
                   <div className="space-y-4">
                     <div className="block p-4 md:p-6 rounded-[20px] md:rounded-[24px] border-2 border-[var(--color-primary)] bg-[var(--color-primary)]/5 transition-all">
                       <div className="flex items-start space-x-4">
@@ -368,9 +369,9 @@ const Checkout: React.FC<CheckoutProps> = ({
                           </div>
                         </div>
                         <div>
-                          <span className="text-lg font-semibold block mb-2">Pay by card</span>
-                          <p className="text-[13px] text-[#6e6e73] leading-relaxed font-normal italic tracking-[-0.01em]">
-                            Card payment processing occurs on a secure page with international certification. This means your data is confidential, and card details are not transmitted online.
+                          <span className="text-[15px] md:text-[17px] font-bold text-[#1d1d1f] block mb-1.5">Pay by card</span>
+                          <p className="text-[12px] md:text-[13px] text-[#6e6e73] leading-relaxed font-medium">
+                            Card payment processing occurs on a secure page with international certification. Your data is confidential, and card details are not transmitted online.
                           </p>
                         </div>
                       </div>
@@ -379,14 +380,14 @@ const Checkout: React.FC<CheckoutProps> = ({
                 </section>
 
                 <section className="bg-white rounded-[24px] md:rounded-[32px] p-6 md:p-10 shadow-sm border border-black/5">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 pb-6 md:pb-8 border-b border-[#f5f5f7]">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 pb-6 md:pb-8 border-b border-black/5">
                      <div className="mb-4 md:mb-0">
-                        <span className="text-xl font-semibold text-[#1d1d1f]">Total Amount</span>
-                        <p className="text-[14px] text-[#6e6e73] font-normal">Including all taxes and fees</p>
+                        <span className="text-[20px] md:text-[24px] font-bold text-[#1d1d1f]">Total Amount</span>
+                        <p className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">Including all taxes and fees</p>
                      </div>
                      <div className="flex items-baseline space-x-2">
-                        <span className="text-[18px] md:text-xl font-semibold text-[#6e6e73] uppercase">USD</span>
-                        <span className="text-[32px] md:text-[36px] font-semibold text-[#1d1d1f] tracking-tight leading-none tabular-nums">${totalValue.toLocaleString()}</span>
+                        <span className="text-[13px] md:text-[15px] font-bold text-[#6e6e73] uppercase">USD</span>
+                        <span className="text-[28px] md:text-[36px] font-bold text-[var(--color-primary)] tracking-tight leading-none tabular-nums">${totalValue.toLocaleString()}</span>
                      </div>
                   </div>
 
@@ -409,10 +410,10 @@ const Checkout: React.FC<CheckoutProps> = ({
                   <button
                     onClick={handlePayment}
                     disabled={!agree || !formData.name || !formData.email || formData.phone.length < 8 || isLoading}
-                    className={`w-full py-4 md:py-5 rounded-[20px] md:rounded-[24px] text-lg md:text-xl font-semibold transition-all transform active:scale-[0.98] shadow-2xl flex items-center justify-center space-x-3
+                    className={`w-full py-4 md:py-5 rounded-2xl md:rounded-[20px] text-[15px] md:text-[17px] font-bold uppercase tracking-wider transition-all transform active:scale-[0.98] shadow-lg flex items-center justify-center space-x-3
                       ${agree && formData.name && formData.email && formData.phone.length >= 8 && !isLoading
-                        ? 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-[var(--color-primary)]/30'
-                        : 'bg-[#ebebed] text-[#6e6e73] cursor-not-allowed shadow-none'}
+                        ? 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)]'
+                        : 'bg-[#f5f5f7] text-[#6e6e73] cursor-not-allowed shadow-none'}
                     `}
                   >
                     {isLoading ? (

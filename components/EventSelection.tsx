@@ -556,61 +556,61 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <div className="relative bg-white w-full max-w-[440px] max-h-[92vh] rounded-[32px] md:rounded-[42px] shadow-2xl overflow-y-auto animate-modalSlide border border-black/5">
             <div className="p-5 md:p-8">
                   <div className="flex items-center justify-between mb-0.5 md:mb-1">
-                    <span className="text-[14px] md:text-[15px] font-semibold text-[#6e6e73]">Select Quantity</span>
+                    <span className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">Select Quantity</span>
                     <button onClick={closeModal} className="p-1 hover:bg-[#f5f5f7] rounded-full transition-colors">
-                      <svg className="w-5 h-5 text-[#d2d2d7]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                      <svg className="w-5 h-5 text-[#6e6e73]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                   </div>
 
                   <div className="mb-3 md:mb-4">
                     <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[#1d1d1f] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
                     <div className="flex items-baseline space-x-1.5">
-                       <span className="text-[15px] md:text-[17px] text-[#6e6e73]">Price:</span>
+                       <span className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">Price:</span>
                        <span className="text-[20px] md:text-[24px] font-bold text-[var(--color-primary)]">${selectedCategory.price.toLocaleString()}</span>
-                       <span className="text-[14px] md:text-[16px] text-[#6e6e73]">/ ticket</span>
+                       <span className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">/ ticket</span>
                     </div>
                   </div>
 
-                  <div className="bg-[#f8f9fb] rounded-[20px] md:rounded-[24px] p-4 md:p-6 mb-4 md:mb-6">
+                  <div className="bg-[#f5f5f7] rounded-[20px] md:rounded-[24px] p-4 md:p-6 mb-4 md:mb-6">
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div className="flex flex-col">
                         <span className="text-[15px] md:text-[17px] font-bold text-[#1d1d1f]">Quantity</span>
-                        <span className="text-[10px] md:text-[11px] text-[#6e6e73] font-medium mt-0.5">Max 4 per order</span>
+                        <span className="text-[11px] md:text-[12px] font-medium text-[#6e6e73] mt-0.5">Max 4 per order</span>
                       </div>
                       <div className="flex items-center space-x-4 md:space-x-5">
                         <button
                           onClick={handleMinus}
-                          className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-[#f0f0f0]"
+                          className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-black/5"
                         >
                           <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1d1d1f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M20 12H4" /></svg>
                         </button>
                         <span className="text-[17px] md:text-[19px] font-bold text-[#1d1d1f] tabular-nums w-4 text-center">{ticketCount}</span>
                         <button
                           onClick={handlePlus}
-                          className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-[#f0f0f0]"
+                          className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-black/5"
                         >
                           <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1d1d1f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" /></svg>
                         </button>
                       </div>
                     </div>
 
-                    <div className="border-t border-[#e2e8f0] my-3 md:my-4 opacity-50"></div>
+                    <div className="border-t border-black/5 my-3 md:my-4"></div>
 
                     <div className="flex justify-between items-center mb-4 md:mb-6">
-                       <span className="text-[15px] md:text-[17px] font-semibold text-[#6e6e73]">Remaining Seats</span>
-                       <span className="text-[15px] md:text-[17px] font-bold text-[var(--color-primary)]">
+                       <span className="text-[13px] md:text-[15px] font-medium text-[#6e6e73]">Remaining Seats</span>
+                       <span className="text-[13px] md:text-[15px] font-bold text-[#1d1d1f] tabular-nums">
                          {selectedCategory.seatsLeft - ticketCount} seats left
                        </span>
                     </div>
 
                     <div className="flex justify-between items-center">
                        <span className="text-[18px] md:text-[20px] font-bold text-[#1d1d1f]">Total</span>
-                       <span className="text-[22px] md:text-[28px] font-bold text-[#1d1d1f] tracking-tight tabular-nums">${(selectedCategory.price * ticketCount).toLocaleString()}</span>
+                       <span className="text-[22px] md:text-[28px] font-bold text-[var(--color-primary)] tracking-tight tabular-nums">${(selectedCategory.price * ticketCount).toLocaleString()}</span>
                     </div>
                   </div>
 
                   <div className="px-2 md:px-4 mb-5 md:mb-8">
-                    <p className="text-center text-[12px] md:text-[14px] text-[#6e6e73] leading-relaxed italic font-medium">
+                    <p className="text-center text-[12px] md:text-[13px] font-medium text-[#6e6e73] leading-relaxed">
                       When ordering two or more tickets, your seats will be next to each other.
                     </p>
                   </div>
@@ -618,13 +618,13 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="space-y-3 md:space-y-4">
                     <button
                       onClick={handleCheckoutClick}
-                      className="w-full py-4 md:py-5 bg-[var(--color-primary)] text-white font-bold rounded-[16px] md:rounded-[20px] shadow-lg hover:bg-[var(--color-primary-hover)] transition-all transform active:scale-[0.98] text-[16px] md:text-[18px]"
+                      className="w-full py-4 md:py-5 bg-[var(--color-primary)] text-white font-bold rounded-2xl md:rounded-[20px] shadow-lg hover:bg-[var(--color-primary-hover)] transition-all transform active:scale-[0.98] text-[15px] md:text-[17px] uppercase tracking-wider"
                     >
                       Checkout
                     </button>
                     <button
                       onClick={handleContinueShopping}
-                      className="w-full py-2.5 text-[var(--color-primary)] font-semibold hover:underline transition-all text-[14px] md:text-[15px]"
+                      className="w-full py-2.5 text-[#6e6e73] font-medium hover:text-[#1d1d1f] transition-all text-[13px] md:text-[15px]"
                     >
                       Continue Shopping
                     </button>
