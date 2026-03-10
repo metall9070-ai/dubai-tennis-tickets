@@ -94,7 +94,7 @@ export default function Footer() {
 
         {/* Payment Methods */}
         <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-black/5">
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-3 lg:flex-row lg:justify-between lg:items-center">
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
               <span className="text-[10px] sm:text-[11px] text-[#6e6e73] uppercase tracking-wider">We Accept:</span>
               <div className="flex items-center gap-2 sm:gap-3">

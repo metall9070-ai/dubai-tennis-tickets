@@ -40,7 +40,7 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
   };
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="relative bg-white">
       <Navbar isVisible={isLoaded} />
       <Hero isVisible={isLoaded} onAction={handleViewShelter} />
       <div className={`transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>

@@ -78,7 +78,7 @@ const Footer: React.FC<FooterProps> = ({
     <footer className="bg-[#f5f5f7] border-t border-black/5">
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-12 max-w-[1200px]">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Column 1: Brand & Contact - on mobile shows LAST, on desktop shows FIRST */}
           <div className="col-span-2 lg:col-span-2 flex flex-col space-y-3 sm:space-y-4 order-last lg:order-first">
             <span className="text-[#1d1d1f] text-[15px] sm:text-[16px] font-bold tracking-tight">
@@ -160,7 +160,7 @@ const Footer: React.FC<FooterProps> = ({
 
         {/* Payment Methods */}
         <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-black/5">
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-3 lg:flex-row lg:justify-between lg:items-center">
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
               <span className="text-[10px] sm:text-[11px] text-[#6e6e73] uppercase tracking-wider">We Accept:</span>
               <div className="flex items-center gap-2 sm:gap-3">

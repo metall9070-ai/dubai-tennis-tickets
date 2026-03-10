@@ -75,7 +75,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
           </div>
           {/* Stats — floating row at bottom of hero */}
           {content.stats && content.stats.length > 0 && (
-            <div className="relative z-10 mt-10 md:mt-14 flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-10 px-4">
+            <div className="relative z-10 mt-10 md:mt-14 container mx-auto px-4 sm:px-6 max-w-[980px] flex flex-wrap justify-between">
               {content.stats.map((stat, i) => (
                 <div key={i} className="text-center">
                   <span className="text-[18px] sm:text-[22px] font-bold text-white">{stat.value}</span>

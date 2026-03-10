@@ -45,6 +45,7 @@ h1, h2, h3, h4, .sf-display {
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior-y: none;
 }
 
 ::selection {
@@ -55,4 +56,45 @@ html {
 /* Custom button/input font weight */
 button, input, select, textarea {
   font-weight: 500;
+}
+
+/* Stadium Map Category Colors */
+.stadium-map [data-category="category-1"] path {
+  fill: #800D2F;
+  transition: filter 0.2s ease;
+}
+
+.stadium-map [data-category="category-2"] path {
+  fill: #9A2749;
+  transition: filter 0.2s ease;
+}
+
+.stadium-map [data-category="category-3"] path {
+  fill: #B44163;
+  transition: filter 0.2s ease;
+}
+
+.stadium-map [data-category="category-4"] path {
+  fill: #E87597;
+  transition: filter 0.2s ease;
+}
+
+/* Sold out state */
+.stadium-map [data-category].sold-out path {
+  fill: #CFCFCF;
+  cursor: not-allowed;
+}
+
+/* Hover effect (brightness increase) */
+.stadium-map [data-category="category-1"]:hover:not(.sold-out) path,
+.stadium-map [data-category="category-2"]:hover:not(.sold-out) path,
+.stadium-map [data-category="category-3"]:hover:not(.sold-out) path,
+.stadium-map [data-category="category-4"]:hover:not(.sold-out) path {
+  filter: brightness(1.15);
+  cursor: pointer;
+}
+
+/* Text elements remain unaffected */
+.stadium-map [data-category] text {
+  pointer-events: none;
 }
