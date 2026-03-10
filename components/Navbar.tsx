@@ -163,30 +163,59 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
       </header>
 
-      <div 
-        className={`fixed inset-0 z-[55] bg-[var(--color-header)] backdrop-blur-3xl transition-transform duration-500 ease-in-out ${
+      <div
+        className={`fixed inset-0 z-[55] bg-white transition-transform duration-500 ease-in-out ${
           isMenuOpen ? 'translate-y-0' : '-translate-y-full'
         } md:hidden`}
       >
-        <div className="flex flex-col h-full pt-20 px-8">
-          <nav className="flex flex-col space-y-6">
+        <div className="flex flex-col h-full pt-16">
+          {/* Main navigation */}
+          <nav className="flex flex-col px-6 pt-4">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleNavItemClick(item.href, item.label, e)}
-                className="text-[28px] font-semibold text-white/90 hover:text-white transition-colors"
+                className="text-[18px] font-semibold text-[#1d1d1f] py-3.5 border-b border-slate-100 last:border-b-0 hover:text-[var(--color-primary)] transition-colors"
               >
                 {item.label}
               </a>
             ))}
           </nav>
-          
-          <div className="mt-auto pb-12">
-            <p className="text-white/50 text-[13px] font-medium tracking-tight">
-              Dubai Tennis Tickets<br />
-              Independent ticket service
-            </p>
+
+          {/* Support links */}
+          <div className="px-6 mt-6 pt-6 border-t border-slate-200">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3">Support</p>
+            <div className="flex flex-col">
+              {[
+                { label: 'Payment & Delivery', href: '/payment-delivery' },
+                { label: 'Terms of Service', href: '/terms' },
+                { label: 'Privacy Policy', href: '/privacy' },
+                { label: 'Contact Us', href: '/contact' },
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavItemClick(item.href, item.label, e)}
+                  className="text-[15px] font-medium text-slate-500 py-2.5 hover:text-[var(--color-primary)] transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact info */}
+          <div className="mt-auto px-6 pb-8 pt-6 border-t border-slate-200 bg-slate-50">
+            <div className="flex flex-col gap-3">
+              <a href={`mailto:${getSiteConfig().supportEmail}`} className="flex items-center gap-2.5 text-[14px] font-medium text-slate-600">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {getSiteConfig().supportEmail}
+              </a>
+              <p className="text-[12px] text-slate-400 font-medium">24/7 Customer Support</p>
+            </div>
           </div>
         </div>
       </div>

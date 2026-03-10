@@ -39,7 +39,7 @@ const seo: SEOContent = {
     },
   ],
   cta: {
-    text: "View Available Sessions",
+    text: "View All Matches",
     href: "/",
   },
   internalLinks: [

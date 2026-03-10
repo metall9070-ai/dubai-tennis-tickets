@@ -20,7 +20,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
     : (embedded ? 'pt-12 sm:pt-16 md:pt-24' : (showHero ? '' : 'pt-24 sm:pt-28 md:pt-32'))
 
   return (
-    <article className={`${topPadding} pb-12 sm:pb-16 bg-[#f5f5f7] text-[#1d1d1f]`}>
+    <article className={`${topPadding} pb-12 sm:pb-16 bg-white text-[#1d1d1f]`}>
 
       {/* Hero Section — shown on all standalone info pages (image is optional) */}
       {showHero && (
@@ -169,8 +169,8 @@ export default function ContentPage({ content, embedded, children }: { content: 
           </section>
         )}
 
-        {/* CTA */}
-        {content.cta && (
+        {/* CTA — hidden when embedded (user already scrolled past events) */}
+        {!embedded && content.cta && (
           <div className="text-center py-8 sm:py-10">
             <Link
               href={content.cta.href}
@@ -181,8 +181,8 @@ export default function ContentPage({ content, embedded, children }: { content: 
           </div>
         )}
 
-        {/* Internal Links */}
-        {content.internalLinks && content.internalLinks.length > 0 && (
+        {/* Internal Links — hidden when embedded (already in header + footer) */}
+        {!embedded && content.internalLinks && content.internalLinks.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6">
             {content.internalLinks.map((link, i) => (
               <Link

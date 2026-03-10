@@ -40,10 +40,12 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
   };
 
   return (
-    <div className="relative min-h-screen bg-[#f5f5f7]">
+    <div className="relative min-h-screen bg-white">
       <Navbar isVisible={isLoaded} />
       <Hero isVisible={isLoaded} onAction={handleViewShelter} />
       <div className={`transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+        {/* Gradient transition from hero dark to events light */}
+        <div className="h-8 md:h-12 bg-gradient-to-b from-black/15 to-white" />
         <Events onSelectEvent={handleSelectEvent} initialEvents={initialEvents} />
         <WhyBuy />
         {seoContent?.h1 ? (

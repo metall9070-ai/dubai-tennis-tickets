@@ -88,7 +88,7 @@ const seo: SEOContent = {
     { label: "Schedule", sublabel: "Dates & match days", href: "/schedule" },
     { label: "About Tournament", sublabel: "Guide & format", href: "/about-tournament" },
     { label: "FAQ", sublabel: "Common questions", href: "/faq" },
-    { label: "All Matches", sublabel: "View available sessions", href: "/" },
+    { label: "All Matches", sublabel: "View all matches", href: "/" },
   ],
 }
 

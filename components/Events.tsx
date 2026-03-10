@@ -119,7 +119,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   // Loading state
   if (isLoading) {
     return (
-      <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
+      <section id="tickets" className="pt-6 pb-12 md:pt-10 md:pb-24 bg-white text-[#1d1d1f]">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           {header}
           <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#6e6e73]">
@@ -133,7 +133,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   // Error state
   if (error) {
     return (
-      <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
+      <section id="tickets" className="pt-6 pb-12 md:pt-10 md:pb-24 bg-white text-[#1d1d1f]">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           {header}
           <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-red-500">
@@ -145,7 +145,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   }
 
   return (
-    <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
+    <section id="tickets" className="pt-6 pb-12 md:pt-10 md:pb-24 bg-white text-[#1d1d1f]">
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
         {header}
 
@@ -288,6 +288,8 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
       onClick={handleClick}
       className={`group cursor-pointer relative flex items-center justify-between p-4 sm:p-5 md:p-8 transition-all duration-300 hover:bg-[#f5f5f7]/50 active:bg-[#f5f5f7]/70 ${!isLast ? 'border-b border-[#f5f5f7]' : ''}`}
     >
+      {/* Left accent stripe */}
+      <div className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-12">
         <div className="flex flex-col items-center justify-center min-w-[48px] sm:min-w-[56px] md:min-w-[80px] h-[48px] sm:h-[56px] md:h-[80px] bg-[#f5f5f7] rounded-xl md:rounded-2xl group-hover:bg-white transition-colors duration-300">
           <span className="text-[8px] sm:text-[9px] md:text-[11px] font-semibold text-[#6e6e73] uppercase tracking-widest leading-none mb-0.5 sm:mb-1">{event.month}</span>
@@ -324,7 +326,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
               {hasValidPrice ? (
                 <>
                   <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#6e6e73] uppercase tracking-wide sm:tracking-widest">From</span>
-                  <span className="text-[14px] sm:text-[15px] md:text-[17px] font-semibold text-[#1d1d1f]">${event.minPrice}</span>
+                  <span className="text-[16px] sm:text-[18px] md:text-[22px] font-bold text-[#1d1d1f]">${event.minPrice}</span>
                 </>
               ) : (
                 <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#6e6e73]">Price unavailable</span>
