@@ -130,7 +130,7 @@ export default function FAQClient() {
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d1d1f] mt-6">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg text-[#86868b] mt-4 max-w-2xl">
+          <p className="text-lg text-[#6e6e73] mt-4 max-w-2xl">
             Find answers to common questions about Dubai Tennis Championships tickets.
           </p>
         </div>
@@ -152,7 +152,7 @@ export default function FAQClient() {
                     <span className="font-semibold text-[#1d1d1f]">{faq.question}</span>
                   </div>
                   <svg
-                    className="w-5 h-5 text-[#86868b] group-open:rotate-180 transition-transform flex-shrink-0"
+                    className="w-5 h-5 text-[#6e6e73] group-open:rotate-180 transition-transform flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

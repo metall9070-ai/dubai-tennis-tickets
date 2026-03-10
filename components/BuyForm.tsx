@@ -84,11 +84,11 @@ export default function BuyForm({
       {/* Order Summary */}
       <div className="bg-[#f5f5f7] rounded-xl p-4 mb-4">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-[#86868b]">Category</span>
+          <span className="text-sm text-[#6e6e73]">Category</span>
           <span className="font-semibold text-[#1d1d1f]">{categoryName}</span>
         </div>
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-[#86868b]">Quantity</span>
+          <span className="text-sm text-[#6e6e73]">Quantity</span>
           <span className="font-semibold text-[#1d1d1f]">{quantity} tickets</span>
         </div>
         <div className="flex justify-between items-center pt-2 border-t border-[#d2d2d7]">

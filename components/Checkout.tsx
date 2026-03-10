@@ -166,7 +166,7 @@ const Checkout: React.FC<CheckoutProps> = ({
       <main className={`flex-1 ${hasTopDisclaimer ? 'pt-20 md:pt-[88px]' : 'pt-20 md:pt-24'} pb-12 md:pb-20`}>
         <div className="max-w-[900px] mx-auto px-6">
           
-          <nav className="flex items-center space-x-2 text-[13px] font-semibold text-[#86868b] mb-6 md:mb-8">
+          <nav className="flex items-center space-x-2 text-[13px] font-semibold text-[#6e6e73] mb-6 md:mb-8">
             <button onClick={onHome} className="hover:text-[#1d1d1f] transition-colors">Home</button>
             <span className="text-[#d2d2d7]">/</span>
             <button onClick={onBack} className="hover:text-[#1d1d1f] transition-colors">Cart</button>
@@ -203,10 +203,10 @@ const Checkout: React.FC<CheckoutProps> = ({
 
               {/* Step 3: Payment */}
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-[#f5f5f7] text-[#86868b] flex items-center justify-center font-semibold text-sm border-2 border-[#d2d2d7]">
+                <div className="w-10 h-10 rounded-full bg-[#f5f5f7] text-[#6e6e73] flex items-center justify-center font-semibold text-sm border-2 border-[#d2d2d7]">
                   3
                 </div>
-                <span className="text-[11px] font-semibold text-[#86868b] mt-2">Payment</span>
+                <span className="text-[11px] font-semibold text-[#6e6e73] mt-2">Payment</span>
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               
               {cart.length === 0 ? (
                 <div className="text-center py-10 md:py-12">
-                  <p className="text-lg text-[#86868b] mb-4 md:mb-6">Your cart is empty.</p>
+                  <p className="text-lg text-[#6e6e73] mb-4 md:mb-6">Your cart is empty.</p>
                   <button onClick={onHome} className="text-[var(--color-primary)] font-semibold hover:underline">Return to Events</button>
                 </div>
               ) : (
@@ -237,7 +237,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                           <div className="flex items-center space-x-3">
                             <span className="text-[16px] md:text-[18px] font-semibold text-[#1d1d1f]">{item.eventDate} {item.eventMonth} {item.eventDay}</span>
                             <span className="w-1.5 h-1.5 rounded-full bg-[#d2d2d7]"></span>
-                            <span className="text-[16px] md:text-[18px] font-semibold text-[#86868b]">{item.eventTime}</span>
+                            <span className="text-[16px] md:text-[18px] font-semibold text-[#6e6e73]">{item.eventTime}</span>
                           </div>
                         </div>
 
@@ -254,13 +254,13 @@ const Checkout: React.FC<CheckoutProps> = ({
                       {/* Detail Row: Category (Left) and Quantity + Remove Icon (Right) */}
                       <div className="flex items-center justify-between border-t border-[#f5f5f7] pt-8">
                         <div className="text-left">
-                          <p className="text-[12px] font-medium text-[#86868b] mb-1.5">Category / Sector</p>
+                          <p className="text-[12px] font-medium text-[#6e6e73] mb-1.5">Category / Sector</p>
                           <p className="text-xl md:text-2xl font-semibold text-[#1d1d1f] tracking-tight">{item.categoryName}</p>
                         </div>
 
                         <div className="flex items-center space-x-4 md:space-x-6">
                           <div className="text-right">
-                            <p className="text-[12px] font-medium text-[#86868b] mb-1.5">Quantity</p>
+                            <p className="text-[12px] font-medium text-[#6e6e73] mb-1.5">Quantity</p>
                             <p className="text-xl md:text-2xl font-semibold text-[#1d1d1f] tabular-nums">{item.quantity} {item.quantity > 1 ? 'tickets' : 'ticket'}</p>
                           </div>
                           
@@ -280,11 +280,11 @@ const Checkout: React.FC<CheckoutProps> = ({
 
                     <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:justify-between md:items-baseline mt-8 pt-6 border-t border-[#f5f5f7]">
                        <div className="flex items-baseline space-x-2">
-                          <span className="text-[14px] text-[#86868b]">Price per ticket:</span>
+                          <span className="text-[14px] text-[#6e6e73]">Price per ticket:</span>
                           <span className="text-[16px] font-semibold text-[#1d1d1f]">${item.price.toLocaleString()}</span>
                        </div>
                        <div className="flex items-baseline space-x-2">
-                          <span className="text-[14px] text-[#86868b]">Total for this day:</span>
+                          <span className="text-[14px] text-[#6e6e73]">Total for this day:</span>
                           <span className="text-[18px] font-bold text-[var(--color-primary)] tabular-nums">${(item.price * item.quantity).toLocaleString()}</span>
                        </div>
                     </div>
@@ -299,7 +299,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   <h2 className="text-2xl font-semibold mb-6 md:mb-8 tracking-tight">Personal Information</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="flex flex-col">
-                      <label className="text-[13px] font-medium text-[#86868b] mb-2 ml-1" htmlFor="name">Full Name</label>
+                      <label className="text-[13px] font-medium text-[#6e6e73] mb-2 ml-1" htmlFor="name">Full Name</label>
                       <input 
                         type="text" 
                         id="name" 
@@ -311,7 +311,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                       />
                     </div>
                     <div className="flex flex-col">
-                      <label className="text-[13px] font-medium text-[#86868b] mb-2 ml-1" htmlFor="email">Email Address</label>
+                      <label className="text-[13px] font-medium text-[#6e6e73] mb-2 ml-1" htmlFor="email">Email Address</label>
                       <input 
                         type="email" 
                         id="email" 
@@ -323,7 +323,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                       />
                     </div>
                     <div className="flex flex-col md:col-span-2">
-                      <label className="text-[13px] font-medium text-[#86868b] mb-2 ml-1" htmlFor="phone">Phone Number</label>
+                      <label className="text-[13px] font-medium text-[#6e6e73] mb-2 ml-1" htmlFor="phone">Phone Number</label>
                       <div className="flex">
                         <span className="inline-flex items-center px-4 bg-[#e8e8ed] text-[#1d1d1f] font-semibold rounded-l-[18px] border-r border-[#d2d2d7]">+</span>
                         <input
@@ -340,10 +340,10 @@ const Checkout: React.FC<CheckoutProps> = ({
                           className="flex-1 bg-[#f5f5f7] border-0 rounded-r-[18px] px-6 py-4 font-medium text-[#1d1d1f] focus:ring-2 focus:ring-[var(--color-primary)] transition-all outline-none"
                         />
                       </div>
-                      <p className="text-[11px] text-[#86868b] mt-1.5 ml-1">Enter country code and number (e.g., 971501234567 for UAE)</p>
+                      <p className="text-[11px] text-[#6e6e73] mt-1.5 ml-1">Enter country code and number (e.g., 971501234567 for UAE)</p>
                     </div>
                     <div className="flex flex-col md:col-span-2">
-                      <label className="text-[13px] font-medium text-[#86868b] mb-2 ml-1" htmlFor="comments">Order Comments</label>
+                      <label className="text-[13px] font-medium text-[#6e6e73] mb-2 ml-1" htmlFor="comments">Order Comments</label>
                       <textarea 
                         id="comments" 
                         name="comments"
@@ -369,7 +369,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                         </div>
                         <div>
                           <span className="text-lg font-semibold block mb-2">Pay by card</span>
-                          <p className="text-[13px] text-[#86868b] leading-relaxed font-normal italic tracking-[-0.01em]">
+                          <p className="text-[13px] text-[#6e6e73] leading-relaxed font-normal italic tracking-[-0.01em]">
                             Card payment processing occurs on a secure page with international certification. This means your data is confidential, and card details are not transmitted online.
                           </p>
                         </div>
@@ -382,10 +382,10 @@ const Checkout: React.FC<CheckoutProps> = ({
                   <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 pb-6 md:pb-8 border-b border-[#f5f5f7]">
                      <div className="mb-4 md:mb-0">
                         <span className="text-xl font-semibold text-[#1d1d1f]">Total Amount</span>
-                        <p className="text-[14px] text-[#86868b] font-normal">Including all taxes and fees</p>
+                        <p className="text-[14px] text-[#6e6e73] font-normal">Including all taxes and fees</p>
                      </div>
                      <div className="flex items-baseline space-x-2">
-                        <span className="text-[18px] md:text-xl font-semibold text-[#86868b] uppercase">USD</span>
+                        <span className="text-[18px] md:text-xl font-semibold text-[#6e6e73] uppercase">USD</span>
                         <span className="text-[32px] md:text-[36px] font-semibold text-[#1d1d1f] tracking-tight leading-none tabular-nums">${totalValue.toLocaleString()}</span>
                      </div>
                   </div>
@@ -400,7 +400,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                           onChange={(e) => setAgree(e.target.checked)}
                         />
                       </div>
-                      <span className="text-[14px] font-medium text-[#86868b] leading-tight select-none group-hover:text-[#1d1d1f] transition-colors">
+                      <span className="text-[14px] font-medium text-[#6e6e73] leading-tight select-none group-hover:text-[#1d1d1f] transition-colors">
                         I have read and agree to the <Link href="/privacy-policy" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">privacy policy</Link> and <Link href="/terms-of-service" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Terms of Service</Link>.
                       </span>
                     </label>
@@ -412,7 +412,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                     className={`w-full py-4 md:py-5 rounded-[20px] md:rounded-[24px] text-lg md:text-xl font-semibold transition-all transform active:scale-[0.98] shadow-2xl flex items-center justify-center space-x-3
                       ${agree && formData.name && formData.email && formData.phone.length >= 8 && !isLoading
                         ? 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-[var(--color-primary)]/30'
-                        : 'bg-[#ebebed] text-[#86868b] cursor-not-allowed shadow-none'}
+                        : 'bg-[#ebebed] text-[#6e6e73] cursor-not-allowed shadow-none'}
                     `}
                   >
                     {isLoading ? (

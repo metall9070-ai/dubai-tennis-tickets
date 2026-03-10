@@ -33,6 +33,8 @@ export default function StadiumMap({
         <img
           src="/lusail-stadium-new.png?v=1"
           alt="Lusail Stadium Seating Map"
+          width={600}
+          height={600}
           className="w-full h-auto max-w-[600px]"
           style={{ objectFit: 'contain' }}
         />
@@ -47,6 +49,8 @@ export default function StadiumMap({
         <img
           src="/jassim-stadium.png"
           alt="Jassim bin Hamad Stadium Seating Map"
+          width={600}
+          height={600}
           className="w-full h-auto max-w-[600px]"
           style={{ objectFit: 'contain' }}
         />
@@ -61,6 +65,8 @@ export default function StadiumMap({
         <img
           src="/ahmad-bin-ali-stadium.png"
           alt="Ahmad bin Ali Stadium Seating Map"
+          width={600}
+          height={600}
           className="w-full h-auto max-w-[600px]"
           style={{ objectFit: 'contain' }}
         />

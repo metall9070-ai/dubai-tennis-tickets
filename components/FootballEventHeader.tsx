@@ -104,6 +104,8 @@ export const FootballEventHeader: React.FC<FootballEventHeaderProps> = ({
             <img
               src={`https://flagcdn.com/w160/${team1Code}.png`}
               alt={team1}
+              width={160}
+              height={120}
               className="w-full h-full object-cover"
             />
           </div>
@@ -126,6 +128,8 @@ export const FootballEventHeader: React.FC<FootballEventHeaderProps> = ({
             <img
               src={`https://flagcdn.com/w160/${team2Code}.png`}
               alt={team2}
+              width={160}
+              height={120}
               className="w-full h-full object-cover"
             />
           </div>
@@ -133,7 +137,7 @@ export const FootballEventHeader: React.FC<FootballEventHeaderProps> = ({
       </div>
 
       {/* Event Details */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-[#86868b] text-[14px] md:text-[16px] font-medium">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-[#6e6e73] text-[14px] md:text-[16px] font-medium">
         {/* Date */}
         {date && (
           <div className="flex items-center gap-2">

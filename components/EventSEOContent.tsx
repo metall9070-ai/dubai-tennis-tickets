@@ -49,7 +49,7 @@ const EventSEOContent: React.FC<EventSEOContentProps> = ({ eventSEO }) => {
                     <span className="font-semibold text-[#1d1d1f] text-base md:text-lg">{item.question}</span>
                   </div>
                   <svg
-                    className="w-5 h-5 text-[#86868b] group-open:rotate-180 transition-transform flex-shrink-0"
+                    className="w-5 h-5 text-[#6e6e73] group-open:rotate-180 transition-transform flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

@@ -116,19 +116,19 @@ export default function VenueClient() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
               <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">5,000</p>
-              <p className="text-sm text-[#86868b]">Seat Capacity</p>
+              <p className="text-sm text-[#6e6e73]">Seat Capacity</p>
             </div>
             <div>
               <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">1993</p>
-              <p className="text-sm text-[#86868b]">Established</p>
+              <p className="text-sm text-[#6e6e73]">Established</p>
             </div>
             <div>
               <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">10 min</p>
-              <p className="text-sm text-[#86868b]">From Airport</p>
+              <p className="text-sm text-[#6e6e73]">From Airport</p>
             </div>
             <div>
               <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">Open-Air</p>
-              <p className="text-sm text-[#86868b]">Venue Type</p>
+              <p className="text-sm text-[#6e6e73]">Venue Type</p>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ export default function VenueClient() {
               <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-6">
                 A Legendary Tennis Venue
               </h2>
-              <div className="space-y-4 text-[#86868b] leading-relaxed">
+              <div className="space-y-4 text-[#6e6e73] leading-relaxed">
                 <p>
                   The Dubai Duty Free Tennis Stadium at the Aviation Club is one of the most
                   prestigious tennis venues in the world. Since hosting its first tournament in 1993,
@@ -163,7 +163,7 @@ export default function VenueClient() {
             </div>
             <div className="relative">
               <img
-                src="/images/dubai-tennis-areal-view.jpg"
+                src="/images/dubai-tennis-areal-view.webp"
                 alt="Dubai Duty Free Tennis Stadium aerial view - Centre Court and surrounding facilities"
                 title="Aerial view of Dubai Tennis Stadium"
                 className="rounded-3xl shadow-xl w-full"
@@ -202,7 +202,7 @@ export default function VenueClient() {
               </div>
               <div>
                 <h3 className="font-bold text-[#1d1d1f] mb-1">Full Address</h3>
-                <p className="text-[#86868b]">
+                <p className="text-[#6e6e73]">
                   Dubai Duty Free Tennis Stadium<br />
                   Aviation Club Tennis Centre<br />
                   Al Garhoud Road, Al Garhoud<br />
@@ -224,7 +224,7 @@ export default function VenueClient() {
                   <div className="text-3xl">{option.icon}</div>
                   <div>
                     <h4 className="font-bold text-[#1d1d1f] mb-2">{option.mode}</h4>
-                    <p className="text-[#86868b] text-sm mb-2">{option.details}</p>
+                    <p className="text-[#6e6e73] text-sm mb-2">{option.details}</p>
                     <p className="text-sm text-[var(--color-primary)] font-medium">💡 {option.tip}</p>
                   </div>
                 </div>
@@ -246,7 +246,7 @@ export default function VenueClient() {
               <div key={index} className="bg-[#f5f5f7] rounded-2xl p-6">
                 <div className="text-3xl mb-4">{facility.icon}</div>
                 <h3 className="font-bold text-[#1d1d1f] mb-2">{facility.title}</h3>
-                <p className="text-sm text-[#86868b]">{facility.description}</p>
+                <p className="text-sm text-[#6e6e73]">{facility.description}</p>
               </div>
             ))}
           </div>
@@ -262,19 +262,19 @@ export default function VenueClient() {
               <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">☀️ February Weather</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
-                  <span className="text-[#86868b]">Average High</span>
+                  <span className="text-[#6e6e73]">Average High</span>
                   <span className="font-semibold text-[#1d1d1f]">25°C / 77°F</span>
                 </div>
                 <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
-                  <span className="text-[#86868b]">Average Low</span>
+                  <span className="text-[#6e6e73]">Average Low</span>
                   <span className="font-semibold text-[#1d1d1f]">15°C / 59°F</span>
                 </div>
                 <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
-                  <span className="text-[#86868b]">Rainfall</span>
+                  <span className="text-[#6e6e73]">Rainfall</span>
                   <span className="font-semibold text-[#1d1d1f]">Rare</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[#86868b]">Conditions</span>
+                  <span className="text-[#6e6e73]">Conditions</span>
                   <span className="font-semibold text-[var(--color-primary)]">Ideal for tennis</span>
                 </div>
               </div>
@@ -302,7 +302,7 @@ export default function VenueClient() {
           <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-4 text-center">
             Nearby Hotels
           </h2>
-          <p className="text-center text-[#86868b] mb-8 max-w-2xl mx-auto">
+          <p className="text-center text-[#6e6e73] mb-8 max-w-2xl mx-auto">
             Recommended accommodations within 15 minutes of the stadium
           </p>
 
@@ -310,17 +310,17 @@ export default function VenueClient() {
             <div className="bg-[#f5f5f7] rounded-2xl p-6">
               <div className="text-sm text-[var(--color-primary)] font-medium mb-2">5-Star • 5 min</div>
               <h3 className="font-bold text-[#1d1d1f] mb-2">Le Meridien Dubai</h3>
-              <p className="text-sm text-[#86868b]">Adjacent to the venue with direct access. Official tournament hotel.</p>
+              <p className="text-sm text-[#6e6e73]">Adjacent to the venue with direct access. Official tournament hotel.</p>
             </div>
             <div className="bg-[#f5f5f7] rounded-2xl p-6">
               <div className="text-sm text-[var(--color-primary)] font-medium mb-2">5-Star • 10 min</div>
               <h3 className="font-bold text-[#1d1d1f] mb-2">Park Hyatt Dubai</h3>
-              <p className="text-sm text-[#86868b]">Luxury waterfront resort at Dubai Creek. Shuttle service available.</p>
+              <p className="text-sm text-[#6e6e73]">Luxury waterfront resort at Dubai Creek. Shuttle service available.</p>
             </div>
             <div className="bg-[#f5f5f7] rounded-2xl p-6">
               <div className="text-sm text-[var(--color-primary)] font-medium mb-2">5-Star • 15 min</div>
               <h3 className="font-bold text-[#1d1d1f] mb-2">InterContinental Festival City</h3>
-              <p className="text-sm text-[#86868b]">Modern hotel at Festival City Mall with excellent dining options.</p>
+              <p className="text-sm text-[#6e6e73]">Modern hotel at Festival City Mall with excellent dining options.</p>
             </div>
           </div>
         </div>
@@ -359,21 +359,21 @@ export default function VenueClient() {
               className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
             >
               <h3 className="font-semibold text-[#1d1d1f] mb-2">Seating Guide</h3>
-              <p className="text-sm text-[#86868b]">Compare seating categories and prices</p>
+              <p className="text-sm text-[#6e6e73]">Compare seating categories and prices</p>
             </button>
             <button
               onClick={() => router.push('/faq')}
               className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
             >
               <h3 className="font-semibold text-[#1d1d1f] mb-2">FAQ</h3>
-              <p className="text-sm text-[#86868b]">Common questions about the event</p>
+              <p className="text-sm text-[#6e6e73]">Common questions about the event</p>
             </button>
             <button
               onClick={() => router.push('/tournament')}
               className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
             >
               <h3 className="font-semibold text-[#1d1d1f] mb-2">Tournament Info</h3>
-              <p className="text-sm text-[#86868b]">History and champions of Dubai Tennis</p>
+              <p className="text-sm text-[#6e6e73]">History and champions of Dubai Tennis</p>
             </button>
           </div>
         </div>

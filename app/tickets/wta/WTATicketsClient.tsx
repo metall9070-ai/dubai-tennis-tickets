@@ -133,7 +133,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
 
           <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
             {isLoading ? (
-              <div className="p-8 text-center text-[#86868b]">
+              <div className="p-8 text-center text-[#6e6e73]">
                 <div className="animate-pulse">Loading sessions...</div>
               </div>
             ) : error ? (
@@ -141,7 +141,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
                 {error}. Please refresh the page.
               </div>
             ) : wtaEvents.length === 0 ? (
-              <div className="p-8 text-center text-[#86868b]">
+              <div className="p-8 text-center text-[#6e6e73]">
                 No sessions available.
               </div>
             ) : (
@@ -202,9 +202,9 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
           <div className="mt-10 pt-8 border-t border-[#d2d2d7]">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <p className="text-sm text-[#86868b] mb-1">Also at Dubai Tennis Championships</p>
+                <p className="text-sm text-[#6e6e73] mb-1">Also at Dubai Tennis Championships</p>
                 <p className="text-lg font-semibold text-[#1d1d1f]">ATP 500 Men's Tournament</p>
-                <p className="text-sm text-[#86868b]">February 23-28, 2026</p>
+                <p className="text-sm text-[#6e6e73]">February 23-28, 2026</p>
               </div>
               <button
                 onClick={() => router.push('/tickets/atp')}

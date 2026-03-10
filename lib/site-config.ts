@@ -161,7 +161,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       badge: "UEFA EURO Champion vs Copa América Champion",
       description:
         "International football celebration headlined by the Finalissima intercontinental final. Six days of world-class matches across Qatar.",
-      image: "/images/lusail-stadium-hero.png",
+      image: "/images/lusail-stadium-hero.webp",
       buttonText: "Get Tickets Now",
     },
     footer: {

@@ -133,6 +133,8 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
               <img
                 src={`https://flagcdn.com/w80/${team1Code}.png`}
                 alt={team1}
+                width={80}
+                height={60}
                 className="w-8 h-6 object-cover rounded shadow-sm border border-slate-100"
               />
               <span className="text-xl font-display font-bold text-slate-900">{team1}</span>
@@ -144,6 +146,8 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
               <img
                 src={`https://flagcdn.com/w80/${team2Code}.png`}
                 alt={team2}
+                width={80}
+                height={60}
                 className="w-8 h-6 object-cover rounded shadow-sm border border-slate-100"
               />
               <span className="text-xl font-display font-bold text-slate-900">{team2}</span>
@@ -210,6 +214,8 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
                 <img
                   src={`https://flagcdn.com/w160/${team1Code}.png`}
                   alt={team1}
+                  width={160}
+                  height={120}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -225,6 +231,8 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
                 <img
                   src={`https://flagcdn.com/w160/${team2Code}.png`}
                   alt={team2}
+                  width={160}
+                  height={120}
                   className="w-full h-full object-cover"
                 />
               </div>

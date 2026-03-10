@@ -61,7 +61,7 @@ export default function NotFound() {
           </h1>
 
           {/* Description */}
-          <p className="text-lg text-[#86868b] mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-[#6e6e73] mb-8 max-w-2xl mx-auto">
             The page you are looking for might have been removed, had its name changed,
             or is temporarily unavailable.
           </p>
@@ -98,7 +98,7 @@ export default function NotFound() {
 
           {/* Help Text */}
           <div className="mt-12 pt-8 border-t border-[#d2d2d7]">
-            <p className="text-sm text-[#86868b]">
+            <p className="text-sm text-[#6e6e73]">
               Need help?{' '}
               <Link href="/contact" className="text-[var(--color-primary)] hover:underline">
                 Contact our support team

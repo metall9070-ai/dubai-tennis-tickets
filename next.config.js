@@ -17,6 +17,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'dubaidutyfreetennischampionships.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'flagcdn.com',
+      },
     ],
   },
 }

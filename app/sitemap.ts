@@ -30,21 +30,35 @@ interface StaticRoute {
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]
 }
 
-const STATIC_ROUTES: StaticRoute[] = [
+const COMMON_ROUTES: StaticRoute[] = [
   { path: "/",                    priority: 1.0, changeFrequency: "weekly"  },
-  { path: "/schedule",            priority: 0.9, changeFrequency: "weekly"  },
-  { path: "/tickets/atp",         priority: 0.9, changeFrequency: "weekly"  },
-  { path: "/tickets/wta",         priority: 0.9, changeFrequency: "weekly"  },
   { path: "/faq",                 priority: 0.8, changeFrequency: "monthly" },
   { path: "/venue",               priority: 0.8, changeFrequency: "monthly" },
-  { path: "/tournament",          priority: 0.7, changeFrequency: "monthly" },
-  { path: "/seating-guide",       priority: 0.7, changeFrequency: "monthly" },
   { path: "/about",               priority: 0.6, changeFrequency: "monthly" },
   { path: "/contact",             priority: 0.6, changeFrequency: "monthly" },
   { path: "/payment-and-delivery",priority: 0.5, changeFrequency: "monthly" },
   { path: "/terms-of-service",    priority: 0.3, changeFrequency: "yearly"  },
   { path: "/privacy-policy",      priority: 0.3, changeFrequency: "yearly"  },
 ]
+
+const SITE_SPECIFIC_ROUTES: Record<string, StaticRoute[]> = {
+  tennis: [
+    { path: "/schedule",            priority: 0.9, changeFrequency: "weekly"  },
+    { path: "/tickets/atp",         priority: 0.9, changeFrequency: "weekly"  },
+    { path: "/tickets/wta",         priority: 0.9, changeFrequency: "weekly"  },
+    { path: "/tournament",          priority: 0.7, changeFrequency: "monthly" },
+    { path: "/seating-guide",       priority: 0.7, changeFrequency: "monthly" },
+  ],
+  finalissima: [
+    { path: "/schedule",            priority: 0.9, changeFrequency: "weekly"  },
+    { path: "/about-tournament",    priority: 0.7, changeFrequency: "monthly" },
+  ],
+  yasarena: [
+    { path: "/events",              priority: 0.9, changeFrequency: "weekly"  },
+    { path: "/about-venue",         priority: 0.7, changeFrequency: "monthly" },
+    { path: "/getting-there",       priority: 0.7, changeFrequency: "monthly" },
+  ],
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SITEMAP GENERATOR
@@ -81,7 +95,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // 1. Static routes — always included, no content-file dependency
-  for (const route of STATIC_ROUTES) {
+  //    Common routes are shared across all sites.
+  //    Site-specific routes are keyed by NEXT_PUBLIC_SITE_CODE.
+  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || "tennis"
+  const staticRoutes = [
+    ...COMMON_ROUTES,
+    ...(SITE_SPECIFIC_ROUTES[siteCode] || []),
+  ]
+
+  for (const route of staticRoutes) {
     addEntry(route.path, {
       priority: route.priority,
       changeFrequency: route.changeFrequency,

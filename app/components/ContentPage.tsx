@@ -95,7 +95,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
                 <div className="text-[22px] sm:text-[26px] font-bold text-[#1d1d1f]">
                   {stat.value}
                 </div>
-                <div className="text-[12px] sm:text-[13px] text-[#86868b] mt-1">
+                <div className="text-[12px] sm:text-[13px] text-[#6e6e73] mt-1">
                   {stat.label}
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
               <div key={i} className="bg-white rounded-2xl p-6">
                 <div className="text-3xl mb-3">{item.icon}</div>
                 <h3 className="font-bold text-[#1d1d1f] text-[15px] sm:text-[16px] mb-2">{item.title}</h3>
-                <p className="text-[13px] sm:text-[14px] text-[#86868b] leading-relaxed">{item.body}</p>
+                <p className="text-[13px] sm:text-[14px] text-[#6e6e73] leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
@@ -147,7 +147,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
                   <summary className="cursor-pointer select-none px-5 py-4 font-semibold text-[15px] sm:text-[16px] text-[#1d1d1f] list-none flex items-center justify-between">
                     {item.question}
                     <svg
-                      className="w-5 h-5 text-[#86868b] shrink-0 ml-4 transition-transform group-open:rotate-45"
+                      className="w-5 h-5 text-[#6e6e73] shrink-0 ml-4 transition-transform group-open:rotate-45"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -194,7 +194,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
                   {link.label}
                 </span>
                 {link.sublabel && (
-                  <span className="text-[11px] sm:text-xs text-[#86868b]">
+                  <span className="text-[11px] sm:text-xs text-[#6e6e73]">
                     {link.sublabel}
                   </span>
                 )}

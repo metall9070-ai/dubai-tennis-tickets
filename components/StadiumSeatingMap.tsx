@@ -366,7 +366,7 @@ const StadiumSeatingMap: React.FC<StadiumSeatingMapProps> = ({
           </button>
           <button
             onClick={handleZoomReset}
-            className="w-10 h-10 bg-white rounded-xl shadow-lg border border-black/5 flex items-center justify-center text-[11px] font-bold text-[#86868b] hover:bg-[#f5f5f7] active:scale-95 transition-all"
+            className="w-10 h-10 bg-white rounded-xl shadow-lg border border-black/5 flex items-center justify-center text-[11px] font-bold text-[#6e6e73] hover:bg-[#f5f5f7] active:scale-95 transition-all"
           >
             {zoomPercent}%
           </button>
@@ -397,7 +397,7 @@ const StadiumSeatingMap: React.FC<StadiumSeatingMapProps> = ({
           <div className="absolute inset-0 flex items-center justify-center bg-[#f8f9fb] z-30">
             <div className="flex flex-col items-center gap-3">
               <div className="w-8 h-8 border-3 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
-              <span className="text-sm text-[#86868b] font-medium">Loading seating map...</span>
+              <span className="text-sm text-[#6e6e73] font-medium">Loading seating map...</span>
             </div>
           </div>
         )}

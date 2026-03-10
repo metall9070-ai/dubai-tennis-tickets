@@ -299,7 +299,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
 
           {/* Breadcrumbs */}
-          <nav className="flex items-center space-x-1.5 md:space-x-2 text-[11px] md:text-[13px] font-medium text-[#86868b] mb-5 md:mb-8 overflow-x-auto">
+          <nav className="flex items-center space-x-1.5 md:space-x-2 text-[11px] md:text-[13px] font-medium text-[#6e6e73] mb-5 md:mb-8 overflow-x-auto">
             <button onClick={onHome} className="hover:text-[#1d1d1f] transition-colors font-semibold whitespace-nowrap">Home</button>
             <span className="text-[#d2d2d7]">/</span>
             <button onClick={onBack} className="hover:text-[#1d1d1f] transition-colors font-semibold whitespace-nowrap">Tickets</button>
@@ -318,6 +318,8 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       <img
                         src={`https://flagcdn.com/w80/${teamInfo.team1Code}.png`}
                         alt={teamInfo.team1}
+                        width={80}
+                        height={60}
                         className="w-6 h-4 md:w-8 md:h-6 object-cover rounded shadow-sm border border-slate-200"
                       />
                       <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
@@ -332,6 +334,8 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       <img
                         src={`https://flagcdn.com/w80/${teamInfo.team2Code}.png`}
                         alt={teamInfo.team2}
+                        width={80}
+                        height={60}
                         className="w-6 h-4 md:w-8 md:h-6 object-cover rounded shadow-sm border border-slate-200"
                       />
                     </div>
@@ -370,7 +374,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
             </div>
             <div className="flex flex-col items-start md:items-end gap-2 self-start md:self-auto">
               {event?.isSoldOut && (
-                <span className="inline-flex items-center px-4 py-1.5 bg-[#86868b] text-white text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-full">
+                <span className="inline-flex items-center px-4 py-1.5 bg-[#6e6e73] text-white text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-full">
                   Sold out
                 </span>
               )}
@@ -392,7 +396,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         <div className="lg:col-span-2 flex flex-col">
           <div className="w-full mb-4 md:mb-6 flex items-center justify-between">
             <h3 className="text-lg md:text-xl font-semibold tracking-tight">Select Seating Area</h3>
-            <span className="text-[10px] md:text-[11px] font-medium text-[#86868b] bg-[#f5f5f7] px-2.5 md:px-3 py-1 rounded-full">Live availability</span>
+            <span className="text-[10px] md:text-[11px] font-medium text-[#6e6e73] bg-[#f5f5f7] px-2.5 md:px-3 py-1 rounded-full">Live availability</span>
           </div>
 
           <div className={`${isFinalissima && (event?.venue?.includes('Lusail') || event?.venue?.includes('Jassim Bin Ham') || event?.venue?.includes('Ahmad Bin Ali')) ? 'bg-white' : 'bg-[#f8f9fb]'} rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5`}>
@@ -489,7 +493,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         ? 'cursor-pointer -translate-y-1 shadow-2xl border-transparent'
                         : isOtherHovered
                           ? 'cursor-pointer opacity-40 border-[#d2d2d7]'
-                          : 'cursor-pointer border-[#d2d2d7] hover:shadow-lg hover:border-[#86868b]/30'
+                          : 'cursor-pointer border-[#d2d2d7] hover:shadow-lg hover:border-[#6e6e73]/30'
                     }
                   `}
                   style={{
@@ -505,7 +509,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         <div
                           className={`w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center font-semibold text-white shadow-md text-base md:text-lg transition-all duration-300`}
                           style={{
-                            backgroundColor: categoryIsSoldOut ? '#86868b' : cat.color,
+                            backgroundColor: categoryIsSoldOut ? '#6e6e73' : cat.color,
                             filter: isHovered && !categoryIsSoldOut ? 'brightness(1.15) saturate(1.2)' : 'none',
                           }}
                         >
@@ -513,10 +517,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         </div>
                       )}
                       <div>
-                        <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#86868b]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
+                        <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#6e6e73]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
                         {categoryIsSoldOut ? (
-                          <span className={`inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-[#86868b] ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}>
-                            <span className="w-1.5 h-1.5 bg-[#86868b] rounded-full"></span>
+                          <span className={`inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-[#6e6e73] ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}>
+                            <span className="w-1.5 h-1.5 bg-[#6e6e73] rounded-full"></span>
                             Sold Out
                           </span>
                         ) : cat.seatsLeft < (isFinalissima ? 50 : 30) ? (
@@ -539,7 +543,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     </div>
                     <div className="text-right">
                       {categoryIsSoldOut ? (
-                        <p className="text-[16px] md:text-[18px] font-bold text-[#86868b] uppercase">Sold Out</p>
+                        <p className="text-[16px] md:text-[18px] font-bold text-[#6e6e73] uppercase">Sold Out</p>
                       ) : (
                         <p className="text-[18px] md:text-[20px] font-semibold text-[#1d1d1f]">${cat.price}</p>
                       )}
@@ -633,7 +637,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
           <div className="relative bg-white w-full max-w-[440px] max-h-[92vh] rounded-[32px] md:rounded-[42px] shadow-2xl overflow-y-auto animate-modalSlide border border-black/5">
             <div className="p-5 md:p-8">
                   <div className="flex items-center justify-between mb-0.5 md:mb-1">
-                    <span className="text-[14px] md:text-[15px] font-semibold text-[#86868b]">Select Quantity</span>
+                    <span className="text-[14px] md:text-[15px] font-semibold text-[#6e6e73]">Select Quantity</span>
                     <button onClick={closeModal} className="p-1 hover:bg-[#f5f5f7] rounded-full transition-colors">
                       <svg className="w-5 h-5 text-[#d2d2d7]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
@@ -642,9 +646,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="mb-3 md:mb-4">
                     <h3 className="text-[22px] md:text-[28px] font-bold tracking-tight text-[#1d1d1f] mb-1.5 md:mb-4">{selectedCategory.name}</h3>
                     <div className="flex items-baseline space-x-1.5">
-                       <span className="text-[15px] md:text-[17px] text-[#86868b]">Price:</span>
+                       <span className="text-[15px] md:text-[17px] text-[#6e6e73]">Price:</span>
                        <span className="text-[20px] md:text-[24px] font-bold text-[var(--color-primary)]">${selectedCategory.price.toLocaleString()}</span>
-                       <span className="text-[14px] md:text-[16px] text-[#86868b]">/ ticket</span>
+                       <span className="text-[14px] md:text-[16px] text-[#6e6e73]">/ ticket</span>
                     </div>
                   </div>
 
@@ -652,7 +656,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div className="flex flex-col">
                         <span className="text-[15px] md:text-[17px] font-bold text-[#1d1d1f]">Quantity</span>
-                        <span className="text-[10px] md:text-[11px] text-[#86868b] font-medium mt-0.5">Max 4 per order</span>
+                        <span className="text-[10px] md:text-[11px] text-[#6e6e73] font-medium mt-0.5">Max 4 per order</span>
                       </div>
                       <div className="flex items-center space-x-4 md:space-x-5">
                         <button
@@ -674,7 +678,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="border-t border-[#e2e8f0] my-3 md:my-4 opacity-50"></div>
 
                     <div className="flex justify-between items-center mb-4 md:mb-6">
-                       <span className="text-[15px] md:text-[17px] font-semibold text-[#86868b]">Remaining Seats</span>
+                       <span className="text-[15px] md:text-[17px] font-semibold text-[#6e6e73]">Remaining Seats</span>
                        <span className="text-[15px] md:text-[17px] font-bold text-[var(--color-primary)]">
                          {selectedCategory.seatsLeft - ticketCount} seats left
                        </span>
@@ -687,7 +691,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   </div>
 
                   <div className="px-2 md:px-4 mb-5 md:mb-8">
-                    <p className="text-center text-[12px] md:text-[14px] text-[#86868b] leading-relaxed italic font-medium">
+                    <p className="text-center text-[12px] md:text-[14px] text-[#6e6e73] leading-relaxed italic font-medium">
                       When ordering two or more tickets, your seats will be next to each other.
                     </p>
                   </div>

@@ -112,7 +112,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   const header = (
     <div className="mb-8 md:mb-20 text-center md:text-left">
       <h2 className="text-[32px] md:text-[56px] font-semibold tracking-tight mb-3 md:mb-4 leading-tight">{title ?? 'Match Schedule'}</h2>
-      <p className="text-[17px] md:text-xl text-[#86868b] font-normal max-w-2xl tracking-[-0.01em]">{subtitle ?? 'Discover the matches and get ready for an unforgettable experience.'}</p>
+      <p className="text-[17px] md:text-xl text-[#6e6e73] font-normal max-w-2xl tracking-[-0.01em]">{subtitle ?? 'Discover the matches and get ready for an unforgettable experience.'}</p>
     </div>
   );
 
@@ -122,7 +122,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
       <section id="tickets" className="py-12 md:py-24 bg-[#f5f5f7] text-[#1d1d1f]">
         <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
           {header}
-          <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#86868b]">
+          <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#6e6e73]">
             <div className="animate-pulse">Loading sessions...</div>
           </div>
         </div>
@@ -158,7 +158,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
               </div>
               <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
                 {wtaEvents.length === 0 ? (
-                  <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
+                  <div className="p-8 text-center text-[#6e6e73]">No sessions available.</div>
                 ) : (
                   wtaEvents.map((event, index, arr) => (
                     <EventRow
@@ -179,7 +179,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
               </div>
               <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
                 {atpEvents.length === 0 ? (
-                  <div className="p-8 text-center text-[#86868b]">No sessions available.</div>
+                  <div className="p-8 text-center text-[#6e6e73]">No sessions available.</div>
                 ) : (
                   atpEvents.map((event, index, arr) => (
                     <EventRow
@@ -197,7 +197,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
           // NEW FOOTBALL CARD DESIGN FOR FINALISSIMA
           <div className="mb-0">
             {events.length === 0 ? (
-              <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#86868b]">
+              <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 text-center text-[#6e6e73]">
                 No sessions available yet. Check back soon.
               </div>
             ) : (
@@ -227,7 +227,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
           <div className="mb-0">
             <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
               {events.length === 0 ? (
-                <div className="p-8 text-center text-[#86868b]">No sessions available yet. Check back soon.</div>
+                <div className="p-8 text-center text-[#6e6e73]">No sessions available yet. Check back soon.</div>
               ) : (
                 events.map((event, index, arr) => (
                   <EventRow
@@ -290,7 +290,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
     >
       <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-12">
         <div className="flex flex-col items-center justify-center min-w-[48px] sm:min-w-[56px] md:min-w-[80px] h-[48px] sm:h-[56px] md:h-[80px] bg-[#f5f5f7] rounded-xl md:rounded-2xl group-hover:bg-white transition-colors duration-300">
-          <span className="text-[8px] sm:text-[9px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-widest leading-none mb-0.5 sm:mb-1">{event.month}</span>
+          <span className="text-[8px] sm:text-[9px] md:text-[11px] font-semibold text-[#6e6e73] uppercase tracking-widest leading-none mb-0.5 sm:mb-1">{event.month}</span>
           <span className="text-lg sm:text-xl md:text-3xl font-semibold tracking-tight leading-none">{event.date}</span>
         </div>
 
@@ -298,7 +298,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
           <div className="flex flex-wrap items-center gap-x-1.5 sm:gap-x-2 gap-y-0.5 mb-0.5 sm:mb-1">
              <span className="text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#1d1d1f]">{event.day}</span>
              <span className="w-1 h-1 rounded-full bg-[#d2d2d7]"></span>
-             <span className="text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#86868b]">{event.time}</span>
+             <span className="text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#6e6e73]">{event.time}</span>
              <span className={`hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-semibold ${session.bgColor} ${session.textColor}`}>
                <span className="text-[10px]">{session.icon}</span>
                {session.label}
@@ -308,14 +308,14 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
             {event.title}
           </h4>
           {event.venue && (
-            <p className="hidden md:block text-[14px] text-[#86868b] mt-0.5">{event.venue}</p>
+            <p className="hidden md:block text-[14px] text-[#6e6e73] mt-0.5">{event.venue}</p>
           )}
         </div>
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 flex-shrink-0">
         {event.isSoldOut ? (
-          <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-5 py-2.5 sm:py-2 md:py-2.5 bg-[#86868b] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg">
+          <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-5 py-2.5 sm:py-2 md:py-2.5 bg-[#6e6e73] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg">
             Sold out
           </span>
         ) : (
@@ -323,11 +323,11 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
             <div className="flex flex-col items-end">
               {hasValidPrice ? (
                 <>
-                  <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#86868b] uppercase tracking-wide sm:tracking-widest">From</span>
+                  <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-[#6e6e73] uppercase tracking-wide sm:tracking-widest">From</span>
                   <span className="text-[14px] sm:text-[15px] md:text-[17px] font-semibold text-[#1d1d1f]">${event.minPrice}</span>
                 </>
               ) : (
-                <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#86868b]">Price unavailable</span>
+                <span className="text-[12px] sm:text-[13px] md:text-[14px] font-medium text-[#6e6e73]">Price unavailable</span>
               )}
             </div>
             <span className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] px-3 sm:px-4 md:px-4 py-2.5 sm:py-2 md:py-2 bg-[var(--color-primary)] text-white text-[10px] sm:text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-lg group-hover:scale-105 active:scale-95 transition-transform">

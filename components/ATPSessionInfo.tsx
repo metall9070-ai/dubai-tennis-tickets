@@ -169,7 +169,7 @@ const ATPSessionInfo: React.FC<ATPSessionInfoProps> = ({ eventTitle }) => {
           <h3 className="text-lg md:text-xl font-semibold text-[#1d1d1f] mb-3 md:mb-4 tracking-tight">
             About this session
           </h3>
-          <div className="text-[14px] md:text-[15px] text-[#86868b] leading-relaxed whitespace-pre-line">
+          <div className="text-[14px] md:text-[15px] text-[#6e6e73] leading-relaxed whitespace-pre-line">
             {sessionData.about}
           </div>
         </div>
@@ -181,7 +181,7 @@ const ATPSessionInfo: React.FC<ATPSessionInfoProps> = ({ eventTitle }) => {
           </h3>
           <ul className="space-y-2 md:space-y-3">
             {sessionData.seating.map((item, index) => (
-              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#86868b] leading-relaxed">
+              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#6e6e73] leading-relaxed">
                 <span className="text-[var(--color-primary)] mt-1">•</span>
                 <span>{item}</span>
               </li>
@@ -196,7 +196,7 @@ const ATPSessionInfo: React.FC<ATPSessionInfoProps> = ({ eventTitle }) => {
           </h3>
           <ul className="space-y-2 md:space-y-3">
             {sessionData.beforeYouGo.map((item, index) => (
-              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#86868b] leading-relaxed">
+              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#6e6e73] leading-relaxed">
                 <span className="text-[var(--color-primary)] mt-1">•</span>
                 <span>{item}</span>
               </li>

@@ -50,7 +50,7 @@ export default function ContactClient() {
                   10:00 AM – 8:00 PM
                 </p>
               </div>
-              <p className="text-[13px] md:text-[15px] text-[#86868b] font-medium pl-4 border-l-2 border-[var(--color-primary)]/20">
+              <p className="text-[13px] md:text-[15px] text-[#6e6e73] font-medium pl-4 border-l-2 border-[var(--color-primary)]/20">
                 We operate seven days a week to ensure you never miss a match.
               </p>
             </section>
@@ -92,7 +92,7 @@ export default function ContactClient() {
                 <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="flex flex-col">
-                      <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Full Name</label>
+                      <label className="text-[12px] md:text-[13px] font-medium text-[#6e6e73] mb-1.5 ml-1">Full Name</label>
                       <input
                         type="text"
                         required
@@ -101,7 +101,7 @@ export default function ContactClient() {
                       />
                     </div>
                     <div className="flex flex-col">
-                      <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Email Address</label>
+                      <label className="text-[12px] md:text-[13px] font-medium text-[#6e6e73] mb-1.5 ml-1">Email Address</label>
                       <input
                         type="email"
                         required
@@ -111,7 +111,7 @@ export default function ContactClient() {
                     </div>
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Subject</label>
+                    <label className="text-[12px] md:text-[13px] font-medium text-[#6e6e73] mb-1.5 ml-1">Subject</label>
                     <input
                       type="text"
                       required
@@ -120,7 +120,7 @@ export default function ContactClient() {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-[12px] md:text-[13px] font-medium text-[#86868b] mb-1.5 ml-1">Message</label>
+                    <label className="text-[12px] md:text-[13px] font-medium text-[#6e6e73] mb-1.5 ml-1">Message</label>
                     <textarea
                       required
                       rows={5}
@@ -141,7 +141,7 @@ export default function ContactClient() {
                     <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                   </div>
                   <h3 className="text-xl md:text-2xl font-semibold mb-2">Message Sent</h3>
-                  <p className="text-[14px] md:text-[16px] text-[#86868b]">Thank you for reaching out. We will get back to you within 24 hours.</p>
+                  <p className="text-[14px] md:text-[16px] text-[#6e6e73]">Thank you for reaching out. We will get back to you within 24 hours.</p>
                 </div>
               )}
             </section>

@@ -47,7 +47,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentPage, light = f
 
       {/* Visual Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="py-4">
-        <ol className={`flex items-center flex-wrap text-sm ${light ? 'text-white/70' : 'text-[#86868b]'}`}>
+        <ol className={`flex items-center flex-wrap text-sm ${light ? 'text-white/70' : 'text-[#6e6e73]'}`}>
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
               {item.onClick ? (
