@@ -20,7 +20,7 @@ export type StatItem = {
 }
 
 export type HighlightItem = {
-  icon: string   // emoji, e.g. "🏟️", "🚇", "☀️"
+  icon: string
   title: string
   body: string
 }

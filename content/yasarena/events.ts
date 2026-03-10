@@ -21,32 +21,32 @@ const seo: SEOContent = {
 
   highlights: [
     {
-      icon: "🎵",
+      icon: "music",
       title: "Live Concerts",
       body: "International touring artists and regional performers take the stage throughout the year.",
     },
     {
-      icon: "🥊",
+      icon: "swords",
       title: "Sporting Events",
       body: "Championship boxing, UFC, basketball, and more — world-class sport in an arena setting.",
     },
     {
-      icon: "😂",
+      icon: "laugh",
       title: "Comedy & Theatre",
       body: "Stand-up comedians, theatrical productions, and family-friendly shows on the Yas Bay waterfront.",
     },
     {
-      icon: "🎮",
+      icon: "gamepad-2",
       title: "Esports & Expos",
       body: "Gaming tournaments, tech exhibitions, and immersive experiences for all ages.",
     },
     {
-      icon: "📅",
+      icon: "calendar",
       title: "Year-Round Calendar",
       body: "New events are announced regularly, with a particularly busy season from October through April.",
     },
     {
-      icon: "🎫",
+      icon: "ticket",
       title: "Multiple Categories",
       body: "Choose from a range of seating options for each event, subject to availability.",
     },

@@ -19,12 +19,12 @@ const seo: SEOContent = {
   heroDescription: "Host venue of Finalissima 2026 and the 2022 FIFA World Cup Final. Located 20 minutes north of Doha.",
 
   highlights: [
-    { icon: "🚇", title: "Metro Access", body: "Take the Red Line to Lusail QNB Station. The stadium is a short walk from the station exit." },
-    { icon: "🚕", title: "Taxi & Rideshare", body: "Karwa taxis and Uber are widely available. Ask for Lusail Stadium — journey from central Doha takes around 20 minutes." },
-    { icon: "🅿️", title: "Parking", body: "Large parking areas surround the stadium. Arrive early on match days as spaces fill quickly." },
-    { icon: "🏟️", title: "World-Class Facilities", body: "80,000-seat capacity, fully air-conditioned concourses, multiple food and beverage outlets throughout the venue." },
-    { icon: "♿", title: "Accessibility", body: "Dedicated accessible entrances, seating areas, and facilities are available across all levels of the stadium." },
-    { icon: "🌡️", title: "Climate & Comfort", body: "March in Qatar is pleasant — expect 20–28°C. The stadium has cooling systems in spectator areas." },
+    { icon: "train-front", title: "Metro Access", body: "Take the Red Line to Lusail QNB Station. The stadium is a short walk from the station exit." },
+    { icon: "car", title: "Taxi & Rideshare", body: "Karwa taxis and Uber are widely available. Ask for Lusail Stadium — journey from central Doha takes around 20 minutes." },
+    { icon: "square-parking", title: "Parking", body: "Large parking areas surround the stadium. Arrive early on match days as spaces fill quickly." },
+    { icon: "landmark", title: "World-Class Facilities", body: "80,000-seat capacity, fully air-conditioned concourses, multiple food and beverage outlets throughout the venue." },
+    { icon: "accessibility", title: "Accessibility", body: "Dedicated accessible entrances, seating areas, and facilities are available across all levels of the stadium." },
+    { icon: "thermometer", title: "Climate & Comfort", body: "March in Qatar is pleasant — expect 20–28°C. The stadium has cooling systems in spectator areas." },
   ],
   stats: [
     { label: "Lusail Capacity", value: "80,000" },

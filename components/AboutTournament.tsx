@@ -1,11 +1,12 @@
 
 import React from 'react';
+import { Trophy, CircleDot, MapPin } from 'lucide-react';
 
 const AboutTournament: React.FC = () => {
   const highlights = [
-    { label: 'Founded', value: '1993', icon: '🏆' },
-    { label: 'Category', value: 'ATP 500 / WTA 1000', icon: '🎾' },
-    { label: 'Venue', value: 'DDF Tennis Stadium', icon: '📍' },
+    { label: 'Founded', value: '1993', icon: <Trophy size={20} /> },
+    { label: 'Category', value: 'ATP 500 / WTA 1000', icon: <CircleDot size={20} /> },
+    { label: 'Venue', value: 'DDF Tennis Stadium', icon: <MapPin size={20} /> },
   ];
 
   return (
@@ -33,7 +34,7 @@ const AboutTournament: React.FC = () => {
               <div className="grid grid-cols-3 gap-4 mb-12">
                 {highlights.map((item, idx) => (
                   <div key={idx} className="bg-[#f5f5f7] p-5 rounded-2xl border border-black/5 hover:border-[var(--color-primary)]/30 transition-colors duration-300">
-                    <span className="text-2xl mb-2 block">{item.icon}</span>
+                    <span className="text-[var(--color-primary)] mb-2 block">{item.icon}</span>
                     <p className="text-[11px] font-bold text-[#6e6e73] uppercase tracking-wider mb-1">{item.label}</p>
                     <p className="text-[14px] md:text-[16px] font-bold text-[#1d1d1f] leading-tight">{item.value}</p>
                   </div>

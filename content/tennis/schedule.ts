@@ -14,14 +14,6 @@ const seo: SEOContent = {
   ],
   h1: "Dubai Tennis 2026 — Full Schedule",
   breadcrumbLabel: "Schedule",
-  highlights: [
-    { icon: "📅", title: "WTA 1000 — Feb 15–21", body: "The women's tournament opens the Championships. Top seeds including Swiatek, Sabalenka, and Gauff compete across seven days at Dubai Tennis Stadium." },
-    { icon: "🎾", title: "ATP 500 — Feb 23–28", body: "The men's draw follows immediately. Djokovic, Sinner, Alcaraz and the world's best compete across six days of world-class tennis." },
-    { icon: "🏟️", title: "One Venue", body: "All matches take place at Dubai Duty Free Tennis Stadium, Aviation Club, Al Garhoud — one of the fastest hard courts on the tour." },
-    { icon: "🌟", title: "Finals Weekend", body: "WTA Final on Feb 21, ATP Final on Feb 28. Premium seating categories sell out first — book early to secure your seats." },
-    { icon: "🎟️", title: "Per-Session Tickets", body: "Each match session is ticketed separately. Browse available sessions below and choose the round or day that suits you." },
-    { icon: "☀️", title: "Evening Sessions", body: "Most matches are scheduled in the afternoon and evening, with temperatures of 22–27°C in late February — ideal outdoor conditions." },
-  ],
   heroSubtitle: "Dubai Duty Free Tennis Championships 2026 — Feb 15–28",
   heroDescription:
     "Two back-to-back world-class tournaments at Dubai Tennis Stadium. WTA 1000 and ATP 500 on the fastest hard court in the Middle East.",

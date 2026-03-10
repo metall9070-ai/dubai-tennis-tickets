@@ -21,32 +21,32 @@ const seo: SEOContent = {
 
   highlights: [
     {
-      icon: "🚗",
+      icon: "car",
       title: "By Car",
       body: "Yas Island is well-connected by road from Abu Dhabi city centre, Dubai, and Al Ain via major highways.",
     },
     {
-      icon: "🅿️",
+      icon: "square-parking",
       title: "On-Site Parking",
       body: "Dedicated parking areas are available near the arena. Arrive early on event days to secure a spot.",
     },
     {
-      icon: "🚕",
+      icon: "car",
       title: "Taxi & Rideshare",
       body: "Uber, Careem, and Abu Dhabi taxis operate across the island with designated drop-off points at the venue.",
     },
     {
-      icon: "✈️",
+      icon: "plane",
       title: "Near the Airport",
       body: "Abu Dhabi International Airport is approximately 15 minutes from Yas Island by road.",
     },
     {
-      icon: "🏨",
+      icon: "hotel",
       title: "Stay on Yas Island",
       body: "Several hotels are within walking distance or a short shuttle ride from the arena.",
     },
     {
-      icon: "♿",
+      icon: "accessibility",
       title: "Accessible Routes",
       body: "Accessible parking, drop-off zones, and venue entrances are available for visitors with mobility needs.",
     },

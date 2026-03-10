@@ -21,32 +21,32 @@ const seo: SEOContent = {
 
   highlights: [
     {
-      icon: "🏟️",
+      icon: "landmark",
       title: "18,000 Capacity",
       body: "Abu Dhabi's largest indoor arena, with flexible configurations for concerts, sports, and exhibitions.",
     },
     {
-      icon: "🎶",
+      icon: "music",
       title: "World-Class Events",
       body: "Hosts international touring artists, championship boxing, UFC fights, comedy shows, and esports tournaments.",
     },
     {
-      icon: "🌊",
+      icon: "waves",
       title: "Yas Bay Waterfront",
       body: "Situated within the Yas Bay development, surrounded by dining, leisure, and waterfront promenades.",
     },
     {
-      icon: "🅿️",
+      icon: "square-parking",
       title: "Easy Access",
       body: "On-site parking, rideshare drop-off zones, and proximity to Abu Dhabi International Airport.",
     },
     {
-      icon: "♿",
+      icon: "accessibility",
       title: "Accessible Design",
       body: "Dedicated accessible entrances, seating areas, and facilities available across all levels of the arena.",
     },
     {
-      icon: "🎭",
+      icon: "drama",
       title: "Flexible Staging",
       body: "Adaptable staging configurations that transform the arena for intimate shows or large-scale productions.",
     },

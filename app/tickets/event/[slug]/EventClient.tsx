@@ -8,6 +8,7 @@ import { fetchEventBySlug } from '@/lib/api';
 import type { Event } from '@/lib/types';
 import type { Category } from '@/lib/api-server';
 import type { EventSEO } from '@/types/seo';
+import { WifiOff, CircleDot } from 'lucide-react';
 
 // Storage version - must match CartContext.tsx
 const CURRENT_CART_VERSION = 3;
@@ -173,7 +174,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
     return (
       <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
-          <div className="text-6xl mb-4">{isNetworkError ? '🔌' : '🎾'}</div>
+          <div className="mb-4 flex justify-center text-[#6e6e73]">{isNetworkError ? <WifiOff size={48} /> : <CircleDot size={48} />}</div>
           <h1 className="text-2xl font-bold text-[#1d1d1f] mb-2">
             {isNetworkError ? 'Connection Error' : 'Event Not Found'}
           </h1>

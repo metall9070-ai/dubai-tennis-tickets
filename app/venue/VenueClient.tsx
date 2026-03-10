@@ -5,35 +5,36 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { UtensilsCrossed, Users, ShoppingBag, Wifi, CreditCard, HeartPulse, TrainFront, Car, SquareParking, Bus, Lightbulb, Landmark, Sun, Backpack } from 'lucide-react';
 
 const facilities = [
   {
-    icon: "🍽️",
+    icon: <UtensilsCrossed size={28} />,
     title: "Food & Beverage",
     description: "Multiple restaurants, cafes, and bars throughout the venue. International cuisine, premium dining options, and quick refreshment stands."
   },
   {
-    icon: "🚻",
+    icon: <Users size={28} />,
     title: "Restrooms",
     description: "Clean, well-maintained facilities located throughout the stadium. Accessible restrooms available on all levels."
   },
   {
-    icon: "🛍️",
+    icon: <ShoppingBag size={28} />,
     title: "Official Merchandise",
     description: "Tournament shop with official Dubai Tennis merchandise, player apparel, and exclusive souvenirs."
   },
   {
-    icon: "📶",
+    icon: <Wifi size={28} />,
     title: "Free WiFi",
     description: "Complimentary high-speed WiFi available throughout the venue for all ticket holders."
   },
   {
-    icon: "🏧",
+    icon: <CreditCard size={28} />,
     title: "ATM & Currency",
     description: "ATM machines available on-site. Most vendors accept credit cards and Apple Pay."
   },
   {
-    icon: "🩺",
+    icon: <HeartPulse size={28} />,
     title: "First Aid",
     description: "Medical stations staffed with trained personnel. Located near main entrances and VIP areas."
   }
@@ -42,25 +43,25 @@ const facilities = [
 const transportOptions = [
   {
     mode: "Metro",
-    icon: "🚇",
+    icon: <TrainFront size={28} />,
     details: "Take the Green Line to GGICO station. 5-minute walk to venue. Trains run every 5-10 minutes.",
     tip: "Most convenient option during peak hours"
   },
   {
     mode: "Taxi / Ride-Share",
-    icon: "🚕",
+    icon: <Car size={28} />,
     details: "Uber, Careem, and taxis available. Drop-off point at Gate 1. Dedicated pickup area after matches.",
     tip: "Book in advance for finals matches"
   },
   {
     mode: "Car / Parking",
-    icon: "🚗",
+    icon: <SquareParking size={28} />,
     details: "On-site parking available (limited). Additional parking at nearby Dubai Festival City Mall with shuttle.",
     tip: "Arrive 90 minutes early for parking"
   },
   {
     mode: "Hotel Shuttle",
-    icon: "🚌",
+    icon: <Bus size={28} />,
     details: "Many nearby hotels offer complimentary shuttle service to the venue during tournament dates.",
     tip: "Check with your hotel concierge"
   }
@@ -198,7 +199,7 @@ export default function VenueClient() {
           <div className="bg-white rounded-2xl p-6 mb-8">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-[var(--color-primary)]/10 rounded-xl flex items-center justify-center shrink-0">
-                <span className="text-2xl">🏟️</span>
+                <Landmark size={24} className="text-[var(--color-primary)]" />
               </div>
               <div>
                 <h3 className="font-bold text-[#1d1d1f] mb-1">Full Address</h3>
@@ -221,11 +222,11 @@ export default function VenueClient() {
             {transportOptions.map((option, index) => (
               <div key={index} className="bg-white rounded-2xl p-6">
                 <div className="flex items-start gap-4">
-                  <div className="text-3xl">{option.icon}</div>
+                  <div className="text-[var(--color-primary)]">{option.icon}</div>
                   <div>
                     <h4 className="font-bold text-[#1d1d1f] mb-2">{option.mode}</h4>
                     <p className="text-[#6e6e73] text-sm mb-2">{option.details}</p>
-                    <p className="text-sm text-[var(--color-primary)] font-medium">💡 {option.tip}</p>
+                    <p className="text-sm text-[var(--color-primary)] font-medium flex items-center gap-1"><Lightbulb size={14} /> {option.tip}</p>
                   </div>
                 </div>
               </div>
@@ -244,7 +245,7 @@ export default function VenueClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {facilities.map((facility, index) => (
               <div key={index} className="bg-[#f5f5f7] rounded-2xl p-6">
-                <div className="text-3xl mb-4">{facility.icon}</div>
+                <div className="text-[var(--color-primary)] mb-4">{facility.icon}</div>
                 <h3 className="font-bold text-[#1d1d1f] mb-2">{facility.title}</h3>
                 <p className="text-sm text-[#6e6e73]">{facility.description}</p>
               </div>
@@ -259,7 +260,7 @@ export default function VenueClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Weather */}
             <div className="bg-white rounded-3xl p-8">
-              <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">☀️ February Weather</h3>
+              <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6 flex items-center gap-2"><Sun size={24} className="text-[var(--color-primary)]" /> February Weather</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b border-[#f5f5f7]">
                   <span className="text-[#6e6e73]">Average High</span>
@@ -282,7 +283,7 @@ export default function VenueClient() {
 
             {/* What to Bring */}
             <div className="bg-white rounded-3xl p-8">
-              <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">🎒 What to Bring</h3>
+              <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6 flex items-center gap-2"><Backpack size={24} className="text-[var(--color-primary)]" /> What to Bring</h3>
               <ul className="space-y-3">
                 {['Sunscreen and sunglasses', 'Hat or cap for day sessions', 'Light jacket for evening matches', 'Comfortable walking shoes', 'Phone charger / power bank', 'Your printed or digital ticket'].map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-[#1d1d1f]">

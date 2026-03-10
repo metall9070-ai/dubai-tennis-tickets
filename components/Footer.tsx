@@ -1,5 +1,6 @@
 import React from 'react';
 import { getSiteConfig } from '@/lib/site-config';
+import { getFooterConfig } from '@/lib/nav-config';
 
 interface FooterProps {
   onHome?: () => void;
@@ -31,21 +32,32 @@ const Footer: React.FC<FooterProps> = ({
   onVenue
 }) => {
   const config = getSiteConfig();
+  const footerConfig = getFooterConfig();
   const { supportEmail, footer } = config;
 
-  const ticketLinks = [
-    { name: 'All Tickets', href: '/', handler: onHome },
-    { name: 'ATP 500 Tickets', href: '/tickets/atp', handler: onATPTickets },
-    { name: 'WTA 1000 Tickets', href: '/tickets/wta', handler: onWTATickets },
-    { name: 'Seating Guide', href: '/seating-guide', handler: onSeatingGuide },
-  ];
+  // Map handlers to href for dynamic linking
+  const handlerMap: Record<string, (() => void) | undefined> = {
+    '/': onHome,
+    '/tournament': onTournament,
+    '/tickets/atp': onATPTickets,
+    '/tickets/wta': onWTATickets,
+    '/seating-guide': onSeatingGuide,
+    '/venue': onVenue,
+    '/faq': onFAQ,
+    '/about': onAboutUs,
+    '/about-tournament': onTournament,
+    '/schedule': undefined, // no handler needed, let default navigation work
+  };
 
-  const infoLinks = [
-    { name: 'Tournament Info', href: '/tournament', handler: onTournament },
-    { name: 'Venue & Directions', href: '/venue', handler: onVenue },
-    { name: 'FAQ', href: '/faq', handler: onFAQ },
-    { name: 'About Us', href: '/about', handler: onAboutUs },
-  ];
+  const ticketLinks = footerConfig.ticketLinks.map(link => ({
+    ...link,
+    handler: handlerMap[link.href],
+  }));
+
+  const infoLinks = footerConfig.infoLinks.map(link => ({
+    ...link,
+    handler: handlerMap[link.href],
+  }));
 
   const legalLinks = [
     { name: 'Contact Us', href: '/contact', handler: onContacts },
@@ -76,16 +88,16 @@ const Footer: React.FC<FooterProps> = ({
               {footer?.description || config.defaultDescription}
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
-              <p className="text-[11px] sm:text-[12px] text-[#86868b]">
+              <p className="text-[11px] sm:text-[12px] text-[#6e6e73]">
                 <span className="font-medium text-[#1d1d1f]">Email:</span> {supportEmail}
               </p>
-              <p className="text-[11px] sm:text-[12px] text-[#86868b]">
+              <p className="text-[11px] sm:text-[12px] text-[#6e6e73]">
                 <span className="font-medium text-[#1d1d1f]">Hours:</span> 24/7 Customer Support
               </p>
-              <p className="text-[11px] sm:text-[12px] text-[#86868b]">
+              <p className="text-[11px] sm:text-[12px] text-[#6e6e73]">
                 <span className="font-medium text-[#1d1d1f]">Company:</span> WORLD TICKETS 365 INC
               </p>
-              <p className="text-[11px] sm:text-[12px] text-[#86868b]">
+              <p className="text-[11px] sm:text-[12px] text-[#6e6e73]">
                 <span className="font-medium text-[#1d1d1f]">Address:</span> 7901 4th St N STE 300, St. Petersburg, FL 33702, USA
               </p>
             </div>
@@ -93,7 +105,7 @@ const Footer: React.FC<FooterProps> = ({
 
           {/* Column 2: Tickets */}
           <div>
-            <h4 className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Tickets</h4>
+            <p className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Tickets</p>
             <ul className="flex flex-col space-y-2 sm:space-y-2.5">
               {ticketLinks.map((link) => (
                 <li key={link.name}>
@@ -111,7 +123,7 @@ const Footer: React.FC<FooterProps> = ({
 
           {/* Column 3: Information */}
           <div>
-            <h4 className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Information</h4>
+            <p className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Information</p>
             <ul className="flex flex-col space-y-2 sm:space-y-2.5">
               {infoLinks.map((link) => (
                 <li key={link.name}>
@@ -129,7 +141,7 @@ const Footer: React.FC<FooterProps> = ({
 
           {/* Column 4: Legal */}
           <div className="col-span-2 sm:col-span-1">
-            <h4 className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Support</h4>
+            <p className="text-[11px] sm:text-[12px] font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 sm:mb-4">Support</p>
             <ul className="flex flex-col space-y-2 sm:space-y-2.5">
               {legalLinks.map((link) => (
                 <li key={link.name}>
@@ -148,9 +160,9 @@ const Footer: React.FC<FooterProps> = ({
 
         {/* Payment Methods */}
         <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-black/5">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-4">
-              <span className="text-[10px] sm:text-[11px] text-[#86868b] uppercase tracking-wider">We Accept:</span>
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+              <span className="text-[10px] sm:text-[11px] text-[#6e6e73] uppercase tracking-wider">We Accept:</span>
               <div className="flex items-center gap-2 sm:gap-3">
                 {/* Visa */}
                 <div className="bg-white px-2 sm:px-2.5 py-1.5 sm:py-2 rounded border border-black/10">
@@ -195,21 +207,21 @@ const Footer: React.FC<FooterProps> = ({
               <svg className="w-4 h-4 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <span className="text-[10px] sm:text-[11px] text-[#86868b]">SSL Secured Checkout</span>
+              <span className="text-[10px] sm:text-[11px] text-[#6e6e73]">SSL Secured Checkout</span>
             </div>
           </div>
         </div>
 
         {/* Disclaimer */}
         <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-black/5">
-          <p className="text-[10px] sm:text-[11px] text-[#86868b] leading-relaxed text-center mb-3 sm:mb-4">
+          <p className="text-[10px] sm:text-[11px] text-[#6e6e73] leading-relaxed text-center mb-3 sm:mb-4">
             {footer?.disclaimer || "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only."}
           </p>
         </div>
 
         {/* Copyright */}
         <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-black/5">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 text-[10px] sm:text-[11px] text-[#86868b]">
+          <div className="flex flex-col items-center gap-1 text-[10px] sm:text-[11px] text-[#6e6e73] text-center">
             <p>© 2026 WORLD TICKETS 365 INC. All rights reserved.</p>
             <p>7901 4th St N STE 300, St. Petersburg, FL 33702, USA</p>
           </div>

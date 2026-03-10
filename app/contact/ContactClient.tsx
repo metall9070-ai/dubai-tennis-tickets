@@ -48,11 +48,11 @@ export default function ContactClient() {
                   Monday to Sunday
                 </p>
                 <p className="text-xl md:text-[24px] font-bold text-[var(--color-primary)]">
-                  10:00 AM – 8:00 PM
+                  24/7
                 </p>
               </div>
               <p className="text-[13px] md:text-[15px] text-[#6e6e73] font-medium pl-4 border-l-2 border-[var(--color-primary)]/20">
-                We operate seven days a week to ensure you never miss a match.
+                Our concierge team is available around the clock to assist you.
               </p>
             </section>
 

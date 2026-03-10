@@ -192,8 +192,8 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
           </nav>
 
           {/* Support links */}
-          <div className="px-6 mt-6 pt-5 border-t border-slate-200">
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Support</p>
+          <div className="px-6 mt-6 pt-5 border-t border-black/5">
+            <p className="text-[11px] font-bold text-[#6e6e73] uppercase tracking-wider mb-2">Support</p>
             <div className="flex flex-col">
               {[
                 { label: 'Payment & Delivery', href: '/payment-delivery' },
@@ -205,7 +205,7 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
                   key={item.label}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-[15px] font-medium text-slate-500 py-2.5 hover:text-[var(--color-primary)] transition-colors"
+                  className="text-[15px] font-medium text-[#1d1d1f] py-2.5 hover:text-[var(--color-primary)] transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -214,15 +214,15 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
           </div>
 
           {/* Contact info */}
-          <div className="mt-auto px-6 pb-8 pt-5 border-t border-slate-200 bg-slate-50">
+          <div className="mt-auto px-6 pb-8 pt-5 border-t border-black/5 bg-[#f5f5f7]">
             <div className="flex flex-col gap-2.5">
-              <a href={`mailto:${siteConfig.supportEmail}`} className="flex items-center gap-2.5 text-[14px] font-medium text-slate-600">
-                <svg className="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href={`mailto:${siteConfig.supportEmail}`} className="flex items-center gap-2.5 text-[14px] font-medium text-[#1d1d1f]">
+                <svg className="w-4 h-4 text-[#6e6e73] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 {siteConfig.supportEmail}
               </a>
-              <p className="text-[12px] text-slate-400 font-medium">24/7 Customer Support</p>
+              <p className="text-[12px] text-[#6e6e73] font-medium">24/7 Customer Support</p>
             </div>
           </div>
         </div>

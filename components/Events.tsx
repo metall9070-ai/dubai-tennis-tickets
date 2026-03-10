@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchEvents } from '@/lib/api';
 import { getSiteCode } from '@/lib/site-config';
 import { FootballEventCard } from './FootballEventCard';
+import { Moon, Sun, Sunrise } from 'lucide-react';
 
 // Re-export Event type from lib/types.ts for backward compatibility
 // This breaks the circular dependency: api.ts <-> Events.tsx
@@ -266,17 +267,17 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
   };
 
   // Determine session type based on time
-  const getSessionType = (time: string): { label: string; icon: string; bgColor: string; textColor: string } => {
+  const getSessionType = (time: string): { label: string; icon: React.ReactNode; bgColor: string; textColor: string } => {
     const hour = parseInt(time.split(':')[0]);
     const isPM = time.includes('PM');
     const hour24 = isPM && hour !== 12 ? hour + 12 : hour;
 
     if (hour24 >= 16) {
-      return { label: 'Evening', icon: '🌙', bgColor: 'bg-[#1d1d1f]', textColor: 'text-white' };
+      return { label: 'Evening', icon: <Moon size={10} />, bgColor: 'bg-[#1d1d1f]', textColor: 'text-white' };
     } else if (hour24 >= 13) {
-      return { label: 'Afternoon', icon: '☀️', bgColor: 'bg-[#f59e0b]/10', textColor: 'text-[#d97706]' };
+      return { label: 'Afternoon', icon: <Sun size={10} />, bgColor: 'bg-[#f59e0b]/10', textColor: 'text-[#d97706]' };
     } else {
-      return { label: 'Morning', icon: '🌅', bgColor: 'bg-[#3b82f6]/10', textColor: 'text-[#2563eb]' };
+      return { label: 'Morning', icon: <Sunrise size={10} />, bgColor: 'bg-[#3b82f6]/10', textColor: 'text-[#2563eb]' };
     }
   };
 
@@ -302,7 +303,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
              <span className="w-1 h-1 rounded-full bg-[#d2d2d7]"></span>
              <span className="text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#6e6e73]">{event.time}</span>
              <span className={`hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-semibold ${session.bgColor} ${session.textColor}`}>
-               <span className="text-[10px]">{session.icon}</span>
+               {session.icon}
                {session.label}
              </span>
           </div>
