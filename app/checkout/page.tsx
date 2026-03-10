@@ -10,7 +10,7 @@ const config = getSiteConfig();
 export const metadata = buildMetadata({
   path: '/checkout',
   title: 'Checkout',
-  description: 'Complete your ticket purchase. Secure checkout with instant confirmation.',
+  description: `Complete your ${config.brand} ticket purchase. Secure checkout powered by Stripe with instant e-ticket confirmation and 24/7 support.`,
   noindex: true,
 });
 

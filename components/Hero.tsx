@@ -30,7 +30,7 @@ export default function Hero({ isVisible, onAction }: HeroProps) {
           <>
             <Image
               src={bgImage}
-              alt=""
+              alt={`${brand} — ${title}`}
               fill
               priority
               quality={85}
