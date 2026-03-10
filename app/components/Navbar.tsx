@@ -196,9 +196,9 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
             <p className="text-[11px] font-bold text-[#6e6e73] uppercase tracking-wider mb-2">Support</p>
             <div className="flex flex-col">
               {[
-                { label: 'Payment & Delivery', href: '/payment-delivery' },
-                { label: 'Terms of Service', href: '/terms' },
-                { label: 'Privacy Policy', href: '/privacy' },
+                { label: 'Payment & Delivery', href: '/payment-and-delivery' },
+                { label: 'Terms of Service', href: '/terms-of-service' },
+                { label: 'Privacy Policy', href: '/privacy-policy' },
                 { label: 'Contact Us', href: '/contact' },
               ].map((item) => (
                 <Link

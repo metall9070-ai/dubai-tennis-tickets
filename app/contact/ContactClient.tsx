@@ -23,11 +23,11 @@ export default function ContactClient() {
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
       <Navbar />
 
-      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-24' : 'pt-16'} pb-12 md:pb-20`}>
+      <main className={`flex-1 ${hasTopDisclaimer ? 'pt-[80px] sm:pt-[88px] md:pt-[96px]' : 'pt-24 sm:pt-28 md:pt-32'} pb-12 md:pb-20`}>
         <div className="max-w-[980px] mx-auto px-4 sm:px-6">
 
           {/* Breadcrumbs */}
-          <div className="mb-8 md:mb-12">
+          <div className="pt-4 mb-2">
             <Breadcrumbs
               items={breadcrumbItems}
               currentPage="Contact Us"
@@ -35,7 +35,7 @@ export default function ContactClient() {
           </div>
 
           {/* Page Heading */}
-          <h1 className="text-[32px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-8 md:mb-12 leading-tight">
+          <h1 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold tracking-tight text-[#1d1d1f] mb-8 sm:mb-10 md:mb-12 leading-tight">
             Get in <span className="text-[var(--color-primary)]">Touch</span>
           </h1>
 
