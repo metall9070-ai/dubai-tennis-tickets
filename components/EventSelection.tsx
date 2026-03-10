@@ -310,8 +310,8 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         {/* Left: Venue Map - статичная SVG схема */}
         <div className="lg:col-span-2 flex flex-col">
           <div className="w-full mb-4 md:mb-6 flex items-center justify-between">
-            <h3 className="text-lg md:text-xl font-semibold tracking-tight">Select Seating Area</h3>
-            <span className="text-[10px] md:text-[11px] font-medium text-[#6e6e73] bg-[#f5f5f7] px-2.5 md:px-3 py-1 rounded-full">Live availability</span>
+            <h3 className="text-[17px] md:text-[20px] font-bold tracking-tight text-[#1d1d1f]">Select Seating Area</h3>
+            <span className="text-[12px] md:text-[13px] font-semibold text-[#1d1d1f] bg-[#f5f5f7] px-3.5 py-1.5 rounded-full border border-black/5">Live availability</span>
           </div>
 
           <div className={`${isFinalissima && (event?.venue?.includes('Lusail') || event?.venue?.includes('Jassim Bin Ham') || event?.venue?.includes('Ahmad Bin Ali')) ? 'bg-white' : 'bg-[#f8f9fb]'} rounded-[16px] md:rounded-[24px] p-3 md:p-6 border border-black/5`}>
@@ -423,19 +423,19 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       <div className="min-w-0">
                         <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#6e6e73]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
                         {categoryIsSoldOut ? (
-                          <span className="inline-flex items-center gap-1 text-[10px] md:text-[11px] font-bold text-[#6e6e73]">
+                          <span className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-semibold text-[#6e6e73]">
                             <span className="w-1.5 h-1.5 bg-[#6e6e73] rounded-full"></span>
                             Sold Out
                           </span>
                         ) : cat.seatsLeft < (isFinalissima ? 50 : 30) ? (
                           <span
-                            className="inline-flex items-center gap-1 text-[10px] md:text-[11px] font-semibold animate-pulse"
+                            className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-semibold"
                             style={{
                               color: isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : '#ef4444'
                             }}
                           >
                             <span
-                              className="w-1.5 h-1.5 rounded-full"
+                              className="w-2 h-2 rounded-full animate-pulse"
                               style={{
                                 backgroundColor: isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : '#ef4444'
                               }}
@@ -466,14 +466,14 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       )}
                     </div>
                   </div>
-                  {/* Urgency indicator bar - hidden for sold out */}
+                  {/* Availability bar — proportional (seatsLeft out of 100 capacity) */}
                   {!categoryIsSoldOut && (
-                    <div className="flex items-center gap-2.5 md:gap-3">
+                    <div className="flex items-center gap-3">
                       <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
                         <div
-                          className="h-full rounded-full transition-all"
+                          className="h-full rounded-full transition-all duration-500"
                           style={{
-                            width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%`,
+                            width: `${Math.max(3, 100 - cat.seatsLeft)}%`,
                             backgroundColor: isFinalissima
                               ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color
                               : cat.seatsLeft < 20 ? '#ef4444' : cat.seatsLeft < 50 ? '#fb923c' : 'var(--color-primary)'
@@ -481,7 +481,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         ></div>
                       </div>
                       <span
-                        className="text-[11px] md:text-[12px] font-semibold whitespace-nowrap"
+                        className="text-[12px] md:text-[13px] font-semibold whitespace-nowrap tabular-nums"
                         style={{
                           color: isFinalissima
                             ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color
