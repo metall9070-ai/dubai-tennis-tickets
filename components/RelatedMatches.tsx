@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { FootballEventCard } from './FootballEventCard';
 import type { Event } from '@/lib/types';
 
 interface RelatedMatchesProps {
@@ -11,9 +12,9 @@ interface RelatedMatchesProps {
 
 /**
  * RelatedMatches component
- * Shows 3-5 events from the same tournament
+ * Shows up to 3 events from the same site
  * Excludes current event
- * Improves internal linking and weight distribution
+ * Uses the same FootballEventCard as the homepage
  */
 const RelatedMatches: React.FC<RelatedMatchesProps> = ({ currentSlug, currentEvent }) => {
   const router = useRouter();
@@ -23,8 +24,17 @@ const RelatedMatches: React.FC<RelatedMatchesProps> = ({ currentSlug, currentEve
   useEffect(() => {
     async function loadRelatedEvents() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-        const response = await fetch(`${apiUrl}/events/`);
+        const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+        if (!apiBaseUrl) {
+          setIsLoading(false);
+          return;
+        }
+        const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || '';
+        let eventsUrl = `${apiBaseUrl}/api/events/`;
+        if (siteCode) {
+          eventsUrl += `?site_code=${encodeURIComponent(siteCode)}`;
+        }
+        const response = await fetch(eventsUrl);
 
         if (!response.ok) {
           setIsLoading(false);
@@ -32,25 +42,22 @@ const RelatedMatches: React.FC<RelatedMatchesProps> = ({ currentSlug, currentEve
         }
 
         const data = await response.json();
-        const events = data.events || [];
+        // API returns { results: [...] } (DRF pagination format)
+        const events = (data.results || data.events || []).map((e: any) => ({
+          ...e,
+          minPrice: Math.round(Number(e.minPrice || e.min_price || 0)) || undefined,
+          isSoldOut: e.isSoldOut ?? e.is_sold_out,
+        }));
 
-        // Filter: same tournament type, exclude current event, limit to 5
+        // Filter: exclude current event, limit to 3
         const related = events
           .filter((event: Event) => {
-            // Exclude current event
             if (event.slug === currentSlug || String(event.id) === currentSlug) {
               return false;
             }
-
-            // If current event has type, match by type
-            if (currentEvent?.type) {
-              return event.type === currentEvent.type;
-            }
-
-            // Otherwise show any events
             return true;
           })
-          .slice(0, 5);
+          .slice(0, 3);
 
         setRelatedEvents(related);
         setIsLoading(false);
@@ -77,48 +84,13 @@ const RelatedMatches: React.FC<RelatedMatchesProps> = ({ currentSlug, currentEve
         Other Matches
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="flex flex-col gap-4 md:gap-5">
         {relatedEvents.map((event) => (
-          <button
+          <FootballEventCard
             key={event.id}
+            event={event}
             onClick={() => router.push(`/tickets/event/${event.slug || event.id}`)}
-            className="bg-[#f5f5f7] rounded-2xl p-5 md:p-6 text-left hover:bg-[#e8e8ed] transition-all group border border-transparent hover:border-[var(--color-primary)] active:scale-[0.98]"
-          >
-            <div className="flex items-start justify-between mb-3">
-              <h3 className="text-lg md:text-xl font-semibold text-[#1d1d1f] group-hover:text-[var(--color-primary)] transition-colors line-clamp-2">
-                {event.title}
-              </h3>
-            </div>
-
-            <div className="space-y-2">
-              {event.venue && (
-                <p className="text-[13px] md:text-[14px] text-[#6e6e73] flex items-center">
-                  <svg className="w-4 h-4 mr-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span className="truncate">{event.venue}</span>
-                </p>
-              )}
-
-              {event.date && event.month && (
-                <p className="text-[13px] md:text-[14px] text-[#6e6e73] flex items-center">
-                  <svg className="w-4 h-4 mr-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>
-                    {event.day && `${event.day}, `}{event.date} {event.month}
-                  </span>
-                </p>
-              )}
-
-              {event.minPrice && (
-                <p className="text-[15px] md:text-[16px] font-semibold text-[var(--color-primary)] mt-3">
-                  From ${event.minPrice}
-                </p>
-              )}
-            </div>
-          </button>
+          />
         ))}
       </div>
     </div>

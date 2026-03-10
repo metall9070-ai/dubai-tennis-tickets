@@ -13,6 +13,7 @@ import RelatedMatches from './RelatedMatches';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
 import { getSiteConfig } from '@/lib/site-config';
+import EventHero from './EventHero';
 import type { EventSEO } from '@/types/seo';
 
 interface EventSelectionProps {
@@ -294,100 +295,14 @@ const EventSelection: React.FC<EventSelectionProps> = ({
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
       <Navbar isVisible />
 
-      {/* Main Header Section */}
-      <div className={`${hasTopDisclaimer ? 'pt-20 md:pt-[88px]' : 'pt-20 md:pt-24'} pb-6 md:pb-8 bg-white border-b border-[#f5f5f7]`}>
-        <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-
-          {/* Breadcrumbs */}
-          <nav className="flex items-center space-x-1.5 md:space-x-2 text-[11px] md:text-[13px] font-medium text-[#6e6e73] mb-5 md:mb-8 overflow-x-auto">
-            <button onClick={onHome} className="hover:text-[#1d1d1f] transition-colors font-semibold whitespace-nowrap">Home</button>
-            <span className="text-[#d2d2d7]">/</span>
-            <button onClick={onBack} className="hover:text-[#1d1d1f] transition-colors font-semibold whitespace-nowrap">Tickets</button>
-            <span className="text-[#d2d2d7]">/</span>
-            <span className="text-[#1d1d1f] font-semibold truncate max-w-[140px] md:max-w-none">{event?.title || 'Tennis Event'}</span>
-          </nav>
-
-          {/* Event Description */}
-          <div className="bg-[#f5f5f7] p-5 md:p-8 rounded-[20px] md:rounded-[32px] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border border-black/5">
-            <div className="w-full md:w-auto">
-              {/* Title with flags for Finalissima */}
-              {isFinalissima && teamInfo ? (
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={`https://flagcdn.com/w80/${teamInfo.team1Code}.png`}
-                        alt={teamInfo.team1}
-                        width={80}
-                        height={60}
-                        className="w-6 h-4 md:w-8 md:h-6 object-cover rounded shadow-sm border border-slate-200"
-                      />
-                      <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
-                        {teamInfo.team1}
-                      </h2>
-                    </div>
-                    <span className="text-sm md:text-base font-bold text-slate-400">VS</span>
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
-                        {teamInfo.team2}
-                      </h2>
-                      <img
-                        src={`https://flagcdn.com/w80/${teamInfo.team2Code}.png`}
-                        alt={teamInfo.team2}
-                        width={80}
-                        height={60}
-                        className="w-6 h-4 md:w-8 md:h-6 object-cover rounded shadow-sm border border-slate-200"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <h2 className="text-xl md:text-3xl font-semibold mb-1 tracking-tight text-[#1d1d1f]">
-                  {event?.title || "Dubai Duty Free Tennis Championships"}
-                </h2>
-              )}
-
-              {/* Date, Time, and Venue */}
-              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-[#1d1d1f] text-[13px] md:text-[15px] font-medium mt-3">
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>{event?.date} {event?.month}, {event?.day}</span>
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{event?.time}</span>
-                </div>
-                {displayVenue && (
-                  <div className="flex items-center">
-                    <svg className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span className="font-semibold">{displayVenue}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="flex flex-col items-start md:items-end gap-2 self-start md:self-auto">
-              {event?.isSoldOut && (
-                <span className="inline-flex items-center px-4 py-1.5 bg-[#6e6e73] text-white text-[11px] md:text-[12px] font-semibold uppercase tracking-wider rounded-full">
-                  Sold out
-                </span>
-              )}
-              <button
-                onClick={onBack}
-                className="text-[13px] md:text-[14px] font-semibold text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 transition-all px-6 md:px-8 py-2 md:py-2.5 bg-white rounded-full border border-[#d2d2d7] shadow-sm whitespace-nowrap active:scale-95"
-              >
-                Change Event
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Event Hero Section */}
+      <EventHero
+        event={event}
+        teamInfo={teamInfo}
+        displayVenue={displayVenue}
+        onHome={onHome}
+        onBack={onBack}
+      />
 
       {/* Main Selection Grid */}
       <div className="flex-1 max-w-[1200px] mx-auto px-4 md:px-6 py-6 md:py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12 border-b border-[#f5f5f7]">
@@ -455,7 +370,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         </div>
 
         {/* Right: Sidebar - категории с bidirectional hover */}
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full lg:sticky lg:top-24 lg:self-start">
           <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 tracking-tight text-[#1d1d1f]">Price Categories</h3>
           <div className="flex flex-col gap-3 md:gap-4 mb-6 md:mb-8">
             {(isFinalissima
@@ -476,17 +391,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
               return (
                 <div
                   key={cat.id}
-                  onTouchStart={(e) => {
-                    // On mobile, open modal immediately without hover state
-                    if (!categoryIsSoldOut) {
-                      e.preventDefault();
-                      openModal(cat);
-                    }
-                  }}
                   onMouseEnter={() => !categoryIsSoldOut && setHoveredCategory(catSlug)}
                   onMouseLeave={() => setHoveredCategory(null)}
                   onClick={() => !categoryIsSoldOut && openModal(cat)}
-                  className={`group bg-white border rounded-[18px] md:rounded-[24px] p-4 md:p-6 transition-all duration-300 transform
+                  className={`group relative bg-white border rounded-[18px] md:rounded-[24px] p-4 md:p-6 pl-5 md:pl-7 transition-all duration-300 transform overflow-hidden
                     ${categoryIsSoldOut
                       ? 'cursor-not-allowed opacity-60 border-[#d2d2d7] grayscale'
                       : isHovered
@@ -502,36 +410,32 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       : undefined,
                   }}
                 >
+                  {/* Left accent bar */}
+                  <div
+                    className="absolute left-0 top-0 bottom-0 w-1 rounded-l-[18px] md:rounded-l-[24px] transition-all duration-300"
+                    style={{
+                      backgroundColor: categoryIsSoldOut ? '#d2d2d7' : (isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : cat.color),
+                      opacity: isHovered ? 1 : 0.6,
+                    }}
+                  />
                   <div className="flex items-center justify-between mb-2.5 md:mb-3">
-                    <div className="flex items-center space-x-3 md:space-x-4">
-                      {/* Show icon only for non-Finalissima events */}
-                      {!isFinalissima && (
-                        <div
-                          className={`w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center font-semibold text-white shadow-md text-base md:text-lg transition-all duration-300`}
-                          style={{
-                            backgroundColor: categoryIsSoldOut ? '#6e6e73' : cat.color,
-                            filter: isHovered && !categoryIsSoldOut ? 'brightness(1.15) saturate(1.2)' : 'none',
-                          }}
-                        >
-                          {cat.id === 'prime-a' ? 'A' : cat.id === 'prime-b' ? 'B' : 'G'}
-                        </div>
-                      )}
-                      <div>
+                    <div className="flex items-center space-x-3 md:space-x-4 min-w-0">
+                      <div className="min-w-0">
                         <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#6e6e73]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
                         {categoryIsSoldOut ? (
-                          <span className={`inline-flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-[#6e6e73] ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}>
+                          <span className="inline-flex items-center gap-1 text-[10px] md:text-[11px] font-bold text-[#6e6e73]">
                             <span className="w-1.5 h-1.5 bg-[#6e6e73] rounded-full"></span>
                             Sold Out
                           </span>
                         ) : cat.seatsLeft < (isFinalissima ? 50 : 30) ? (
                           <span
-                            className={`inline-flex items-center gap-1 ${isFinalissima ? 'text-[11px] md:text-[12px]' : 'text-[9px] md:text-[10px]'} font-semibold animate-pulse ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}
+                            className="inline-flex items-center gap-1 text-[10px] md:text-[11px] font-semibold animate-pulse"
                             style={{
                               color: isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : '#ef4444'
                             }}
                           >
                             <span
-                              className={isFinalissima ? 'w-2 h-2 rounded-full' : 'w-1.5 h-1.5 rounded-full'}
+                              className="w-1.5 h-1.5 rounded-full"
                               style={{
                                 backgroundColor: isFinalissima ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color : '#ef4444'
                               }}
@@ -541,11 +445,24 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         ) : null}
                       </div>
                     </div>
-                    <div className="text-right">
-                      {categoryIsSoldOut ? (
-                        <p className="text-[16px] md:text-[18px] font-bold text-[#6e6e73] uppercase">Sold Out</p>
-                      ) : (
-                        <p className="text-[18px] md:text-[20px] font-semibold text-[#1d1d1f]">${cat.price}</p>
+                    <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+                      <div className="text-right">
+                        {categoryIsSoldOut ? (
+                          <p className="text-[14px] md:text-[16px] font-bold text-[#6e6e73]">Sold Out</p>
+                        ) : (
+                          <p className="text-[20px] md:text-[24px] font-bold text-[#1d1d1f] tabular-nums">${cat.price.toLocaleString()}</p>
+                        )}
+                      </div>
+                      {/* Chevron icon */}
+                      {!categoryIsSoldOut && (
+                        <svg
+                          className="w-4 h-4 md:w-5 md:h-5 text-[#d2d2d7] group-hover:text-[var(--color-primary)] transition-colors flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                       )}
                     </div>
                   </div>
@@ -554,7 +471,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center gap-2.5 md:gap-3">
                       <div className="flex-1 h-1.5 bg-[#f5f5f7] rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all`}
+                          className="h-full rounded-full transition-all"
                           style={{
                             width: `${Math.max(5, 100 - (cat.seatsLeft / 2))}%`,
                             backgroundColor: isFinalissima
@@ -564,7 +481,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         ></div>
                       </div>
                       <span
-                        className={`${isFinalissima ? 'text-[12px] md:text-[13px]' : 'text-[10px] md:text-[11px]'} font-semibold whitespace-nowrap ${!isFinalissima ? 'uppercase tracking-wide' : ''}`}
+                        className="text-[11px] md:text-[12px] font-semibold whitespace-nowrap"
                         style={{
                           color: isFinalissima
                             ? FINALISSIMA_CATEGORY_COLORS[catSlug] || cat.color
@@ -615,6 +532,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         </div>
       </div>
 
+      {/* Why Buy - right after categories for conversion */}
+      <WhyBuy />
+
       {/* WTA Session Info - only shown for WTA events */}
       {event?.type === 'WTA' && <WTASessionInfo eventTitle={event?.title || ''} />}
 
@@ -627,7 +547,6 @@ const EventSelection: React.FC<EventSelectionProps> = ({
       {/* Related Matches - Internal Linking */}
       <RelatedMatches currentSlug={event?.slug || ''} currentEvent={event} />
 
-      <WhyBuy />
       <Footer />
 
       {/* Modal Window */}

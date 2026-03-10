@@ -196,10 +196,10 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
       </div>
 
       {/* --- MOBILE LAYOUT (up to lg) --- */}
-      <div className="lg:hidden p-8 flex flex-col gap-8">
+      <div className="lg:hidden p-5 flex flex-col gap-4">
         {/* Finalissima Title - Above Everything */}
         {isFinalissimaEvent && (
-          <div className="text-center -mb-4">
+          <div className="text-center">
             <span className="text-[11px] font-bold text-[#00627B] uppercase tracking-widest">
               Finalissima 2026
             </span>
@@ -207,81 +207,79 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
         )}
 
         {/* 1. Teams Section */}
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center justify-center gap-4 w-full">
-            <div className="flex flex-col items-center gap-2 flex-1">
-              <div className="w-16 h-12 rounded-xl overflow-hidden shadow-sm border border-slate-100">
-                <img
-                  src={`https://flagcdn.com/w160/${team1Code}.png`}
-                  alt={team1}
-                  width={160}
-                  height={120}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="text-lg font-display font-bold text-slate-900 text-center">{team1}</span>
+        <div className="flex items-center justify-center gap-4 w-full">
+          <div className="flex flex-col items-center gap-2 flex-1">
+            <div className="w-14 h-10 rounded-lg overflow-hidden shadow-sm border border-slate-100">
+              <img
+                src={`https://flagcdn.com/w160/${team1Code}.png`}
+                alt={team1}
+                width={160}
+                height={120}
+                className="w-full h-full object-cover"
+              />
             </div>
+            <span className="text-base font-display font-bold text-slate-900 text-center">{team1}</span>
+          </div>
 
-            <div className="flex items-center justify-center px-3 py-1 bg-slate-50 rounded-lg text-[10px] font-black text-slate-300 uppercase tracking-widest border border-slate-100">
-              VS
-            </div>
+          <div className="flex items-center justify-center px-3 py-1 bg-slate-50 rounded-lg text-[10px] font-black text-slate-300 uppercase tracking-widest border border-slate-100">
+            VS
+          </div>
 
-            <div className="flex flex-col items-center gap-2 flex-1">
-              <div className="w-16 h-12 rounded-xl overflow-hidden shadow-sm border border-slate-100">
-                <img
-                  src={`https://flagcdn.com/w160/${team2Code}.png`}
-                  alt={team2}
-                  width={160}
-                  height={120}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="text-lg font-display font-bold text-slate-900 text-center">{team2}</span>
+          <div className="flex flex-col items-center gap-2 flex-1">
+            <div className="w-14 h-10 rounded-lg overflow-hidden shadow-sm border border-slate-100">
+              <img
+                src={`https://flagcdn.com/w160/${team2Code}.png`}
+                alt={team2}
+                width={160}
+                height={120}
+                className="w-full h-full object-cover"
+              />
             </div>
+            <span className="text-base font-display font-bold text-slate-900 text-center">{team2}</span>
           </div>
         </div>
 
-        {/* 2. Date & Time Line */}
-        <div className="flex items-center justify-center gap-3 text-slate-500 text-sm font-semibold">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-[#00627B]" />
-            <span>{dateInfo.weekday}, {dateInfo.day} {dateInfo.month}</span>
+        {/* 2. Date, Time & Venue */}
+        <div className="flex flex-col items-center gap-1.5 text-slate-400 text-[13px] font-medium">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{dateInfo.weekday}, {dateInfo.day} {dateInfo.month}</span>
+            </div>
+            <div className="w-1 h-1 rounded-full bg-slate-300" />
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5" />
+              <span>{event.time || '19:00'}</span>
+            </div>
           </div>
-          <div className="w-1 h-1 rounded-full bg-slate-300" />
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-[#00627B]" />
-            <span>{event.time || '19:00'}</span>
+          <div className="flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5" />
+            <span>{event.venue || 'Lusail Stadium'}</span>
           </div>
         </div>
 
-        {/* 3. Venue Line */}
-        <div className="flex items-center justify-center gap-2 text-slate-400 text-sm font-medium">
-          <MapPin className="w-4 h-4" />
-          <span>{event.venue || 'Lusail Stadium'}</span>
-        </div>
-
-        {/* 4. Bottom Action Section */}
-        <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+        {/* 3. Bottom Action Section — stacked */}
+        <div className="flex flex-col items-center gap-3 pt-4 border-t border-slate-100">
           {!event.isSoldOut && hasValidPrice && (
             <>
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">From</span>
-                <span className="text-3xl font-display font-bold text-slate-900 leading-none">${event.minPrice}</span>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">From</span>
+                <span className="text-2xl font-display font-bold text-slate-900 leading-none">${event.minPrice}</span>
               </div>
               <button
-                className="px-8 py-4 bg-[#00627B] hover:bg-[#004e62] active:scale-95 text-white rounded-2xl font-bold text-sm transition-all duration-300 shadow-xl shadow-[#00627B]/20 flex items-center gap-3 group/btn"
+                className="w-full py-3.5 bg-[#00627B] hover:bg-[#004e62] active:scale-[0.98] text-white rounded-2xl font-bold text-sm transition-all duration-300 shadow-lg shadow-[#00627B]/15 flex items-center justify-center gap-2.5 group/btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleClick();
                 }}
               >
-                <Ticket className="w-5 h-5 group-hover/btn:rotate-12 transition-transform" />
+                <Ticket className="w-4.5 h-4.5 group-hover/btn:rotate-12 transition-transform" />
                 BUY TICKETS
               </button>
             </>
           )}
           {event.isSoldOut && (
-            <span className="px-8 py-4 bg-slate-200 text-slate-500 rounded-2xl font-bold text-sm uppercase w-full text-center">
+            <span className="w-full py-3.5 bg-slate-200 text-slate-500 rounded-2xl font-bold text-sm uppercase text-center">
               Sold Out
             </span>
           )}
