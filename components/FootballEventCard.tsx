@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
 import { Calendar, MapPin, Ticket, Clock } from 'lucide-react';
 import type { Event } from '@/lib/types';
 import { getCountryCode } from '@/lib/country-codes';
@@ -53,6 +52,25 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
 
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const handleClick = () => {
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'view_item', {
@@ -68,16 +86,10 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{
-        y: -4,
-        transition: { duration: 0.2, ease: 'easeOut' }
-      }}
+    <div
+      ref={cardRef}
       onClick={handleClick}
-      className="group relative bg-white rounded-[24px] md:rounded-[32px] border border-black/5 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden w-full cursor-pointer"
+      className={`group relative bg-white rounded-[24px] md:rounded-[32px] border border-black/5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden w-full cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
     >
 
       {/* --- DESKTOP LAYOUT (lg and up) --- */}
@@ -254,6 +266,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };

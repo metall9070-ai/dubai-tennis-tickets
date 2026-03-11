@@ -34,11 +34,11 @@ jobs:
           pip install pip-audit
           pip-audit --strict
 
-      - name: Run tests
+      - name: Run tests with coverage
         env:
           SECRET_KEY: test-secret-key-for-ci
           DEBUG: 'False'
-        run: pytest
+        run: pytest --cov=. --cov-fail-under=70 --cov-report=term-missing
 
   # ── Frontend: Lint + Typecheck + Unit Tests + Build ──
   frontend-test:

@@ -39,8 +39,12 @@
     "node_modules",
     "backend",
     "vite.config.ts",
+    "vitest.config.ts",
+    "vitest.setup.ts",
     "index.tsx",
     "App.tsx",
-    "design-preview/**/*"
+    "design-preview/**/*",
+    "**/__tests__/**",
+    "e2e/**"
   ]
 }

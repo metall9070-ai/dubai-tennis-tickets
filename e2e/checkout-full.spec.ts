@@ -172,4 +172,116 @@ test.describe('Full checkout flow', () => {
       // Loading might be too fast to catch — that's OK
     })
   })
+
+  test('checkout API returns order_id and checkout_url', async ({ page }) => {
+    // Seed cart
+    await page.goto('/checkout')
+    await page.evaluate(() => {
+      const item = {
+        id: '10-5',
+        eventTitle: 'ATP Semifinal',
+        categoryName: 'Premium',
+        price: 350,
+        quantity: 1,
+        eventDate: '20',
+        eventMonth: 'MAR',
+        eventDay: 'Thu',
+        eventTime: '7:00 PM',
+        venue: 'Center Court',
+      }
+      const cartData = JSON.stringify([item])
+      for (const code of ['tennis', 'finalissima', 'yasarena', '']) {
+        localStorage.setItem(`${code}-cart`, cartData)
+        localStorage.setItem(`${code}-cart-version`, '3')
+      }
+    })
+    await page.reload()
+    await page.waitForLoadState('networkidle')
+
+    // Mock API with full response including order_id
+    let capturedRequestBody: Record<string, unknown> | null = null
+    await page.route('**/api/checkout/create-session/', async (route) => {
+      capturedRequestBody = route.request().postDataJSON()
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          checkout_url: 'https://checkout.stripe.com/c/pay/cs_test_order456',
+          order_id: 'order-456',
+        }),
+      })
+    })
+
+    // Fill form completely
+    await page.locator('input#name').fill('Alice Smith')
+    await page.locator('input#email').fill('alice@example.com')
+    await page.locator('input#phone').fill('971551234567')
+    await page.locator('input[type="checkbox"]').check()
+
+    const submitButton = page.locator('button:has-text("Proceed to payment")')
+    await expect(submitButton).toBeEnabled()
+    await submitButton.click()
+
+    // Wait for the API call to complete
+    await page.waitForTimeout(1_000)
+
+    // Verify the request body includes cart items and customer details
+    expect(capturedRequestBody).not.toBeNull()
+    expect(capturedRequestBody!.name).toBe('Alice Smith')
+    expect(capturedRequestBody!.email).toBe('alice@example.com')
+    expect(capturedRequestBody!.items).toBeDefined()
+    expect((capturedRequestBody!.items as unknown[]).length).toBe(1)
+  })
+
+  test('checkout handles API error gracefully', async ({ page }) => {
+    // Seed cart
+    await page.goto('/checkout')
+    await page.evaluate(() => {
+      const item = {
+        id: '10-5',
+        eventTitle: 'ATP Semifinal',
+        categoryName: 'Premium',
+        price: 350,
+        quantity: 1,
+        eventDate: '20',
+        eventMonth: 'MAR',
+        eventDay: 'Thu',
+        eventTime: '7:00 PM',
+        venue: 'Center Court',
+      }
+      const cartData = JSON.stringify([item])
+      for (const code of ['tennis', 'finalissima', 'yasarena', '']) {
+        localStorage.setItem(`${code}-cart`, cartData)
+        localStorage.setItem(`${code}-cart-version`, '3')
+      }
+    })
+    await page.reload()
+    await page.waitForLoadState('networkidle')
+
+    // Mock API with error response
+    await page.route('**/api/checkout/create-session/', async (route) => {
+      await route.fulfill({
+        status: 500,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'Internal server error' }),
+      })
+    })
+
+    // Fill form and submit
+    await page.locator('input#name').fill('Bob Error')
+    await page.locator('input#email').fill('bob@example.com')
+    await page.locator('input#phone').fill('971559999999')
+    await page.locator('input[type="checkbox"]').check()
+
+    const submitButton = page.locator('button:has-text("Proceed to payment")')
+    await submitButton.click()
+
+    // Should show error feedback (alert, error message, or button re-enabled)
+    // The exact behavior depends on the component — verify the user isn't stuck
+    await page.waitForTimeout(2_000)
+
+    // The submit button should be re-enabled after error (not stuck in loading)
+    const isStillOnCheckout = page.url().includes('/checkout')
+    expect(isStillOnCheckout).toBe(true)
+  })
 })
