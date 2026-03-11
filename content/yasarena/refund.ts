@@ -5,6 +5,7 @@ const seo: SEOContent = {
   description:
     "Refund policy for Yas Arena Concierge. Learn about our cancellation and refund terms for ticket orders.",
   h1: "Refund Policy",
+  breadcrumbLabel: "Refund Policy",
   sections: [
     {
       heading: "1. General Rule",
@@ -55,6 +56,7 @@ const seo: SEOContent = {
     },
     {
       heading: "9. Organizer Decisions",
+      variant: "highlighted",
       body: `<p>The company is not responsible for decisions made by the event organizer, including cancellation, postponement, venue change, or changes to the event program.</p>
 <p>Official information about event status is determined solely by the event organizer.</p>`,
     },
