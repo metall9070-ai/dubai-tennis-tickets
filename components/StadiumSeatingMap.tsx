@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { sanitizeSVG } from '@/lib/sanitize';
 
 interface Category {
   id: number;
@@ -82,7 +83,7 @@ const StadiumSeatingMap: React.FC<StadiumSeatingMapProps> = ({
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2142.21 2019.85">',
           `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2142.21 2019.85" width="${SVG_WIDTH}" height="${SVG_HEIGHT}" style="display:block;">`
         );
-        setSvgContent(modifiedSvg);
+        setSvgContent(sanitizeSVG(modifiedSvg));
         setSvgLoaded(true);
       })
       .catch(err => console.error('Failed to load SVG:', err));

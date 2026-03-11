@@ -20,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Get site_code from environment variable (works in client component)
-  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'tennis';
+  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'default';
   const { navigation } = getSiteConfig();
   const navItems = navigation;
   const isFinalissimaLogo = siteCode === 'finalissima';

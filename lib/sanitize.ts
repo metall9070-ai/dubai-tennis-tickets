@@ -18,3 +18,15 @@ export function sanitizeHTML(html: string): string {
     ALLOWED_ATTR: ['href', 'target', 'rel', 'class', 'src', 'alt', 'width', 'height'],
   });
 }
+
+/**
+ * Sanitize SVG string to prevent XSS while preserving SVG structure.
+ * Allows SVG elements, presentation attributes, and data-* attributes
+ * needed for interactive stadium maps.
+ */
+export function sanitizeSVG(svg: string): string {
+  return DOMPurify.sanitize(svg, {
+    USE_PROFILES: { svg: true, svgFilters: true },
+    ADD_ATTR: ['data-category', 'viewBox', 'xmlns', 'style'],
+  });
+}

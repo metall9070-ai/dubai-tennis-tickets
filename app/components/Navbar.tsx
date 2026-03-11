@@ -22,7 +22,7 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
   const brandName = siteConfig.brand; // Use brand from site-config for consistency
 
   // Get site_code from environment variable (works in client component)
-  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'tennis';
+  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || 'default';
   const isFinalissimaLogo = siteCode === 'finalissima';
 
   const handleNavItemClick = (label: string, href: string, e: React.MouseEvent) => {

@@ -97,7 +97,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 1. Static routes — always included, no content-file dependency
   //    Common routes are shared across all sites.
   //    Site-specific routes are keyed by NEXT_PUBLIC_SITE_CODE.
-  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || "tennis"
+  const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || "default"
   const staticRoutes = [
     ...COMMON_ROUTES,
     ...(SITE_SPECIFIC_ROUTES[siteCode] || []),
