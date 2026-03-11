@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchEvents } from '@/lib/api';
-import { getSiteCode } from '@/lib/site-config';
+import { getSiteCode, getSiteConfig } from '@/lib/site-config';
 import { logger } from '@/lib/logger';
 import { FootballEventCard } from './FootballEventCard';
 import { Moon, Sun, Sunrise } from 'lucide-react';
@@ -121,18 +121,18 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   }
 
   return (
-    <section id="tickets" className="pt-6 pb-12 md:pt-10 md:pb-24 bg-white text-[#1d1d1f]">
+    <section id="tickets" aria-label="Event schedule" className="pt-6 pb-12 md:pt-10 md:pb-24 bg-white text-[#1d1d1f]">
       <div className="container mx-auto px-4 sm:px-6 max-w-[980px]">
         {header}
 
         {isTennisLayout ? (
           <>
-            <div className="mb-10 md:mb-24">
+            <div className="mb-10 md:mb-24" role="region" aria-label="WTA Tournament">
               <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
                 <h3 className="text-xl md:text-2xl font-semibold tracking-tight">WTA 1000 Tournament</h3>
                 <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Women&apos;s Week</span>
               </div>
-              <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
+              <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5" role="list" aria-label="WTA events">
                 {wtaEvents.length === 0 ? (
                   <div className="p-8 text-center text-[#6e6e73]">No sessions available.</div>
                 ) : (
@@ -148,12 +148,12 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
               </div>
             </div>
 
-            <div className="mb-0">
+            <div className="mb-0" role="region" aria-label="ATP Tournament">
               <div className="flex items-center justify-between mb-5 md:mb-8 px-2 md:px-4">
                 <h3 className="text-xl md:text-2xl font-semibold tracking-tight">ATP 500 Tournament</h3>
                 <span className="text-[12px] md:text-sm font-medium text-[var(--color-primary)]">Men&apos;s Week</span>
               </div>
-              <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
+              <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5" role="list" aria-label="ATP events">
                 {atpEvents.length === 0 ? (
                   <div className="p-8 text-center text-[#6e6e73]">No sessions available.</div>
                 ) : (
@@ -177,7 +177,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
                 No sessions available yet. Check back soon.
               </div>
             ) : (
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6" role="list" aria-label="Match schedule">
                 {events
                   .sort((a, b) => {
                     // Custom order: saudi-arabia-egypt-mar-26 first, then sort by date
@@ -201,7 +201,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
         ) : (
           // FALLBACK: OLD DESIGN FOR OTHER SITES
           <div className="mb-0">
-            <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5">
+            <div className="bg-white rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm border border-black/5" role="list" aria-label="Event schedule">
               {events.length === 0 ? (
                 <div className="p-8 text-center text-[#6e6e73]">No sessions available yet. Check back soon.</div>
               ) : (
@@ -227,13 +227,13 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
   const handleClick = () => {
-    // GA4: Track view_item event
+    // GA4: Track view_item event (use brand as category, not event type)
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'view_item', {
         items: [{
           item_id: event.id,
           item_name: event.title,
-          item_category: event.type,
+          item_category: getSiteConfig().brand,
           item_variant: event.type
         }]
       });
@@ -263,7 +263,11 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
   return (
     <div
       id={`event-${event.id}`}
+      role="listitem"
+      aria-label={`${event.title} — ${event.day} ${event.month} ${event.date}, ${event.time}${hasValidPrice ? `, from $${event.minPrice}` : ''}${event.isSoldOut ? ', sold out' : ''}`}
+      tabIndex={0}
       onClick={handleClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } }}
       className={`group cursor-pointer relative flex items-center justify-between p-4 sm:p-5 md:p-8 transition-all duration-300 hover:bg-[#f5f5f7]/50 active:bg-[#f5f5f7]/70 ${!isLast ? 'border-b border-[#f5f5f7]' : ''}`}
     >
       {/* Left accent stripe */}
