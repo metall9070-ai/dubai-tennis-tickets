@@ -414,7 +414,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                         />
                       </div>
                       <span className="text-[14px] font-medium text-[#636366] leading-tight select-none group-hover:text-[#1d1d1f] transition-colors">
-                        I have read and agree to the <Link href="/privacy-policy" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">privacy policy</Link> and <Link href="/terms-of-service" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Terms of Service</Link>.
+                        I have read and agree to the <Link href="/privacy-policy" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">privacy policy</Link>, <Link href="/terms-of-service" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Terms of Service</Link> and <Link href="/refund-policy" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-hover)]">Refund Policy</Link>.
                       </span>
                     </label>
                   </div>
