@@ -86,8 +86,8 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       "Dubai Tennis, Dubai Duty Free Tennis Championships, ATP 500 Dubai, WTA 1000 Dubai, tennis tickets Dubai, Dubai Tennis Stadium, tennis 2026, buy tennis tickets",
     ogImage:
       "https://images.unsplash.com/photo-1622279457486-62dcc4a4bd13?q=80&w=1200&auto=format&fit=crop",
-    gaId: "G-1R8HSPFZ1S",
-    gscVerification: "Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY",
+    gaId: process.env.NEXT_PUBLIC_GA_ID,
+    gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
     jsonLdType: "tennis",
     templateType: "tournament",
     favicon: "/favicon.svg",
