@@ -15,7 +15,7 @@ const TrustSignals: React.FC = () => {
             </div>
             <div className="min-w-0">
               <p className="text-[12px] sm:text-[13px] font-semibold text-[#1d1d1f] leading-tight">100% Authentic</p>
-              <p className="text-[10px] sm:text-[11px] text-[#6e6e73] leading-tight">Genuine tickets</p>
+              <p className="text-[10px] sm:text-[11px] text-[#636366] leading-tight">Genuine tickets</p>
             </div>
           </div>
           <div className="flex items-center gap-2.5 sm:gap-3">
@@ -26,7 +26,7 @@ const TrustSignals: React.FC = () => {
             </div>
             <div className="min-w-0">
               <p className="text-[12px] sm:text-[13px] font-semibold text-[#1d1d1f] leading-tight">Secure Payment</p>
-              <p className="text-[10px] sm:text-[11px] text-[#6e6e73] leading-tight">SSL encryption</p>
+              <p className="text-[10px] sm:text-[11px] text-[#636366] leading-tight">SSL encryption</p>
             </div>
           </div>
           <div className="flex items-center gap-2.5 sm:gap-3">
@@ -37,7 +37,7 @@ const TrustSignals: React.FC = () => {
             </div>
             <div className="min-w-0">
               <p className="text-[12px] sm:text-[13px] font-semibold text-[#1d1d1f] leading-tight">Easy Purchase</p>
-              <p className="text-[10px] sm:text-[11px] text-[#6e6e73] leading-tight">Fast checkout</p>
+              <p className="text-[10px] sm:text-[11px] text-[#636366] leading-tight">Fast checkout</p>
             </div>
           </div>
           <div className="flex items-center gap-2.5 sm:gap-3">
@@ -48,7 +48,7 @@ const TrustSignals: React.FC = () => {
             </div>
             <div className="min-w-0">
               <p className="text-[12px] sm:text-[13px] font-semibold text-[#1d1d1f] leading-tight">24/7 Support</p>
-              <p className="text-[10px] sm:text-[11px] text-[#6e6e73] leading-tight">Always here</p>
+              <p className="text-[10px] sm:text-[11px] text-[#636366] leading-tight">Always here</p>
             </div>
           </div>
         </div>

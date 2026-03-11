@@ -31,7 +31,7 @@ function SuccessContent() {
         Payment Successful!
       </h1>
 
-      <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-6">
+      <p className="text-[17px] text-[#636366] leading-relaxed mb-6">
         Thank you for your order. Your {brand} tickets have been confirmed.
       </p>
 
@@ -40,7 +40,7 @@ function SuccessContent() {
       </p>
 
       {sessionId && (
-        <p className="text-[13px] text-[#6e6e73] mb-8 font-mono bg-[#f5f5f7] p-3 rounded-lg break-all">
+        <p className="text-[13px] text-[#636366] mb-8 font-mono bg-[#f5f5f7] p-3 rounded-lg break-all">
           Reference: {sessionId.slice(-12).toUpperCase()}
         </p>
       )}
@@ -53,7 +53,7 @@ function SuccessContent() {
           Return to Home
         </Link>
 
-        <p className="text-[13px] text-[#6e6e73]">
+        <p className="text-[13px] text-[#636366]">
           Questions? Contact us at{' '}
           <a href={`mailto:${supportEmail}`} className="text-[var(--color-primary)] hover:underline">
             {supportEmail}

@@ -29,7 +29,7 @@ const SessionInfo: React.FC<SessionInfoProps> = ({ eventTitle, sessionData }) =>
           <h3 className="text-lg md:text-xl font-semibold text-[#1d1d1f] mb-3 md:mb-4 tracking-tight">
             About this session
           </h3>
-          <div className="text-[14px] md:text-[15px] text-[#6e6e73] leading-relaxed whitespace-pre-line">
+          <div className="text-[14px] md:text-[15px] text-[#636366] leading-relaxed whitespace-pre-line">
             {data.about}
           </div>
         </div>
@@ -41,7 +41,7 @@ const SessionInfo: React.FC<SessionInfoProps> = ({ eventTitle, sessionData }) =>
           </h3>
           <ul className="space-y-2 md:space-y-3">
             {data.seating.map((item, index) => (
-              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#6e6e73] leading-relaxed">
+              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#636366] leading-relaxed">
                 <span className="text-[var(--color-primary)] mt-1">•</span>
                 <span>{item}</span>
               </li>
@@ -56,7 +56,7 @@ const SessionInfo: React.FC<SessionInfoProps> = ({ eventTitle, sessionData }) =>
           </h3>
           <ul className="space-y-2 md:space-y-3">
             {data.beforeYouGo.map((item, index) => (
-              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#6e6e73] leading-relaxed">
+              <li key={index} className="flex items-start gap-2 md:gap-3 text-[14px] md:text-[15px] text-[#636366] leading-relaxed">
                 <span className="text-[var(--color-primary)] mt-1">•</span>
                 <span>{item}</span>
               </li>

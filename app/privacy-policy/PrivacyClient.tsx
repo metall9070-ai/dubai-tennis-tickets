@@ -33,7 +33,7 @@ export default function PrivacyClient() {
           <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight text-[#1d1d1f] mb-6 leading-tight">
             Privacy <span className="text-[var(--color-primary)]">Policy</span>
           </h1>
-          <p className="text-[13px] text-[#6e6e73] font-medium mb-12 uppercase tracking-widest">Publication date: February 1, 2026</p>
+          <p className="text-[13px] text-[#636366] font-medium mb-12 uppercase tracking-widest">Publication date: February 1, 2026</p>
 
           {/* Content Sections */}
           <article className="prose prose-lg max-w-none text-[#1d1d1f]/90 leading-relaxed font-normal space-y-12">

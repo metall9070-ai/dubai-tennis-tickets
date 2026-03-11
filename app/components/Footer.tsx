@@ -30,10 +30,10 @@ export default function Footer() {
               {brandDescription}
             </p>
             <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2">
-              <p className="text-[11px] sm:text-[12px] text-[#6e6e73]">
+              <p className="text-[11px] sm:text-[12px] text-[#636366]">
                 <span className="font-medium text-[#1d1d1f]">Email:</span> {supportEmail}
               </p>
-              <p className="text-[11px] sm:text-[12px] text-[#6e6e73]">
+              <p className="text-[11px] sm:text-[12px] text-[#636366]">
                 <span className="font-medium text-[#1d1d1f]">Hours:</span> 24/7 Customer Support
               </p>
             </div>
@@ -95,7 +95,7 @@ export default function Footer() {
         <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-black/5">
           <div className="flex flex-col items-center gap-3 lg:flex-row lg:justify-between lg:items-center">
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-              <span className="text-[10px] sm:text-[11px] text-[#6e6e73] uppercase tracking-wider">We Accept:</span>
+              <span className="text-[10px] sm:text-[11px] text-[#636366] uppercase tracking-wider">We Accept:</span>
               <div className="flex items-center gap-2 sm:gap-3">
                 {/* Visa */}
                 <div className="bg-white px-2 sm:px-2.5 py-1.5 sm:py-2 rounded border border-black/10">
@@ -140,21 +140,21 @@ export default function Footer() {
               <svg className="w-4 h-4 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <span className="text-[10px] sm:text-[11px] text-[#6e6e73]">SSL Secured Checkout</span>
+              <span className="text-[10px] sm:text-[11px] text-[#636366]">SSL Secured Checkout</span>
             </div>
           </div>
         </div>
 
         {/* Disclaimer */}
         <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-black/5">
-          <p className="text-[10px] sm:text-[11px] text-[#6e6e73] leading-relaxed text-center mb-3 sm:mb-4">
+          <p className="text-[10px] sm:text-[11px] text-[#636366] leading-relaxed text-center mb-3 sm:mb-4">
             {disclaimer}
           </p>
         </div>
 
         {/* Copyright */}
         <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-black/5">
-          <div className="flex justify-center items-center text-[10px] sm:text-[11px] text-[#6e6e73]">
+          <div className="flex justify-center items-center text-[10px] sm:text-[11px] text-[#636366]">
             <p>© 2026 {brandName}. All rights reserved.</p>
           </div>
         </div>

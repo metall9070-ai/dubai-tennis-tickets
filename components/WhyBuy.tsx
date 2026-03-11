@@ -63,7 +63,7 @@ const WhyBuy: React.FC = () => {
           <h2 className="text-[24px] md:text-[36px] font-bold tracking-tight text-[#1d1d1f] mb-3">
             Premium Booking Experience
           </h2>
-          <p className="text-[15px] md:text-lg text-[#6e6e73] font-medium max-w-2xl mx-auto">
+          <p className="text-[15px] md:text-lg text-[#636366] font-medium max-w-2xl mx-auto">
             Secure and trusted way to experience {brand} events.
           </p>
         </div>
@@ -79,7 +79,7 @@ const WhyBuy: React.FC = () => {
                 {benefit.icon}
               </div>
               <h3 className="text-[15px] md:text-base font-bold text-[#1d1d1f] mb-1.5">{benefit.title}</h3>
-              <p className="text-[#6e6e73] text-[13px] md:text-[14px] leading-relaxed font-medium">
+              <p className="text-[#636366] text-[13px] md:text-[14px] leading-relaxed font-medium">
                 {benefit.description}
               </p>
             </div>

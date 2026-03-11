@@ -21,6 +21,7 @@
  */
 
 import { getSiteUrl } from '@/lib/site-config'
+import { logger } from '@/lib/logger'
 
 /**
  * Build absolute canonical URL for a given path.
@@ -103,7 +104,7 @@ export function validateSiteUrl(): void {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
   if (!siteUrl) {
-    console.error(
+    logger.error(
       '[CANONICAL VALIDATION] NEXT_PUBLIC_SITE_URL is not defined. Canonical URLs will use fallback domain.'
     )
     // Uncomment to enforce strict validation (recommended for production):
@@ -125,7 +126,7 @@ export function validateSiteUrl(): void {
       process.env.NODE_ENV === 'production' &&
       siteUrl.startsWith('http://')
     ) {
-      console.warn(
+      logger.warn(
         `[CANONICAL WARNING] NEXT_PUBLIC_SITE_URL uses http:// in production: "${siteUrl}". Consider using https:// for SEO.`
       )
     }

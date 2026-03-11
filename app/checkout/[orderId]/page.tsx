@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ClearCartOnSuccess from './ClearCartOnSuccess';
 import TrackPurchase from './TrackPurchase';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
+import { logger } from '@/lib/logger';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -61,7 +62,7 @@ async function fetchOrder(orderId: string): Promise<Order | null> {
 
     return response.json();
   } catch (error) {
-    console.error('[fetchOrder] Error:', error);
+    logger.error('[fetchOrder] Error:', error);
     return null;
   }
 }
@@ -136,11 +137,11 @@ export default async function OrderCheckoutPage({ params }: Props) {
 
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-[#6e6e73]">Order Number</span>
+              <span className="text-[#636366]">Order Number</span>
               <p className="font-mono font-semibold text-[#1d1d1f]">{order.order_number}</p>
             </div>
             <div>
-              <span className="text-[#6e6e73]">Date</span>
+              <span className="text-[#636366]">Date</span>
               <p className="font-semibold text-[#1d1d1f]">
                 {new Date(order.created_at).toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -164,10 +165,10 @@ export default async function OrderCheckoutPage({ params }: Props) {
               >
                 <div className="flex-1">
                   <h3 className="font-semibold text-[#1d1d1f]">{item.event_title}</h3>
-                  <p className="text-sm text-[#6e6e73]">
+                  <p className="text-sm text-[#636366]">
                     {item.event_date} {item.event_month}, {item.event_day} at {item.event_time}
                   </p>
-                  <p className="text-sm text-[#6e6e73]">{item.venue}</p>
+                  <p className="text-sm text-[#636366]">{item.venue}</p>
                   <div className="mt-2">
                     <span className="inline-block px-2 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold rounded">
                       {item.category_name}
@@ -176,7 +177,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-[#1d1d1f]">${parseFloat(item.subtotal).toLocaleString()}</p>
-                  <p className="text-sm text-[#6e6e73]">
+                  <p className="text-sm text-[#636366]">
                     {item.quantity} x ${parseFloat(item.unit_price).toLocaleString()}
                   </p>
                 </div>
@@ -192,7 +193,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
                 ${parseFloat(order.total_amount).toLocaleString()}
               </span>
             </div>
-            <p className="text-sm text-[#6e6e73] mt-1">
+            <p className="text-sm text-[#636366] mt-1">
               {order.total_tickets} {order.total_tickets === 1 ? 'ticket' : 'tickets'}
             </p>
           </div>
@@ -204,20 +205,20 @@ export default async function OrderCheckoutPage({ params }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-[#6e6e73]">Name</span>
+              <span className="text-[#636366]">Name</span>
               <p className="font-semibold text-[#1d1d1f]">{order.name}</p>
             </div>
             <div>
-              <span className="text-[#6e6e73]">Email</span>
+              <span className="text-[#636366]">Email</span>
               <p className="font-semibold text-[#1d1d1f]">{order.email}</p>
             </div>
             <div>
-              <span className="text-[#6e6e73]">Phone</span>
+              <span className="text-[#636366]">Phone</span>
               <p className="font-semibold text-[#1d1d1f]">{order.phone}</p>
             </div>
             {order.comments && (
               <div className="md:col-span-2">
-                <span className="text-[#6e6e73]">Comments</span>
+                <span className="text-[#636366]">Comments</span>
                 <p className="font-semibold text-[#1d1d1f]">{order.comments}</p>
               </div>
             )}
@@ -228,7 +229,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
         {order.status === 'pending' && (
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">Payment</h2>
-            <p className="text-[#6e6e73] mb-4">
+            <p className="text-[#636366] mb-4">
               Complete your purchase to secure your tickets. Stripe payment integration coming soon.
             </p>
             <button
@@ -237,7 +238,7 @@ export default async function OrderCheckoutPage({ params }: Props) {
             >
               Pay ${parseFloat(order.total_amount).toLocaleString()}
             </button>
-            <p className="text-xs text-[#6e6e73] mt-3 text-center">
+            <p className="text-xs text-[#636366] mt-3 text-center">
               Stripe integration not yet implemented
             </p>
           </div>

@@ -11,7 +11,7 @@ interface StaticSeatingMapProps {
 }
 
 // Gray color for sold out sections (same as inactive stadium areas)
-const SOLD_OUT_COLOR = '#6e6e73';
+const SOLD_OUT_COLOR = '#636366';
 
 // Маппинг секций к категориям для WTA (Women's Day) - 3 категории
 const WTA_SECTION_TO_CATEGORY: Record<string, string> = {

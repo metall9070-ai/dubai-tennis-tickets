@@ -378,7 +378,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         ? 'cursor-pointer -translate-y-1 shadow-2xl border-transparent'
                         : isOtherHovered
                           ? 'cursor-pointer opacity-40 border-[#d2d2d7]'
-                          : 'cursor-pointer border-[#d2d2d7] hover:shadow-lg hover:border-[#6e6e73]/30'
+                          : 'cursor-pointer border-[#d2d2d7] hover:shadow-lg hover:border-[#636366]/30'
                     }
                   `}
                   style={{
@@ -398,10 +398,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="flex items-center justify-between mb-2.5 md:mb-3">
                     <div className="flex items-center space-x-3 md:space-x-4 min-w-0">
                       <div className="min-w-0">
-                        <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#6e6e73]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
+                        <h4 className={`font-semibold text-[16px] md:text-[18px] tracking-tight ${categoryIsSoldOut ? 'text-[#636366]' : 'text-[#1d1d1f]'}`}>{cat.name}</h4>
                         {categoryIsSoldOut ? (
-                          <span className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-semibold text-[#6e6e73]">
-                            <span className="w-1.5 h-1.5 bg-[#6e6e73] rounded-full"></span>
+                          <span className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-semibold text-[#636366]">
+                            <span className="w-1.5 h-1.5 bg-[#636366] rounded-full"></span>
                             Sold Out
                           </span>
                         ) : cat.seatsLeft < (isFinalissima ? 50 : 30) ? (
@@ -425,7 +425,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
                       <div className="text-right">
                         {categoryIsSoldOut ? (
-                          <p className="text-[14px] md:text-[16px] font-bold text-[#6e6e73]">Sold Out</p>
+                          <p className="text-[14px] md:text-[16px] font-bold text-[#636366]">Sold Out</p>
                         ) : (
                           <p className="text-[20px] md:text-[24px] font-bold text-[#1d1d1f] tabular-nums">${cat.price.toLocaleString()}</p>
                         )}
@@ -495,7 +495,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                 </div>
               </div>
               <div className="flex justify-between items-baseline mb-5 md:mb-6">
-                <span className="text-[14px] md:text-[15px] font-normal text-[#6e6e73]">Subtotal</span>
+                <span className="text-[14px] md:text-[15px] font-normal text-[#636366]">Subtotal</span>
                 <span className="text-2xl md:text-3xl font-semibold">${cartTotalValue.toLocaleString()}</span>
               </div>
               <button
@@ -533,16 +533,16 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   <div className="flex items-center justify-between mb-4 md:mb-5">
                     <span className="text-[16px] md:text-[18px] font-semibold text-[#1d1d1f]">Select Quantity</span>
                     <button onClick={closeModal} aria-label="Close" className="p-1.5 hover:bg-[#f5f5f7] rounded-full transition-colors">
-                      <svg className="w-5 h-5 text-[#6e6e73]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                      <svg className="w-5 h-5 text-[#636366]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                   </div>
 
                   <div className="mb-4 md:mb-5">
                     <h3 className="text-[18px] md:text-[20px] font-bold tracking-tight text-[#1d1d1f] mb-1">{selectedCategory.name}</h3>
                     <div className="flex items-baseline space-x-1.5">
-                       <span className="text-[14px] md:text-[15px] text-[#6e6e73]">Price:</span>
+                       <span className="text-[14px] md:text-[15px] text-[#636366]">Price:</span>
                        <span className="text-[18px] md:text-[20px] font-bold text-[var(--color-primary)]">${selectedCategory.price.toLocaleString()}</span>
-                       <span className="text-[14px] md:text-[15px] text-[#6e6e73]">/ ticket</span>
+                       <span className="text-[14px] md:text-[15px] text-[#636366]">/ ticket</span>
                     </div>
                   </div>
 
@@ -550,7 +550,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div className="flex flex-col">
                         <span className="text-[15px] md:text-[16px] font-semibold text-[#1d1d1f]">Quantity</span>
-                        <span className="text-[12px] md:text-[13px] text-[#6e6e73] mt-0.5">Max 4 per order</span>
+                        <span className="text-[12px] md:text-[13px] text-[#636366] mt-0.5">Max 4 per order</span>
                       </div>
                       <div className="flex items-center space-x-4 md:space-x-5">
                         <button
@@ -574,7 +574,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                     <div className="border-t border-black/5 my-3 md:my-4"></div>
 
                     <div className="flex justify-between items-center mb-4 md:mb-5">
-                       <span className="text-[14px] md:text-[15px] text-[#6e6e73]">Remaining Seats</span>
+                       <span className="text-[14px] md:text-[15px] text-[#636366]">Remaining Seats</span>
                        <span className="text-[14px] md:text-[15px] font-semibold text-[#1d1d1f] tabular-nums">
                          {selectedCategory.seatsLeft - ticketCount} seats left
                        </span>
@@ -587,7 +587,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                   </div>
 
                   <div className="px-2 md:px-4 mb-4 md:mb-6">
-                    <p className="text-center text-[12px] md:text-[13px] text-[#6e6e73] leading-relaxed">
+                    <p className="text-center text-[12px] md:text-[13px] text-[#636366] leading-relaxed">
                       When ordering two or more tickets, your seats will be next to each other.
                     </p>
                   </div>

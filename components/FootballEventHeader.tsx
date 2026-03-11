@@ -109,7 +109,7 @@ export const FootballEventHeader: React.FC<FootballEventHeaderProps> = ({
       </div>
 
       {/* Event Details */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-[#6e6e73] text-[14px] md:text-[16px] font-medium">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-[#636366] text-[14px] md:text-[16px] font-medium">
         {/* Date */}
         {date && (
           <div className="flex items-center gap-2">

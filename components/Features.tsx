@@ -52,7 +52,7 @@ const Features: React.FC = () => {
           <h2 className="text-[32px] md:text-[48px] font-bold tracking-tight text-[#1d1d1f] mb-4">
             Our Advantages
           </h2>
-          <p className="text-lg md:text-xl text-[#6e6e73] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-[#636366] max-w-2xl mx-auto leading-relaxed">
             We prioritize your experience, ensuring every moment from booking to the event is seamless and reliable.
           </p>
         </div>
@@ -69,7 +69,7 @@ const Features: React.FC = () => {
               <h3 className="text-xl font-bold text-[#1d1d1f] mb-4 tracking-tight">
                 {feature.title}
               </h3>
-              <p className="text-[#6e6e73] text-[15px] leading-relaxed font-medium">
+              <p className="text-[#636366] text-[15px] leading-relaxed font-medium">
                 {feature.description}
               </p>
             </div>

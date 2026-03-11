@@ -127,7 +127,7 @@ export default function SeatingGuideClient() {
 
                   <div className="flex-1">
                     <h3 className="text-xl md:text-2xl font-bold text-[#1d1d1f] mb-1">{category.name}</h3>
-                    <p className="text-sm text-[#6e6e73] mb-3">{category.location}</p>
+                    <p className="text-sm text-[#636366] mb-3">{category.location}</p>
                     <p className="text-[#424245] leading-relaxed">{category.description}</p>
                   </div>
 
@@ -155,19 +155,19 @@ export default function SeatingGuideClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#f5f5f7] p-6 rounded-2xl">
               <h3 className="font-bold text-[#1d1d1f] mb-3">For Photography</h3>
-              <p className="text-[#6e6e73]">Prime B sections often provide the best angle for capturing match moments without being too close to the net.</p>
+              <p className="text-[#636366]">Prime B sections often provide the best angle for capturing match moments without being too close to the net.</p>
             </div>
             <div className="bg-[#f5f5f7] p-6 rounded-2xl">
               <h3 className="font-bold text-[#1d1d1f] mb-3">For Shade</h3>
-              <p className="text-[#6e6e73]">Grandstand Upper rows on the west side receive afternoon shade earliest. Evening sessions offer cooler conditions throughout the stadium.</p>
+              <p className="text-[#636366]">Grandstand Upper rows on the west side receive afternoon shade earliest. Evening sessions offer cooler conditions throughout the stadium.</p>
             </div>
             <div className="bg-[#f5f5f7] p-6 rounded-2xl">
               <h3 className="font-bold text-[#1d1d1f] mb-3">For Families</h3>
-              <p className="text-[#6e6e73]">Grandstand Lower offers comfortable views with convenient access to amenities. Aisle seats are recommended for families with children.</p>
+              <p className="text-[#636366]">Grandstand Lower offers comfortable views with convenient access to amenities. Aisle seats are recommended for families with children.</p>
             </div>
             <div className="bg-[#f5f5f7] p-6 rounded-2xl">
               <h3 className="font-bold text-[#1d1d1f] mb-3">For Atmosphere</h3>
-              <p className="text-[#6e6e73]">Grandstand sections behind the baseline deliver the most vibrant crowd atmosphere and are popular with enthusiastic fan groups.</p>
+              <p className="text-[#636366]">Grandstand sections behind the baseline deliver the most vibrant crowd atmosphere and are popular with enthusiastic fan groups.</p>
             </div>
           </div>
         </div>
@@ -200,21 +200,21 @@ export default function SeatingGuideClient() {
               className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
             >
               <h3 className="font-semibold text-[#1d1d1f] mb-2">Venue Information</h3>
-              <p className="text-sm text-[#6e6e73]">Getting there, parking, and stadium facilities</p>
+              <p className="text-sm text-[#636366]">Getting there, parking, and stadium facilities</p>
             </button>
             <button
               onClick={() => router.push('/faq')}
               className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
             >
               <h3 className="font-semibold text-[#1d1d1f] mb-2">FAQ</h3>
-              <p className="text-sm text-[#6e6e73]">Common questions about tickets and the event</p>
+              <p className="text-sm text-[#636366]">Common questions about tickets and the event</p>
             </button>
             <button
               onClick={() => router.push('/#tournament')}
               className="p-6 bg-white rounded-2xl text-left hover:shadow-lg transition-shadow"
             >
               <h3 className="font-semibold text-[#1d1d1f] mb-2">Tournament Info</h3>
-              <p className="text-sm text-[#6e6e73]">Learn about Dubai Tennis Championships</p>
+              <p className="text-sm text-[#636366]">Learn about Dubai Tennis Championships</p>
             </button>
           </div>
         </div>

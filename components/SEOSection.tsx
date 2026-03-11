@@ -61,33 +61,33 @@ const SEOSection: React.FC<SEOSectionProps> = ({
               className="min-h-[56px] p-3 sm:p-4 bg-white rounded-xl text-center hover:shadow-md active:bg-gray-50 transition-all"
             >
               <span className="text-[13px] sm:text-sm font-semibold text-[#1d1d1f] block">ATP 500 Tickets</span>
-              <span className="text-[11px] sm:text-xs text-[#6e6e73]">Men's Feb 23-28</span>
+              <span className="text-[11px] sm:text-xs text-[#636366]">Men's Feb 23-28</span>
             </button>
             <button
               onClick={onWTATickets}
               className="min-h-[56px] p-3 sm:p-4 bg-white rounded-xl text-center hover:shadow-md active:bg-gray-50 transition-all"
             >
               <span className="text-[13px] sm:text-sm font-semibold text-[#1d1d1f] block">WTA 1000 Tickets</span>
-              <span className="text-[11px] sm:text-xs text-[#6e6e73]">Women's Feb 15-21</span>
+              <span className="text-[11px] sm:text-xs text-[#636366]">Women's Feb 15-21</span>
             </button>
             <button
               onClick={onSeatingGuide}
               className="min-h-[56px] p-3 sm:p-4 bg-white rounded-xl text-center hover:shadow-md active:bg-gray-50 transition-all"
             >
               <span className="text-[13px] sm:text-sm font-semibold text-[#1d1d1f] block">Seating Guide</span>
-              <span className="text-[11px] sm:text-xs text-[#6e6e73]">Compare & Choose</span>
+              <span className="text-[11px] sm:text-xs text-[#636366]">Compare & Choose</span>
             </button>
             <button
               onClick={onFAQ}
               className="min-h-[56px] p-3 sm:p-4 bg-white rounded-xl text-center hover:shadow-md active:bg-gray-50 transition-all"
             >
               <span className="text-[13px] sm:text-sm font-semibold text-[#1d1d1f] block">FAQ</span>
-              <span className="text-[11px] sm:text-xs text-[#6e6e73]">Common Questions</span>
+              <span className="text-[11px] sm:text-xs text-[#636366]">Common Questions</span>
             </button>
           </div>
 
           <div className="py-8 sm:py-10 md:py-12 border-t border-[#d2d2d7]">
-            <p className="text-[12px] sm:text-[13px] text-[#6e6e73] text-center leading-relaxed">
+            <p className="text-[12px] sm:text-[13px] text-[#636366] text-center leading-relaxed">
               Buy Dubai Tennis tickets online. Secure checkout, instant confirmation, and verified tickets for all sessions at Dubai Duty Free Tennis Stadium.
             </p>
           </div>

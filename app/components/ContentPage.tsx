@@ -116,7 +116,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
                 <div className="text-[22px] sm:text-[26px] font-bold text-[#1d1d1f]">
                   {stat.value}
                 </div>
-                <div className="text-[12px] sm:text-[13px] text-[#6e6e73] mt-1">
+                <div className="text-[12px] sm:text-[13px] text-[#636366] mt-1">
                   {stat.label}
                 </div>
               </div>
@@ -131,7 +131,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
               <div key={i} className="bg-[#f5f5f7] rounded-xl sm:rounded-2xl p-4 sm:p-6">
                 <div className="text-[var(--color-primary)] mb-2 sm:mb-3"><HighlightIcon name={item.icon} /></div>
                 <h3 className="font-bold text-[#1d1d1f] text-[13px] sm:text-[16px] mb-1 sm:mb-2">{item.title}</h3>
-                <p className="text-[11px] sm:text-[14px] text-[#6e6e73] leading-relaxed">{item.body}</p>
+                <p className="text-[11px] sm:text-[14px] text-[#636366] leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
@@ -168,7 +168,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
                   <summary className="cursor-pointer select-none px-5 py-4 font-semibold text-[15px] sm:text-[16px] text-[#1d1d1f] list-none flex items-center justify-between">
                     {item.question}
                     <svg
-                      className="w-5 h-5 text-[#6e6e73] shrink-0 ml-4 transition-transform group-open:rotate-45"
+                      className="w-5 h-5 text-[#636366] shrink-0 ml-4 transition-transform group-open:rotate-45"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

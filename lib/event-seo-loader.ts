@@ -1,4 +1,5 @@
 import type { EventSEO } from '@/types/seo'
+import { logger } from '@/lib/logger'
 
 /**
  * Load event-level SEO content from /content/{site_code}/events/{slug}.ts
@@ -56,7 +57,7 @@ export async function loadEventSEO(
 
     return null
   } catch (error) {
-    console.error(`[loadEventSEO] Failed to load SEO for ${siteCode}/${slug}:`, error)
+    logger.error(`[loadEventSEO] Failed to load SEO for ${siteCode}/${slug}:`, error)
     return null
   }
 }

@@ -204,7 +204,7 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
 
           {/* Support links */}
           <div className="px-6 mt-6 pt-5 border-t border-black/5">
-            <p className="text-[11px] font-bold text-[#6e6e73] uppercase tracking-wider mb-2">Support</p>
+            <p className="text-[11px] font-bold text-[#636366] uppercase tracking-wider mb-2">Support</p>
             <div className="flex flex-col">
               {[
                 { label: 'Payment & Delivery', href: '/payment-and-delivery' },
@@ -228,12 +228,12 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
           <div className="mt-auto px-6 pb-8 pt-5 border-t border-black/5 bg-[#f5f5f7]">
             <div className="flex flex-col gap-2.5">
               <a href={`mailto:${siteConfig.supportEmail}`} className="flex items-center gap-2.5 text-[14px] font-medium text-[#1d1d1f]">
-                <svg className="w-4 h-4 text-[#6e6e73] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-[#636366] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 {siteConfig.supportEmail}
               </a>
-              <p className="text-[12px] text-[#6e6e73] font-medium">24/7 Customer Support</p>
+              <p className="text-[12px] text-[#636366] font-medium">24/7 Customer Support</p>
             </div>
           </div>
         </div>

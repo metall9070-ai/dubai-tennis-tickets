@@ -43,7 +43,7 @@ export default function VenueClient() {
         <section className="pt-16 pb-12 bg-white">
           <div className="container mx-auto px-4 sm:px-6 max-w-[980px] text-center">
             <h1 className="text-4xl font-bold text-[#1d1d1f] mt-8">Venue Information</h1>
-            <p className="text-lg text-[#6e6e73] mt-4">Venue details are not available for this site.</p>
+            <p className="text-lg text-[#636366] mt-4">Venue details are not available for this site.</p>
           </div>
         </section>
         <Footer />
@@ -97,7 +97,7 @@ export default function VenueClient() {
             {venue.stats.map((stat, index) => (
               <div key={index}>
                 <p className="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">{stat.value}</p>
-                <p className="text-sm text-[#6e6e73]">{stat.label}</p>
+                <p className="text-sm text-[#636366]">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -112,7 +112,7 @@ export default function VenueClient() {
               <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-6">
                 {venue.aboutTitle}
               </h2>
-              <div className="space-y-4 text-[#6e6e73] leading-relaxed">
+              <div className="space-y-4 text-[#636366] leading-relaxed">
                 {venue.aboutParagraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
@@ -163,7 +163,7 @@ export default function VenueClient() {
               </div>
               <div>
                 <h3 className="font-bold text-[#1d1d1f] mb-1">Full Address</h3>
-                <p className="text-[#6e6e73]">
+                <p className="text-[#636366]">
                   {venue.address.map((line, i) => (
                     <React.Fragment key={i}>
                       {line}
@@ -191,7 +191,7 @@ export default function VenueClient() {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#1d1d1f] mb-2">{option.mode}</h4>
-                    <p className="text-[#6e6e73] text-sm mb-2">{option.details}</p>
+                    <p className="text-[#636366] text-sm mb-2">{option.details}</p>
                     <p className="text-sm text-[var(--color-primary)] font-medium flex items-center gap-1"><Lightbulb size={14} /> {option.tip}</p>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default function VenueClient() {
                   {facilityIcons[facility.title] || <Landmark size={28} />}
                 </div>
                 <h3 className="font-bold text-[#1d1d1f] mb-2">{facility.title}</h3>
-                <p className="text-sm text-[#6e6e73]">{facility.description}</p>
+                <p className="text-sm text-[#636366]">{facility.description}</p>
               </div>
             ))}
           </div>
@@ -233,7 +233,7 @@ export default function VenueClient() {
                   <div className="space-y-4">
                     {venue.weather.rows.map((row, index) => (
                       <div key={index} className={`flex justify-between items-center ${index < venue.weather!.rows.length - 1 ? 'pb-4 border-b border-[#f5f5f7]' : ''}`}>
-                        <span className="text-[#6e6e73]">{row.label}</span>
+                        <span className="text-[#636366]">{row.label}</span>
                         <span className={`font-semibold ${index === venue.weather!.rows.length - 1 ? 'text-[var(--color-primary)]' : 'text-[#1d1d1f]'}`}>{row.value}</span>
                       </div>
                     ))}
@@ -266,7 +266,7 @@ export default function VenueClient() {
             <h2 className="text-[32px] font-bold text-[#1d1d1f] mb-4 text-center">
               Nearby Hotels
             </h2>
-            <p className="text-center text-[#6e6e73] mb-8 max-w-2xl mx-auto">
+            <p className="text-center text-[#636366] mb-8 max-w-2xl mx-auto">
               Recommended accommodations near the stadium
             </p>
 
@@ -275,7 +275,7 @@ export default function VenueClient() {
                 <div key={index} className="bg-[#f5f5f7] rounded-2xl p-6">
                   <div className="text-sm text-[var(--color-primary)] font-medium mb-2">{hotel.rating} &bull; {hotel.distance}</div>
                   <h3 className="font-bold text-[#1d1d1f] mb-2">{hotel.name}</h3>
-                  <p className="text-sm text-[#6e6e73]">{hotel.description}</p>
+                  <p className="text-sm text-[#636366]">{hotel.description}</p>
                 </div>
               ))}
             </div>

@@ -20,7 +20,7 @@ export default function CancelClient() {
             Payment Cancelled
           </h1>
 
-          <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-8">
+          <p className="text-[17px] text-[#636366] leading-relaxed mb-8">
             Your payment was cancelled. Don't worry, your cart items are still saved. You can return to checkout whenever you're ready.
           </p>
 
@@ -32,7 +32,7 @@ export default function CancelClient() {
               Return to Home
             </Link>
 
-            <p className="text-[13px] text-[#6e6e73]">
+            <p className="text-[13px] text-[#636366]">
               Need help? Contact us at{' '}
               <a href={`mailto:${supportEmail}`} className="text-[var(--color-primary)] hover:underline">
                 {supportEmail}

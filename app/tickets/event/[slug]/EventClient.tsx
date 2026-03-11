@@ -161,7 +161,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
       <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
-          <p className="text-[#6e6e73]">Loading event details...</p>
+          <p className="text-[#636366]">Loading event details...</p>
         </div>
       </div>
     );
@@ -174,11 +174,11 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
     return (
       <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
-          <div className="mb-4 flex justify-center text-[#6e6e73]">{isNetworkError ? <WifiOff size={48} /> : <CircleDot size={48} />}</div>
+          <div className="mb-4 flex justify-center text-[#636366]">{isNetworkError ? <WifiOff size={48} /> : <CircleDot size={48} />}</div>
           <h1 className="text-2xl font-bold text-[#1d1d1f] mb-2">
             {isNetworkError ? 'Connection Error' : 'Event Not Found'}
           </h1>
-          <p className="text-[#6e6e73] mb-6">
+          <p className="text-[#636366] mb-6">
             {isNetworkError
               ? 'Unable to connect to the server. Please check if the backend is running and try again.'
               : error || "We couldn't find the event you're looking for. It may have been moved or no longer exists."}

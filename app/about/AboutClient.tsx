@@ -66,7 +66,7 @@ export default function AboutClient() {
                 <p><span className="font-semibold text-[#1d1d1f]">Address:</span> 7901 4th St N STE 300, St. Petersburg, FL 33702, United States</p>
                 <p><span className="font-semibold text-[#1d1d1f]">Email:</span> <a href={`mailto:${config.supportEmail}`} className="text-[var(--color-primary)] hover:underline">{config.supportEmail}</a></p>
               </div>
-              <p className="text-[13px] text-[#6e6e73] mt-4 italic">
+              <p className="text-[13px] text-[#636366] mt-4 italic">
                 {footer.disclaimer}
               </p>
             </section>

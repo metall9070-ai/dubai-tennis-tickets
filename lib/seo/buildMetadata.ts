@@ -19,6 +19,7 @@ import type { Metadata } from 'next'
 import type { SiteConfig } from '@/lib/site-config'
 import { getSiteConfig, getSiteUrl } from '@/lib/site-config'
 import { buildCanonical } from './buildCanonical'
+import { logger } from '@/lib/logger'
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
@@ -87,7 +88,7 @@ export function buildMetadata(options: BuildMetadataOptions): Metadata {
   // DEV-only warning when a storefront has no ogImage configured.
   // Does NOT throw — purely diagnostic.
   if (!config.ogImage && process.env.NODE_ENV === 'development') {
-    console.warn(
+    logger.warn(
       `[SEO WARNING] Missing ogImage in site-config for "${config.brand}". Using neutral fallback: ${normalizedSiteUrl}/og/default.jpg`
     )
   }

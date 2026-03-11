@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { logger } from '@/lib/logger';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -90,7 +91,7 @@ export async function createOrder(input: CreateOrderInput): Promise<OrderActionR
       checkout_url: data.checkout_url,
     };
   } catch (error) {
-    console.error('[createOrder] Error:', error);
+    logger.error('[createOrder] Error:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Connection error',
