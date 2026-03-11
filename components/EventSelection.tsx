@@ -13,6 +13,7 @@ import RelatedMatches from './RelatedMatches';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
 import { getSiteConfig } from '@/lib/site-config';
+import { getCountryCode } from '@/lib/country-codes';
 import { logger } from '@/lib/logger';
 import EventHero from './EventHero';
 import type { EventSEO } from '@/types/seo';
@@ -69,21 +70,11 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
     if (teams.length !== 2) return null;
 
-    // Map team names to country codes
-    const codeMap: Record<string, string> = {
-      'Argentina': 'ar', 'Spain': 'es', 'Brazil': 'br', 'Germany': 'de',
-      'France': 'fr', 'Italy': 'it', 'Portugal': 'pt', 'Netherlands': 'nl',
-      'England': 'gb-eng', 'Uruguay': 'uy', 'Mexico': 'mx', 'Japan': 'jp',
-      'Qatar': 'qa', 'Serbia': 'rs', 'Saudi Arabia': 'sa', 'Egypt': 'eg',
-      'United States': 'us', 'Belgium': 'be', 'Croatia': 'hr', 'Denmark': 'dk',
-      'Morocco': 'ma', 'South Korea': 'kr',
-    };
-
     return {
       team1: teams[0],
       team2: teams[1],
-      team1Code: codeMap[teams[0]] || 'un',
-      team2Code: codeMap[teams[1]] || 'un',
+      team1Code: getCountryCode(teams[0]),
+      team2Code: getCountryCode(teams[1]),
     };
   };
 

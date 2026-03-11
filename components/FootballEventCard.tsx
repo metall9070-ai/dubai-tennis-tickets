@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Ticket, Clock } from 'lucide-react';
 import type { Event } from '@/lib/types';
+import { getCountryCode } from '@/lib/country-codes';
 
 interface FootballEventCardProps {
   event: Event;
@@ -30,29 +31,6 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
 
   const team1 = teams[0] || 'Team 1';
   const team2 = teams[1] || 'Team 2';
-
-  // Map team names to country codes for flags
-  const getCountryCode = (teamName: string): string => {
-    const codeMap: Record<string, string> = {
-      'Argentina': 'ar',
-      'Spain': 'es',
-      'Brazil': 'br',
-      'Germany': 'de',
-      'France': 'fr',
-      'Italy': 'it',
-      'Portugal': 'pt',
-      'Netherlands': 'nl',
-      'England': 'gb-eng',
-      'Uruguay': 'uy',
-      'Mexico': 'mx',
-      'Japan': 'jp',
-      'Qatar': 'qa',
-      'Serbia': 'rs',
-      'Saudi Arabia': 'sa',
-      'Egypt': 'eg',
-    };
-    return codeMap[teamName] || 'un';
-  };
 
   const team1Code = getCountryCode(team1);
   const team2Code = getCountryCode(team2);

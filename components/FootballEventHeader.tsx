@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Calendar, MapPin, Clock } from 'lucide-react';
+import { getCountryCode } from '@/lib/country-codes';
 
 interface FootballEventHeaderProps {
   h1: string;
@@ -52,35 +53,6 @@ export const FootballEventHeader: React.FC<FootballEventHeaderProps> = ({
   };
 
   const { team1, team2, venue, date } = parseEventInfo(h1);
-
-  // Map team names to country codes for flags
-  const getCountryCode = (teamName: string): string => {
-    const codeMap: Record<string, string> = {
-      'Argentina': 'ar',
-      'Spain': 'es',
-      'Brazil': 'br',
-      'Germany': 'de',
-      'France': 'fr',
-      'Italy': 'it',
-      'Portugal': 'pt',
-      'Netherlands': 'nl',
-      'England': 'gb-eng',
-      'Uruguay': 'uy',
-      'Mexico': 'mx',
-      'Japan': 'jp',
-      'Qatar': 'qa',
-      'Serbia': 'rs',
-      'Saudi Arabia': 'sa',
-      'Egypt': 'eg',
-      'United States': 'us',
-      'Belgium': 'be',
-      'Croatia': 'hr',
-      'Denmark': 'dk',
-      'Morocco': 'ma',
-      'South Korea': 'kr',
-    };
-    return codeMap[teamName] || 'un'; // 'un' for unknown/United Nations flag as fallback
-  };
 
   const team1Code = getCountryCode(team1);
   const team2Code = getCountryCode(team2);
