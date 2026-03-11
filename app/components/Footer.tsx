@@ -10,10 +10,10 @@ export default function Footer() {
   const { supportEmail } = getSiteConfig();
 
   const legalLinks = [
-    { name: 'Contact Us', href: '/contact' },
     { name: 'Payment & Delivery', href: '/payment-and-delivery' },
-    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Refund Policy', href: '/refund-policy' },
     { name: 'Terms of Service', href: '/terms-of-service' },
+    { name: 'Privacy Policy', href: '/privacy-policy' },
   ];
 
   return (

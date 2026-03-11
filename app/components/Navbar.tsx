@@ -208,9 +208,9 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
             <div className="flex flex-col">
               {[
                 { label: 'Payment & Delivery', href: '/payment-and-delivery' },
+                { label: 'Refund Policy', href: '/refund-policy' },
                 { label: 'Terms of Service', href: '/terms-of-service' },
                 { label: 'Privacy Policy', href: '/privacy-policy' },
-                { label: 'Contact Us', href: '/contact' },
               ].map((item) => (
                 <Link
                   key={item.label}
