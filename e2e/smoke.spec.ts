@@ -8,7 +8,7 @@ test.describe('Smoke tests', () => {
     // Main content rendered
     await expect(page.locator('body')).toBeVisible()
     // Navigation exists
-    await expect(page.locator('nav, header')).toBeVisible()
+    await expect(page.locator('header').first()).toBeVisible()
   })
 
   test('FAQ page loads', async ({ page }) => {
