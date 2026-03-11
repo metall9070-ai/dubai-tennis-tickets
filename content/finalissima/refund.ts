@@ -5,6 +5,7 @@ const seo: SEOContent = {
   description:
     "Refund policy for Football Festival Qatar. Learn about our cancellation and refund terms for ticket orders.",
   h1: "Refund Policy",
+  breadcrumbLabel: "Refund Policy",
   sections: [
     {
       heading: "1. General Rule",

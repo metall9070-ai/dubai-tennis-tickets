@@ -5,20 +5,52 @@ const seo: SEOContent = {
   description:
     "Football Festival Qatar is an independent ticket concierge service for Finalissima 2026 and international football events in Qatar. Secure booking and dedicated support.",
   h1: "About Us",
+  breadcrumbLabel: "About Us",
   sections: [
     {
-      heading: "Who We Are",
-      body: `<p><strong>Football Festival Qatar</strong> is an independent ticket concierge service specializing in Finalissima 2026 and international football events at world-class Qatar stadiums including Lusail Stadium.</p>
-<p>We are operated by WORLD TICKETS 365 INC and are not affiliated with FIFA, UEFA, CONMEBOL, national associations, venues, or event organizers.</p>`,
+      heading: "About Football Festival Qatar",
+      body: `<p>Football Festival Qatar is a professional ticket concierge service specializing in premium access to sports and entertainment events.</p>
+<p>We provide a full range of services related to events, including ticket selection and booking, personalized recommendations, delivery coordination, and comprehensive event information support. Our goal is to make the process of attending an event simple, transparent, and comfortable for our clients.</p>
+<p>We work with both individual clients and corporate customers, assisting in finding optimal options based on preferences, availability, and budget. From initial inquiry to event attendance, we accompany our clients at every stage, ensuring clarity, reliability, and timely communication.</p>
+<p>Football Festival Qatar is focused on delivering a high-quality service experience, helping clients save time and confidently plan their visit to major events.</p>`,
     },
     {
       heading: "What We Do",
-      body: `<p>We source tickets through a global network of authorized secondary market partners. Every ticket is verified for authenticity before delivery, ensuring a reliable experience from booking to event day.</p>
-<p>Our service includes secure checkout via Stripe, electronic ticket delivery, and dedicated customer support at <strong>support@footballfestivalqatar.com</strong>.</p>`,
+      body: `<p>Our services include:</p>
+<ul>
+<li>ticket sourcing and booking</li>
+<li>premium and hard-to-find ticket access</li>
+<li>personalized ticket recommendations</li>
+<li>ticket transfer coordination</li>
+<li>support before and after purchase</li>
+</ul>`,
     },
     {
-      heading: "Our Commitment",
-      body: `<p>Transparent pricing, authentic tickets, and responsive support — that is our commitment to every customer. Prices are market-based and clearly displayed before purchase, with no hidden fees.</p>`,
+      heading: "Contact Our Concierge Team",
+      body: `<p>Our concierge team is available to assist you with ticket requests, event information, and order support.</p>`,
+    },
+    {
+      heading: "Business Hours",
+      body: `<p><strong>Monday to Sunday — 24/7</strong></p>
+<p>Our concierge team is available around the clock to assist you.</p>`,
+    },
+    {
+      heading: "Response Time",
+      body: `<p>Our dedicated concierge team works around the clock. All requests are processed within <strong>1 business day</strong>.</p>`,
+    },
+    {
+      heading: "Direct Contact",
+      body: `<p>You can reach us directly via email:</p>
+<p><strong>support@footballfestivalqatar.com</strong></p>`,
+    },
+    {
+      heading: "Company Information",
+      body: `<p><strong>Legal Entity:</strong> WORLD TICKETS 365 INC</p>
+<p><strong>Address:</strong> 7901 4th St N STE 300, St. Petersburg, FL 33702, United States</p>`,
+    },
+    {
+      heading: "Disclaimer",
+      body: `<p>Independent ticket concierge service. Not affiliated with venue, artists, or organizers.</p>`,
     },
   ],
 }
