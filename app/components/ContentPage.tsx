@@ -141,17 +141,32 @@ export default function ContentPage({ content, embedded, children }: { content: 
         {children}
 
         {/* Sections */}
-        {content.sections?.map((section, i) => (
-          <section key={i} className="mb-10 sm:mb-12">
-            <h2 className="text-[22px] sm:text-[26px] md:text-[32px] font-bold tracking-tight mb-4 sm:mb-6 leading-tight">
-              {section.heading}
-            </h2>
-            <div
-              className="text-[15px] sm:text-[16px] md:text-[17px] text-[#1d1d1f]/80 leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_li]:mb-1.5 [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold"
-              dangerouslySetInnerHTML={{ __html: sanitizeHTML(section.body) }}
-            />
-          </section>
-        ))}
+        {content.sections?.map((section, i) => {
+          const variant = section.variant ?? (embedded ? "plain" : "default")
+          const isHighlighted = variant === "highlighted"
+          const isPlain = variant === "plain"
+
+          return (
+            <section
+              key={i}
+              className={`mb-10 sm:mb-12 ${isHighlighted ? "bg-[#f5f5f7] p-6 sm:p-8 rounded-2xl sm:rounded-[32px] border border-black/5" : ""}`}
+            >
+              <h2 className="text-[22px] sm:text-[26px] md:text-[32px] font-bold tracking-tight mb-4 sm:mb-6 leading-tight">
+                {section.heading}
+              </h2>
+              <div
+                className={`text-[15px] sm:text-[16px] md:text-[17px] leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_li]:mb-1.5 [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold ${
+                  isHighlighted
+                    ? "text-[#1d1d1f]/80 font-medium"
+                    : isPlain
+                      ? "text-[#1d1d1f]/80"
+                      : "text-[#1d1d1f]/80 pl-4 border-l-2 border-[var(--color-primary)]/20"
+                }`}
+                dangerouslySetInnerHTML={{ __html: sanitizeHTML(section.body) }}
+              />
+            </section>
+          )
+        })}
 
         {/* FAQ */}
         {content.faq && content.faq.length > 0 && (

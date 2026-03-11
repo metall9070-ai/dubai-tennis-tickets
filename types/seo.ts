@@ -1,6 +1,12 @@
 export type SEOSection = {
   heading: string
   body: string
+  /** Visual variant for ContentPage rendering:
+   *  - "default" (or undefined): left border accent
+   *  - "highlighted": gray background card (intros, summaries)
+   *  - "plain": no decoration (embedded/homepage use)
+   */
+  variant?: "default" | "highlighted" | "plain"
 }
 
 export type FAQItem = {

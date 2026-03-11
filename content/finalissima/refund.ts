@@ -56,6 +56,7 @@ const seo: SEOContent = {
     },
     {
       heading: "9. Organizer Decisions",
+      variant: "highlighted",
       body: `<p>The company is not responsible for decisions made by the event organizer, including cancellation, postponement, venue change, or changes to the event program.</p>
 <p>Official information about event status is determined solely by the event organizer.</p>`,
     },

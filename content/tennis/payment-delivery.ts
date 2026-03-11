@@ -43,6 +43,7 @@ const seo: SEOContent = {
     },
     {
       heading: "3. Important Information",
+      variant: "highlighted",
       body: `<p>3.1. The buyer is responsible for providing a valid and correct email address when placing an order.</p>
 <p>3.2. The company is not responsible for ticket delivery issues caused by incorrect contact information provided by the buyer.</p>
 <p>3.3. If the ticket email or delivery instructions are not visible in the inbox the buyer is advised to check spam or junk mail folders.</p>

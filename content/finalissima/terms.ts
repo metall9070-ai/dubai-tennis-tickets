@@ -9,6 +9,7 @@ const seo: SEOContent = {
   sections: [
     {
       heading: "Public Offer for Agency Services",
+      variant: "highlighted",
       body: `<p><strong>(Public Offer for Agency Services)</strong></p>`,
     },
     {
@@ -100,6 +101,7 @@ const seo: SEOContent = {
     },
     {
       heading: "13. Term",
+      variant: "highlighted",
       body: `<p>13.1. This Agreement enters into force upon Acceptance and remains valid until all obligations of the parties have been fulfilled.</p>`,
     },
   ],

@@ -9,6 +9,7 @@ const seo: SEOContent = {
   sections: [
     {
       heading: "Introduction",
+      variant: "highlighted",
       body: `<p>This Privacy Policy describes how personal data of users and customers of the Football Festival Qatar (WORLD TICKETS 365 INC) service is collected, used, stored, and protected (hereinafter referred to as "we", "our", or "us"). Users and customers are individuals who use the website https://footballfestivalqatar.com (hereinafter referred to as "you", "your", or the "Client").</p>
 <p><strong>Football Festival Qatar (WORLD TICKETS 365 INC) operates as a ticket concierge and ticket sourcing service through a network of suppliers and partners. Tickets may be obtained from official platforms or secondary market providers. Ticket prices may differ from the original face value.</strong></p>`,
     },
@@ -90,6 +91,7 @@ const seo: SEOContent = {
     },
     {
       heading: "8. Changes to the Privacy Policy",
+      variant: "highlighted",
       body: `<p>8.1. Football Festival Qatar (WORLD TICKETS 365 INC) reserves the right to amend this Privacy Policy at any time.</p>
 <p>8.2. The updated version of the Policy becomes effective upon publication.</p>
 <p>8.3. Continued use of the website and services constitutes acceptance of the updated Policy.</p>
