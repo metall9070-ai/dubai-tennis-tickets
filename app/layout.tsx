@@ -27,7 +27,7 @@ const GA_ID_PATTERN = /^G-[A-Z0-9]+$/;
 const GTM_ID_PATTERN = /^GTM-[A-Z0-9]+$/;
 const validGaId = siteConfig.gaId && GA_ID_PATTERN.test(siteConfig.gaId) ? siteConfig.gaId : '';
 const GTM_ID = GTM_ID_PATTERN.test(RAW_GTM_ID) ? RAW_GTM_ID : '';
-const faviconPath = siteCode === 'finalissima' ? '/favicon-finalissima.svg' : '/favicon.svg';
+const faviconPath = siteConfig.favicon || '/favicon.svg';
 
 /* ------------------------------------------------------------------ */
 /*  Metadata — driven by site-config                                   */

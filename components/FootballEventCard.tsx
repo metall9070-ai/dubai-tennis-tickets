@@ -59,7 +59,7 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
         items: [{
           item_id: event.id,
           item_name: event.title,
-          item_category: 'football_event',
+          item_category: event.type,
           price: event.minPrice
         }]
       });

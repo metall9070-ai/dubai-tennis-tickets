@@ -233,7 +233,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
         items: [{
           item_id: event.id,
           item_name: event.title,
-          item_category: 'tennis_event',
+          item_category: event.type,
           item_variant: event.type
         }]
       });

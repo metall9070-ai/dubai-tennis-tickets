@@ -15,6 +15,8 @@ export interface SiteConfig {
   jsonLdType: "tennis" | "finalissima" | "yasarena" | "generic"
   templateType?: "tournament" | "artist" | "venue" | "festival"
   catalogSlug?: string
+  favicon?: string
+  logoType?: "tennis-ball" | "trophy" | "star"
   navigation: Array<{
     label: string
     href: string
@@ -85,6 +87,9 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     gaId: "G-1R8HSPFZ1S",
     gscVerification: "Kut3VjgQnCtxdcmziGTy5PxqZRF5BOAX3s9OtOmcwKY",
     jsonLdType: "tennis",
+    templateType: "tournament",
+    favicon: "/favicon.svg",
+    logoType: "tennis-ball",
     allowedEventTypes: ["ATP", "WTA"],
     colors: {
       primary: "#1e824c",
@@ -135,6 +140,9 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     ogImage: "/og/finalissima.jpg",
     gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
     jsonLdType: "finalissima",
+    templateType: "festival",
+    favicon: "/favicon-finalissima.svg",
+    logoType: "trophy",
     allowedEventTypes: ["MATCH"],
     colors: {
       primary: "#00627B",
@@ -186,6 +194,8 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     jsonLdType: "yasarena",
     templateType: "venue",
     catalogSlug: "events",
+    favicon: "/favicon-yasarena.svg",
+    logoType: "star",
     allowedEventTypes: ["CONCERT", "SHOW", "SPORTS", "EXHIBITION"],
     colors: {
       primary: "#DD900C",
@@ -237,6 +247,7 @@ const NEUTRAL_FALLBACK: SiteConfig = {
     "Browse and purchase event tickets securely. Verified tickets, secure checkout, and dedicated customer support.",
   defaultKeywords: "event tickets, buy tickets, secure tickets",
   jsonLdType: "generic",
+  favicon: "/favicon.svg",
   navigation: [],
   colors: {
     primary: "#1e824c",
@@ -272,68 +283,38 @@ export function isTennisSite(): boolean {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function buildJsonLd(config: SiteConfig): Record<string, any> | null {
+  if (config.jsonLdType === "generic") {
+    // No JSON-LD to avoid phantom structured data
+    return null
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const org: Record<string, any> = {
+    "@type": "Organization",
+    name: config.brand,
+    url: SITE_URL,
+  }
+
   if (config.jsonLdType === "tennis") {
-    return {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          name: "Dubai Tennis Tickets",
-          url: SITE_URL,
-          logo: `${SITE_URL}/logo.png`,
-          contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "customer service",
-            availableLanguage: ["English", "Arabic", "Russian"],
-          },
-        },
-        {
-          "@type": "WebSite",
-          name: "Dubai Tennis Tickets",
-          url: SITE_URL,
-        },
-      ],
+    org.logo = `${SITE_URL}/logo.png`
+    org.contactPoint = {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      availableLanguage: ["English", "Arabic", "Russian"],
     }
+  } else {
+    org.email = config.supportEmail
   }
 
-  if (config.jsonLdType === "finalissima") {
-    return {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          name: "Football Festival Qatar",
-          url: SITE_URL,
-          email: "support@footballfestivalqatar.com",
-        },
-        {
-          "@type": "WebSite",
-          name: "Football Festival Qatar",
-          url: SITE_URL,
-        },
-      ],
-    }
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      org,
+      {
+        "@type": "WebSite",
+        name: config.brand,
+        url: SITE_URL,
+      },
+    ],
   }
-
-  if (config.jsonLdType === "yasarena") {
-    return {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          name: "Yas Arena Concierge",
-          url: SITE_URL,
-          email: "support@yasarena.com",
-        },
-        {
-          "@type": "WebSite",
-          name: "Yas Arena Concierge",
-          url: SITE_URL,
-        },
-      ],
-    }
-  }
-
-  // generic / unknown — no JSON-LD to avoid phantom structured data
-  return null
 }
