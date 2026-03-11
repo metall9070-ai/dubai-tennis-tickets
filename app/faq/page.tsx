@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { loadSEOStrict } from '@/lib/seo-loader';
 import { isTennisSite } from '@/lib/site-config';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
@@ -46,9 +45,6 @@ export default async function FAQPage() {
     );
   }
 
-  if (isTennisSite()) {
-    return <FAQClient />;
-  }
-
-  notFound();
+  // Fallback: use config-driven FAQClient for any site
+  return <FAQClient />;
 }

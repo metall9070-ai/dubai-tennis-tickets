@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { loadSEOStrict } from '@/lib/seo-loader';
 import { isTennisSite } from '@/lib/site-config';
 import { buildMetadata } from '@/lib/seo/buildMetadata';
@@ -46,9 +45,6 @@ export default async function VenuePage() {
     );
   }
 
-  if (isTennisSite()) {
-    return <VenueClient />;
-  }
-
-  notFound();
+  // Fallback: use config-driven VenueClient for any site
+  return <VenueClient />;
 }
