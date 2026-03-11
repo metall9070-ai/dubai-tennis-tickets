@@ -1,34 +1,15 @@
-import { notFound } from "next/navigation"
-import { loadSEOStrict } from "@/lib/seo-loader"
-import { buildMetadata } from "@/lib/seo/buildMetadata"
-import Navbar from "@/app/components/Navbar"
-import Footer from "@/app/components/Footer"
-import ContentPage from "@/app/components/ContentPage"
+import { buildMetadata } from '@/lib/seo/buildMetadata';
+import { getSiteConfig } from '@/lib/site-config';
+import AboutClient from './AboutClient';
 
-const siteCode = process.env.NEXT_PUBLIC_SITE_CODE || "default"
+const config = getSiteConfig();
 
-export async function generateMetadata() {
-  const seo = await loadSEOStrict(siteCode, "about-us")
+export const metadata = buildMetadata({
+  path: '/about-us',
+  title: 'About Us',
+  description: `${config.brand} is a professional ticket concierge service specializing in premium access to sports and entertainment events.`,
+});
 
-  if (!seo) return {}
-
-  return buildMetadata({
-    path: "/about-us",
-    title: seo.title,
-    description: seo.description,
-  })
-}
-
-export default async function AboutUsPage() {
-  const seo = await loadSEOStrict(siteCode, "about-us")
-
-  if (!seo) notFound()
-
-  return (
-    <div className="relative min-h-screen bg-[#f5f5f7]">
-      <Navbar isVisible />
-      <ContentPage content={seo} />
-      <Footer />
-    </div>
-  )
+export default function AboutUsPage() {
+  return <AboutClient />;
 }
