@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
@@ -26,9 +26,13 @@ const Checkout: React.FC<CheckoutProps> = ({
   });
   const [agree, setAgree] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const isSubmittingRef = useRef(false);
   const hasTopDisclaimer = !!getSiteConfig().topDisclaimer;
 
   const handlePayment = async () => {
+    // Double-submission guard (ref is synchronous, unlike setState)
+    if (isSubmittingRef.current) return;
+
     // Validation check
     if (!formData.name) {
       alert('Please enter your name');
@@ -47,6 +51,7 @@ const Checkout: React.FC<CheckoutProps> = ({
       return;
     }
 
+    isSubmittingRef.current = true;
     setIsLoading(true);
 
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -144,6 +149,7 @@ const Checkout: React.FC<CheckoutProps> = ({
     } catch (error) {
       console.error('Payment error:', error);
       alert(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+      isSubmittingRef.current = false;
       setIsLoading(false);
     }
   };
