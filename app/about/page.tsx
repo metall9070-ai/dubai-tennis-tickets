@@ -1,15 +1,9 @@
-import { buildMetadata } from '@/lib/seo/buildMetadata';
-import { getSiteConfig } from '@/lib/site-config';
-import AboutClient from './AboutClient';
+import { redirect } from "next/navigation"
 
-const config = getSiteConfig();
-
-export const metadata = buildMetadata({
-  path: '/about',
-  title: 'About Us',
-  description: `${config.brand} is an independent concierge service. Verified tickets, secure booking, and 24/7 support for every order.`,
-});
-
-export default function AboutPage() {
-  return <AboutClient />;
+/**
+ * Redirect /about → /about-us (canonical URL).
+ * Prevents duplicate content for SEO.
+ */
+export default function AboutRedirect() {
+  redirect("/about-us")
 }

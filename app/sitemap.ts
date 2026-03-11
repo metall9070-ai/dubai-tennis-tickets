@@ -34,9 +34,10 @@ const COMMON_ROUTES: StaticRoute[] = [
   { path: "/",                    priority: 1.0, changeFrequency: "weekly"  },
   { path: "/faq",                 priority: 0.8, changeFrequency: "monthly" },
   { path: "/venue",               priority: 0.8, changeFrequency: "monthly" },
-  { path: "/about",               priority: 0.6, changeFrequency: "monthly" },
+  { path: "/about-us",             priority: 0.6, changeFrequency: "monthly" },
   { path: "/contact",             priority: 0.6, changeFrequency: "monthly" },
   { path: "/payment-and-delivery",priority: 0.5, changeFrequency: "monthly" },
+  { path: "/refund-policy",       priority: 0.3, changeFrequency: "yearly"  },
   { path: "/terms-of-service",    priority: 0.3, changeFrequency: "yearly"  },
   { path: "/privacy-policy",      priority: 0.3, changeFrequency: "yearly"  },
 ]
