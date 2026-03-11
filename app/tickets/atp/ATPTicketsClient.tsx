@@ -7,6 +7,7 @@ import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Event, EventRow } from '@/components/Events';
 import { fetchEvents } from '@/lib/api';
+import { logger } from '@/lib/logger';
 import { useCart } from '@/app/CartContext';
 
 interface ATPTicketsClientProps {
@@ -25,7 +26,7 @@ export default function ATPTicketsClient({ initialEvents }: ATPTicketsClientProp
   // Skip CSR fetch if we have SSR data
   useEffect(() => {
     if (initialEvents && initialEvents.length > 0) {
-      console.log(`[SSR] Using ${initialEvents.length} ATP events from server-side render`);
+      logger.log(`[SSR] Using ${initialEvents.length} ATP events from server-side render`);
       return;
     }
 
@@ -40,7 +41,7 @@ export default function ATPTicketsClient({ initialEvents }: ATPTicketsClientProp
 
         // STRICT: Reject fallback data - only use Django API prices
         if (result.fallback) {
-          console.error('[TOURNAMENT PAGE] REJECTED fallback data - Django API required for prices');
+          logger.error('[TOURNAMENT PAGE] REJECTED fallback data - Django API required for prices');
           setError('Unable to load prices. Please try again.');
           setAtpEvents([]);
           return;
@@ -49,10 +50,10 @@ export default function ATPTicketsClient({ initialEvents }: ATPTicketsClientProp
         if (result.data) {
           const atp = result.data.filter(e => e.type === 'ATP');
           setAtpEvents(atp);
-          console.log(`[CSR FALLBACK] /tickets/atp loaded ${atp.length} ATP events from Django API`);
+          logger.log(`[CSR FALLBACK] /tickets/atp loaded ${atp.length} ATP events from Django API`);
         }
       } catch (err) {
-        console.error('[TOURNAMENT PAGE] Failed to load events:', err);
+        logger.error('[TOURNAMENT PAGE] Failed to load events:', err);
         if (mounted) {
           setError('Unable to load prices. Please try again.');
           setAtpEvents([]);

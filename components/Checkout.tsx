@@ -6,6 +6,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { CartItem } from '@/app/CartContext';
 import { getSiteConfig } from '@/lib/site-config';
+import { logger } from '@/lib/logger';
 
 interface CheckoutProps {
   cart: CartItem[];
@@ -79,8 +80,8 @@ const Checkout: React.FC<CheckoutProps> = ({
       // Build E.164 phone: add + prefix (user only enters digits)
       const cleanPhone = '+' + formData.phone.replace(/[^\d]/g, '');
 
-      console.log('[Checkout] Creating order with items:', items);
-      console.log('[Checkout] Phone (cleaned):', cleanPhone);
+      logger.log('[Checkout] Creating order with items:', items);
+      logger.log('[Checkout] Phone (cleaned):', cleanPhone);
 
       // Combined: create order + Stripe checkout session in one call
       const response = await fetch(`${API_BASE_URL}/api/checkout/create-session/`, {
@@ -99,7 +100,7 @@ const Checkout: React.FC<CheckoutProps> = ({
       });
 
       const data = await response.json();
-      console.log('[Checkout] Checkout session response:', response.status, data);
+      logger.log('[Checkout] Checkout session response:', response.status, data);
 
       if (!response.ok || !data.checkout_url) {
         let errorMessage = 'Failed to create order';
@@ -127,9 +128,9 @@ const Checkout: React.FC<CheckoutProps> = ({
 
       if (data.checkout_url) {
         // GA4: Track begin_checkout event via gtag only (avoid duplicate with GTM)
-        if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
           const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-          (window as any).gtag('event', 'begin_checkout', {
+          window.gtag('event', 'begin_checkout', {
             currency: 'USD',
             value: cartTotal,
             items: cart.map(item => ({
@@ -152,7 +153,7 @@ const Checkout: React.FC<CheckoutProps> = ({
         throw new Error('No checkout URL returned');
       }
     } catch (error) {
-      console.error('Payment error:', error);
+      logger.error('Payment error:', error);
       alert(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
       isSubmittingRef.current = false;
       setIsLoading(false);

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useCart, CART_VERSION_KEY } from '@/app/CartContext';
 import EventSelection from '@/components/EventSelection';
 import { fetchEventBySlug } from '@/lib/api';
-import type { Event } from '@/lib/types';
-import type { Category } from '@/lib/api-server';
+import { logger } from '@/lib/logger';
+import type { Event, Category } from '@/lib/types';
 import type { EventSEO } from '@/types/seo';
 import { WifiOff, CircleDot } from 'lucide-react';
 
@@ -53,7 +53,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
   useEffect(() => {
     // Skip CSR fetch if we have SSR data
     if (initialEvent) {
-      console.log(`[EventClient] Using SSR data for event: "${initialEvent.title}"`);
+      logger.log(`[EventClient] Using SSR data for event: "${initialEvent.title}"`);
       // Store in sessionStorage for other components
       sessionStorage.setItem('selectedEvent', JSON.stringify(initialEvent));
       return;
@@ -62,7 +62,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
     let mounted = true;
 
     async function loadEvent() {
-      console.log(`[EventClient] No SSR data, starting CSR load for slug: "${slug}"`);
+      logger.log(`[EventClient] No SSR data, starting CSR load for slug: "${slug}"`);
       setIsLoading(true);
       setError(null);
 
@@ -77,7 +77,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
             // Check if the stored event matches the current slug
             // This handles the case where user navigated via event selection
             if (storedEvent.slug === slug || String(storedEvent.id) === slug) {
-              console.log(`[EventClient] Found matching event in sessionStorage (version valid)`);
+              logger.log(`[EventClient] Found matching event in sessionStorage (version valid)`);
               if (mounted) {
                 setSelectedEvent(storedEvent);
                 setIsLoading(false);
@@ -91,34 +91,34 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
             }
           } catch {
             // Invalid JSON in sessionStorage, ignore
-            console.log(`[EventClient] Invalid sessionStorage data, fetching from API`);
+            logger.log(`[EventClient] Invalid sessionStorage data, fetching from API`);
           }
         }
       } else {
-        console.log(`[EventClient] Storage version mismatch, clearing stale sessionStorage`);
+        logger.log(`[EventClient] Storage version mismatch, clearing stale sessionStorage`);
         sessionStorage.removeItem('selectedEvent');
       }
 
       // Fetch event from API by slug (or ID for backward compatibility)
-      console.log(`[EventClient] Fetching event from API: ${slug}`);
+      logger.log(`[EventClient] Fetching event from API: ${slug}`);
 
       try {
         const result = await fetchEventBySlug(slug);
 
         if (!mounted) {
-          console.log(`[EventClient] Component unmounted, ignoring result`);
+          logger.log(`[EventClient] Component unmounted, ignoring result`);
           return;
         }
 
         if (result.fallback || !result.data) {
-          console.error(`[EventClient] API returned error:`, result.error);
+          logger.error(`[EventClient] API returned error:`, result.error);
           setError(result.error || 'Event not found');
           setIsLoading(false);
           return;
         }
 
         const event = result.data;
-        console.log(`[EventClient] Loaded event: "${event.title}"`);
+        logger.log(`[EventClient] Loaded event: "${event.title}"`);
 
         // If user came with numeric ID, redirect to slug URL for SEO
         const isNumericSlug = /^\d+$/.test(slug);
@@ -135,7 +135,7 @@ export default function EventClient({ slug, initialEvent, initialCategories, eve
         setIsLoading(false);
       } catch (err) {
         // This catch handles any unexpected errors not caught by fetchEventBySlug
-        console.error(`[EventClient] Unexpected error:`, err);
+        logger.error(`[EventClient] Unexpected error:`, err);
         if (mounted) {
           setError(err instanceof Error ? err.message : 'Failed to load event');
           setIsLoading(false);

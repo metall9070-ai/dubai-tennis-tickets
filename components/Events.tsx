@@ -3,40 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { fetchEvents } from '@/lib/api';
 import { getSiteCode } from '@/lib/site-config';
+import { logger } from '@/lib/logger';
 import { FootballEventCard } from './FootballEventCard';
 import { Moon, Sun, Sunrise } from 'lucide-react';
 
-// Re-export Event type from lib/types.ts for backward compatibility
-// This breaks the circular dependency: api.ts <-> Events.tsx
 export type { Event } from '@/lib/types';
 import type { Event } from '@/lib/types';
 
-// ============================================================================
-// WARNING: THIS STATIC DATA IS FOR TYPE REFERENCE ONLY
-// DO NOT USE FOR PRICES - Django API is the SINGLE SOURCE OF TRUTH
-// lib/api.ts does NOT import this data anymore
-// If you see $150 anywhere, it's a BUG - report immediately
-// ============================================================================
-// WTA min_price = $300 (Grandstand), ATP min_price = $200 (Grandstand Upper)
-// Slugs are now the primary identifier - IDs are kept for backward compatibility
-export const eventsData: Event[] = [
-  { id: 1, slug: 'womens-day-1-feb-15', type: 'WTA', month: 'FEB', date: '15', day: 'Sun', time: '11:00 AM', title: "Women's Day 1", minPrice: 300, isSoldOut: false },
-  { id: 2, slug: 'womens-day-2-feb-16', type: 'WTA', month: 'FEB', date: '16', day: 'Mon', time: '11:00 AM', title: "Women's Day 2", minPrice: 300, isSoldOut: false },
-  { id: 3, slug: 'womens-day-3-feb-17', type: 'WTA', month: 'FEB', date: '17', day: 'Tue', time: '11:00 AM', title: "Women's Day 3", minPrice: 300, isSoldOut: false },
-  { id: 4, slug: 'womens-day-4-feb-18', type: 'WTA', month: 'FEB', date: '18', day: 'Wed', time: '11:00 AM', title: "Women's Day 4", minPrice: 300, isSoldOut: false },
-  { id: 5, slug: 'womens-quarter-finals-feb-19', type: 'WTA', month: 'FEB', date: '19', day: 'Thu', time: '2:00 PM', title: "Women's Quarter-Finals", minPrice: 300, isSoldOut: false },
-  { id: 6, slug: 'womens-semi-finals-feb-20', type: 'WTA', month: 'FEB', date: '20', day: 'Fri', time: '1:00 PM', title: "Women's Semi-Finals", minPrice: 300, isSoldOut: false },
-  { id: 7, slug: 'womens-finals-feb-21', type: 'WTA', month: 'FEB', date: '21', day: 'Sat', time: '4:30 PM', title: "Women's Finals", minPrice: 300, isSoldOut: false },
-  { id: 8, slug: 'mens-day-1-feb-23', type: 'ATP', month: 'FEB', date: '23', day: 'Mon', time: '2:00 PM', title: "Men's Day 1", minPrice: 200, isSoldOut: false },
-  { id: 9, slug: 'mens-day-2-feb-24', type: 'ATP', month: 'FEB', date: '24', day: 'Tue', time: '2:00 PM', title: "Men's Day 2", minPrice: 200, isSoldOut: false },
-  { id: 10, slug: 'mens-day-3-feb-25', type: 'ATP', month: 'FEB', date: '25', day: 'Wed', time: '2:00 PM', title: "Men's Day 3", minPrice: 200, isSoldOut: false },
-  { id: 11, slug: 'mens-quarter-finals-feb-26', type: 'ATP', month: 'FEB', date: '26', day: 'Thu', time: '2:00 PM', title: "Men's Quarter-Finals", minPrice: 200, isSoldOut: false },
-  { id: 12, slug: 'mens-semi-finals-feb-27', type: 'ATP', month: 'FEB', date: '27', day: 'Fri', time: '1:30 PM', title: "Men's Semi-Finals", minPrice: 200, isSoldOut: false },
-  { id: 13, slug: 'mens-finals-feb-28', type: 'ATP', month: 'FEB', date: '28', day: 'Sat', time: '4:30 PM', title: "Men's Finals", minPrice: 200, isSoldOut: false },
-];
-
 interface EventsProps {
-  onSelectEvent: (event: any) => void;
+  onSelectEvent: (event: Event) => void;
   initialEvents?: Event[];
   title?: string;
   subtitle?: string;
@@ -52,7 +27,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
   useEffect(() => {
     // Skip CSR fetch if we already have SSR data
     if (initialEvents && initialEvents.length > 0) {
-      console.log(`[SSR] Using ${initialEvents.length} events from server-side render`);
+      logger.log(`[SSR] Using ${initialEvents.length} events from server-side render`);
       return;
     }
 
@@ -67,7 +42,7 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
 
         // STRICT: Reject fallback data - only use Django API prices
         if (result.fallback) {
-          console.error('[Events] REJECTED fallback data - Django API required for prices');
+          logger.error('[Events] REJECTED fallback data - Django API required for prices');
           setError('Unable to load prices');
           setEvents([]);
           return;
@@ -77,12 +52,12 @@ const Events: React.FC<EventsProps> = ({ onSelectEvent, initialEvents, title, su
           setEvents(result.data);
           // Log each event with LIVE FETCH format for network verification
           result.data.forEach(event => {
-            console.log(`[LIVE FETCH] Homepage event "${event.title}" min_price=${event.minPrice}`);
+            logger.log(`[LIVE FETCH] Homepage event "${event.title}" min_price=${event.minPrice}`);
           });
-          console.log(`[LIVE FETCH] Homepage loaded ${result.data.length} events from Django API`);
+          logger.log(`[LIVE FETCH] Homepage loaded ${result.data.length} events from Django API`);
         }
       } catch (err) {
-        console.error('[Events] Failed to load events:', err);
+        logger.error('[Events] Failed to load events:', err);
         if (mounted) {
           setError('Unable to load prices');
           setEvents([]);
@@ -253,8 +228,8 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
 
   const handleClick = () => {
     // GA4: Track view_item event
-    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-      (window as any).gtag('event', 'view_item', {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'view_item', {
         items: [{
           item_id: event.id,
           item_name: event.title,
@@ -270,7 +245,9 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
   const getSessionType = (time: string): { label: string; icon: React.ReactNode; bgColor: string; textColor: string } => {
     const hour = parseInt(time.split(':')[0]);
     const isPM = time.includes('PM');
-    const hour24 = isPM && hour !== 12 ? hour + 12 : hour;
+    const hour24 = isPM
+      ? (hour === 12 ? 12 : hour + 12)
+      : (hour === 12 ? 0 : hour);
 
     if (hour24 >= 16) {
       return { label: 'Evening', icon: <Moon size={10} />, bgColor: 'bg-[#1d1d1f]', textColor: 'text-white' };

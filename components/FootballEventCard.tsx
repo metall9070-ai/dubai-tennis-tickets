@@ -76,8 +76,8 @@ export const FootballEventCard: React.FC<FootballEventCardProps> = ({ event, onC
   const hasValidPrice = event.minPrice != null && event.minPrice > 0;
 
   const handleClick = () => {
-    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-      (window as any).gtag('event', 'view_item', {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'view_item', {
         items: [{
           item_id: event.id,
           item_name: event.title,

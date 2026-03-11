@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { logger } from '@/lib/logger';
 
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
 export const CART_STORAGE_KEY = `${SITE_CODE}-cart`;
@@ -15,14 +16,14 @@ if (typeof window !== 'undefined') {
     const storedVersion = localStorage.getItem(CART_VERSION_KEY);
     const version = storedVersion ? parseInt(storedVersion, 10) : 0;
     if (version !== CURRENT_CART_VERSION) {
-      console.log(`[Cart] Module init: Version mismatch (${version} -> ${CURRENT_CART_VERSION}). Clearing sessionStorage immediately.`);
+      logger.log(`[Cart] Module init: Version mismatch (${version} -> ${CURRENT_CART_VERSION}). Clearing sessionStorage immediately.`);
       sessionStorage.removeItem('selectedEvent');
       // Also clear cart and update version
       localStorage.removeItem(CART_STORAGE_KEY);
       localStorage.setItem(CART_VERSION_KEY, String(CURRENT_CART_VERSION));
     }
   } catch (e) {
-    console.error('[Cart] Module init: Failed to check/clear storage:', e);
+    logger.error('[Cart] Module init: Failed to check/clear storage:', e);
   }
 }
 
@@ -74,13 +75,13 @@ function loadCartFromStorage(): CartItem[] {
         // Filter out invalid items (old format)
         const validItems = parsed.filter(isValidCartItem);
         if (validItems.length !== parsed.length) {
-          console.log(`[Cart] Filtered out ${parsed.length - validItems.length} invalid items`);
+          logger.log(`[Cart] Filtered out ${parsed.length - validItems.length} invalid items`);
         }
         return validItems;
       }
     }
   } catch (e) {
-    console.error('[Cart] Failed to load cart from localStorage:', e);
+    logger.error('[Cart] Failed to load cart from localStorage:', e);
   }
   return [];
 }
@@ -91,7 +92,7 @@ function saveCartToStorage(cart: CartItem[]): void {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
     localStorage.setItem(CART_VERSION_KEY, String(CURRENT_CART_VERSION));
   } catch (e) {
-    console.error('[Cart] Failed to save cart to localStorage:', e);
+    logger.error('[Cart] Failed to save cart to localStorage:', e);
   }
 }
 
@@ -104,7 +105,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const storedCart = loadCartFromStorage();
     if (storedCart.length > 0) {
       setCart(storedCart);
-      console.log(`[Cart] Restored ${storedCart.length} items from localStorage`);
+      logger.log(`[Cart] Restored ${storedCart.length} items from localStorage`);
     }
     setIsHydrated(true);
   }, []);

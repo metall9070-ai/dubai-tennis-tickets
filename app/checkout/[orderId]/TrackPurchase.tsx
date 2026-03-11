@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { getSiteConfig } from '@/lib/site-config';
+import { logger } from '@/lib/logger';
 
 interface OrderItem {
   event_id: number;
@@ -35,8 +36,8 @@ export default function TrackPurchase({ orderId, orderNumber, totalAmount, statu
     const key = `purchase_tracked_${orderId}`;
     if (sessionStorage.getItem(key)) return;
 
-    if (typeof (window as any).gtag === 'function') {
-      (window as any).gtag('event', 'purchase', {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'purchase', {
         transaction_id: orderId,
         affiliation: siteConfig.brand,
         value: parseFloat(totalAmount),
@@ -53,7 +54,7 @@ export default function TrackPurchase({ orderId, orderNumber, totalAmount, statu
         })),
       });
 
-      console.log(`[GA4] purchase event fired for order ${orderNumber} ($${totalAmount})`);
+      logger.log(`[GA4] purchase event fired for order ${orderNumber} ($${totalAmount})`);
       hasFired.current = true;
       sessionStorage.setItem(key, '1');
     }
@@ -76,7 +77,7 @@ export default function TrackPurchase({ orderId, orderNumber, totalAmount, statu
     const interval = setInterval(async () => {
       attempts++;
       if (attempts > maxAttempts) {
-        console.log('[GA4] Stopped polling — webhook did not arrive within 30s');
+        logger.log('[GA4] Stopped polling — webhook did not arrive within 30s');
         clearInterval(interval);
         return;
       }

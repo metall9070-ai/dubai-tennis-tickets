@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FootballEventCard } from './FootballEventCard';
-import type { Event } from '@/lib/types';
+import type { Event, APIEvent } from '@/lib/types';
 
 interface RelatedMatchesProps {
   currentSlug: string;
@@ -43,10 +43,10 @@ const RelatedMatches: React.FC<RelatedMatchesProps> = ({ currentSlug, currentEve
 
         const data = await response.json();
         // API returns { results: [...] } (DRF pagination format)
-        const events = (data.results || data.events || []).map((e: any) => ({
+        const events = (data.results || data.events || []).map((e: APIEvent) => ({
           ...e,
-          minPrice: Math.round(Number(e.minPrice || e.min_price || 0)) || undefined,
-          isSoldOut: e.isSoldOut ?? e.is_sold_out,
+          minPrice: Math.round(Number(e.min_price || 0)) || undefined,
+          isSoldOut: e.is_sold_out,
         }));
 
         // Filter: exclude current event, limit to 3

@@ -8,26 +8,12 @@
  * Filtering happens in page components using lib/event-filter.ts.
  */
 
-import type { Event } from '@/lib/types';
+import type { Event, APIEvent, APICategory, Category } from '@/lib/types';
 import { isReservedSlug } from '@/lib/reserved-slugs';
+import { logger } from '@/lib/logger';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
-
-interface APIEvent {
-  id: number;
-  slug: string;
-  title: string;
-  date: string;
-  day: string;
-  month: string;
-  time: string;
-  min_price: string | null;
-  is_sold_out: boolean;
-  type: string;
-  venue: string;
-  tournament_slug?: string;
-}
 
 /**
  * Fetch events from Django API (server-side).
@@ -39,7 +25,7 @@ interface APIEvent {
  */
 export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
   if (!API_BASE_URL) {
-    console.error('[SERVER API] No API URL configured');
+    logger.error('[SERVER API] No API URL configured');
     return [];
   }
 
@@ -59,7 +45,7 @@ export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
     });
 
     if (!response.ok) {
-      console.error('[SERVER API] Events fetch failed:', response.status);
+      logger.error('[SERVER API] Events fetch failed:', response.status);
       return [];
     }
 
@@ -71,7 +57,7 @@ export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
 
       // Validate against reserved slugs (SEO_ARCHITECTURE §12.3)
       if (isReservedSlug(slug)) {
-        console.error(
+        logger.error(
           `[SERVER API] Reserved slug detected: "${slug}" (Event ID: ${e.id}). ` +
           `This slug conflicts with static routes and must be changed in CRM.`
         );
@@ -93,11 +79,11 @@ export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
       };
     });
 
-    console.log(`[SERVER API] Loaded ${events.length} events for SSR`);
+    logger.log(`[SERVER API] Loaded ${events.length} events for SSR`);
     return events;
 
   } catch (error) {
-    console.error('[SERVER API] Events fetch error:', error);
+    logger.error('[SERVER API] Events fetch error:', error);
     return [];
   }
 }
@@ -109,7 +95,7 @@ export async function fetchEventsServer(siteCode?: string): Promise<Event[]> {
 export async function fetchATPEventsServer(): Promise<Event[]> {
   const allEvents = await fetchEventsServer();
   const atpEvents = allEvents.filter(e => e.type === 'ATP');
-  console.log(`[SERVER API] Filtered ${atpEvents.length} ATP events for SSR`);
+  logger.log(`[SERVER API] Filtered ${atpEvents.length} ATP events for SSR`);
   return atpEvents;
 }
 
@@ -120,33 +106,13 @@ export async function fetchATPEventsServer(): Promise<Event[]> {
 export async function fetchWTAEventsServer(): Promise<Event[]> {
   const allEvents = await fetchEventsServer();
   const wtaEvents = allEvents.filter(e => e.type === 'WTA');
-  console.log(`[SERVER API] Filtered ${wtaEvents.length} WTA events for SSR`);
+  logger.log(`[SERVER API] Filtered ${wtaEvents.length} WTA events for SSR`);
   return wtaEvents;
 }
 
 // ============================================================================
 // EVENT DETAIL PAGE - SSR/ISR Functions
 // ============================================================================
-
-interface APICategory {
-  id: number | string;
-  name: string;
-  price: string | number;
-  color?: string;
-  seats_left: number;
-  is_active?: boolean;
-  show_on_frontend?: boolean;
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  price: number;
-  color: string;
-  seatsLeft: number;
-  isActive?: boolean;
-  showOnFrontend?: boolean;
-}
 
 const CATEGORY_COLORS: Record<string, string> = {
   'prime-a': '#8B5CF6',
@@ -162,7 +128,7 @@ const CATEGORY_COLORS: Record<string, string> = {
  */
 export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | null> {
   if (!API_BASE_URL) {
-    console.error('[SERVER API] No API URL configured');
+    logger.error('[SERVER API] No API URL configured');
     return null;
   }
 
@@ -180,7 +146,7 @@ export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | 
     });
 
     if (!response.ok) {
-      console.error('[SERVER API] Event fetch failed:', response.status);
+      logger.error('[SERVER API] Event fetch failed:', response.status);
       return null;
     }
 
@@ -201,11 +167,11 @@ export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | 
       venue: e.venue,
     };
 
-    console.log(`[SERVER API] Loaded event "${event.title}" for SSR`);
+    logger.log(`[SERVER API] Loaded event "${event.title}" for SSR`);
     return event;
 
   } catch (error) {
-    console.error('[SERVER API] Event fetch error:', error);
+    logger.error('[SERVER API] Event fetch error:', error);
     return null;
   }
 }
@@ -216,7 +182,7 @@ export async function fetchEventBySlugServer(slugOrId: string): Promise<Event | 
  */
 export async function fetchEventCategoriesServer(eventId: number | string): Promise<Category[]> {
   if (!API_BASE_URL) {
-    console.error('[SERVER API] No API URL configured');
+    logger.error('[SERVER API] No API URL configured');
     return [];
   }
 
@@ -234,7 +200,7 @@ export async function fetchEventCategoriesServer(eventId: number | string): Prom
     });
 
     if (!response.ok) {
-      console.error('[SERVER API] Categories fetch failed:', response.status);
+      logger.error('[SERVER API] Categories fetch failed:', response.status);
       return [];
     }
 
@@ -256,11 +222,11 @@ export async function fetchEventCategoriesServer(eventId: number | string): Prom
       };
     });
 
-    console.log(`[SERVER API] Loaded ${categories.length} categories for event ${eventId}`);
+    logger.log(`[SERVER API] Loaded ${categories.length} categories for event ${eventId}`);
     return categories;
 
   } catch (error) {
-    console.error('[SERVER API] Categories fetch error:', error);
+    logger.error('[SERVER API] Categories fetch error:', error);
     return [];
   }
 }
@@ -284,6 +250,6 @@ export async function fetchEventWithCategoriesServer(slugOrId: string): Promise<
   // Then fetch categories using the event ID (parallel would require ID upfront)
   const categories = await fetchEventCategoriesServer(event.id);
 
-  console.log(`[SERVER API] SSR complete: event "${event.title}" with ${categories.length} categories`);
+  logger.log(`[SERVER API] SSR complete: event "${event.title}" with ${categories.length} categories`);
   return { event, categories };
 }

@@ -26,8 +26,8 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
     setIsLoaded(true);
   }, []);
 
-  const handleSelectEvent = (eventData: any) => {
-    const eventSlug = eventData?.slug || `event-${eventData?.id}`;
+  const handleSelectEvent = (eventData: Event) => {
+    const eventSlug = eventData.slug || `event-${eventData.id}`;
     sessionStorage.setItem('selectedEvent', JSON.stringify(eventData));
     router.push(`/tickets/event/${eventSlug}`);
   };

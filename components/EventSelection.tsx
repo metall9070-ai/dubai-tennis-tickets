@@ -13,11 +13,13 @@ import RelatedMatches from './RelatedMatches';
 import { CartItem } from '@/app/CartContext';
 import { fetchEventCategories, isSoldOut } from '@/lib/api';
 import { getSiteConfig } from '@/lib/site-config';
+import { logger } from '@/lib/logger';
 import EventHero from './EventHero';
 import type { EventSEO } from '@/types/seo';
+import type { Event } from '@/lib/types';
 
 interface EventSelectionProps {
-  event: any;
+  event: Event;
   initialCategories?: Category[];
   eventSEO?: EventSEO | null;
   onBack: () => void;
@@ -37,26 +39,6 @@ interface Category {
   isActive?: boolean;
   showOnFrontend?: boolean;
 }
-
-// ============================================================================
-// DEPRECATED: These constants are NO LONGER USED in state initialization
-// Django API is the SINGLE SOURCE OF TRUTH for category prices
-// Keep for reference only - DO NOT use for fallback pricing
-// ============================================================================
-// WTA: Grandstand $300, Prime B $1000, Prime A $2000
-const _WTA_REFERENCE_CATEGORIES: Category[] = [
-  { id: 'grandstand', name: 'Grandstand', price: 300, color: CATEGORY_COLORS['grandstand'], seatsLeft: 100 },
-  { id: 'prime-b', name: 'Prime B', price: 1000, color: CATEGORY_COLORS['prime-b'], seatsLeft: 100 },
-  { id: 'prime-a', name: 'Prime A', price: 2000, color: CATEGORY_COLORS['prime-a'], seatsLeft: 100 },
-];
-
-// ATP: Grandstand Upper $200, Grandstand Lower $400, Prime B $1500, Prime A $3000
-const _ATP_REFERENCE_CATEGORIES: Category[] = [
-  { id: 'grandstand-upper', name: 'Grandstand Upper', price: 200, color: CATEGORY_COLORS['grandstand-upper'], seatsLeft: 100 },
-  { id: 'grandstand-lower', name: 'Grandstand Lower', price: 400, color: CATEGORY_COLORS['grandstand-lower'], seatsLeft: 100 },
-  { id: 'prime-b', name: 'Prime B', price: 1500, color: CATEGORY_COLORS['prime-b'], seatsLeft: 100 },
-  { id: 'prime-a', name: 'Prime A', price: 3000, color: CATEGORY_COLORS['prime-a'], seatsLeft: 100 },
-];
 
 // Finalissima category colors (matching stadium map)
 const FINALISSIMA_CATEGORY_COLORS: Record<string, string> = {
@@ -132,9 +114,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
   useEffect(() => {
     // Skip if we already have SSR data
     if (initialCategories && initialCategories.length > 0) {
-      console.log(`[EventSelection] Using SSR data: ${initialCategories.length} categories`);
+      logger.log(`[EventSelection] Using SSR data: ${initialCategories.length} categories`);
       initialCategories.forEach(cat => {
-        console.log(`[SSR] category "${cat.name}" price=${cat.price}`);
+        logger.log(`[SSR] category "${cat.name}" price=${cat.price}`);
       });
       return;
     }
@@ -147,7 +129,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         return;
       }
 
-      console.log(`[EventSelection] No SSR data, fetching categories from API`);
+      logger.log(`[EventSelection] No SSR data, fetching categories from API`);
       setIsLoading(true);
       setApiError(null);
 
@@ -159,7 +141,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
         // STRICT: Reject if API returns fallback or null data
         if (result.fallback || !result.data || result.data.length === 0) {
-          console.error('[EventSelection] Django API required for category prices - no fallback allowed');
+          logger.error('[EventSelection] Django API required for category prices - no fallback allowed');
           setApiError(result.error || 'Unable to load prices from server');
           setCategories([]);
           return;
@@ -173,13 +155,13 @@ const EventSelection: React.FC<EventSelectionProps> = ({
 
         // Log each category with LIVE FETCH format for network verification
         apiCategories.forEach(cat => {
-          console.log(`[LIVE FETCH] /tickets/event category "${cat.name}" price=${cat.price}`);
+          logger.log(`[LIVE FETCH] /tickets/event category "${cat.name}" price=${cat.price}`);
         });
 
         setCategories(apiCategories);
-        console.log(`[LIVE FETCH] /tickets/event loaded ${apiCategories.length} categories from Django API`);
+        logger.log(`[LIVE FETCH] /tickets/event loaded ${apiCategories.length} categories from Django API`);
       } catch (error) {
-        console.error('[EventSelection] API fetch failed:', error);
+        logger.error('[EventSelection] API fetch failed:', error);
         if (mounted) {
           setApiError('Unable to load prices. Please try again.');
           setCategories([]);
@@ -221,8 +203,8 @@ const EventSelection: React.FC<EventSelectionProps> = ({
     const cartId = `${event.id}-${selectedCategory.id}`;
 
     // GA4: Track add_to_cart event
-    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-      (window as any).gtag('event', 'add_to_cart', {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'add_to_cart', {
         items: [{
           item_id: event.id,
           item_name: event.title,
@@ -250,7 +232,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
         eventMonth: event.month,
         eventDay: event.day,
         eventTime: event.time,
-        venue: event.venue
+        venue: event.venue || ''
       }];
     });
   };
@@ -362,7 +344,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                 hoveredCategory={hoveredCategory}
                 onHoverCategory={setHoveredCategory}
                 onSelectCategory={handleSelectCategory}
-                eventType={event?.type}
+                eventType={event?.type as 'ATP' | 'WTA'}
                 soldOutCategories={soldOutCategories}
               />
             )}

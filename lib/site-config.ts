@@ -186,7 +186,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
     jsonLdType: "yasarena",
     templateType: "venue",
     catalogSlug: "events",
-    // TODO: verify — set allowedEventTypes when events are configured in CRM
+    allowedEventTypes: ["CONCERT", "SHOW", "SPORTS", "EXHIBITION"],
     colors: {
       primary: "#DD900C",
       primaryHover: "#BC7A0A",

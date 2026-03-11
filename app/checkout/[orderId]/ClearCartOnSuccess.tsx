@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useCart, CART_STORAGE_KEY } from '@/app/CartContext';
+import { logger } from '@/lib/logger';
 
 interface ClearCartOnSuccessProps {
   orderStatus: string;
@@ -16,9 +17,9 @@ export default function ClearCartOnSuccess({ orderStatus }: ClearCartOnSuccessPr
       // Clear localStorage directly to prevent race condition with CartProvider hydration
       try {
         localStorage.removeItem(CART_STORAGE_KEY);
-        console.log('[ClearCartOnSuccess] Cleared cart from localStorage');
+        logger.log('[ClearCartOnSuccess] Cleared cart from localStorage');
       } catch (e) {
-        console.error('[ClearCartOnSuccess] Failed to clear localStorage:', e);
+        logger.error('[ClearCartOnSuccess] Failed to clear localStorage:', e);
       }
       // Also update React state
       setCart([]);

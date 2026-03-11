@@ -7,6 +7,7 @@ import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Event, EventRow } from '@/components/Events';
 import { fetchEvents } from '@/lib/api';
+import { logger } from '@/lib/logger';
 import { useCart } from '@/app/CartContext';
 
 interface WTATicketsClientProps {
@@ -25,7 +26,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
   // Skip CSR fetch if we have SSR data
   useEffect(() => {
     if (initialEvents && initialEvents.length > 0) {
-      console.log(`[SSR] Using ${initialEvents.length} WTA events from server-side render`);
+      logger.log(`[SSR] Using ${initialEvents.length} WTA events from server-side render`);
       return;
     }
 
@@ -40,7 +41,7 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
 
         // STRICT: Reject fallback data - only use Django API prices
         if (result.fallback) {
-          console.error('[TOURNAMENT PAGE] REJECTED fallback data - Django API required for prices');
+          logger.error('[TOURNAMENT PAGE] REJECTED fallback data - Django API required for prices');
           setError('Unable to load prices. Please try again.');
           setWtaEvents([]);
           return;
@@ -49,10 +50,10 @@ export default function WTATicketsClient({ initialEvents }: WTATicketsClientProp
         if (result.data) {
           const wta = result.data.filter(e => e.type === 'WTA');
           setWtaEvents(wta);
-          console.log(`[CSR FALLBACK] /tickets/wta loaded ${wta.length} WTA events from Django API`);
+          logger.log(`[CSR FALLBACK] /tickets/wta loaded ${wta.length} WTA events from Django API`);
         }
       } catch (err) {
-        console.error('[TOURNAMENT PAGE] Failed to load events:', err);
+        logger.error('[TOURNAMENT PAGE] Failed to load events:', err);
         if (mounted) {
           setError('Unable to load prices. Please try again.');
           setWtaEvents([]);

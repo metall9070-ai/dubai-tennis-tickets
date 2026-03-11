@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { logger } from '@/lib/logger';
 
 interface StadiumMapProps {
   activeCategory?: string | null;
@@ -103,9 +104,9 @@ export default function StadiumMap({
         });
 
         setSvgLoaded(true);
-        console.log(`[StadiumMap] Loaded ${svgPath}`);
+        logger.log(`[StadiumMap] Loaded ${svgPath}`);
       })
-      .catch(err => console.error('[StadiumMap] Failed to load SVG:', err));
+      .catch(err => logger.error('[StadiumMap] Failed to load SVG:', err));
   }, [svgPath, soldOutCategories]);
 
   // Apply CSS classes to categories based on state

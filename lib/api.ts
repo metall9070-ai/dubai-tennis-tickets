@@ -30,9 +30,9 @@
 
 // STRICT: No static fallback data - Django API is single source of truth
 // If API is unavailable, UI must show error - NOT stale prices
-// NOTE: Event type moved to lib/types.ts to break circular dependency with components/Events.tsx
-import type { Event } from '@/lib/types';
+import type { Event, APIEvent, APICategory, APIResponse } from '@/lib/types';
 import { isReservedSlug } from '@/lib/reserved-slugs';
+import { logger } from '@/lib/logger';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || '';
@@ -40,58 +40,11 @@ const API_TIMEOUT = 10000; // 10 seconds - increased for reliable local dev
 
 // Log API configuration on module load (client-side only)
 if (typeof window !== 'undefined') {
-  console.log('[API CONFIG] Base URL:', API_BASE_URL || '(NOT SET - API calls will fail!)');
-  console.log('[API CONFIG] Timeout:', API_TIMEOUT, 'ms');
+  logger.log('[API CONFIG] Base URL:', API_BASE_URL || '(NOT SET - API calls will fail!)');
+  logger.log('[API CONFIG] Timeout:', API_TIMEOUT, 'ms');
   if (!API_BASE_URL) {
-    console.error('[API CONFIG] CRITICAL: NEXT_PUBLIC_API_BASE_URL is not set in .env.local');
+    logger.error('[API CONFIG] CRITICAL: NEXT_PUBLIC_API_BASE_URL is not set in .env.local');
   }
-}
-
-// Shadow mode: fetch API data but don't use it - only log comparisons
-const SHADOW_MODE = process.env.NEXT_PUBLIC_DJANGO_SHADOW_MODE === 'true';
-
-// LIMITED LIVE MODE (B5.2): Only these event IDs use live Django prices
-// "*" = all events use Django (single source of truth)
-// "1,2,3" = only specific events use Django
-// "" = all events use fallback (safe default)
-const LIVE_EVENT_IDS_RAW = process.env.NEXT_PUBLIC_DJANGO_LIVE_EVENT_IDS || '';
-const ALL_EVENTS_LIVE = LIVE_EVENT_IDS_RAW.trim() === '*';
-const LIVE_EVENT_IDS: Set<number | string> = new Set(
-  ALL_EVENTS_LIVE ? [] : LIVE_EVENT_IDS_RAW
-    .split(',')
-    .map(id => id.trim())
-    .filter(id => id.length > 0)
-    .map(id => {
-      const num = parseInt(id, 10);
-      return isNaN(num) ? id : num;
-    })
-);
-
-// ============================================================================
-// LIMITED LIVE MODE HELPERS (B5.2)
-// ============================================================================
-
-/**
- * Check if an event should use LIVE Django prices.
- * Returns true only if:
- * - Shadow mode is OFF
- * - LIVE_EVENT_IDS is "*" (all events) OR Event ID is in the list
- */
-export function isEventLive(eventId: number | string): boolean {
-  if (SHADOW_MODE) return false;
-  if (ALL_EVENTS_LIVE) return true;  // "*" = all events use Django API
-  if (LIVE_EVENT_IDS.size === 0) return false;
-
-  // Check both number and string versions
-  const numId = typeof eventId === 'string' ? parseInt(eventId, 10) : eventId;
-  return LIVE_EVENT_IDS.has(eventId) || LIVE_EVENT_IDS.has(numId);
-}
-
-/**
- * Get list of live event IDs for debugging
- */
-export function getLiveEventIds(): (number | string)[] {
-  return Array.from(LIVE_EVENT_IDS);
 }
 
 // ============================================================================
@@ -102,40 +55,6 @@ interface APIHealthResponse {
   status: string;
   use_django_prices: boolean;
   use_django_availability: boolean;
-}
-
-interface APIEvent {
-  id: number;
-  slug: string;
-  title: string;
-  date: string;
-  day: string;
-  month: string;
-  time: string;
-  min_price: string | null;
-  is_sold_out: boolean;
-  type: string;
-  venue: string;
-  tournament_slug?: string;
-  is_active?: boolean;
-}
-
-interface APICategory {
-  id: number;
-  name: string;
-  price: string;
-  color: string;
-  seats_total: number;
-  seats_available: number;
-  seats_left: number;
-  is_active: boolean;
-  show_on_frontend: boolean;
-}
-
-interface APIResponse<T> {
-  data: T | null;
-  fallback: boolean;
-  error?: string;
 }
 
 // ============================================================================
@@ -191,7 +110,7 @@ async function fetchWithTimeout(url: string, timeout: number = API_TIMEOUT): Pro
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-  console.log(`[API FETCH] Requesting: ${url}`);
+  logger.log(`[API FETCH] Requesting: ${url}`);
   const startTime = Date.now();
 
   try {
@@ -208,7 +127,7 @@ async function fetchWithTimeout(url: string, timeout: number = API_TIMEOUT): Pro
     clearTimeout(timeoutId);
 
     const elapsed = Date.now() - startTime;
-    console.log(`[API FETCH] Response: ${response.status} in ${elapsed}ms`);
+    logger.log(`[API FETCH] Response: ${response.status} in ${elapsed}ms`);
 
     return response;
   } catch (error) {
@@ -218,17 +137,17 @@ async function fetchWithTimeout(url: string, timeout: number = API_TIMEOUT): Pro
     // Provide specific error messages for common issues
     if (error instanceof Error) {
       if (error.name === 'AbortError') {
-        console.error(`[API FETCH] TIMEOUT after ${elapsed}ms: ${url}`);
+        logger.error(`[API FETCH] TIMEOUT after ${elapsed}ms: ${url}`);
         throw new Error(`API timeout after ${timeout}ms - is Django server running?`);
       }
       if (error.message.includes('fetch')) {
-        console.error(`[API FETCH] NETWORK ERROR after ${elapsed}ms: ${url}`);
-        console.error(`[API FETCH] Is Django running at ${API_BASE_URL}?`);
+        logger.error(`[API FETCH] NETWORK ERROR after ${elapsed}ms: ${url}`);
+        logger.error(`[API FETCH] Is Django running at ${API_BASE_URL}?`);
         throw new Error(`Network error - Django server unreachable at ${API_BASE_URL}`);
       }
     }
 
-    console.error(`[API FETCH] ERROR after ${elapsed}ms:`, error);
+    logger.error(`[API FETCH] ERROR after ${elapsed}ms:`, error);
     throw error;
   }
 }
@@ -250,7 +169,7 @@ export async function checkAPIHealth(): Promise<{
     const response = await fetchWithTimeout(`${API_BASE_URL}/api/health/`);
 
     if (!response.ok) {
-      console.warn('[API] Health check failed:', response.status);
+      logger.warn('[API] Health check failed:', response.status);
       return { available: false, useDjangoPrices: false, useDjangoAvailability: false };
     }
 
@@ -262,7 +181,7 @@ export async function checkAPIHealth(): Promise<{
       useDjangoAvailability: data.use_django_availability ?? false,
     };
   } catch (error) {
-    console.warn('[API] Health check error:', error);
+    logger.warn('[API] Health check error:', error);
     return { available: false, useDjangoPrices: false, useDjangoAvailability: false };
   }
 }
@@ -278,15 +197,8 @@ export async function checkAPIHealth(): Promise<{
 export async function fetchEvents(): Promise<APIResponse<Event[]>> {
   // No API URL configured - return error (Django API is required)
   if (!API_BASE_URL) {
-    console.error('[API] FATAL: No API URL configured - Django API is required for prices');
+    logger.error('[API] FATAL: No API URL configured - Django API is required for prices');
     return { data: null, fallback: true, error: 'API_URL_NOT_CONFIGURED' };
-  }
-
-  // SHADOW MODE DISABLED - Django API is single source of truth
-  // Shadow mode was for comparing static vs API data - no longer applicable
-  if (SHADOW_MODE) {
-    console.warn('[API] Shadow mode is deprecated - Django API is single source of truth');
-    // Fall through to normal API fetch
   }
 
   // DJANGO API - SINGLE SOURCE OF TRUTH
@@ -300,14 +212,14 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
     const response = await fetchWithTimeout(eventsUrl);
 
     if (!response.ok) {
-      console.error('[API] Events fetch FAILED:', response.status);
+      logger.error('[API] Events fetch FAILED:', response.status);
       return { data: null, fallback: true, error: `HTTP ${response.status}` };
     }
 
     const json = await response.json();
 
     if (json.fallback === true) {
-      console.error('[API] Server returned fallback - this should not happen');
+      logger.error('[API] Server returned fallback - this should not happen');
       return { data: null, fallback: true, error: 'SERVER_RETURNED_FALLBACK' };
     }
 
@@ -318,7 +230,7 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
 
       // Validate against reserved slugs (SEO_ARCHITECTURE §12.3)
       if (isReservedSlug(slug)) {
-        console.error(
+        logger.error(
           `[API CLIENT] Reserved slug detected: "${slug}" (Event ID: ${e.id}). ` +
           `This slug conflicts with static routes and must be changed in CRM.`
         );
@@ -341,15 +253,15 @@ export async function fetchEvents(): Promise<APIResponse<Event[]>> {
     });
 
     // Log each event with price source for audit trail
-    console.log(`[API] Loaded ${djangoEvents.length} events from Django API (SINGLE SOURCE OF TRUTH)`);
+    logger.log(`[API] Loaded ${djangoEvents.length} events from Django API (SINGLE SOURCE OF TRUTH)`);
     djangoEvents.forEach(e => {
-      console.log(`[PRICE] Event ${e.id} "${e.title}" (slug: ${e.slug}): $${e.minPrice} (source: Django API)`);
+      logger.log(`[PRICE] Event ${e.id} "${e.title}" (slug: ${e.slug}): $${e.minPrice} (source: Django API)`);
     });
 
     return { data: djangoEvents, fallback: false };
 
   } catch (error) {
-    console.error('[API] Events fetch ERROR - UI must show error state:', error);
+    logger.error('[API] Events fetch ERROR - UI must show error state:', error);
     return { data: null, fallback: true, error: String(error) };
   }
 }
@@ -383,7 +295,7 @@ export async function fetchEventCategories(
 }[]>> {
   // No API URL configured
   if (!API_BASE_URL) {
-    console.error('[API] FATAL: No API URL configured - Django API is required for category prices');
+    logger.error('[API] FATAL: No API URL configured - Django API is required for category prices');
     return { data: null, fallback: true, error: 'API_URL_NOT_CONFIGURED' };
   }
 
@@ -392,7 +304,7 @@ export async function fetchEventCategories(
     const response = await fetchWithTimeout(`${API_BASE_URL}/api/events/${eventId}/categories/`);
 
     if (!response.ok) {
-      console.error('[API] Categories fetch FAILED:', response.status);
+      logger.error('[API] Categories fetch FAILED:', response.status);
       return { data: null, fallback: true, error: `HTTP ${response.status}` };
     }
 
@@ -418,16 +330,16 @@ export async function fetchEventCategories(
         categories = json.categories;
       } else {
         // Unknown object structure - log and return error
-        console.error('[API] Categories response has unknown structure:', JSON.stringify(json).slice(0, 200));
+        logger.error('[API] Categories response has unknown structure:', JSON.stringify(json).slice(0, 200));
         return { data: null, fallback: true, error: 'UNKNOWN_RESPONSE_STRUCTURE' };
       }
     } else {
       // Null, undefined, or primitive - invalid response
-      console.error('[API] Categories response is not an array or object:', typeof json);
+      logger.error('[API] Categories response is not an array or object:', typeof json);
       return { data: null, fallback: true, error: 'INVALID_RESPONSE_TYPE' };
     }
 
-    console.log(`[API NORMALIZED] categories count: ${categories.length}`);
+    logger.log(`[API NORMALIZED] categories count: ${categories.length}`);
 
     // IMPORTANT: Do NOT filter out show_on_frontend=false categories
     // They should be visible but disabled (greyed out, not clickable, not purchasable)
@@ -435,25 +347,25 @@ export async function fetchEventCategories(
     const djangoCategories = categories.map(c => ({
       id: String(c.id),
       name: c.name,
-      price: parseFloat(c.price) || 0,
-      color: c.color,
-      seatsLeft: c.seats_available,
-      isActive: c.is_active,
-      showOnFrontend: c.show_on_frontend,
+      price: typeof c.price === 'number' ? c.price : (parseFloat(c.price) || 0),
+      color: c.color || '#888888',
+      seatsLeft: c.seats_available ?? c.seats_left ?? 0,
+      isActive: c.is_active ?? true,
+      showOnFrontend: c.show_on_frontend ?? true,
     }));
 
     // Log each category with price source for audit trail
-    console.log(`[API] Event ${eventId} categories loaded from Django (SINGLE SOURCE OF TRUTH):`);
-    console.log(`[API] Total: ${categories.length}`);
+    logger.log(`[API] Event ${eventId} categories loaded from Django (SINGLE SOURCE OF TRUTH):`);
+    logger.log(`[API] Total: ${categories.length}`);
     djangoCategories.forEach(c => {
       const notPurchasable = isSoldOut(c.isActive, c.seatsLeft, c.showOnFrontend);
-      console.log(`[PRICE] Category "${c.name}": $${c.price} ${notPurchasable ? '(NOT PURCHASABLE)' : ''} [isActive=${c.isActive}, showOnFrontend=${c.showOnFrontend}]`);
+      logger.log(`[PRICE] Category "${c.name}": $${c.price} ${notPurchasable ? '(NOT PURCHASABLE)' : ''} [isActive=${c.isActive}, showOnFrontend=${c.showOnFrontend}]`);
     });
 
     return { data: djangoCategories, fallback: false };
 
   } catch (error) {
-    console.error('[API] Categories fetch ERROR - UI must show error state:', error);
+    logger.error('[API] Categories fetch ERROR - UI must show error state:', error);
     return { data: null, fallback: true, error: String(error) };
   }
 }
@@ -467,17 +379,17 @@ export async function fetchEventCategories(
 export async function fetchEventBySlug(
   slugOrId: string
 ): Promise<APIResponse<Event>> {
-  console.log(`[API] fetchEventBySlug called with: "${slugOrId}"`);
-  console.log(`[API] API_BASE_URL = "${API_BASE_URL}"`);
+  logger.log(`[API] fetchEventBySlug called with: "${slugOrId}"`);
+  logger.log(`[API] API_BASE_URL = "${API_BASE_URL}"`);
 
   if (!API_BASE_URL) {
     const errorMsg = 'NEXT_PUBLIC_API_BASE_URL is not configured. Check .env.local file.';
-    console.error('[API] FATAL:', errorMsg);
+    logger.error('[API] FATAL:', errorMsg);
     return { data: null, fallback: true, error: errorMsg };
   }
 
   const url = `${API_BASE_URL}/api/events/${slugOrId}/`;
-  console.log(`[API] Full URL: ${url}`);
+  logger.log(`[API] Full URL: ${url}`);
 
   try {
     // API supports both slug and ID lookup
@@ -485,7 +397,7 @@ export async function fetchEventBySlug(
 
     if (!response.ok) {
       const errorMsg = `HTTP ${response.status} - ${response.status === 404 ? 'Event not found' : 'Server error'}`;
-      console.error('[API] Event fetch FAILED:', errorMsg);
+      logger.error('[API] Event fetch FAILED:', errorMsg);
       return { data: null, fallback: true, error: errorMsg };
     }
 
@@ -495,7 +407,7 @@ export async function fetchEventBySlug(
 
     // Validate against reserved slugs (SEO_ARCHITECTURE §12.3)
     if (isReservedSlug(slug)) {
-      console.error(
+      logger.error(
         `[API CLIENT] Reserved slug detected: "${slug}" (Event ID: ${e.id}). ` +
         `This slug conflicts with static routes and must be changed in CRM.`
       );
@@ -515,12 +427,12 @@ export async function fetchEventBySlug(
       tournamentSlug: e.tournament_slug,
     };
 
-    console.log(`[API] SUCCESS: Fetched event "${event.title}" (slug: ${event.slug}, id: ${event.id}, soldOut: ${event.isSoldOut})`);
+    logger.log(`[API] SUCCESS: Fetched event "${event.title}" (slug: ${event.slug}, id: ${event.id}, soldOut: ${event.isSoldOut})`);
     return { data: event, fallback: false };
 
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
-    console.error('[API] Event fetch ERROR:', errorMsg);
+    logger.error('[API] Event fetch ERROR:', errorMsg);
     return { data: null, fallback: true, error: errorMsg };
   }
 }
@@ -543,25 +455,14 @@ export async function safeLoadEvents(): Promise<{
 }
 
 /**
- * Check if shadow mode is enabled
- */
-export function isShadowMode(): boolean {
-  return SHADOW_MODE;
-}
-
-/**
  * Get current API configuration status
  */
 export function getAPIConfig(): {
   baseUrl: string;
-  shadowMode: boolean;
-  liveEventIds: (number | string)[];
   timeout: number;
 } {
   return {
     baseUrl: API_BASE_URL,
-    shadowMode: SHADOW_MODE,
-    liveEventIds: Array.from(LIVE_EVENT_IDS),
     timeout: API_TIMEOUT,
   };
 }
