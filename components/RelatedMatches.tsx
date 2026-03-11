@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FootballEventCard } from './FootballEventCard';
 import type { Event, APIEvent } from '@/lib/types';
+import { logger } from '@/lib/logger';
 
 interface RelatedMatchesProps {
   currentSlug: string;
@@ -62,7 +63,7 @@ const RelatedMatches: React.FC<RelatedMatchesProps> = ({ currentSlug, currentEve
         setRelatedEvents(related);
         setIsLoading(false);
       } catch (error) {
-        console.error('[RelatedMatches] Error loading related events:', error);
+        logger.error('[RelatedMatches] Error loading related events:', error);
         setIsLoading(false);
       }
     }

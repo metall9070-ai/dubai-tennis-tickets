@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { sanitizeSVG } from '@/lib/sanitize';
+import { logger } from '@/lib/logger';
 
 interface Category {
   id: number;
@@ -86,7 +87,7 @@ const StadiumSeatingMap: React.FC<StadiumSeatingMapProps> = ({
         setSvgContent(sanitizeSVG(modifiedSvg));
         setSvgLoaded(true);
       })
-      .catch(err => console.error('Failed to load SVG:', err));
+      .catch(err => logger.error('[StadiumSeatingMap] Failed to load SVG:', err));
   }, []);
 
   // Set initial scale

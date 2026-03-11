@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import WhyBuy from './WhyBuy';
-import WTASessionInfo from './WTASessionInfo';
-import ATPSessionInfo from './ATPSessionInfo';
+import SessionInfo from './SessionInfo';
+import { ATP_SESSION_DATA, WTA_SESSION_DATA } from '@/lib/session-data';
 import StaticSeatingMap, { CATEGORY_COLORS } from './StaticSeatingMap';
 import StadiumMap from './StadiumMap';
 import EventSEOContent from './EventSEOContent';
@@ -364,6 +364,10 @@ const EventSelection: React.FC<EventSelectionProps> = ({
               return (
                 <div
                   key={cat.id}
+                  role="button"
+                  aria-label={categoryIsSoldOut ? `${cat.name} — sold out` : `Select ${cat.name} — $${cat.price}`}
+                  tabIndex={0}
+                  onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && !categoryIsSoldOut) { e.preventDefault(); openModal(cat); } }}
                   onMouseEnter={() => !categoryIsSoldOut && setHoveredCategory(catSlug)}
                   onMouseLeave={() => setHoveredCategory(null)}
                   onClick={() => !categoryIsSoldOut && openModal(cat)}
@@ -508,11 +512,9 @@ const EventSelection: React.FC<EventSelectionProps> = ({
       {/* Why Buy - right after categories for conversion */}
       <WhyBuy />
 
-      {/* WTA Session Info - only shown for WTA events */}
-      {event?.type === 'WTA' && <WTASessionInfo eventTitle={event?.title || ''} />}
-
-      {/* ATP Session Info - only shown for ATP events */}
-      {event?.type === 'ATP' && <ATPSessionInfo eventTitle={event?.title || ''} />}
+      {/* Session Info - shown for WTA and ATP events */}
+      {event?.type === 'WTA' && <SessionInfo eventTitle={event?.title || ''} sessionData={WTA_SESSION_DATA} />}
+      {event?.type === 'ATP' && <SessionInfo eventTitle={event?.title || ''} sessionData={ATP_SESSION_DATA} />}
 
       {/* Event-Level SEO Content Block (if exists) */}
       {eventSEO && <EventSEOContent eventSEO={eventSEO} />}
@@ -530,7 +532,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
             <div className="p-5 md:p-8">
                   <div className="flex items-center justify-between mb-4 md:mb-5">
                     <span className="text-[16px] md:text-[18px] font-semibold text-[#1d1d1f]">Select Quantity</span>
-                    <button onClick={closeModal} className="p-1.5 hover:bg-[#f5f5f7] rounded-full transition-colors">
+                    <button onClick={closeModal} aria-label="Close" className="p-1.5 hover:bg-[#f5f5f7] rounded-full transition-colors">
                       <svg className="w-5 h-5 text-[#6e6e73]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                   </div>
@@ -553,6 +555,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                       <div className="flex items-center space-x-4 md:space-x-5">
                         <button
                           onClick={handleMinus}
+                          aria-label="Decrease quantity"
                           className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-black/5"
                         >
                           <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1d1d1f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M20 12H4" /></svg>
@@ -560,6 +563,7 @@ const EventSelection: React.FC<EventSelectionProps> = ({
                         <span className="text-[17px] md:text-[18px] font-bold text-[#1d1d1f] tabular-nums w-6 text-center">{ticketCount}</span>
                         <button
                           onClick={handlePlus}
+                          aria-label="Increase quantity"
                           className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-full hover:bg-white/80 active:scale-90 transition-all shadow-sm border border-black/5"
                         >
                           <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1d1d1f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" /></svg>

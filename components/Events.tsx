@@ -252,7 +252,7 @@ export const EventRow: React.FC<{ event: Event; isLast: boolean; onClick: () => 
     if (hour24 >= 16) {
       return { label: 'Evening', icon: <Moon size={10} />, bgColor: 'bg-[#1d1d1f]', textColor: 'text-white' };
     } else if (hour24 >= 13) {
-      return { label: 'Afternoon', icon: <Sun size={10} />, bgColor: 'bg-[#f59e0b]/10', textColor: 'text-[#d97706]' };
+      return { label: 'Afternoon', icon: <Sun size={10} />, bgColor: 'bg-[#f59e0b]/15', textColor: 'text-[#92400e]' };
     } else {
       return { label: 'Morning', icon: <Sunrise size={10} />, bgColor: 'bg-[#3b82f6]/10', textColor: 'text-[#2563eb]' };
     }
