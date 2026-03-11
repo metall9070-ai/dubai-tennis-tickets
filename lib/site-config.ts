@@ -261,11 +261,7 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
         { name: "About Venue", href: "/about-venue" },
         { name: "Getting There", href: "/getting-there" },
         { name: "FAQ", href: "/faq" },
-        { name: "Contact", href: "/contact" },
-        { name: "Terms", href: "/terms" },
-        { name: "Privacy", href: "/privacy" },
         { name: "About Us", href: "/about-us" },
-        { name: "Payment & Delivery", href: "/payment-delivery" },
       ],
     },
     topDisclaimer:
