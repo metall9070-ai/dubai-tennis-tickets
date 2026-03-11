@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { getSiteConfig } from '@/lib/site-config';
-import { getFooterConfig } from '@/lib/nav-config';
+import { getSiteConfig, getFooterConfig } from '@/lib/site-config';
 
 export default function AboutClient() {
   const router = useRouter();

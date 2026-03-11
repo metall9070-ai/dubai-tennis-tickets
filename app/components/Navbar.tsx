@@ -4,8 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
-import { getNavItems, getFooterConfig } from '@/lib/nav-config';
-import { getSiteConfig } from '@/lib/site-config';
+import { getSiteConfig, getNavItems } from '@/lib/site-config';
 
 interface NavbarProps {
   isVisible?: boolean;

@@ -11,6 +11,7 @@ import WhyBuy from '@/components/WhyBuy';
 import SEOSection from '@/components/SEOSection';
 import type { Event } from '@/lib/types';
 import type { SEOContent } from '@/types/seo';
+import { isTennisSite } from '@/lib/site-config';
 
 interface HomeClientProps {
   initialEvents: Event[];
@@ -50,7 +51,7 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
         <WhyBuy />
         {seoContent?.h1 ? (
           <ContentPage content={seoContent} embedded />
-        ) : (
+        ) : isTennisSite() ? (
           <SEOSection
             onFAQ={() => router.push('/faq')}
             onSeatingGuide={() => router.push('/seating-guide')}
@@ -58,7 +59,7 @@ export default function HomeClient({ initialEvents, seoContent }: HomeClientProp
             onATPTickets={() => router.push('/tickets/atp')}
             onWTATickets={() => router.push('/tickets/wta')}
           />
-        )}
+        ) : null}
         <Footer />
       </div>
     </div>

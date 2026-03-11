@@ -45,6 +45,8 @@ export interface SiteConfig {
     brandTitle: string
     description: string
     disclaimer: string
+    ticketLinks?: { name: string; href: string }[]
+    infoLinks?: { name: string; href: string }[]
   }
   topDisclaimer?: string
   /**
@@ -124,6 +126,19 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       brandTitle: "Dubai Tennis Tickets",
       description: "Independent ticket service for Dubai Duty Free Tennis Championships. Secure booking and guaranteed authentic tickets.",
       disclaimer: "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service. We are not affiliated with, endorsed by, or connected to Dubai Duty Free, the Dubai Duty Free Tennis Championships, or any venue or event organizer. All trademarks, logos, and brand names are the property of their respective owners and are used for identification purposes only. Prices listed on this website differ from face value and may be higher than the original ticket price.",
+      ticketLinks: [
+        { name: "All Tickets", href: "/" },
+        { name: "ATP 500 Tickets", href: "/tickets/atp" },
+        { name: "WTA 1000 Tickets", href: "/tickets/wta" },
+        { name: "Seating Guide", href: "/seating-guide" },
+      ],
+      infoLinks: [
+        { name: "Tournament Info", href: "/tournament" },
+        { name: "Schedule", href: "/schedule" },
+        { name: "Venue & Directions", href: "/venue" },
+        { name: "FAQ", href: "/faq" },
+        { name: "About Us", href: "/about" },
+      ],
     },
   },
 
@@ -176,6 +191,16 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
       brandTitle: "Football Festival Qatar",
       description: "Independent ticket concierge service for Football Festival Qatar 2026. Secure booking and guaranteed authentic tickets for all matches.",
       disclaimer: "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with FIFA, UEFA, CONMEBOL, national associations, venues, or event organizers; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
+      ticketLinks: [
+        { name: "All Tickets", href: "/" },
+        { name: "Schedule", href: "/schedule" },
+      ],
+      infoLinks: [
+        { name: "About Tournament", href: "/about-tournament" },
+        { name: "Venue & Directions", href: "/venue" },
+        { name: "FAQ", href: "/faq" },
+        { name: "About Us", href: "/about" },
+      ],
     },
     topDisclaimer: "Independent ticket concierge service in the secondary ticket market. Prices are market-based and may exceed face value.",
   },
@@ -228,6 +253,20 @@ const SITE_CONFIGS: Record<string, SiteConfig> = {
         "Independent ticket concierge for events at Etihad Arena, Abu Dhabi. Secure booking and guaranteed authentic tickets.",
       disclaimer:
         "Independent ticket concierge service providing ticket sourcing, booking, and delivery through a global network of secondary market partners. We are not affiliated with Etihad Arena, Yas Island, Miral, or any venue or event organizer; all trademarks and brand names are used for identification purposes only, and prices are market-based and may exceed face value.",
+      ticketLinks: [
+        { name: "All Events", href: "/" },
+        { name: "Events", href: "/events" },
+      ],
+      infoLinks: [
+        { name: "About Venue", href: "/about-venue" },
+        { name: "Getting There", href: "/getting-there" },
+        { name: "FAQ", href: "/faq" },
+        { name: "Contact", href: "/contact" },
+        { name: "Terms", href: "/terms" },
+        { name: "Privacy", href: "/privacy" },
+        { name: "About Us", href: "/about-us" },
+        { name: "Payment & Delivery", href: "/payment-delivery" },
+      ],
     },
     topDisclaimer:
       "Independent ticket concierge service in the secondary ticket market. Prices are market-based and may exceed face value.",
@@ -275,6 +314,45 @@ export function getSiteUrl(): string {
 
 export function isTennisSite(): boolean {
   return SITE_CODE === "tennis"
+}
+
+export type NavItem = {
+  label: string
+  href: string
+}
+
+export type FooterConfig = {
+  brandName: string
+  brandDescription: string
+  ticketLinks: { name: string; href: string }[]
+  infoLinks: { name: string; href: string }[]
+  disclaimer: string
+}
+
+export function getNavItems(): NavItem[] {
+  const config = SITE_CONFIGS[SITE_CODE]
+  return config?.navigation || []
+}
+
+const NEUTRAL_FOOTER: FooterConfig = {
+  brandName: "Event Tickets",
+  brandDescription: "Secure ticket booking service.",
+  ticketLinks: [],
+  infoLinks: [],
+  disclaimer:
+    "This website is operated by WORLD TICKETS 365 INC, an independent ticket concierge service.",
+}
+
+export function getFooterConfig(): FooterConfig {
+  const config = SITE_CONFIGS[SITE_CODE]
+  if (!config?.footer) return NEUTRAL_FOOTER
+  return {
+    brandName: config.footer.brandTitle,
+    brandDescription: config.footer.description,
+    ticketLinks: config.footer.ticketLinks || [],
+    infoLinks: config.footer.infoLinks || [],
+    disclaimer: config.footer.disclaimer,
+  }
 }
 
 /* ------------------------------------------------------------------ */

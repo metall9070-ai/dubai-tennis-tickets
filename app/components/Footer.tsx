@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { getFooterConfig } from '@/lib/nav-config';
-import { getSiteConfig } from '@/lib/site-config';
+import { getSiteConfig, getFooterConfig } from '@/lib/site-config';
 
 const footerConfig = getFooterConfig();
 

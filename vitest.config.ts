@@ -12,6 +12,12 @@ export default defineConfig({
       provider: 'v8',
       include: ['lib/**/*.ts'],
       exclude: ['lib/logger.ts'],
+      thresholds: {
+        lines: 50,
+        functions: 50,
+        branches: 50,
+        statements: 50,
+      },
     },
   },
   resolve: {

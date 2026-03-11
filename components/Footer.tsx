@@ -1,6 +1,5 @@
 import React from 'react';
-import { getSiteConfig } from '@/lib/site-config';
-import { getFooterConfig } from '@/lib/nav-config';
+import { getSiteConfig, getFooterConfig } from '@/lib/site-config';
 
 interface FooterProps {
   onHome?: () => void;
