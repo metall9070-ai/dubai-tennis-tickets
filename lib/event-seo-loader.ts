@@ -52,6 +52,25 @@ export async function loadEventSEO(
       }
     }
 
+    if (siteCode === 'yasarena') {
+      switch (slug) {
+        case 'tarkan-2026-apr-17': {
+          const mod = await import('@/content/yasarena/events/tarkan-2026-apr-17')
+          return mod.eventSEO
+        }
+        case 'cristina-aguilera-2026-apr-24': {
+          const mod = await import('@/content/yasarena/events/cristina-aguilera-2026-apr-24')
+          return mod.eventSEO
+        }
+        case 'scorpions-2026-may-03': {
+          const mod = await import('@/content/yasarena/events/scorpions-2026-may-03')
+          return mod.eventSEO
+        }
+        default:
+          return null
+      }
+    }
+
     // Add other site codes here as needed
     // if (siteCode === 'tennis') { ... }
 
