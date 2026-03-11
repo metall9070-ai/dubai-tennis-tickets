@@ -2,6 +2,7 @@
 
 import React from 'react';
 import type { EventSEO } from '@/types/seo';
+import { sanitizeHTML } from '@/lib/sanitize';
 
 interface EventSEOContentProps {
   eventSEO: EventSEO;
@@ -25,7 +26,7 @@ const EventSEOContent: React.FC<EventSEOContentProps> = ({ eventSEO }) => {
 
           <div
             className="text-[#1d1d1f] leading-relaxed event-seo-content"
-            dangerouslySetInnerHTML={{ __html: eventSEO.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHTML(eventSEO.content) }}
           />
         </div>
       </div>

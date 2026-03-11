@@ -3,6 +3,7 @@ import Breadcrumbs from "@/components/Breadcrumbs"
 import type { SEOContent } from "@/types/seo"
 import { getSiteConfig } from "@/lib/site-config"
 import { icons } from "lucide-react"
+import { sanitizeHTML } from "@/lib/sanitize"
 
 function HighlightIcon({ name }: { name: string }) {
   // Convert kebab-case to PascalCase: "train-front" → "TrainFront"
@@ -147,7 +148,7 @@ export default function ContentPage({ content, embedded, children }: { content: 
             </h2>
             <div
               className="text-[15px] sm:text-[16px] md:text-[17px] text-[#1d1d1f]/80 leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_li]:mb-1.5 [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold"
-              dangerouslySetInnerHTML={{ __html: section.body }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(section.body) }}
             />
           </section>
         ))}

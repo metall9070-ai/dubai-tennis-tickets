@@ -42,6 +42,11 @@ const Checkout: React.FC<CheckoutProps> = ({
       alert('Please enter your email');
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address');
+      return;
+    }
     if (!formData.phone || formData.phone.length < 8) {
       alert('Please enter a valid phone number (at least 8 digits including country code)');
       return;

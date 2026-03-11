@@ -22,7 +22,11 @@ const siteCode = getSiteCode();
 const siteConfig = getSiteConfig();
 const siteUrl = getSiteUrl();
 const jsonLd = buildJsonLd(siteConfig);
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+const RAW_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+const GA_ID_PATTERN = /^G-[A-Z0-9]+$/;
+const GTM_ID_PATTERN = /^GTM-[A-Z0-9]+$/;
+const validGaId = siteConfig.gaId && GA_ID_PATTERN.test(siteConfig.gaId) ? siteConfig.gaId : '';
+const GTM_ID = GTM_ID_PATTERN.test(RAW_GTM_ID) ? RAW_GTM_ID : '';
 const faviconPath = siteCode === 'finalissima' ? '/favicon-finalissima.svg' : '/favicon.svg';
 
 /* ------------------------------------------------------------------ */
@@ -106,11 +110,11 @@ export default function RootLayout({
 
         {/* Google Analytics 4 — only if GA ID configured */}
         {/* PERFORMANCE: afterInteractive to prevent blocking LCP */}
-        {siteConfig.gaId && (
+        {validGaId && (
           <>
             <Script
               id="gtag-js"
-              src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=${validGaId}`}
               strategy="afterInteractive"
             />
             <Script
@@ -121,7 +125,7 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${siteConfig.gaId}'${process.env.NODE_ENV !== 'production' ? ", { debug_mode: true }" : ''});
+                  gtag('config', '${validGaId}'${process.env.NODE_ENV !== 'production' ? ", { debug_mode: true }" : ''});
                 `,
               }}
             />
